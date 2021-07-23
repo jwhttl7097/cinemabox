@@ -6,12 +6,6 @@
 	
 	<!-- 
 		루트 스프링 컨테이너 설정하기
-		
-		* ContextLoaderListener는 Tomcat이 시작되면 <context-param />에 설정된 스프링 빈 설정파일을 읽어서
-		  스프링 컨테이너를 생성한다.
-		* ContextLoaderListener가 생성한 스프링 컨테이너는 루트 스프링 컨테이너가 된다.
-		* ContextLoaderListener가 생성한 스프링 컨테이너가 관리하는 빈들은 Child 스프링  컨테이너에서 참조할 수 있다.
-		  (즉, Root 스프링 컨테이너가 관리하는 빈들은 Child 스프링 컨테이너가 관리하는 빈들에게 의존성 주입이 가능하다.)
 	 -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
