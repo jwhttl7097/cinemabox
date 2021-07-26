@@ -1,6 +1,5 @@
 package com.cinemabox.web.utils;
 
-import javax.servlet.ServletRequestAttributeEvent;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.web.context.request.RequestContextHolder;
