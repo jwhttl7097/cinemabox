@@ -15,9 +15,9 @@
 </head>
 <body>
 <div class="container-fluid">
-	<%@include file="./common/header.jsp" %>
+	<%@include file="common/header.jsp" %>
 	<p>test</p>
-	<%@include file="./common/footer.jsp" %>
+	<%@include file="common/footer.jsp" %>
 </div>
 </body>
 </html>
