@@ -28,9 +28,9 @@
 							<li class="nav-item"><a class="nav-link" href="">개봉예정작</a></li>
 						</ul>
 					</li>
-					<li class="nav-item mainnav"><a class="nav-link text-body" href="/cinemabox/theaterhome">극장</a>
+					<li class="nav-item mainnav"><a class="nav-link text-body" href="/cinemabox/theaterHome">극장</a>
 						<ul class="nav justify-content-center subnav" id="subnav-03">
-							<li class="nav-item"><a class="nav-link" href="/cinemabox/theaterhome">전체극장</a></li>
+							<li class="nav-item"><a class="nav-link" href="/cinemabox/theaterHome">전체극장</a></li>
 							<li class="nav-item"><a class="nav-link" href="">특별관</a></li>
 						</ul>
 					</li>
