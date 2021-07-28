@@ -1,4 +1,4 @@
-package com.cinemabox.dto;
+package com.cinemabox.dto.Question;
 
 import java.util.Date;
 

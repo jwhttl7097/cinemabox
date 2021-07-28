@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.cinemabox.dao.Notice.NoticeDao">
+
+	<select id="getNoticeByNo" parameterType="int" resultType="com.cinemabox.vo.Notice">
+		select 
+			notice_no				no,
+			notice_division			division,
+			notice_title			title,
+			notice_date				date,
+			notice_hits				hits
+		from
+			cinemabox_notice
+		where
+			notice_no = #{no}
+	</select>
+	
+	
+	<select id="getDetailNoticeByNo" parameterType="int" resultType="com.cinemabox.vo.Notice">
+		select 
+			notice_no				no,
+			notice_content			content,
+			notice_title			title,
+			notice_date				date,
+			notice_hits				hits
+		from
+			cinemabox_notice
+		where
+			notice_no = #{no}
+			
+	</select>
+	
+
+	<insert id="insertNotice" parameterType="com.cinemabox.vo.Notice">
+		insert into cinemabox_notice
+		(notice_no, notice_division, notice_title, notice_content, notice_date)
+		values
+		(notice_seq.nextval, #{division},  #{title},  #{content},  #{date})
+	</insert>
+	
+	
+	
+	<delete id="deleteNotice" parameterType="int">
+		delete from
+			cinemabox_notice
+		where
+			notice_no = #{no}
+	</delete>
+	
+	
+	
+	<update id="updateImportNotice" parameterType="HashMap">
+		update
+			cinemabox_notice
+		set
+			notice_important = #{important}
+			
+		where
+			notice_no = #{no}
+	</update>
+	
+
+
+</mapper>

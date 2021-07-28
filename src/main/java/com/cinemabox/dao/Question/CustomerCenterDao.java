@@ -1,11 +1,10 @@
-package com.cinemabox.dao;
+package com.cinemabox.dao.Question;
 
 import java.util.HashMap;
 import java.util.List;
 
-import com.cinemabox.dto.AnswerDto;
-import com.cinemabox.dto.QuestionDto;
-
+import com.cinemabox.dto.Question.AnswerDto;
+import com.cinemabox.dto.Question.QuestionDto;
 import com.cinemabox.vo.Question;
 
 public interface CustomerCenterDao {
@@ -33,11 +32,6 @@ public interface CustomerCenterDao {
 	 */
 	void insertQuestion(QuestionDto question);
 	
-	/**
-	 * 새 답변 등록함 (update)
-	 * @param answer
-	 */
-	void insertAnswer(AnswerDto answer);
 	
 	/**
 	 * 지정된 번호로 문의 삭제함 
@@ -49,7 +43,13 @@ public interface CustomerCenterDao {
 	 * 지정된 번호로 만족도, 상태를 변경함 
 	 * @param questionNo
 	 */
-	void updateQuestion(int questionNo);
+	void updateSatisfaction(HashMap<String,Object> question);
+	
+	/**
+	 * 새 답변 등록함 (update)
+	 * @param answer
+	 */
+	void insertAnswer(AnswerDto answer);
 	
 	
 	

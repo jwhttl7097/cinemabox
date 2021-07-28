@@ -27,7 +27,6 @@
 			question_date				questionDate,
 			question_state				state,
 			question_name				name,
-			answer_title				answerTitle,
 			answer_content				answerContent,
 			answer_date					answerDate			
 		from
@@ -56,11 +55,10 @@
 	
 	
 	
-	<update id="updateQuestion" parameterType="HashMap">
+	<update id="updateSatisfaction" parameterType="HashMap">
 		update
 			cinemabox_question
 		set
-			question_status	= #{state},
 			question_satisfaction = #{satisfaction}
 			
 		where
@@ -72,8 +70,7 @@
 	<update id="insertAnswer" parameterType="com.cinemabox.dto.AnswerDto">
 		update
 			cinemabox_question
-		set
-			answer_title	= #{answerTitle},			
+		set		
 			answer_content	= #{answerContent},			
 			answer_date		= #{answerDate}					
 			
