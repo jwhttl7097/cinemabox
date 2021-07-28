@@ -15,6 +15,8 @@ public class QuestionServiceImpl implements QuestionService {
 
 	@Autowired CustomerCenterDao questionDao;
 	
+	@Autowired Question question;
+	
 	@Override
 	public List<Question> getQuestionByName(String name, String email) {
 		HashMap<String, Object> userInfo = new HashMap<String, Object>();
@@ -25,9 +27,13 @@ public class QuestionServiceImpl implements QuestionService {
 	}
 	
 	@Override
-	public void insertAnswer(AnswerDto answer) {
-		
+	public void updateQuestion(int questionNo) {
+		HashMap<String, Object> content = new HashMap<String, Object>();
+		content.put("state",question.isState());
+		content.put("satisfaction",question.getSatisfaction());
+		content.put("questionNo",questionNo);
 	}
 	
 	
 }
+	

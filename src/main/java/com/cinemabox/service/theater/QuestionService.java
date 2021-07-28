@@ -11,6 +11,8 @@ public interface QuestionService {
 
 	List<Question> getQuestionByName(String name, String email);
 
-	void insertAnswer(AnswerDto answer);
+
+	void updateQuestion(int questionNo);
+	
 
 }

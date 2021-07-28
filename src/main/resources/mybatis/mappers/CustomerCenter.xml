@@ -9,7 +9,7 @@
 			question_no					questionNo,
 			question_title				questionTitle,
 			question_date				questionDate,
-			question_status				status,
+			question_state				state,
 			question_satisfaction		satisfaction
 		from
 			cinemabox_question
@@ -25,7 +25,7 @@
 			question_title				questionTitle,
 			question_content			questionContent,
 			question_date				questionDate,
-			question_status				status,
+			question_state				state,
 			question_name				name,
 			answer_title				answerTitle,
 			answer_content				answerContent,
@@ -47,9 +47,6 @@
 	
 	
 	
-	
-	
-	
 	<delete id="deleteQuestion" parameterType="int">
 		delete from
 			cinemabox_question
@@ -59,11 +56,11 @@
 	
 	
 	
-	<update id="updateQuestion" parameterType="int">
+	<update id="updateQuestion" parameterType="HashMap">
 		update
 			cinemabox_question
 		set
-			question_status	= #{status},
+			question_status	= #{state},
 			question_satisfaction = #{satisfaction}
 			
 		where
@@ -73,7 +70,7 @@
 	
 
 	<update id="insertAnswer" parameterType="com.cinemabox.dto.AnswerDto">
-			update
+		update
 			cinemabox_question
 		set
 			answer_title	= #{answerTitle},			
