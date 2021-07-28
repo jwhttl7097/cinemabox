@@ -8,7 +8,7 @@
 
 /* 최상단 로고 및 로그인,회원가입,고객센터 nav */
 #topnav-container{
-	border-bottom:1px solid black;
+	border-bottom:1px solid gray;
 }
 #top-nav{
 	bottom:0; 
@@ -56,7 +56,7 @@
 	line-height: 30px;
 }
 #mainnav-01>li:hover{
-	border-bottom:5px solid #ffc107;
+	border-bottom:3px solid #ffc107;
 }
 #mainnav-01>li{
 	width: 100px;
@@ -69,7 +69,7 @@
 	color:black;
 }
 .mainnav>ul>li>a:hover{
-	color:#999;
+	color:#F8F8F8;
 }
 /* subnav */
 .subnav{
@@ -78,7 +78,7 @@
 	top:50px;
 	left: 0px;
 	width: 100%;
-	background-color:rgba(248, 248, 248, 0.8);
+	background-color:#ffc107;
 }
 .mainnav>ul>li>a{
 	font-size:14px;

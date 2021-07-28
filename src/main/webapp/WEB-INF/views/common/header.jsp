@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 
-<header class="py-4 container" id="header">
-	<nav class="row">
+<header class="pt-4" id="header">
+	<nav class="row container" style="margin:0 auto;">
 		<div class="text-center p-0" id="topnav-container">
 			<a class="navbar-brand" href="/cinemabox/home" style="font-size:25px; color:black; font-weight: bolder;"><i class="fas fa-film mx-2"></i>CINEMA BOX</a>
 			<ul class="nav justify-content-end" id="top-nav">
@@ -25,7 +25,7 @@
 					<li class="nav-item mainnav"><a class="nav-link text-body" href="/cinemabox/boxoffice">영화</a>
 						<ul class="nav justify-content-center subnav" id="subnav-02">
 							<li class="nav-item"><a class="nav-link" href="/cinemabox/boxoffice">현재상영작</a></li>
-							<li class="nav-item"><a class="nav-link" href="">개봉예정작</a></li>
+							<li class="nav-item"><a class="nav-link" href="/cinemabox/boxoffice?type=scheduled">상영예정작</a></li>
 						</ul>
 					</li>
 					<li class="nav-item mainnav"><a class="nav-link text-body" href="/cinemabox/theaterHome">극장</a>
