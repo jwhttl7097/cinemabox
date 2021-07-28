@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.cinemabox.dao.CustomerCenterDao">
+
+<select id="getQuestionByName" parameterType="HashMap" resultType="com.cinemabox.vo.Question">
+		select 
+			question_no					questionNo,
+			question_title				questionTitle,
+			question_date				questionDate,
+			question_status				status,
+			question_satisfaction		satisfaction
+		from
+			cinemabox_question
+		where
+			question_name = #{name}
+			and question_email = #{email}
+	</select>
+	
+	
+	<select id="getQuestionByNo" parameterType="int" resultType="com.cinemabox.vo.Question">
+		select 
+			question_no					questionNo,
+			question_title				questionTitle,
+			question_content			questionContent,
+			question_date				questionDate,
+			question_status				status,
+			question_name				name,
+			answer_title				answerTitle,
+			answer_content				answerContent,
+			answer_date					answerDate			
+		from
+			cinemabox_question
+		where
+			question_no = #{questionNo}
+			
+	</select>
+	
+
+	<insert id="insertQuestion" parameterType="com.cinemabox.dto.QuestionDto">
+		insert into cinemabox_question
+		(question_no, question_title, question_content, question_date, question_name, question_email, question_phone)
+		values
+		(question_seq.nextval, #{questionTitle}, #{questionContent},  #{questionDate},  #{name},  #{email},  #{phone})
+	</insert>
+	
+	
+	
+	
+	
+	
+	<delete id="deleteQuestion" parameterType="int">
+		delete from
+			cinemabox_question
+		where
+			question_no = #{questionNo}
+	</delete>
+	
+	
+	
+	<update id="updateQuestion" parameterType="int">
+		update
+			cinemabox_question
+		set
+			question_status	= #{status},
+			question_satisfaction = #{satisfaction}
+			
+		where
+			question_no = #{questionNo}
+	</update>
+	
+	
+
+	<update id="insertAnswer" parameterType="com.cinemabox.dto.AnswerDto">
+			update
+			cinemabox_question
+		set
+			answer_title	= #{answerTitle},			
+			answer_content	= #{answerContent},			
+			answer_date		= #{answerDate}					
+			
+		where
+			question_no = #{questionNo}
+	</update>
+
+
+
+
+
+
+
+</mapper>
