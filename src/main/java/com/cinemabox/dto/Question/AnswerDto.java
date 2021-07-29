@@ -1,4 +1,4 @@
-package com.cinemabox.dto;
+package com.cinemabox.dto.Question;
 
 import java.util.Date;
 
@@ -8,7 +8,6 @@ import lombok.Data;
 public class AnswerDto {
 	
 	private int questionNo;
-	private String answerTitle;
 	private String answerContent;
 	private Date answerDate;
 
