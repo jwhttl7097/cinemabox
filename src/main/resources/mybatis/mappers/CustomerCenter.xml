@@ -37,7 +37,7 @@
 	</select>
 	
 
-	<insert id="insertQuestion" parameterType="com.cinemabox.dto.QuestionDto">
+	<insert id="insertQuestion" parameterType="com.cinemabox.dto.Question.QuestionDto">
 		insert into cinemabox_question
 		(question_no, question_title, question_content, question_date, question_name, question_email, question_phone)
 		values
@@ -55,7 +55,7 @@
 	
 	
 	
-	<update id="updateSatisfaction" parameterType="HashMap">
+	<update id="updateSatisfaction" parameterType="com.cinemabox.vo.Question">
 		update
 			cinemabox_question
 		set
@@ -67,7 +67,7 @@
 	
 	
 
-	<update id="insertAnswer" parameterType="com.cinemabox.dto.AnswerDto">
+	<update id="insertAnswer" parameterType="com.cinemabox.dto.Question.AnswerDto">
 		update
 			cinemabox_question
 		set		

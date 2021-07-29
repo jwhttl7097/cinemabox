@@ -28,8 +28,6 @@ import com.cinemabox.vo.Question;
 public class QuestionServiceImpl implements QuestionService {
 
 	@Autowired CustomerCenterDao customerDao;
-	@Autowired Question question;	
-	@Autowired AnswerDto answerDto;
 
 	
 	@Override
@@ -47,13 +45,10 @@ public class QuestionServiceImpl implements QuestionService {
 	}
 	
 	@Override
-	public void updateSatisfaction(int questionNo) {
+	public void updateSatisfaction(Question question) {
 		// 만족도 추가한다.
-		HashMap<String, Object> content = new HashMap<String, Object>();
-		content.put("satisfaction",question.getSatisfaction());
-		content.put("questionNo",questionNo);
 		
-		customerDao.updateSatisfaction(content);
+		customerDao.updateSatisfaction(question);
 	}
 	
 	@Override
@@ -82,7 +77,7 @@ public class QuestionServiceImpl implements QuestionService {
 		
 		// 메일발송
 		// 메일 전송을 위한 메일 정보 
-		String userMail = question.getEmail();
+		String userMail = answer.getEmail();
 		// gmail로 보내는 권한 부여 
 		Properties props = System.getProperties();
 		props.put("mail.smtp.user", "abpple0405@gmail.com");
