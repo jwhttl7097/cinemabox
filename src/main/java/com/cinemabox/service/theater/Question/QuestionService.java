@@ -26,7 +26,7 @@ public interface QuestionService {
 	void addAnswer(AnswerDto answer);
 
 
-	void updateSatisfaction(int questionNo);
+	void updateSatisfaction(Question question);
 	
 
 }

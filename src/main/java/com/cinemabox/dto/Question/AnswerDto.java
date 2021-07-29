@@ -10,6 +10,7 @@ public class AnswerDto {
 	private int questionNo;
 	private String answerContent;
 	private Date answerDate;
+	private String email;
 
 
 }

@@ -14,36 +14,45 @@ import com.cinemabox.vo.Notice;
 public class NoticeServiceImpl implements NoticeService {
 
 	@Autowired NoticeDao noticeDao;
-	@Autowired Notice notice;
 	
 	@Override
-	public List<NoticeDao> getNoticeByNo(int no){
-		return null;
+	public List<Notice> getNoticeByNo(int no){
+		// 공지사항 조회 
+		List<Notice> notice = noticeDao.getNoticeByNo(no);
+		// 공지사항을 반환한다.
+		return notice;
 	}
 	
 	@Override
-	public NoticeDao detailNoticeByNo(int no) {
-		return null;
+	public Notice detailNoticeByNo(int no) {
+		// 공지사항 상세 조회 
+		return noticeDao.getDetailNoticeByNo(no) ;
 	}
 	
 	@Override
-	public void addNotice(NoticeDao notice) {
-		
+	public void addNotice(Notice addNotice) {
+		// 공지 등록 
+		//Notice addList = noticeDao.getNoticeByNo(no)
+		//if()
 	}
 	
 	@Override
 	public void deleteNotice(int no) {
-		
+		// 공지사항 삭제 
+		noticeDao.deleteNotice(no);
 	}
 	
 	@Override
-	public void importNotice(int no) {
-		// 중요도 추가한다
-		HashMap<String, Object> updateImport = new HashMap<String, Object>();
-		updateImport.put("important",notice.getImportant());
-		updateImport.put("no",no);
+	public void increaseHit(int no) {
+		// 조회수 증가 
+		noticeDao.increaseHit(no);
 		
-		noticeDao.updateImportNotice(updateImport);
+	}
+
+	@Override
+	public void changeNotice(Notice notice) {
+		// 공지사항 수정 
+		noticeDao.changeNotice(notice);
 		
 	}
 

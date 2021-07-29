@@ -43,7 +43,7 @@ public interface CustomerCenterDao {
 	 * 지정된 번호로 만족도, 상태를 변경함 
 	 * @param questionNo
 	 */
-	void updateSatisfaction(HashMap<String,Object> question);
+	void updateSatisfaction(Question question);
 	
 	/**
 	 * 새 답변 등록함 (update)

@@ -10,11 +10,13 @@
 			notice_division			division,
 			notice_title			title,
 			notice_date				date,
-			notice_hits				hits
+			notice_hits				hits,
+			notice_important		important
 		from
 			cinemabox_notice
 		where
 			notice_no = #{no}
+		order by notice_important desc, notice_date desc
 	</select>
 	
 	
@@ -35,9 +37,9 @@
 
 	<insert id="insertNotice" parameterType="com.cinemabox.vo.Notice">
 		insert into cinemabox_notice
-		(notice_no, notice_division, notice_title, notice_content, notice_date)
+		(notice_no, notice_division, notice_title, notice_content, notice_date, notice_important)
 		values
-		(notice_seq.nextval, #{division},  #{title},  #{content},  #{date})
+		(notice_seq.nextval, #{division},  #{title},  #{content},  #{date}, #{important})
 	</insert>
 	
 	
@@ -51,15 +53,27 @@
 	
 	
 	
-	<update id="updateImportNotice" parameterType="HashMap">
+	<update id="increaseHit" parameterType="int">
 		update
 			cinemabox_notice
 		set
-			notice_important = #{important}
-			
+			notice_hits = notice_hits + 1
 		where
 			notice_no = #{no}
 	</update>
+	
+	
+	
+	<update id="changeNotice" parameterType="com.cinemabox.vo.Notice">
+		update
+			cinemabox_notice
+		set
+			notice_content	= #{content},	
+			notice_title	= #{title}		
+		where
+			notice_no = #{no}
+	</update>
+	
 	
 
 
