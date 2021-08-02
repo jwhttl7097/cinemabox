@@ -4,7 +4,7 @@
 
 <mapper namespace="com.cinemabox.dao.Notice.NoticeDao">
 
-	<select id="getNoticeByNo" parameterType="int" resultType="com.cinemabox.vo.Notice">
+	<select id="getNoticeAll" resultType="com.cinemabox.vo.Notice">
 		select 
 			notice_no				no,
 			notice_division			division,
@@ -14,9 +14,7 @@
 			notice_important		important
 		from
 			cinemabox_notice
-		where
-			notice_no = #{no}
-		order by notice_important desc, notice_date desc
+		order by notice_important asc, notice_date desc
 	</select>
 	
 	
@@ -30,8 +28,7 @@
 		from
 			cinemabox_notice
 		where
-			notice_no = #{no}
-			
+			notice_no = #{no}	
 	</select>
 	
 

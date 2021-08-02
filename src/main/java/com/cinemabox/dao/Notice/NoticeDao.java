@@ -11,7 +11,7 @@ public interface NoticeDao {
 	 * 전체공지사항 조회 
 	 * @return no
 	 */
-	List<Notice> getNoticeByNo(int no);
+	List<Notice> getNoticeAll();
 	
 	/**
 	 * 번호로 공지사항 상세 조회 

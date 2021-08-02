@@ -1,6 +1,5 @@
 package com.cinemabox.service.theater.Notice;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +15,9 @@ public class NoticeServiceImpl implements NoticeService {
 	@Autowired NoticeDao noticeDao;
 	
 	@Override
-	public List<Notice> getNoticeByNo(int no){
+	public List<Notice> getNoticeAll(){
 		// 공지사항 조회 
-		List<Notice> notice = noticeDao.getNoticeByNo(no);
+		List<Notice> notice = noticeDao.getNoticeAll();
 		// 공지사항을 반환한다.
 		return notice;
 	}
@@ -32,8 +31,8 @@ public class NoticeServiceImpl implements NoticeService {
 	@Override
 	public void addNotice(Notice addNotice) {
 		// 공지 등록 
-		//Notice addList = noticeDao.getNoticeByNo(no)
-		//if()
+		 noticeDao.insertNotice(addNotice);
+		 
 	}
 	
 	@Override
