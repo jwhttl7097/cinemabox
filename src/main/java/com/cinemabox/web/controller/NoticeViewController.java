@@ -24,7 +24,7 @@ public class NoticeViewController {
 	NoticeService noticeService;
 
 	/**
-	 * 공지사항리스트를 조회하여 공지사항 페이지를 호출합니다.
+	 * 공지사항리스트를 조회하여 공지사항 페이지를 호출
 	 * @param model 뷰페이지에 전달할 데이터를 담는 객체, HadlerAdapter객체가 Model를 생성해서 전달함
 	 * @return 뷰페이지의 이름 (공지사항 페이지)
 	 */
@@ -34,39 +34,87 @@ public class NoticeViewController {
 		List<Notice> noticeList = noticeService.getNoticeAll();
 		
 		// 뷰 페이지에 공지사항 목록 전달하기
-		model.addAttribute("noticesList", noticeList);
+		model.addAttribute("noticeList", noticeList);
 		
 		// 뷰페이지로 내부이동하기
 		// /WEB-INF/views/notice/noticeMain.jsp로 내부이동해서 JSP 실행시키기
-		return "noitce/noticeMain";
+		return "notice/noticeMain";
 	}
 	
 	/**
-	 * 
+	 * 공지 사항 세부페이지 호출  
 	 * @param no
 	 * @param model
 	 * @return
 	 */
 	@GetMapping("/detail")
-	public String details(int no, Model model) {
+	public String details(@RequestParam("no") int no, Model model) {
 		Notice noticeDetail = noticeService.detailNoticeByNo(no);
 		model.addAttribute("noticeDetail", noticeDetail);
-		return "noitce/detailNotice";
+		return "notice/detailNotice";
 	}
 
 	/**
-	 * 
+	 * 공지 글 삭제 후 메인페이지 호출 
 	 * @param no
 	 * @param redirectAttributes
 	 * @return
 	 */
 	@GetMapping("/delete")
-	public String deleteReview(int no,  RedirectAttributes redirectAttributes) {
-		
+	public String delete(int no,  RedirectAttributes redirectAttributes) {
 		noticeService.deleteNotice(no);
-		redirectAttributes.addAttribute("no", no);
-		
+		redirectAttributes.addAttribute("no", no);	
 		return "redirect:noticeMain";
 	}
+	
+	/**
+	 * 공지 글 추가 후 메인페이지 호출
+	 * @param no
+	 * @param redirectAttributes
+	 * @return
+	 */
+	@GetMapping("/add")
+	public String addNotice(int no, RedirectAttributes redirectAttributes) {
+		Notice notice = new Notice();
+		notice.setNo(no);
+		noticeService.addNotice(notice);
+		redirectAttributes.addAttribute("notice", notice);
+		return "redirect:noticeMain";
+	}
+	
+	/**
+	 * 공지 사항 세부페이지 호출  
+	 * @param no
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("/modify")
+	public String modifyNotice(int no, Model model) {
+		Notice notice = new Notice();
+		notice.setNo(no);
+		noticeService.changeNotice(notice);
+		model.addAttribute("notice", notice);
+		return "notice/modifyNotice";
+	}
+	
+
+	/**
+	 * 공지 사항 글 추가 
+	 * @param no
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("/insert")
+	public String insertNotice(int no, String title, String content,  Model model) {
+		Notice notice = new Notice();
+		notice.setNo(no);
+		notice.setTitle(title);
+		notice.setContent(content);
+		noticeService.addNotice(notice);
+		model.addAttribute("notice", notice);
+		return "notice/insertNotice";
+	}
+	
+	
 	
 }

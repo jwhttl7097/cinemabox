@@ -9,7 +9,7 @@
 			notice_no				no,
 			notice_division			division,
 			notice_title			title,
-			notice_date				date,
+			notice_date				creatDate,
 			notice_hits				hits,
 			notice_important		important
 		from
@@ -23,7 +23,7 @@
 			notice_no				no,
 			notice_content			content,
 			notice_title			title,
-			notice_date				date,
+			notice_date				creatDate,
 			notice_hits				hits
 		from
 			cinemabox_notice
@@ -36,7 +36,7 @@
 		insert into cinemabox_notice
 		(notice_no, notice_division, notice_title, notice_content, notice_date, notice_important)
 		values
-		(notice_seq.nextval, #{division},  #{title},  #{content},  #{date}, #{important})
+		(notice_seq.nextval, #{division},  #{title},  #{content},  #{creatDate}, #{important})
 	</insert>
 	
 	

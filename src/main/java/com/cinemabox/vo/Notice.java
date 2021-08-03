@@ -11,7 +11,7 @@ public class Notice {
 	private String division;
 	private String title;
 	private String content;
-	private Date date;
+	private Date creatDate;
 	private int hits;
 	private int important;
 	
