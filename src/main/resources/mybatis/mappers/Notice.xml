@@ -14,7 +14,7 @@
 			notice_important		important
 		from
 			cinemabox_notice
-		order by notice_important asc, notice_date desc
+		order by notice_important asc, notice_no desc
 	</select>
 	
 	
@@ -26,17 +26,17 @@
 			notice_date				creatDate,
 			notice_hits				hits
 		from
-			cinemabox_notice
+			 cinemabox_notice
 		where
 			notice_no = #{no}	
 	</select>
 	
 
-	<insert id="insertNotice" parameterType="com.cinemabox.vo.Notice">
+	<insert id="insertNotice" parameterType="com.cinemabox.dto.Notice.NoticeDto">
 		insert into cinemabox_notice
 		(notice_no, notice_division, notice_title, notice_content, notice_date, notice_important)
 		values
-		(notice_seq.nextval, #{division},  #{title},  #{content},  #{creatDate}, #{important})
+		(notice_seq.nextval, #{division},  #{title}, #{content},  sysDate, #{important})
 	</insert>
 	
 	

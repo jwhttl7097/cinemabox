@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cinemabox.dao.Notice.NoticeDao;
+import com.cinemabox.dto.Notice.NoticeDto;
 import com.cinemabox.vo.Notice;
 
 
@@ -29,7 +30,7 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 	
 	@Override
-	public void addNotice(Notice addNotice) {
+	public void addNotice(NoticeDto addNotice) {
 		// 공지 등록 
 		 noticeDao.insertNotice(addNotice);
 		 
@@ -49,9 +50,9 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public void changeNotice(Notice notice) {
+	public void changeNotice(int no) {
 		// 공지사항 수정 
-		noticeDao.changeNotice(notice);
+		noticeDao.changeNotice(no);
 		
 	}
 

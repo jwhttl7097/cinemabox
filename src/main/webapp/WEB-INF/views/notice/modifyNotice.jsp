@@ -16,13 +16,43 @@
 <body>
 <div class="container-fluid">
 	<%@ include file="../common/header.jsp"%>
-	<p>test</p>
-	<%@ include file="../common/footer.jsp"%>
+	
+	<div class="top" style="margin-left:150px;  margin-top:30px;">
+	<h3 >공지사항</h3>
+	</div>
 	
 	
+	<div style="padding:80px">
+	<form id="notice-form" name="update" onsubmit="return check()">
+	<div class="mb-3">
+	  <label for="exampleFormControlInput1" class="form-label">제목</label>
+	  <input type="text" class="form-control" id="title" name="title" value="${noticeDetail.title }"/>
+	</div>
+	<div class="mb-3">
+	  <label for="exampleFormControlTextarea1" class="form-label">내용</label>
+	  <input class="form-control" id="content" name ="content" value="${noticeDetail.content }"></input>
+	</div>
+	</form>
+			<div style="text-align: right;">
+                <input type=submit value="수정" onclick="checkForm()"/>
+            
+                <input type=button value="목록" onclick="location.href='list'"/>
+            </div>
+	</div>
 	
 	
-	
+	<%@ include file="../common/footer.jsp"%>	
 </div>
+
+<script type="text/javascript">
+
+function checkForm() {
+     alert("글이 등록됩니다!");
+    
+	return true;
+	
+}
+
+</script>
 </body>
 </html>

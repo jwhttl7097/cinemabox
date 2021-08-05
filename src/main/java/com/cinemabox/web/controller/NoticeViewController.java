@@ -6,10 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.cinemabox.dto.Notice.NoticeDto;
 import com.cinemabox.service.theater.Notice.NoticeService;
 import com.cinemabox.vo.Notice;
 
@@ -48,9 +52,12 @@ public class NoticeViewController {
 	 * @return
 	 */
 	@GetMapping("/detail")
-	public String details(@RequestParam("no") int no, Model model) {
+	public String details(int no, Model model) {
 		Notice noticeDetail = noticeService.detailNoticeByNo(no);
 		model.addAttribute("noticeDetail", noticeDetail);
+		// 조회수 증가 
+		noticeService.increaseHit(no);
+		model.addAttribute("no", no);
 		return "notice/detailNotice";
 	}
 
@@ -61,41 +68,12 @@ public class NoticeViewController {
 	 * @return
 	 */
 	@GetMapping("/delete")
-	public String delete(int no,  RedirectAttributes redirectAttributes) {
+	public String delete(@RequestParam int no,  RedirectAttributes redirectAttributes) {
 		noticeService.deleteNotice(no);
 		redirectAttributes.addAttribute("no", no);	
 		return "redirect:noticeMain";
 	}
 	
-	/**
-	 * 공지 글 추가 후 메인페이지 호출
-	 * @param no
-	 * @param redirectAttributes
-	 * @return
-	 */
-	@GetMapping("/add")
-	public String addNotice(int no, RedirectAttributes redirectAttributes) {
-		Notice notice = new Notice();
-		notice.setNo(no);
-		noticeService.addNotice(notice);
-		redirectAttributes.addAttribute("notice", notice);
-		return "redirect:noticeMain";
-	}
-	
-	/**
-	 * 공지 사항 세부페이지 호출  
-	 * @param no
-	 * @param model
-	 * @return
-	 */
-	@GetMapping("/modify")
-	public String modifyNotice(int no, Model model) {
-		Notice notice = new Notice();
-		notice.setNo(no);
-		noticeService.changeNotice(notice);
-		model.addAttribute("notice", notice);
-		return "notice/modifyNotice";
-	}
 	
 
 	/**
@@ -104,17 +82,52 @@ public class NoticeViewController {
 	 * @param model
 	 * @return
 	 */
-	@GetMapping("/insert")
-	public String insertNotice(int no, String title, String content,  Model model) {
-		Notice notice = new Notice();
-		notice.setNo(no);
-		notice.setTitle(title);
-		notice.setContent(content);
+	@RequestMapping("/insert")
+	public String insertNotice(NoticeDto notice) {
+		System.out.println("notice ==>"+notice.toString());
+		notice.setImportant("true".equals(notice.getImportant())?"1":"0");
 		noticeService.addNotice(notice);
-		model.addAttribute("notice", notice);
+
+		return "notice/noticeMain";
+	}
+	/**
+	 * 공지 글 추가 페이지
+	 * @param no
+	 * @param redirectAttributes
+	 * @return
+	 */
+	@GetMapping("/add")
+	public String addNotice() {
+		
 		return "notice/insertNotice";
 	}
 	
+	/**
+	 * 공지 글 수정 폼페이지
+	 * @param no
+	 * @param redirectAttributes
+	 * @return
+	 */
+	@GetMapping("/modify")
+	public String modifyNotice(int no, Model model) throws Exception{
+		Notice noticeDetail = noticeService.detailNoticeByNo(no);
+		model.addAttribute("noticeDetail", noticeDetail);
+		
+		return "notice/modifyNotice";
+	}
+	
+	/**
+	 * 공지 사항 수정 후 페이지 이동 
+	 * @param no
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("/newModify")
+	public String newNotice(int no, Model model) {
+		noticeService.changeNotice(no);
+		model.addAttribute("no", no);
+		return "redirect:noticeMain";
+	}
 	
 	
 }

@@ -17,51 +17,84 @@
 <div class="container-fluid">
 	<%@ include file="../common/header.jsp"%>
 	
-<div class="row mb-3" style="padding:100px">
-	<div class="col">
-			
-					<table class="table" style="margin:auto">
+	<div class="top" style="margin-left:150px;  margin-top:30px;">
+	<h3 >공지사항</h3>
+	</div>
 
-						<thead style="background: #EEEEEE">
-							<tr class="info">
-							<td>
-								<span>${noticeDetail.title }</span>
-								<span>등록일</span>
-								<span><fmt:formatDate value="${noticeDetail.creatDate }" pattern="yyyy.MM.dd"/></span>
-								<span>조회수</span>
-								<span>${noticeDetail.hits }</span>
-							</td>
-							</tr>
-					</thead>
-					<tbody>
-					<tr class="content">
-						<td>${noticeDetail.content }</td>	
+<div class="row mb-3" style="padding:80px">
+<div class="col-2">
+		<table class="table">
+		<tbody>
+			<tr>
+				<td><a href="list">고객센터</a></td>
+			</tr>
+			<tr>
+				<td><a href="list">공지사항</a></td>
+			</tr>
+			<tr>
+				<td><a href="list">1:1 문의</a></td>
+			</tr>
+		</tbody>
+		</table>
+	</div>
+		<div class="col-9">
+				<table class="table mb-3" style="margin:auto">
+						<colgroup>
+							<col width="*">
+							<col width="25%">
+							<col width="15%">
+						</colgroup>
+				<thead style="background: #FFBF00">
+					<tr>
+						<th>${noticeDetail.title }</th>
+						<th>등록일<span><fmt:formatDate value="${noticeDetail.creatDate }" pattern="yyyy.MM.dd"/></span></th>
+						<th>조회수<span>${noticeDetail.hits }</span></th>
 					</tr>
-					<tr class="link">
-						<td>
-							<a href="">
-								<span class="next">다음글</span>
-								<span>${noticeDetail.title }</span>
-							</a>
-						</td>
-					</tr>
-					<tr class="link">
-						<td>
-							<a href="">
-								<span class="prev">이전글</span>
-								<span>${noticeDetail.title }</span>
-							</a>
-						</td>
-					</tr>
-					</tbody>
-					</table>
+			</thead>
+			<tbody>
+			<tr class="content">
+				<td colspan="3" style="padding:35px;">${noticeDetail.content }</td>	
+			</tr>
+			<tr class="link">
+				<td colspan="3">
 					
-					<div class="btn_btm_wrap"><a href="#" class="btn_col2 ty6">목록</a></div>
-				</div>
-			
+						<span class="next">다음글</span>
+						<span><a href="detail?no=${noticeDetail.no+1 }"></a></span>
+				
+				</td>
+			</tr>
+			<tr class="link">
+				<td colspan="3">
+					<a href="">
+						<span class="prev">이전글</span>
+						<span><a href="detail?no=${noticeDetail.no-1 }"></a></span>
+					</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+		<div style="text-align: right;">
+			<button type="button" class="btn btn-warning" onclick="location.href='list'">목록</button>
+			<button type="button" class="btn btn-warning"  onclick="location.href='modify?no=${noticeDetail.no}'">수정</button>
+			<button type="button" class="btn btn-warning" onclick="del(${noticeDetail.no})">삭제</button>
 		</div>
+	</div>	
+				
+</div>
 	<%@ include file="../common/footer.jsp"%>
 	
 </div>
+<script type="text/javascript">
+
+function del(no) {
+	var chk = confirm("정말 삭제하시겠습니까?");
+	if (chk) {
+		//location.href= 'list';
+		location.href='delete?no='+no;
+	}
+}	
+
+</script>
 </body>
 </html>

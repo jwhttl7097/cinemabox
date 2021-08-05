@@ -18,7 +18,7 @@
 	<%@ include file="../common/header.jsp"%>
 	
 	<div class="top" style="margin-left:150px;  margin-top:30px;">
-	<h3 >공지사항</h3>
+	<h3>공지시항</h3>
 	</div>
 	
 	<div class="row mb-3" style="padding:55px; margin-left:50px;">
@@ -26,49 +26,55 @@
 		<table class="table">
 		<tbody>
 			<tr>
-				<td>공지사항</td>
+				<td><a href="list">고객센터</a></td>
 			</tr>
 			<tr>
-				<td>문의</td>
+				<td><a href="list">공지사항</a></td>
+			</tr>
+			<tr>
+				<td><a href="list">1:1 문의</a></td>
 			</tr>
 		</tbody>
 		</table>
 	</div>
-	
-			<div class="col-9">
-				<div class="border p-2 bg-light">
-					<table class="table">
-						<colgroup>
-							<col width="7%">
-							<col width="15%">
-							<col width="*">
-							<col width="15%">
-							<col width="15%">
-						</colgroup>
-						<thead>
+		<div class="col-9">
+			<div class="border p-2 bg-light">
+				<table class="table">
+					<colgroup>
+						<col width="10%">
+						<col width="15%">
+						<col width="*">
+						<col width="15%">
+						<col width="15%">
+					</colgroup>
+					<thead>
+						<tr>
+							<th>번호</th>
+							<th>카테고리</th>
+							<th>제목</th>
+							<th>등록일</th>
+							<th class="text-end">조회수</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach var="noticeList" items="${noticeList }">
 							<tr>
-								<th>번호</th>
-								<th>카테고리</th>
-								<th>제목</th>
-								<th>등록일</th>
-								<th class="text-end">조회수</th>
+								<td>${noticeList.no }</td>
+								<td>${noticeList.division }</td>
+								<td><a class="text-decoration-none" href="detail?no=${noticeList.no }">${noticeList.title }</a></td>
+								<td><fmt:formatDate value="${noticeList.creatDate }" pattern="yyyy.MM.dd"/></td>
+								<td class="text-end">${noticeList.hits }</td>
 							</tr>
-						</thead>
-						<tbody>
-							<c:forEach var="noticeList" items="${noticeList }">
-								<tr>
-									<td>${noticeList.no }</td>
-									<td>${noticeList.division }</td>
-									<td><a class="text-decoration-none" href="detail?no=${noticeList.no }">${noticeList.title }</a></td>
-									<td><fmt:formatDate value="${noticeList.creatDate }" pattern="yyyy.MM.dd"/></td>
-									<td class="text-end">${noticeList.hits }</td>
-								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
-				</div>
+						</c:forEach>
+					</tbody>
+				</table>
 			</div>
-		</div>
+		<div style="text-align: right;">
+			<button type="button" class="btn btn-warning" onclick="location.href='add'">글쓰기</button>
+		</div>	
+	</div>		
+ </div>
+	
 	
 	<nav aria-label="Page navigation example">
   <ul class="pagination">

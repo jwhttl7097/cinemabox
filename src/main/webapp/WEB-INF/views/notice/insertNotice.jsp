@@ -16,13 +16,63 @@
 <body>
 <div class="container-fluid">
 	<%@ include file="../common/header.jsp"%>
-	<p>test</p>
-	<%@ include file="../common/footer.jsp"%>
+	
+	<div class="top" style="margin-left:150px;  margin-top:30px;">
+	<h3 >공지사항</h3>
+	</div>
 	
 	
+	<div style="padding:80px">
+	<form id="notice-form" name="insertForm" action="noticeMain.jsp">
+	<div class="mb-3">
+	  <label for="exampleFormControlInput1" class="form-label">제목</label>
+	  <input type="text" class="form-control" id="title" name="title">
+	</div>
+	<div class="form-check">
+	  <input class="form-check-input" type="checkbox" value="" id="important" name="important">
+	  <label class="form-check-label" for="flexCheckDefault">중요글</label>
+	</div>
+	<div class="mb-3">
+	  <label for="exampleFormControlTextarea1" class="form-label">내용</label>
+	  <textarea class="form-control" id="content" name ="content" rows="3"></textarea>
+
+	</div>
+	</form>
+	<div style="text-align: right;">
+			<button type="submit" id="insertBt" class="btn btn-warning"  onclick="checkForm()">등록</button>
+		</div>	
+	</div>
 	
+
 	
-	
+	<%@ include file="../common/footer.jsp"%>	
 </div>
+
+<script type="text/javascript">
+function checkForm() {
+	
+	var title = document.insertForm.title;
+	var content = document.insertForm.content;
+	var important = document.insertForm.important;
+	
+	if(title.value==""){
+        alert("제목을 입력해주세요.");
+        title.focus();
+        return false;
+    }else if(content.value==""){
+        alert("내용을 입력해주세요.");
+        content.focus();
+        return false;
+
+    }else{
+        alert("글이 등록됩니다!");
+        return true;
+    }
+	
+	return true;
+	
+}
+
+</script>
 </body>
 </html>

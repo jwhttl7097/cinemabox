@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.cinemabox.dao.Notice.NoticeDao;
+import com.cinemabox.dto.Notice.NoticeDto;
 import com.cinemabox.vo.Notice;
 
 public interface NoticeService {
@@ -17,10 +18,11 @@ public interface NoticeService {
 	// 공지사항 삭제 
 	void increaseHit(int no);
 	// 조회수 증가 
-	void addNotice(Notice addNotice);
+	void addNotice(NoticeDto notice);
 	// 공지 등록 
-	void changeNotice(Notice notice);
+	void changeNotice(int no);
 	// 공지사항 수정 
+	
 	
 	
 }
