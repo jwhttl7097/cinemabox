@@ -6,7 +6,7 @@
 		<div class="text-center p-0" id="topnav-container">
 			<a class="navbar-brand" href="/cinemabox/home" style="font-size:25px; color:black; font-weight: bolder;"><i class="fas fa-film mx-2"></i>CINEMA BOX</a>
 			<ul class="nav justify-content-end" id="top-nav">
-				<li class="nav-item"><a class="nav-link" href="#">로그인</a></li>
+				<li class="nav-item"><a class="nav-link">로그인</a></li>
 				<li class="nav-item"><a class="nav-link" href="#">회원가입</a></li>
 				<li class="nav-item"><a class="nav-link" href="/cinemabox/notice/list">고객센터</a></li>
 				<li class="nav-item"><a class="nav-link last-a" href="/cinemabox/admin">관리자</a></li>
