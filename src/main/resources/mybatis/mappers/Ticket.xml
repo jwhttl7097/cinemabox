@@ -30,6 +30,7 @@
             		row_number() over (order by MOVIE_RATING desc) row_number,
            		</when>
            		<otherwise>
+            		row_number() over (order by MOVIE_RESERVATION_RATE desc) row_number
            		</otherwise>
             </choose>
 	            MOVIE_NO, MOVIE_TITLE ,MOVIE_RATING,
