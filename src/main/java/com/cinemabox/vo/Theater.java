@@ -13,8 +13,5 @@ public class Theater {
 	private String theaterHallExist;
 	private int theaterLatitude;
 	private int theaterLongitude;
-	private String contentFirst;
-	private String contentSecond;
-	private String contentMerit;
-	private String theaterNumber;
+	
 }
