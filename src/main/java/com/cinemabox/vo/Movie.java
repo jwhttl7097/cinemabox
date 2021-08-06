@@ -25,4 +25,5 @@ public class Movie {
 	private String status;
 	private Date createdDate;
 	private Date closeDate;
+	
 }
