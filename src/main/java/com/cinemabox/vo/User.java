@@ -13,7 +13,7 @@ public class User {
 	private String email;
 	private String phone;
 	private String address;
-	private Date birth;
+	private String birth;
 	private int couponNo;
 	private int point;
 	private int grade;
