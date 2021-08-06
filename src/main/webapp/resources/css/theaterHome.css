@@ -1,0 +1,32 @@
+@charset "UTF-8";
+
+#theater-box {
+	border-radius: 10px 10px 10px 10px;
+	border: 3px solid gray;
+}
+
+#theater-place ul {
+	border-bottom: 1px solid gray;
+	border-radius: 10px 0px 0px 0px;
+}
+
+#theater-location {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+#theater-location li {
+	border-right: 1px solid gray;
+	border-top: none;
+	border-bottom: none;
+}
+
+#theater-location li:last-child {
+	border-right: none;
+}
+.quick-area .btn-go-top {
+	position: fixed;
+	left: 50%;
+	bottom: 100px;
+	display: none;
+}

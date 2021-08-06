@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.cinemabox.dao.ticket.TicketDao">
+	<select id="getMovieListByTheaterNo" parameterType="int" resultType="com.cinemabox.dto.ticket.TicketDto">
+        select
+        	s.SCREENING_NO as screeningNo,
+			s.MOVIE_NO as movieNo,
+			s.THEATER_NO as theaterNo,
+			s.HALL_NO as hallNo,
+			s.SCREENING_DATE as screeningDate,
+			s.SCREENING_TIME as screeningTime,
+			s.SCREENING_STATUS as screeningStatus,
+			m.MOVIE_TITLE as title,
+			m.MOVIE_RUNNING_TIME as runningTime,
+			m.MOVIE_AGE as age,
+			m.MOVIE_STATUS as movieStatus,
+            h.hall_name as hallName
+		from(
+            select
+            <choose>
+            	<when test="sort == 'ticket'">
+            		row_number() over (order by MOVIE_RESERVATION_RATE desc) row_number,
+           		</when>
+            	<when test="sort == 'count'">
+            		row_number() over (order by MOVIE_CUMULATIVE_AUDIENCE_CNT desc) row_number,
+           		</when>
+            	<when test="sort == 'rating'">
+            		row_number() over (order by MOVIE_RATING desc) row_number,
+           		</when>
+           		<otherwise>
+           		</otherwise>
+            </choose>
+	            MOVIE_NO, MOVIE_TITLE ,MOVIE_RATING,
+	            MOVIE_RESERVATION_RATE,MOVIE_CUMULATIVE_AUDIENCE_CNT,
+	            MOVIE_GENRE,MOVIE_RELEASE_DATE,MOVIE_RUNNING_TIME,
+	            MOVIE_AGE,MOVIE_STATUS,MOVIE_CLOSE_DATE
+			from
+				CINEMABOX_MOVIE
+			where MOVIE_RELEASE_DATE > sysdate - 30
+			and MOVIE_STATUS = 'Y') m, CINEMABOX_SCREENING s, CINEMABOX_THEATER t, CINEMABOX_HALL h
+		where 
+			s.THEATER_NO = #{value}
+            and s.movie_no = m.movie_no
+            and s.theater_no = t.theater_no
+            and s.hall_no = h.hall_no	
+	</select>
+</mapper>

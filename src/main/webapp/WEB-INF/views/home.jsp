@@ -104,6 +104,7 @@
 </style>
 </head>
 <body>
+
 <div class="container-fluid" id="silder-container">
 	<%@include file="common/header.jsp" %>
    <div class="row" id="wholeCarousel">
@@ -136,7 +137,6 @@
 	   </div>
      </div>
 </div>
-</div>
 <!-- 
 	현재 상영작 (예매율 순위로 정렬)
  -->
@@ -155,7 +155,7 @@
 									<span><img class="rateStar" alt="star" 
 									src="/cinemabox/resources/images/main/movieCurrentLists/star.png" /> 9.1</span>
 									<span> | <img class="heart" alt="heart"
-									src="/cinemabox/resources/images/main/movieCurrentLists/heart.png""></span>
+									src="/cinemabox/resources/images/main/movieCurrentLists/heart.png"></span>
 									</p>
 								</div>
 								
@@ -169,7 +169,7 @@
 									<span><img class="rateStar" alt="star" 
 									src="/cinemabox/resources/images/main/movieCurrentLists/star.png" /> 9.1</span>
 									<span> | <img class="heart" alt="heart"
-									src="/cinemabox/resources/images/main/movieCurrentLists/heart.png""></span></p>
+									src="/cinemabox/resources/images/main/movieCurrentLists/heart.png"></span></p>
 								</div>
 								
 									
@@ -183,7 +183,7 @@
 									<span><img class="rateStar" alt="star" 
 									src="/cinemabox/resources/images/main/movieCurrentLists/star.png" /> 9.1</span>
 									<span> | <img class="heart" alt="heart"
-									src="/cinemabox/resources/images/main/movieCurrentLists/heart.png""></span></p>
+									src="/cinemabox/resources/images/main/movieCurrentLists/heart.png"></span></p>
 								</div>									
 							</div>
 							<div class="d-inline-block rounded-3">
@@ -195,7 +195,7 @@
 									<span><img class="rateStar" alt="star" 
 									src="/cinemabox/resources/images/main/movieCurrentLists/star.png" /> 9.1</span>
 									<span> | <img class="heart" alt="heart"
-									src="/cinemabox/resources/images/main/movieCurrentLists/heart.png""></span></p>
+									src="/cinemabox/resources/images/main/movieCurrentLists/heart.png"></span></p>
 								</div>
 							</div>
 						</div>
@@ -211,7 +211,7 @@
 									<span><img class="rateStar" alt="star" 
 									src="/cinemabox/resources/images/main/movieCurrentLists/star.png" /> 9.1</span>
 									<span> | <img class="heart" alt="heart"
-									src="/cinemabox/resources/images/main/movieCurrentLists/heart.png""></span></p>
+									src="/cinemabox/resources/images/main/movieCurrentLists/heart.png"></span></p>
 								</div>
 							</div>
 							<div class="d-inline-block rounded-3">
@@ -223,7 +223,7 @@
 									<span><img class="rateStar" alt="star" 
 									src="/cinemabox/resources/images/main/movieCurrentLists/star.png" /> 9.1</span>
 									<span> | <img class="heart" alt="heart"
-									src="/cinemabox/resources/images/main/movieCurrentLists/heart.png""></span></p>
+									src="/cinemabox/resources/images/main/movieCurrentLists/heart.png"></span></p>
 								</div>
 							</div>
 							<div class="d-inline-block rounded-3">
@@ -235,7 +235,7 @@
 									<span><img class="rateStar" alt="star" 
 									src="/cinemabox/resources/images/main/movieCurrentLists/star.png" /> 9.1</span>
 									<span> | <img class="heart" alt="heart"
-									src="/cinemabox/resources/images/main/movieCurrentLists/heart.png""></span></p>
+									src="/cinemabox/resources/images/main/movieCurrentLists/heart.png"></span></p>
 								</div>
 							</div>
 							<div class="d-inline-block rounded-3">
@@ -247,7 +247,7 @@
 									<span><img class="rateStar" alt="star" 
 									src="/cinemabox/resources/images/main/movieCurrentLists/star.png" /> 9.1</span>
 									<span> | <img class="heart" alt="heart"
-									src="/cinemabox/resources/images/main/movieCurrentLists/heart.png""></span></p>
+									src="/cinemabox/resources/images/main/movieCurrentLists/heart.png"></span></p>
 								</div>
 							</div>
 						</div>
