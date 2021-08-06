@@ -1,11 +1,28 @@
 @charset "UTF-8";
+
+/* 스크롤바 */
+*::-webkit-scrollbar {
+  width: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background-color: #eee;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: #aaa;
+}
+
 .container-fluid{
 	padding:0px;
 	margin:0px;
 }
 
 /* header */
-
 /* 최상단 로고 및 로그인,회원가입,고객센터 nav */
 #topnav-container{
 	border-bottom:1px solid gray;
@@ -37,7 +54,6 @@
 	background-color:white;
 	z-index: 1000000000;
 }
-
 .sticky-menu ul:first-child{
 	line-height:30px;
 }
