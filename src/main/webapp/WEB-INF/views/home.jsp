@@ -106,7 +106,7 @@
 <body>
 
 <div class="container-fluid" id="silder-container">
-	<%@include file="common/header.jsp" %>
+<%@include file="common/header.jsp" %>
    <div class="row" id="wholeCarousel">
      <div class="col-12 p-0">
   	   <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
@@ -136,6 +136,8 @@
   		</button>
 	   </div>
      </div>
+
+</div>
 </div>
 <!-- 
 	현재 상영작 (예매율 순위로 정렬)

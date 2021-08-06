@@ -19,5 +19,7 @@ public class Movie {
 	private String trailer;
 	private String age;
 	private String status;
+	private int like;
 	private Date createdDate;
+	private Date closeDate;
 }
