@@ -39,6 +39,7 @@ public class TheaterServiceImpl implements TheaterService{
 			System.out.println(doc);
 			Elements theaterAddress;
 			theaterAddress = doc.select(".big");
+			theaterAddress = doc.select(".font-gblue span");
 //			String theaterAddressJ = theaterAddress.text();
 			System.out.println("==================="+ theaterAddress.text());
 //			Elements theaterFacility;
