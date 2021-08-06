@@ -43,8 +43,8 @@
 							<span class="position-absolute rankNo"><strong><i>${loop.count }</i></strong></span>
 							<div class="position-absolute poster-info">	
 								<div class="position-absolute">
-									<a class="nav-link text-white d-block mb-2" href="ticketing?no=${movie.no }">예매하기</a>
-									<a class="nav-link text-white d-block" href="movieDetail?no=${movie.no }">상세정보</a>
+									<a class="nav-link text-white d-block mb-2" href="ticket?MovieNo=${movie.no }">예매하기</a>
+									<a class="nav-link text-white d-block" href="movieDetail?MovieNo=${movie.no }">상세정보</a>
 								</div>
 							</div>
 							<img src="/cinemabox/resources/images/movie/${movie.no }.jpg">

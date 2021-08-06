@@ -130,8 +130,8 @@
 				<div class="col-3 h-100" id="div-movie">
 					<h5 class="p-3 text-center text-white m-0">영화 선택하면 영화이름</h5>
 					<div style="border-bottom:1px solid #CCC; padding: 12px;">
-						<select class="form-select" aria-label="Default select example">
-							<option value="ticket" data-sort="ticket" selected>예매순</option>
+						<select class="form-select" aria-label="Default select example" id="select-sort">
+							<option value="ticket" data-sort="ticket" selected="selected">예매순</option>
 							<option value="count" data-sort="count">관객순</option>
 							<option value="rating" data-sort="rating">평점순</option>
 						</select>
@@ -184,7 +184,7 @@
 							<div class="div-group-time-select mb-3">
 								<div class="div-time-select-tit">
 									<span>
-										<img src="/cinemabox/resources/images/icon/txt-age-small-all.png" alt="">
+										<img src="/cinemabox/resources/images/icon/txt-age-small-ALL.png" alt="">
 										<strong>모가디슈</strong>
 									</span>
 								</div>
@@ -349,10 +349,36 @@ $(function(){
 		});
 	});
 	
+	//정렬값
+	$("#select-sort").change(function(){
+		sort = $(this).val();
+		alert(sort)
+	})
 	//탭 타이틀 변경
 	$('#ul-location2').on('click', 'li', function(){
+		//선택한 극장명
 		var theater = $(this).text();
 		$("#div-theater>h5").empty().text(theater);
+		//선택한 극장번호
+		var theaterNo = $(this).data('theater-no');
+		
+// 		$.ajax({
+// 			type:"GET",
+// 			url:"ticketing/movie",
+// 			data:{sort:sort, theaterNo:theaterNo},
+// 			dataType:"json",
+// 			success:function(movieList){
+// 				$("#ul-movieList").empty();
+// 				$.each(movieList, function(index, item){
+// 					var content = 
+// 					"<li>"+
+// 						"<img src='/cinemabox/resources/images/icon/txt-age-small-"+item.age+".png' alt=''>"+
+// 						"<strong>"+item.title+"</strong>"+
+// 					"</li>"
+// 					$('#ul-movieList').append(content);
+// 				})
+// 			}
+// 		});
 	})
 	
 	/* 달력 날짜 표시하기 */

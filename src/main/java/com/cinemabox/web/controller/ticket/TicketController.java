@@ -1,11 +1,14 @@
 package com.cinemabox.web.controller.ticket;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.cinemabox.dto.ticket.TicketDto;
 import com.cinemabox.service.Ticket.TicketService;
 
 @Controller
@@ -15,7 +18,7 @@ public class TicketController{
 	
 	@GetMapping(path = {"/ticket"})
 	public String ticket(Model model) {
-		//List<TicketDto> movieList = ticketService.getMovieListByTheaterNo(theaterNo);
+		//List<TicketDto> movieList = ticketService.getMovieListByTheaterNo(sort, theaterNo);
 		//model.addAttribute("movieList",movieList);
 		return "ticket/ticket";	
 	}
