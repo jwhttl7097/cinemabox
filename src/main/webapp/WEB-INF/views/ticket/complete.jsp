@@ -63,10 +63,10 @@
 							</span>
 						</div>
 						<div class="p-5 row justify-content-center">
-							<div class="col-2">
+							<div class="col-3 text-end px-4">
 								<img src="/cinemabox/resources/images/movie/20202185.jpg" alt="" width="120px;">
 							</div>
-							<div class="col-4">
+							<div class="col-6">
 								<dl class="dl-info">
 									<dt><strong>영화명</strong></dt><dd><img src="/cinemabox/resources/images/icon/txt-age-small-12.png" alt="" class="me-2">모가디슈</dd>
 									<dt><strong>극장</strong></dt><dd>가산디지털 5관-2D</dd>
