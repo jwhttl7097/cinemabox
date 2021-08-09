@@ -18,17 +18,23 @@
 	</select>
 	
 	
-	<select id="getDetailNoticeByNo" parameterType="int" resultType="com.cinemabox.vo.Notice">
-		select 
-			notice_no				no,
-			notice_content			content,
-			notice_title			title,
-			notice_date				creatDate,
-			notice_hits				hits
+	<select id="getDetailNoticeByNo" parameterType="int" resultType="com.cinemabox.dto.Notice.NoticeDetailDto">
+		select *
 		from
-			 cinemabox_notice
-		where
-			notice_no = #{no}	
+			(select
+                notice_no				no,
+                notice_content			content,
+                notice_title			title,
+                notice_date				creatDate,
+                notice_hits				hits,
+                LEAD(notice_no)over(order by notice_no desc) as preNo,
+                LEAD(notice_title)over(order by notice_no desc) as preTitle,
+                LAG(notice_no)over(order by notice_no desc) as  nextNo,
+                LAG(notice_title)over(order by notice_no desc) as nextTitle
+			from cinemabox_notice
+			)A
+        where 
+           A. no= #{no}
 	</select>
 	
 
@@ -61,7 +67,7 @@
 	
 	
 	
-	<update id="changeNotice" parameterType="com.cinemabox.vo.Notice">
+	<update id="changeNotice" parameterType="com.cinemabox.dto.Notice.NoticeDetailDto">
 		update
 			cinemabox_notice
 		set

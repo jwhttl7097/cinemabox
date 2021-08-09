@@ -18,7 +18,7 @@
 	<%@ include file="../common/header.jsp"%>
 	
 	<div class="top" style="margin-left:150px;  margin-top:30px;">
-	<h3>공지시항</h3>
+	<h3>공지사항</h3>
 	</div>
 	
 	<div class="row mb-3" style="padding:55px; margin-left:50px;">
@@ -26,7 +26,7 @@
 		<table class="table">
 		<tbody>
 			<tr>
-				<td><a href="list">고객센터</a></td>
+				<td><a href="../customerCenter/main">고객센터</a></td>
 			</tr>
 			<tr>
 				<td><a href="list">공지사항</a></td>

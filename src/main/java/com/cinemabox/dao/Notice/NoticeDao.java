@@ -3,6 +3,7 @@ package com.cinemabox.dao.Notice;
 import java.util.HashMap;
 import java.util.List;
 
+import com.cinemabox.dto.Notice.NoticeDetailDto;
 import com.cinemabox.dto.Notice.NoticeDto;
 import com.cinemabox.vo.Notice;
 
@@ -18,7 +19,7 @@ public interface NoticeDao {
 	 * 번호로 공지사항 상세 조회 
 	 * @return
 	 */
-	Notice getDetailNoticeByNo(int no);
+	NoticeDetailDto getDetailNoticeByNo(int no);
 	
 	/**
 	 * 공지하기 
@@ -42,7 +43,7 @@ public interface NoticeDao {
 	 *  공지사항 수정하기 
 	 * @param no
 	 */
-	void changeNotice(int no);
+	void changeNotice(NoticeDetailDto no);
 
 
 }

@@ -23,7 +23,7 @@
 	
 	
 	<div style="padding:80px">
-	<form id="notice-form" name="update" onsubmit="return check()">
+	<form id="notice-form" name="update" action="../notice/newModify" method="post" onsubmit="return check()">
 	<div class="mb-3">
 	  <label for="exampleFormControlInput1" class="form-label">제목</label>
 	  <input type="text" class="form-control" id="title" name="title" value="${noticeDetail.title }"/>
@@ -31,13 +31,15 @@
 	<div class="mb-3">
 	  <label for="exampleFormControlTextarea1" class="form-label">내용</label>
 	  <input class="form-control" id="content" name ="content" value="${noticeDetail.content }"></input>
+	  <input type="hidden" name="no" id="no" value="${noticeDetail.no }">
 	</div>
-	</form>
+	
 			<div style="text-align: right;">
                 <input type=submit value="수정" onclick="checkForm()"/>
             
                 <input type=button value="목록" onclick="location.href='list'"/>
             </div>
+    </form>
 	</div>
 	
 	

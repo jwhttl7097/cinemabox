@@ -57,17 +57,15 @@
 			</tr>
 			<tr class="link">
 				<td colspan="3">
-					
-						<span class="next">다음글</span>
-						<span><a href="detail?no=${noticeDetail.no+1 }"></a></span>
+					<a href="detail?no=${noticeDetail.nextNo }">
+						<span class="next">다음글</span> ${noticeDetail.nextTitle }
 				
 				</td>
 			</tr>
 			<tr class="link">
 				<td colspan="3">
-					<a href="">
-						<span class="prev">이전글</span>
-						<span><a href="detail?no=${noticeDetail.no-1 }"></a></span>
+					<a href="detail?no=${noticeDetail.preNo }">
+						<span class="prev">이전글</span>${noticeDetail.preTitle }
 					</a>
 				</td>
 			</tr>
