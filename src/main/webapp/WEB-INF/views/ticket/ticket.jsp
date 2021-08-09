@@ -14,6 +14,7 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <%-- moment cdnjs 한국어설정하기 --%>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/ko.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
 <title>CINEMABOX :: TICKETING</title>
 </head>
 <body>
@@ -99,28 +100,6 @@
 										<li>서울</li>
 										<li>서울</li>
 										<li>서울</li>
-										<li>서울</li>
-										<li>서울</li>
-										<li>서울</li>
-										<li>서울</li>
-										<li>서울</li>
-										<li>서울</li>
-										<li>서울</li>
-										<li>서울</li>
-										<li>서울</li>
-										<li>서울</li>
-										<li>서울</li>
-										<li>서울</li>
-										<li>서울</li>
-										<li>서울</li>
-										<li>서울</li>
-										<li>서울</li>
-										<li>서울</li>
-										<li>서울</li>
-										<li>서울</li>
-										<li>서울</li>
-										<li>서울</li>
-										<li>서울</li>
 									</ul>
 								</div>	
 							</div>
@@ -128,7 +107,7 @@
 					</div>
 				</div>
 				<div class="col-3 h-100" id="div-movie">
-					<h5 class="p-3 text-center text-white m-0">영화 선택하면 영화이름</h5>
+					<h5 class="p-3 text-center text-white m-0">영화 선택</h5>
 					<div style="border-bottom:1px solid #CCC; padding: 12px;">
 						<select class="form-select" aria-label="Default select example" id="select-sort">
 							<option value="ticket" data-sort="ticket" selected="selected">예매순</option>
@@ -137,24 +116,15 @@
 						</select>
 					</div>
 					<div class="h-100" style="overflow-y: auto;">
-						<ul id="ul-movieList" class="p-0">
-							<li>
-								<img src="/cinemabox/resources/images/icon/txt-age-small-ALL.png" alt="">
-								<strong>모가디슈</strong>
-							</li>
-							<li>
-								<img src="/cinemabox/resources/images/icon/txt-age-small-19.png" alt="">
-								<strong>모가디슈</strong>
-							</li>
-							<li>
-								<img src="/cinemabox/resources/images/icon/txt-age-small-12.png" alt="">
-								<strong>모가디슈</strong>
-							</li>
+						<ul id="ul-movieList" class="p-3">
+							<span class="text-center d-block p-5" style="margin-top: 50%;">
+								<i class="fas fa-exclamation-circle"></i> 극장을 선택하세요.
+							</span> 
 						</ul>
 					</div>
 				</div>
 				<div class="col-5" id="div-date">
-					<h5 class="p-3 text-center text-white m-0">날짜선택하면 날짜 2021-07-29(목)</h5>
+					<h5 class="p-3 text-center text-white m-0">날짜/시간</h5>
 					<div class="p-3 row" id="div-days">
 						<button class="btn-day float-start col-1" id="btn-prev"><i class="fas fa-chevron-left"></i></button>
 						<ul id="ul-days" class="m-0 col-10 text-center">
@@ -181,86 +151,14 @@
 					<div class="tab-content" id="nav-tabContent">
 						<div class="tab-pane fade show active p-4" id="nav-entireTime" role="tabpanel" aria-labelledby="nav-entireTime-tab">
 							<!-- 영화타이틀, 영화관, 시간 시작  -->
-							<div class="div-group-time-select mb-3">
-								<div class="div-time-select-tit">
-									<span>
-										<img src="/cinemabox/resources/images/icon/txt-age-small-ALL.png" alt="">
-										<strong>모가디슈</strong>
-									</span>
+							<div class="div-group-time-select mb-3" id="div-time">
+								<div class="div-time-select-tit" id="div-time-title">
 								</div>
 								<div class="div-time-select-wrap mt-3">
-									<h6 style="font-size:0.8rem;"><strong>2D(특별관종류)</strong></h6>
 									<ul class="nav" id="ul-list-time">
-										<li class="rounded-3 me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
-											<dl class="text-center p-2">
-												<dt class="d-none">상영시간</dt>
-												<dd class="dd-time">
-													<strong>09:45</strong>
-												</dd>
-												<dt class="d-none">좌석</dt>
-												<dd class="dd-seat d-inline-block">
-													<strong>127</strong>/175
-												</dd>
-												<dt class="d-none">상영관</dt>
-												<dd class="dd-hall d-inline-block">2관</dd>
-											</dl>
-										</li>
-										<li class="rounded-3 me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
-											<dl class="text-center p-2">
-												<dt class="d-none">상영시간</dt>
-												<dd class="dd-time">
-													<strong>09:45</strong>
-												</dd>
-												<dt class="d-none">좌석</dt>
-												<dd class="dd-seat d-inline-block">
-													<strong>127</strong>/175
-												</dd>
-												<dt class="d-none">상영관</dt>
-												<dd class="dd-hall d-inline-block">2관</dd>
-											</dl>
-										</li>
-										<li class="rounded-3 me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
-											<dl class="text-center p-2">
-												<dt class="d-none">상영시간</dt>
-												<dd class="dd-time">
-													<strong>09:45</strong>
-												</dd>
-												<dt class="d-none">좌석</dt>
-												<dd class="dd-seat d-inline-block">
-													<strong>127</strong>/175
-												</dd>
-												<dt class="d-none">상영관</dt>
-												<dd class="dd-hall d-inline-block">2관</dd>
-											</dl>
-										</li>
-										<li class="rounded-3 me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
-											<dl class="text-center p-2">
-												<dt class="d-none">상영시간</dt>
-												<dd class="dd-time">
-													<strong>09:45</strong>
-												</dd>
-												<dt class="d-none">좌석</dt>
-												<dd class="dd-seat d-inline-block">
-													<strong>127</strong>/175
-												</dd>
-												<dt class="d-none">상영관</dt>
-												<dd class="dd-hall d-inline-block">2관</dd>
-											</dl>
-										</li>
-										<li class="rounded-3 me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
-											<dl class="text-center p-2">
-												<dt class="d-none">상영시간</dt>
-												<dd class="dd-time">
-													<strong>09:45</strong>
-												</dd>
-												<dt class="d-none">좌석</dt>
-												<dd class="dd-seat d-inline-block">
-													<strong>127</strong>/175
-												</dd>
-												<dt class="d-none">상영관</dt>
-												<dd class="dd-hall d-inline-block">2관</dd>
-											</dl>
-										</li>
+										<span class="text-center d-block" style="margin-top: 3%; padding: 145px;">
+											<i class="fas fa-exclamation-circle"></i> 극장/영화를 선택하세요.
+										</span> 
 									</ul>
 								</div>
 							</div>
@@ -292,7 +190,7 @@
 					<h5 class="modal-title" id="exampleModalLabel">선택한 시간 불러오기(n관)</h5>
 				</div>
 				<div class="modal-body text-center">
-					<span>잔여좌석 <strong style="font-size:25px;">269</strong>/405</span>
+					<span>잔여좌석 <strong style="font-size:25px;">269</strong>/70</span>
 					<br/>
 					<br/>
 					<span class="text-muted" style="font-size:13px;">S&nbsp;C&nbsp;R&nbsp;E&nbsp;E&nbsp;N</span>
@@ -305,7 +203,7 @@
 						□□■ □□■■□□■□□■ □□■ <br/>
 					</div>
 					<div class="my-4">
-						<img src="/cinemabox/resources/images/icon/txt-age-small-all.png" alt="">
+						<img src="/cinemabox/resources/images/icon/txt-age-small-ALL.png" alt="">
 						본 영화는 전체관람가 영화입니다.
 					</div>
 				</div>
@@ -320,6 +218,11 @@
 </div>
 <script type="text/javascript">
 $(function(){
+	var theaterNo;
+	var movieNo;
+	//오늘날짜	
+	var screeningDate = moment().format("YYYYMMDD");
+	
 	//header nav js
 	$('.mainnav').mouseover(function(){
 	   $(this).children('.subnav').stop().slideDown().css('display','flex');
@@ -328,7 +231,7 @@ $(function(){
 	   $(this).children('.subnav').stop().slideUp();
 	})
 	
-	//영화관 지역 ajax
+	//영화관 지역
 	$(".li-location1").click(function(){
 		$(this).addClass('loc-act').siblings().removeClass('loc-act');
 		var location = $(this).text();
@@ -349,36 +252,120 @@ $(function(){
 		});
 	});
 	
-	//정렬값
-	$("#select-sort").change(function(){
-		sort = $(this).val();
-		alert(sort)
-	})
-	//탭 타이틀 변경
+	
+	//탭 타이틀 변경, 극장선택
 	$('#ul-location2').on('click', 'li', function(){
 		//선택한 극장명
+		$(this).css({'font-weight':'bolder', 'color':'#ffc107'}).siblings().css({'font-weight':'normal', 'color':''});
 		var theater = $(this).text();
 		$("#div-theater>h5").empty().text(theater);
-		//선택한 극장번호
-		var theaterNo = $(this).data('theater-no');
+		$("#div-movie>h5").empty().text('영화 선택');		
 		
-// 		$.ajax({
-// 			type:"GET",
-// 			url:"ticketing/movie",
-// 			data:{sort:sort, theaterNo:theaterNo},
-// 			dataType:"json",
-// 			success:function(movieList){
-// 				$("#ul-movieList").empty();
-// 				$.each(movieList, function(index, item){
-// 					var content = 
-// 					"<li>"+
-// 						"<img src='/cinemabox/resources/images/icon/txt-age-small-"+item.age+".png' alt=''>"+
-// 						"<strong>"+item.title+"</strong>"+
-// 					"</li>"
-// 					$('#ul-movieList').append(content);
-// 				})
-// 			}
-// 		});
+		//정렬값 구하기
+		var sort;
+		if(sort == null) {
+			sort = "ticket";
+		}
+		
+		//선택한 극장번호
+		theaterNo = $(this).data('theater-no');
+		
+		//극장에서 상영중인 영화 가져오기
+		$.ajax({
+			type:"GET",
+			url:"ticketing/movie",
+			data:{sort:sort, theaterNo:theaterNo},
+			dataType:"json",
+			success:function(movieList){
+				var mvlist = _.uniqBy(movieList, "movieNo");
+				$("#ul-movieList").empty();
+				$.each(mvlist, function(index, item){
+					var content = 
+					"<li data-movie-no="+item.movieNo+" data-hall-no="+item.hallNo+">"+
+						"<img src='/cinemabox/resources/images/icon/txt-age-small-"+item.age+".png' alt='' class='me-2'>"+
+						"<strong>"+item.title+"</strong>"+
+					"</li>"
+					$('#ul-movieList').append(content);
+				})
+			}
+		});
+	})
+	
+	//정렬선택
+	$("#select-sort").change(function(){
+		sort = $(this).val();
+		if(theaterNo == null){
+			alert("영화관을 선택하세요");
+		}
+		//정렬시킨 상태에서 영화목록 가져오기
+		$.ajax({
+			type:"GET",
+			url:"ticketing/movie",
+			data:{sort:sort, theaterNo:theaterNo},
+			dataType:"json",
+			success:function(movieList){
+				var mvlist = _.uniqBy(movieList, "movieNo");
+				$("#ul-movieList").empty();
+				$.each(mvlist, function(index, item){
+					var content = 
+						"<li data-movie-no="+item.movieNo+" data-hall-no="+item.hallNo+">"+
+						"<img src='/cinemabox/resources/images/icon/txt-age-small-"+item.age+".png' alt='' class='me-2'>"+
+						"<strong>"+item.title+"</strong>"+
+					"</li>"
+					$('#ul-movieList').append(content);
+				})		
+			}
+		})
+	});	
+	
+	//탭 타이틀 변경, 영화선택	
+	$('#ul-movieList').on('click', 'li', function(){
+		//선택한 영화명
+		$(this).css({'font-weight':'bolder', 'color':'#ffc107'}).siblings().css({'font-weight':'normal', 'color':''});
+		var title = $(this).text();
+		$("#div-movie>h5").empty().text(title);		
+		
+		//영화번호
+		movieNo = $(this).data('movie-no');
+		
+		//극장, 영화번호, 오늘날짜로 영화 시간 불러오기
+		$.ajax({
+			type:"GET",
+			url:"ticketing/time",
+			data:{theaterNo:theaterNo, movieNo:movieNo, screeningDate:screeningDate},
+			dataType:"json",
+			success:function(movieTime){
+				$("#div-time-title").empty();
+				$("#ul-list-time").empty();
+				var content=
+					'<div class="div-time-select-tit" id="div-time-title">'+
+						'<span>'+
+							'<img src="/cinemabox/resources/images/icon/txt-age-small-'+movieTime[0].age+'.png" alt="" class="me-2">'+
+							'<strong>'+movieTime[0].title+'</strong>'+
+						'</span>'+
+					'</div>'
+				$('#div-time').prepend(content);
+				
+				$.each(movieTime, function(index, item){
+					var timeTable = 
+						'<li class="rounded-3 me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">'+
+							'<dl class="text-center p-2">'+
+								'<dt class="d-none">상영시간</dt>'+
+								'<dd class="dd-time">'+
+									'<strong>'+item.screeningTime+'</strong>'+
+								'</dd>'+
+								'<dt class="d-none">좌석</dt>'+
+								'<dd class="dd-seat d-inline-block me-2">'+
+									'<strong>'+item.seatCnt+'</strong>/70'+
+								'</dd>'+
+								'<dt class="d-none">상영관</dt>'+
+								'<dd class="dd-hall d-inline-block">'+item.hallName+'</dd>'+
+							'</dl>'+
+						'</li>'
+					$('#ul-list-time').append(timeTable);
+				})		
+			}
+		})		
 	})
 	
 	/* 달력 날짜 표시하기 */
@@ -414,6 +401,8 @@ $(function(){
 		var weekDays = [];
 		for(var i=0; i<7; i++){
 			weekDays.push({
+				ymd : moment().add(i+(week*7), 'd').format("YYYY-MM-DD(ddd)"),
+				selectedDay : moment().add(i+(week*7), 'd').format("YYYYMMDD"),
 				month : moment().add(i+(week*7), 'd').format("M월"),
 				day : moment().add(i+(week*7), 'd').format("D"),
 				dayOfWeek : moment().add(i+(week*7), 'd').format("ddd")
@@ -423,7 +412,9 @@ $(function(){
 		var prev;
 		$.each(weekDays, function(index, item){
 			var month = item.month;
-			var content = "<li class='d-inline-block' style='width: 14%;'>";
+			var ymd = item.ymd;
+			var selectedDay = item.selectedDay;
+			var content = "<li class='d-inline-block' style='width: 14%;' data-ymd="+ymd+" data-select-day="+selectedDay+">";
 			if(!prev || prev != month){
 				content += "<strong class='d-block' style='font-size:0.7rem;'>"+month+"</strong>"
 			}
@@ -446,14 +437,64 @@ $(function(){
 			
 		});
 	}
+
+	
 	//날짜를 눌렀을 때 체크되게하기
 	$('#ul-days').on('click', 'li', function(){
-		$(this).addClass('day-act').siblings().removeClass('day-act');
+		//선택한 날짜 표시
+		$(this).css({'font-weight':'bolder', 'border-bottom':'4px solid #ffc107'}).siblings().css({'font-weight':'', 'border-bottom':''});
+		var ymd = $(this).data(ymd);
+		$.each(ymd, function(index, item){
+			$("#div-date>h5").empty().text(item);					
+		})
+		
+		//var theaterNo = 10001;
+		//var movieNo = 20218348;
+		screeningDate = $(this).data('select-day');
+
+		//극장, 영화번호, 오늘날짜로 영화 시간 불러오기
+		$.ajax({
+			type:"GET",
+			url:"ticketing/time",
+			data:{theaterNo:theaterNo, movieNo:movieNo, screeningDate:screeningDate},
+			dataType:"json",
+			success:function(movieTime){
+				$("#div-time-title").empty();
+				$("#ul-list-time").empty();
+				var content=
+					'<div class="div-time-select-tit" id="div-time-title">'+
+						'<span>'+
+							'<img src="/cinemabox/resources/images/icon/txt-age-small-'+movieTime[0].age+'.png" alt="" class="me-2">'+
+							'<strong>'+movieTime[0].title+'</strong>'+
+						'</span>'+
+					'</div>'
+				$('#div-time').prepend(content);
+				
+				$.each(movieTime, function(index, item){
+					if(item.screeningStatus == 'Y'){
+						var timeTable = 
+							'<li class="rounded-3 me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">'+
+								'<dl class="text-center p-2">'+
+									'<dt class="d-none">상영시간</dt>'+
+									'<dd class="dd-time">'+
+										'<strong>'+item.screeningTime+'</strong>'+
+									'</dd>'+
+									'<dt class="d-none">좌석</dt>'+
+									'<dd class="dd-seat d-inline-block me-2">'+
+										'<strong>'+item.seatCnt+'</strong>/70'+
+									'</dd>'+
+									'<dt class="d-none">상영관</dt>'+
+									'<dd class="dd-hall d-inline-block">'+item.hallName+'</dd>'+
+								'</dl>'+
+							'</li>'
+						$('#ul-list-time').append(timeTable);
+					}
+				})		
+			}
+		})	
 	})
 
 	changeDays();
-	
-	//ajax
 	
 	//최종 확인 팝업
 	$('#ul-list-time li').click(function(){
