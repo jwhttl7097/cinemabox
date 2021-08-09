@@ -32,7 +32,7 @@
 				<td><a href="list">공지사항</a></td>
 			</tr>
 			<tr>
-				<td><a href="list">1:1 문의</a></td>
+				<td><a href="../customerCenter/userInfo">1:1 문의</a></td>
 			</tr>
 		</tbody>
 		</table>

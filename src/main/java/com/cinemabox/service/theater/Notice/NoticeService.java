@@ -23,6 +23,9 @@ public interface NoticeService {
 	// 공지 등록 
 	void changeNotice(NoticeDetailDto notice);
 	// 공지사항 수정 
+
+
+	
 	
 	
 	

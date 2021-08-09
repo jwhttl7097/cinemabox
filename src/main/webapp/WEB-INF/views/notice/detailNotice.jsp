@@ -26,13 +26,13 @@
 		<table class="table">
 		<tbody>
 			<tr>
-				<td><a href="list">고객센터</a></td>
+				<td><a href="../customerCenter/main">고객센터</a></td>
 			</tr>
 			<tr>
 				<td><a href="list">공지사항</a></td>
 			</tr>
 			<tr>
-				<td><a href="list">1:1 문의</a></td>
+				<td><a href="../customerCenter/userInfo">1:1 문의</a></td>
 			</tr>
 		</tbody>
 		</table>

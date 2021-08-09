@@ -1,0 +1,139 @@
+package com.cinemabox.web.controller;
+
+import java.util.HashMap;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.cinemabox.dto.Question.QuestionDto;
+import com.cinemabox.service.theater.Question.QuestionService;
+import com.cinemabox.vo.Question;
+
+@Controller
+@RequestMapping("/customerCenter")
+public class QuestionViewController {
+	
+	@Autowired
+	QuestionService questionService;
+	
+	/**
+	 * 고객센터 메인페이지
+	 * @param no
+	 * @param redirectAttributes
+	 * @return
+	 */
+	@GetMapping("/main")
+	public String maincustomerCenter() {
+		
+		return "customerCenter/questionMain";
+	}
+	
+	/**
+	 * 고객센터 문의 페이지 
+	 * @param no
+	 * @param redirectAttributes
+	 * @return
+	 */
+	@GetMapping("/list")
+	public String questionList(String name, String email, Model model) {
+		List<Question> list = questionService.getQuestionByName(name, email);
+		model.addAttribute("list", list);
+		return "customerCenter/questionList";
+	}
+	
+	/**
+	 * 고객센터 문의 상세페이지
+	 * @param no
+	 * @param redirectAttributes
+	 * @return
+	 */
+	@GetMapping("/detail")
+	public String questionDetail(int no, Model model) {
+		Question questionDetail = questionService.detailQuestion(no);
+		model.addAttribute("questionDetail", questionDetail);
+		return "customerCenter/questionDetail";
+	}
+	
+	/**
+	 * 문의 글작성 페이지 
+	 * @param no
+	 * @return
+	 */
+	@GetMapping("/add")
+	public String addQuestion() {
+		
+		return "customerCenter/questionWrite";
+	}
+	
+	/**
+	 * 문의 글작성 후 페이지 이동 
+	 * @param no
+	 * @param redirectAttributes
+	 * @return
+	 */
+	@RequestMapping("/insertQuestion")
+	public String insertQuestion(QuestionDto question, RedirectAttributes redirectAttributes) {
+		
+		System.out.println("question ==> "+question.toString());
+		questionService.addQuestion(question);
+		return "redirect:main";
+	}
+	
+	/**
+	 * 답변 글작성 페이지 
+	 * @param no
+	 * @param redirectAttributes
+	 * @return
+	 */
+	@GetMapping("/insertAnswer")
+	public String insertAnswer() {
+		
+		return "customerCenter/answerWrite";
+	}
+	
+	
+	/**
+	 * 문의 글 작성 전 개인 정보 입력 
+	 * @param no
+	 * @param redirectAttributes
+	 * @return
+	 */
+	@GetMapping("/userInfo")
+	public String userform() {
+		
+		return "customerCenter/userInfo";
+	}
+	
+	
+
+	/**
+	 * 문의 글 삭제  
+	 * @param no
+	 * @param redirectAttributes
+	 * @return
+	 */
+	@GetMapping("/delete")
+	public String questionDelete() {
+		
+		return "redirect:list";
+	}
+	
+	
+	@RequestMapping("/list/count")
+	public @ResponseBody ResponseEntity<Integer> getQuestionCountByName(QuestionDto param) {
+		int count = questionService.getQuestionCountByName(param);
+		return new ResponseEntity<Integer>(count, HttpStatus.OK);
+	}
+	
+
+}

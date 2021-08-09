@@ -129,6 +129,12 @@ public class QuestionServiceImpl implements QuestionService {
         	System.out.println("메일발송을 실패하였습니다. [SYSTEM]");
         }
 	}
+
+	@Override
+	public int getQuestionCountByName(QuestionDto param) {
+		System.out.println("count  : " + customerDao.getQuestionCountByName(param));
+		return customerDao.getQuestionCountByName(param);
+	}
 	
 	
 	

@@ -16,7 +16,6 @@ public class Question {
 	private Date answerDate;
 	private char state;
 	private int satisfaction;
-	private String userId;
 	private String name;
 	private String email;
 	private String phone;

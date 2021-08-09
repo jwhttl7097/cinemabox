@@ -44,7 +44,7 @@
 	</div>
 	</form>
 	
-
+</form>
 	
 	<%@ include file="../common/footer.jsp"%>	
 </div>

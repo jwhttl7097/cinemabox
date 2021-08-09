@@ -50,15 +50,13 @@ public interface CustomerCenterDao {
 	 * @param answer
 	 */
 	void insertAnswer(AnswerDto answer);
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+	/**
+	 * 이름과 이메일을 이용하여 등록된 답변의 개수를 조회함
+	 * @param answer
+	 */
+	int getQuestionCountByName(QuestionDto param);
 	
 	
 	}

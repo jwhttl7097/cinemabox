@@ -27,6 +27,9 @@ public interface QuestionService {
 
 
 	void updateSatisfaction(Question question);
+
+
+	int getQuestionCountByName(QuestionDto param);
 	
 
 }

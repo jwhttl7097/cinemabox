@@ -16,13 +16,65 @@
 <body>
 <div class="container-fluid">
 	<%@ include file="../common/header.jsp"%>
-	<p>test</p>
+	
+	<div class="top" style="margin-left:150px;  margin-top:30px;">
+	<h3>1:1문의</h3>
+	</div>
+	
+	<div class="row mb-3" style="padding:55px; margin-left:50px;">
+		<div class="col-2">
+		<table class="table">
+		<tbody>
+			<tr>
+		<td><a href="main">고객센터</a></td>
+			</tr>
+			<tr>
+				<td><a href="../notice/list">공지사항</a></td>
+			</tr>
+			<tr>
+				<td><a href="userInfo">1:1 문의</a></td>
+			</tr>
+		</tbody>
+		</table>
+	</div>
+		<div class="col-9">
+			<div class="border p-2 bg-light">
+				<table class="table">
+					<colgroup>
+						<col width="10%">
+						<col width="15%">
+						<col width="*">
+						<col width="15%">
+						<col width="15%">
+					</colgroup>
+					<thead>
+						<tr>
+							<th>번호</th>
+							<th>제목</th>
+							<th>등록일</th>
+							<th>상태</th>
+							<th class="text-end">만족도</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach var="list" items="${list }">
+							<tr>
+								<td>${list.questionNo }</td>
+								<td><a class="text-decoration-none" href="detail?no=${list.questionNo }">${list.questionTitle }</a></td>
+								<td><fmt:formatDate value="${list.questionDate }" pattern="yyyy.MM.dd"/></td>
+								<td>${list.state }</td>
+								<td class="text-end">${list.satisfaction }</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>	
+	</div>		
+ </div>
+	
+	
 	<%@ include file="../common/footer.jsp"%>
-	
-	
-	
-	
-	
+		
 </div>
 </body>
 </html>

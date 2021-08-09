@@ -16,12 +16,56 @@
 <body>
 <div class="container-fluid">
 	<%@ include file="../common/header.jsp"%>
-	<p>test</p>
+	
+	<div class="top" style="margin-left:150px;  margin-top:30px;">
+	<h3 >1:1문의</h3>
+	</div>
+
+<div class="row mb-3" style="padding:80px">
+<div class="col-2">
+		<table class="table">
+		<tbody>
+			<tr>
+				<td><a href="../customerCenter/main">고객센터</a></td>
+			</tr>
+			<tr>
+				<td><a href="list">공지사항</a></td>
+			</tr>
+			<tr>
+				<td><a href="../customerCenter/userInfo">1:1 문의</a></td>
+			</tr>
+		</tbody>
+		</table>
+	</div>
+		<div class="col-9">
+				<table class="table mb-3" style="margin:auto">
+						<colgroup>
+							<col width="*">
+							<col width="25%">
+						</colgroup>
+				<thead style="background: #FFBF00">
+					<tr>
+						<th>${questionDetail.questionTitle }</th>
+						<th>등록일<span><fmt:formatDate value="${questionDetail.questionDate }" pattern="yyyy.MM.dd"/></span></th>
+					</tr>
+			</thead>
+			<tbody>
+			<tr class="content">
+				<td colspan="3" style="padding:35px;">${questionDetail.questionContent }</td>	
+			</tr>
+			
+		</tbody>
+	</table>
+
+		<div style="text-align: right;">
+			<button type="button" class="btn btn-warning" onclick="location.href='list'">목록</button>
+			<button type="button" class="btn btn-warning" onclick="del(${questionDetail.questionNo})">삭제</button>
+			<button type="button" class="btn btn-warning" onclick="location.href='insertAnswer'">답글</button>
+		</div>
+	</div>	
+				
+</div>
 	<%@ include file="../common/footer.jsp"%>
-	
-	
-	
-	
 	
 </div>
 </body>

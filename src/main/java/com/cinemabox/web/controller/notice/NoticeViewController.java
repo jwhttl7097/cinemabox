@@ -78,7 +78,7 @@ public class NoticeViewController {
 	
 
 	/**
-	 * 공지 사항 글 추가 
+	 * 공지 사항 글 추가 후 페이지 이동
 	 * @param no
 	 * @param model
 	 * @return
