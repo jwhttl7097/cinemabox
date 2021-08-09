@@ -8,4 +8,5 @@ public interface TheaterDao {
 
 	List<Theater> getAllLocation(String location);
 	Theater getLocationByNo(int no);
+	void updateTheaterDetail(Theater theater);
 }

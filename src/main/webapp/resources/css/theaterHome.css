@@ -7,7 +7,7 @@
 
 #theater-place ul {
 	border-bottom: 1px solid gray;
-	border-radius: 10px 0px 0px 0px;
+	border-right: 1px solid #ffc107;
 }
 
 #theater-location {
@@ -16,7 +16,6 @@
 }
 
 #theater-location li {
-	border-right: 1px solid gray;
 	border-top: none;
 	border-bottom: none;
 }
@@ -24,6 +23,7 @@
 #theater-location li:last-child {
 	border-right: none;
 }
+
 .quick-area .btn-go-top {
 	position: fixed;
 	left: 50%;

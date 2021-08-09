@@ -133,7 +133,7 @@
 				</div>
 				<div class="row mt-5">
 					<div class="col-12">
-						<h1 class="text-white text-center">${location.theaterName }</h1>
+						<h1 class="text-white text-center" id="theaterNm">${location.theaterName }</h1>
 					</div>
 				</div>
 			</div>
@@ -161,17 +161,14 @@
 		<div class="theaterInfo">
 			<!-- 극장 소개 -->
 			<div class="row mt-2">
-				<div class="col-12">
+				<div class="col-11">
 					<div class="theaterContentFirst">
-						<h2>강남의 중심!</h2>
-					</div>
-					<div class="theaterContentFirst">
-						<h2>로맨틱 멀티플렉스!</h2>
+						<h3>${theaterDto.content}</h3>
 					</div>
 					<div class="theaterContentMerit mt-4"
 						style="border-bottom: 1px solid #ebebeb;">
 						<p>
-							<프라다>가 선택한 수려한 디자인 
+							${theaterDto.contentMerit}
 						</p>
 					</div>
 				</div>
@@ -183,41 +180,59 @@
 				<div class="col-12">
 					<h4 style="color: #503396">시설안내</h4>
 				</div>
-				<div class="col-12">
+				<div class="col-12 mt-3">
 					<h5>보유시설</h5>
 				</div>
-				<div class="col-12 theaterFacility">
-					<img alt="" src="qwe"> <img alt="" src="qwe">
+				<div class="col-3 theaterFacility" id="facilityData" data-facility="${theaterDto.theaterFacility}">
+					<table class="table table-borderless">
+						<thead class="text-center">
+							<tr id="theader">
+							
+							</tr>
+						</thead>
+						<tbody class="text-center">
+							<tr id="tbodyDown">
+								
+							</tr>
+						</tbody>
+					</table>
 				</div>
-				<div class="col-12">
+				<div class="col-12 mt-3">
 					<h5>층별안내</h5>
 				</div>
 				<div class="col-12">
 					<ul>
-						<li id="floorInfo">1층: 매표소</li>
+						<li id="floorInfo">${theaterDto.floor1}</li>
+						<li id="floorInfo">${theaterDto.floor2}</li>
+						<li id="floorInfo">${theaterDto.floor3}</li>
+						<li id="floorInfo">${theaterDto.floor4}</li>
+						<li id="floorInfo">${theaterDto.floor5}</li>
+						<li id="floorInfo">${theaterDto.floor6}</li>
+						<li id="floorInfo">${theaterDto.floor7}</li>
 					</ul>
 				</div>
 			</div>
 			<!-- 시설안내 -->
 
 			<!-- 교통안내 -->
-			<div class="row mt-5">
+			<div class="row mt-1">
 				<div class="col-12">
 					<h4 style="color: #503396">교통안내</h4>
 				</div>
 				<div class="col-12 mt-2">
 					<h5>약도</h5>
 					<ul>
-						<li id="theaterAddress">상영관주소: 서울특별시</li>
+						<li id="theaterAddress">${theaterDto.theaterAddress}</li>
 					</ul>
 				</div>
 				<!-- kakaoMapAPI -->
-				<div class="col-12 kakaoMap">
-					<button type="button" class="btn btn-lg text-white" data-bs-toggle="modal" data-bs-target="#mapBtn" style="background-color: #ffc107">
+				<div class="col-12 kakaoMap mt-1">
+					<button type="button" class="btn btn-lg text-white" data-bs-toggle="modal" id="latLng" data-bs-target="#mapBtn" 
+					data-lng="${theaterDto.theaterLongitude }" data-lat="${theaterDto.theaterLatitude }" style="background-color: #ffc107">
 						<i class="fas fa-map-marked-alt"></i> 약도보기
 					</button>
 					<div class="modal" tabindex="-1" id="mapBtn">
-						<div class="modal-dialog modal-dialog-centered modal-xl">
+						<div class="modal-dialog modal-dialog-centered modal-lg">
 							<div class="modal-content">
 								<div class="modal-header text-white"
 									style="background-color: #ffc107">
@@ -228,7 +243,7 @@
 								<div class="modal-body">
 									<div class="kakaoMap">
 										<!-- 지도 담을 영역 -->
-										<div id="map" style="width: 100%; height: 700px;"></div>
+										<div id="map" style="width: 100%; height: 500px;"></div>
 										<!-- 지도 담을 영역 -->
 									</div>
 								</div>
@@ -246,16 +261,42 @@
 					<h5>주차</h5>
 				</div>
 			</div>
-			<div class="row" style="border: 1px solid #ebebeb;">
-				<div class="col-2 my-3 text-center">
-					<img alt="" src="resources/images/theaterDetail/parking.png"
-						width="100px" height="100">
+			<div style="border: 1px solid #ebebeb;">
+				<div class="row">
+					<div class="col-2 my-3 text-center">
+						<img alt="" src="resources/images/theaterDetail/parking1.png"
+							width="70px" height="70">
+					</div>
+					<div class="col-10 my-3">
+						<p>주차안내</p>
+						<ul style="padding: 0px 250px 0px 20px;">
+							<li>${theaterDto.parkingInfo }</li>
+						</ul>
+					</div>
 				</div>
-				<div class="col-10 my-3">
-					<p>주차요금</p>
-					<ul>
-						<li>2시간2,000원</li>
-					</ul>
+				<div class="row">
+					<div class="col-2 my-3 text-center">
+						<img alt="" src="resources/images/theaterDetail/parking2.png"
+							width="70px" height="70">
+					</div>
+					<div class="col-10 my-3">
+						<p>주차확인</p>
+						<ul style="padding: 0px 250px 0px 20px;">
+							<li>${theaterDto.parkingConfirm }</li>
+						</ul>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-2 my-3 text-center">
+						<img alt="" src="resources/images/theaterDetail/parking3.png"
+							width="70px" height="70">
+					</div>
+					<div class="col-10 my-3">
+						<p>주차요금</p>
+						<ul style="padding: 0px 250px 0px 20px;">
+							<li>${theaterDto.parkingPrice }</li>
+						</ul>
+					</div>
 				</div>
 			</div>
 			<!-- 주차 -->
@@ -1026,25 +1067,132 @@
 				$(".theaterInfo").hide();
 			})
 			
+			var facilityD = $("#facilityData").data('facility');
+			var facilityNames = $.trim(facilityD.split(' '));
+			var facilityNmS = facilityNames.split(',');
+			var array;
+			for (var i=0; i <= facilityNmS.length; i++) {
+				if('돌비' == facilityNmS[i] || '부티크' == facilityNmS[i] || '컴포트' == facilityNmS[i] || '스폐셜석' == facilityNmS[i] || '스위트룸' == facilityNmS[i] || 'MX' == facilityNmS[i]) {
+					array = [];
+					array = facilityNmS[i];
+					console.log('1:'+array);
+					for(var j=0; j = 1; j++) {
+						facilityNmS[i] = array[j];
+						break;
+					}
+					facilityNmS[i] = "";
+				}
+			}
+			
+			if('돌비' == array || '부티크' == array || '컴포트' == array || '스폐셜석' == array || '스위트룸' == array || 'MX' == array) {
+				var content = '<th> ' +
+							  '    <img alt="'+array+'" src="resources/images/facility/ico-facility-sweet.png"> ' +
+							  '</th> ';
+				$("#theader").append(content);
+				var content = '<td> ' +
+							  ' 특별관 ' +
+							  '</td> ';
+				$("#tbodyDown").append(content);
+				
+			}
+			
+			for (var i=0; i <= facilityNmS.length; i++) {
+				if('일반상영관' == facilityNmS[i]) {
+					var content = '<th> ' +
+								  '    <img alt="'+facilityNmS[i]+'" src="resources/images/facility/ico-facility-theater.png"> ' +
+								  '</th> ';
+					$("#theader").append(content);
+					var content = '<td> ' +
+								  ' ' + facilityNmS[i] + ' ' +
+								  '</td> ';
+					$("#tbodyDown").append(content);
+				}
+				
+				if('장애인석' == facilityNmS[i]) {
+					var content = '<th> ' +
+								  '    <img alt="'+facilityNmS[i]+'" src="resources/images/facility/ico-facility-disabled.png"> ' +
+								  '</th> ';
+					$("#theader").append(content);
+					var content = '<td> ' +
+								  ' ' + facilityNmS[i] + ' ' +
+								  '</td> ';
+					$("#tbodyDown").append(content);
+				}
+				
+				if('커플석' == facilityNmS[i]) {
+					var content = '<th> ' +
+								  '    <img alt="'+facilityNmS[i]+'" src="resources/images/facility/ico-facility-couple.png"> ' +
+								  '</th> ';
+					$("#theader").append(content);
+					var content = '<td> ' +
+								  ' ' + facilityNmS[i] + ' ' +
+								  '</td> ';
+					$("#tbodyDown").append(content);
+				}
+				
+				if('2인소파석' == facilityNmS[i]) {
+					var content = '<th> ' +
+								  '    <img alt="'+facilityNmS[i]+'" src="resources/images/facility/ico-facility-twopulson.png"> ' +
+								  '</th> ';
+					$("#theader").append(content);
+					var content = '<td> ' +
+								  ' ' + facilityNmS[i] + ' ' +
+								  '</td> ';
+					$("#tbodyDown").append(content);
+				}
+				
+				if('4인소파석' == facilityNmS[i]) {
+					var content = '<th> ' +
+								  '    <img alt="'+facilityNmS[i]+'" src="resources/images/facility/ico-facility-fourpulson.png"> ' +
+								  '</th> ';
+					$("#theader").append(content);
+					var content = '<td> ' +
+								  ' ' + facilityNmS[i] + ' ' +
+								  '</td> ';
+					$("#tbodyDown").append(content);
+				}
+			}
+			
+			
+			var lng = $("#latLng").data('lng');
+			var lat = $("#latLng").data('lat');
+			var theaterNm = $("#theaterNm").text();
+			
 			// kakaoMap
 			$("#mapBtn").on('shown.bs.modal', function() {
 				var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 				mapOption = { 
-				    center: new kakao.maps.LatLng(37.498110, 127.026498), // 지도의 중심좌표
+				    center: new kakao.maps.LatLng(lat, lng), // 지도의 중심좌표
 				    level: 3 // 지도의 확대 레벨
 				};
 				
 				var map = new kakao.maps.Map(mapContainer, mapOption); // 지도 생성
 				
-				//마커가 표시될 위치입니다 
-				var markerPosition  = new kakao.maps.LatLng(37.498110, 127.026498); 
-				//마커를 생성합니다
+				// 마커가 표시될 위치입니다 
+				var markerPosition  = new kakao.maps.LatLng(lat, lng); 
+
+				// 마커를 생성합니다
 				var marker = new kakao.maps.Marker({
-				position: markerPosition
+				    position: markerPosition
 				});
-				
-				//마커가 지도 위에 표시되도록 설정합니다
+				// 마커가 지도 위에 표시되도록 설정합니다
 				marker.setMap(map);
+
+				var iwContent = '<div class="text-center p-2" style="width:240px; border:none;">' +
+								'	<i class="fas fa-film mx-2"></i>CINEMA BOX <br> '+theaterNm+'점 <br>' +
+								'	<button class="btn btn-primary btn-sm mt-1" style="background-color: #ffc107;"><a href="https://map.kakao.com/link/map/CINEMA BOX'+theaterNm+','+lat+','+lng+'" style="color:white; text-decoration:none;" target="_blank"><i class="bi bi-map"></i> 큰지도보기</a></button>' +
+								'	<button class="btn btn-primary btn-sm mt-1" style="background-color: #ffc107;"><a href="https://map.kakao.com/link/to/CINEMA BOX'+theaterNm+','+lat+','+lng+'" style="color:white; text-decoration:none;" target="_blank"><i class="fas fa-directions"></i> 길찾기</a></button>' +
+								'</div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+				    iwPosition = new kakao.maps.LatLng(lat, lng); //인포윈도우 표시 위치입니다
+
+				// 인포윈도우를 생성합니다
+				var infowindow = new kakao.maps.InfoWindow({
+				    position : iwPosition, 
+				    content : iwContent 
+				});
+				  
+				// 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
+				infowindow.open(map, marker);
 				
 				// 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
 				var mapTypeControl = new kakao.maps.MapTypeControl();
@@ -1057,47 +1205,47 @@
 				var zoomControl = new kakao.maps.ZoomControl();
 				map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 				
-				// 커스텀 오버레이에 표시할 내용입니다     
-				// HTML 문자열 또는 Dom Element 입니다 
-				var content = '<div class="overlaybox">' +
-				    '    <div class="boxtitle">CINEMA BOX 영화순위</div>' +
-				    '    <div class="first">' +
-				    '        <div class="triangle text">1</div>' +
-				    '        <div class="movietitle text">드래곤 길들이기2</div>' +
-				    '    </div>' +
-				    '    <ul>' +
-				    '        <li class="up">' +
-				    '            <span class="number">2</span>' +
-				    '            <span class="title">명량</span>' +
-				    '        </li>' +
-				    '        <li>' +
-				    '            <span class="number">3</span>' +
-				    '            <span class="title">해적(바다로 간 산적)</span>' +
-				    '        </li>' +
-				    '        <li>' +
-				    '            <span class="number">4</span>' +
-				    '            <span class="title">해무</span>' +
-				    '        </li>' +
-				    '        <li>' +
-				    '            <span class="number">5</span>' +
-				    '            <span class="title">안녕, 헤이즐</span>' +
-				    '        </li>' +
-				    '    </ul>' +
-				    '</div>';
+// 				// 커스텀 오버레이에 표시할 내용입니다     
+// 				// HTML 문자열 또는 Dom Element 입니다 
+// 				var content = '<div class="overlaybox">' +
+// 				    '    <div class="boxtitle">CINEMA BOX 영화순위</div>' +
+// 				    '    <div class="first">' +
+// 				    '        <div class="triangle text">1</div>' +
+// 				    '        <div class="movietitle text">드래곤 길들이기2</div>' +
+// 				    '    </div>' +
+// 				    '    <ul>' +
+// 				    '        <li class="up">' +
+// 				    '            <span class="number">2</span>' +
+// 				    '            <span class="title">명량</span>' +
+// 				    '        </li>' +
+// 				    '        <li>' +
+// 				    '            <span class="number">3</span>' +
+// 				    '            <span class="title">해적(바다로 간 산적)</span>' +
+// 				    '        </li>' +
+// 				    '        <li>' +
+// 				    '            <span class="number">4</span>' +
+// 				    '            <span class="title">해무</span>' +
+// 				    '        </li>' +
+// 				    '        <li>' +
+// 				    '            <span class="number">5</span>' +
+// 				    '            <span class="title">안녕, 헤이즐</span>' +
+// 				    '        </li>' +
+// 				    '    </ul>' +
+// 				    '</div>';
 
-				// 커스텀 오버레이가 표시될 위치입니다 
-				var position = new kakao.maps.LatLng(37.498110, 127.026498);  
+// 				// 커스텀 오버레이가 표시될 위치입니다 
+// 				var position = new kakao.maps.LatLng(lat, lng);  
 
-				// 커스텀 오버레이를 생성합니다
-				var customOverlay = new kakao.maps.CustomOverlay({
-				    position: position,
-				    content: content,
-				    xAnchor: 0.3,
-				    yAnchor: 0.91
-				});
+// 				// 커스텀 오버레이를 생성합니다
+// 				var customOverlay = new kakao.maps.CustomOverlay({
+// 				    position: position,
+// 				    content: content,
+// 				    xAnchor: 0.3,
+// 				    yAnchor: 0.91
+// 				});
 
-				// 커스텀 오버레이를 지도에 표시합니다
-				customOverlay.setMap(map);
+// 				// 커스텀 오버레이를 지도에 표시합니다
+// 				customOverlay.setMap(map);
 
 				map.relayout();
 			})
@@ -1175,7 +1323,7 @@
 			   //날짜를 눌렀을 때 체크되게하기
 			   $('#ul-days').on('click', 'li', function(){
 			      $(this).addClass('day-act').siblings().removeClass('day-act');
-			      $(this).css({"border-bottom": "3px solid #ffc107", "box-shadow": "0px 0px 0px #ffc107"}).siblings().css({"border-bottom": "none", "box-shadow": "none"});
+			      $(this).css({"font-weight": "bolder", "border-bottom": "4px solid #ffc107", "box-shadow": "0px 0px 0px #ffc107"}).siblings().css({"border-bottom": "none", "box-shadow": "none", "font-weight": ""});
 			   })
 			   changeDays();
 			   

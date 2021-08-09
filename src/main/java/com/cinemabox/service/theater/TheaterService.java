@@ -2,6 +2,7 @@ package com.cinemabox.service.theater;
 
 import java.util.List;
 
+import com.cinemabox.dto.theater.TheaterDto;
 import com.cinemabox.vo.Theater;
 
 public interface TheaterService {
@@ -23,5 +24,5 @@ public interface TheaterService {
     * 극장번호를 전달받아서 극장상세정보를 반환한다.
     * @param no 극장번호
     */
-   void detailTheaterInfoByJsoup(String number);
+   TheaterDto detailTheaterInfoByJsoup(String number);
 }
