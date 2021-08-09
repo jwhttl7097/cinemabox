@@ -30,19 +30,19 @@
 				<div class="row">
 					<div id="theater-place" class="col-12">
 						<ul class="list-group list-group-horizontal">
-							<li class="list-group-item flex-fill text-center active">서울</li>
+							<li class="list-group-item flex-fill text-center" style="background-color: #ffc107;">서울</li>
 							<li class="list-group-item flex-fill text-center">경기</li>
 							<li class="list-group-item flex-fill text-center">인천</li>
 							<li class="list-group-item flex-fill text-center">대전/충청/세종</li>
 							<li class="list-group-item flex-fill text-center">부산/대구/경상</li>
-							<li class="list-group-item flex-fill text-center">경주/전라</li>
+							<li class="list-group-item flex-fill text-center">광주/전라</li>
 							<li class="list-group-item flex-fill text-center">강원</li>
 						</ul>
 					</div>
 				</div>
 				<div class="row" id="theater-location">
 					<c:forEach var="item" items="${locations }">
-						<div class='col-3'>
+						<div class='col-3 theaterLi' style="border-right: 1px solid #ffc107">
 							<ul class='list-group list-group-horizontal'>
 								<li class="list-group-item"><a href="detailTheater?no=${item.theaterNo }&number=${item.theaterNumber}" class="text-body nav-link p-0">${item.theaterName }</a></li>
 							</ul>
@@ -105,10 +105,12 @@
 	</div>
 	<script type="text/javascript">
 		$(function() {
+			
+			$(".theaterLi:last-child").css('border-right', 'none');
+			
 			$("#theater-place li").click(
 					function() {
-						$(this).addClass('active').siblings().removeClass(
-								'active').css('border-top', 'none');
+						$(this).css({'background-color':'#ffc107', 'border-top': 'none'}).siblings().css({'background-color':'white', 'border-top': 'none'});
 
 						var $loca = $("#theater-location");
 						var location = $(this).text();
@@ -124,7 +126,7 @@
 									var $ul = $("<ul class='list-group list-group-horizontal'></ul>")
 									var $li = $("<li class='list-group-item' ></li>")
 									var $a = $("<a class='text-body nav-link'></a>")
-									$a.attr("href", "detailTheater?no="+ item.theaterNo).text(item.theaterName).css("border-right", "1px solid gray").appendTo($li).appendTo($ul).appendTo($div);
+									$a.attr("href", "detailTheater?no="+ item.theaterNo + "&number=" + item.theaterNumber).text(item.theaterName).css("border-right", "1px solid #ffc107").appendTo($li).appendTo($ul).appendTo($div);
 									$loca.append($div);
 								})
 							},

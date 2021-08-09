@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.cinemabox.dto.theater.TheaterDto;
 import com.cinemabox.service.theater.TheaterService;
 import com.cinemabox.vo.Theater;
 
@@ -26,9 +27,16 @@ public class TheateHomeController{
 	@GetMapping("/detailTheater")
 	public String detailTheater(Model model, int no, String number) {
 		Theater location = theaterService.getLocationByNo(no, number);
-		theaterService.detailTheaterInfoByJsoup(number);
+		TheaterDto theaterDto = theaterService.detailTheaterInfoByJsoup(number);
+		
 		model.addAttribute("location", location);
+		model.addAttribute("theaterDto", theaterDto);
 		return "theater/detailTheater";	
+	}
+	
+	@GetMapping("/specialHall")
+	public String theaterHome() {
+		return "theater/specialHall";	
 	}
 
 }
