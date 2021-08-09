@@ -3,10 +3,8 @@ package com.cinemabox.service.movie;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cinemabox.vo.Movie;
-import com.cinemabox.vo.Theater;
 
 public interface MovieService {
 	
