@@ -8,8 +8,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="/cinemabox/resources/css/common.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+<link rel="stylesheet" href="/cinemabox/resources/css/common.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <title>CINEMA BOX</title>
@@ -17,7 +17,7 @@
 	.container-fluid{position: relative;}
 	header .navbar-brand, #top-nav>li>a, #mainnav-02>li>a{color:white !important;}
 	.mainnav>a{color:white !important;}
-	header{width:100%; background-color: rgba(0,0,0,0.5) !important; position: absolute; top: 8.5%; left: 50%; transform: translate(-50%, -50%); z-index: 100000000;}
+	header{width:100%; background-color: rgba(0,0,0,0.5) !important; position: absolute; top: 8.5%; left: 50%; transform: translate(-50%, -50%); z-index: 10;}
 	
 	.posterinfo{
 		width: 184px;

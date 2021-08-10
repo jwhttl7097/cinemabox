@@ -19,10 +19,10 @@
    .mainnav>a{z-index:100000;}
 
    #myPageBg{
-      background: linear-gradient(to bottom, #ffc107 60%, #f8f8f8 40%);
+      background: linear-gradient(to bottom, #ffc107 80%, #f8f8f8 20%);
       display: flex;
-        justify-content: center;
-        vertical-align: middle;
+      justify-content: center;
+      vertical-align: middle;
       width:auto;
       height:auto;
    }
@@ -32,27 +32,20 @@
       width:90%;
       height: auto;
       margin-top : 60px;
-      border: 1px solid black;
+      border-radius: 30px;
    }
 </style>
 </head>
 <body>
 
 <%@include file="../common/header.jsp" %>
-
    <div class="container-fluid" id="myPageBg">
       <div class="container" id="myPage">
          <div id="myPageInfo" class="mb-5">
             <div class="row mx-2">
-               <div class="col-7" style="border: 1px solid black">
-                  콜 7
-               </div>
-               <div class="col-5" style="border: 1px solid black">
-                  콜 5
-               </div>
+               
             </div>
          </div>
-
          <ul class="nav nav-tabs d-flex justify-content-around" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
                <button class="nav-link active" id="결제내역-tab" data-bs-toggle="tab" data-bs-target="#결제내역" type="button" role="tab" aria-controls="결제내역" aria-selected="true">결제내역</button>
@@ -101,12 +94,9 @@
             <div class="tab-pane fade" id="무비로그" role="tabpanel" aria-labelledby="무비로그-tab">6</div>
             <div class="tab-pane fade" id="문의" role="tabpanel" aria-labelledby="문의-tab">7</div>
             <div class="tab-pane fade" id="정보관리" role="tabpanel" aria-labelledby="정보관리-tab">8</div>
-         </div>
-      </div>
-
-
-   </div>
-
-   <%@include file="../common/footer.jsp" %>  
+        	</div>
+    	</div>
+    </div>
+ <%@include file="../common/footer.jsp" %>  
 </body>
 </html>
