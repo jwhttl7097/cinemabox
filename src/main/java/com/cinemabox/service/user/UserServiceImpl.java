@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cinemabox.dao.user.UserDao;
 import com.cinemabox.vo.User;
+import com.cinemabox.web.utils.SessionUtils;
 
 @Service
 @Transactional
@@ -35,8 +36,21 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	public void login(String userId, String userPassword) {
-		// TODO Auto-generated method stub
+		User user = userDao.getUserById(userId);
+		if (user == null) {
+			throw new RuntimeException("아이디 혹은 비밀번호가 유효하지 않습니다.");
+		}
 		
+		if (!"ACTIVE".equalsIgnoreCase(user.getStatus())) {
+			throw new RuntimeException( "탈퇴 혹은 일시정지 처리된 사용자입니다.");
+		}
+		
+		String secretPassword = DigestUtils.sha256Hex(userPassword);
+		if (!user.getPassword().equals(secretPassword)) {
+			throw new RuntimeException("아이디 혹은 비밀번호가 유효하지 않습니다.");
+		}
+		
+		SessionUtils.addAttribute("LOGINED_USER", user);
 	}
 	
 	@Override
