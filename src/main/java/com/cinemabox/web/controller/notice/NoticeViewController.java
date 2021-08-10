@@ -24,7 +24,7 @@ import com.cinemabox.vo.Notice;
 @RequestMapping("/notice")
 public class NoticeViewController {
 	
-	// NoticeService를 컨트롤러에 매핑합니다. ( 컨트롤러 어디서든 사용할수 있게 )
+	// NoticeService를 컨트롤러에 매핑 ( 컨트롤러 어디서든 사용할수 있게 )
 	@Autowired
 	NoticeService noticeService;
 

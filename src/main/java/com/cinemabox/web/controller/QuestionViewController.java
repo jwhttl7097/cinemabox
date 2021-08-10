@@ -12,10 +12,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.cinemabox.dto.Notice.NoticeDetailDto;
+import com.cinemabox.dto.Question.AnswerDto;
 import com.cinemabox.dto.Question.QuestionDto;
+import com.cinemabox.service.theater.Notice.NoticeService;
 import com.cinemabox.service.theater.Question.QuestionService;
 import com.cinemabox.vo.Question;
 
@@ -35,6 +39,7 @@ public class QuestionViewController {
 	@GetMapping("/main")
 	public String maincustomerCenter() {
 		
+		
 		return "customerCenter/questionMain";
 	}
 	
@@ -44,7 +49,7 @@ public class QuestionViewController {
 	 * @param redirectAttributes
 	 * @return
 	 */
-	@GetMapping("/list")
+	@RequestMapping("/list")
 	public String questionList(String name, String email, Model model) {
 		List<Question> list = questionService.getQuestionByName(name, email);
 		model.addAttribute("list", list);
@@ -83,22 +88,33 @@ public class QuestionViewController {
 	 */
 	@RequestMapping("/insertQuestion")
 	public String insertQuestion(QuestionDto question, RedirectAttributes redirectAttributes) {
-		
 		System.out.println("question ==> "+question.toString());
 		questionService.addQuestion(question);
-		return "redirect:main";
+		return "redirect:userInfo";
 	}
 	
 	/**
 	 * 답변 글작성 페이지 
 	 * @param no
+	 * @return
+	 */
+	@GetMapping("/addAnswer")
+	public String addAnswer(int questionNo, Model model) {
+		Question questionDetail = questionService.detailQuestion(questionNo);
+		model.addAttribute("questionDetail", questionDetail);
+		return "customerCenter/answerWrite";
+	}
+	
+	/**
+	 * 답변 글작성 후 페이지 이동
+	 * @param no
 	 * @param redirectAttributes
 	 * @return
 	 */
-	@GetMapping("/insertAnswer")
-	public String insertAnswer() {
-		
-		return "customerCenter/answerWrite";
+	@RequestMapping("/insertAnswer")
+	public String insertAnswer(AnswerDto answer, RedirectAttributes redirectAttributes) {
+		questionService.addAnswer(answer);
+		return "redirect:userInfo";
 	}
 	
 	
@@ -123,9 +139,10 @@ public class QuestionViewController {
 	 * @return
 	 */
 	@GetMapping("/delete")
-	public String questionDelete() {
-		
-		return "redirect:list";
+	public String questionDelete(@RequestParam int questionNo, RedirectAttributes redirectAttributes) {
+		questionService.deleteQuestion(questionNo);
+		redirectAttributes.addAttribute("questionNo", questionNo);	
+		return "redirect:userInfo";
 	}
 	
 	

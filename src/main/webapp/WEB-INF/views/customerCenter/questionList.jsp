@@ -42,28 +42,28 @@
 				<table class="table">
 					<colgroup>
 						<col width="10%">
-						<col width="15%">
-						<col width="*">
-						<col width="15%">
-						<col width="15%">
+						<col width="*%">
+						<col width="15">
+						<col width="10%">
+						<col width="10%">
 					</colgroup>
 					<thead>
-						<tr>
+						<tr class="text-center">
 							<th>번호</th>
 							<th>제목</th>
 							<th>등록일</th>
 							<th>상태</th>
-							<th class="text-end">만족도</th>
+							<th>만족도</th>
 						</tr>
 					</thead>
 					<tbody>
 						<c:forEach var="list" items="${list }">
-							<tr>
+							<tr class="text-center">
 								<td>${list.questionNo }</td>
 								<td><a class="text-decoration-none" href="detail?no=${list.questionNo }">${list.questionTitle }</a></td>
 								<td><fmt:formatDate value="${list.questionDate }" pattern="yyyy.MM.dd"/></td>
 								<td>${list.state }</td>
-								<td class="text-end">${list.satisfaction }</td>
+								<td>${list.satisfaction }</td>
 							</tr>
 						</c:forEach>
 					</tbody>

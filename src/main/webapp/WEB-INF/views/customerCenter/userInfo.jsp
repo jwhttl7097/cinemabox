@@ -42,7 +42,7 @@
 			<table class="table">
 			<tbody>
 				<tr>
-					<td><a href="main">고객센터</a></td>
+					<td><a href="main">고객센터 메인</a></td>
 				</tr>
 				<tr>
 					<td><a href="../notice/list">공지사항</a></td>
@@ -55,8 +55,7 @@
 		</div>
 			<div class="col-6">
 			<main class="form-signin">
-	  <form id="question-form" name="userInfo" method="get" action="../customerCenter/list">
-	    <img class="mb-4">
+	  <form id="question-form" name="userInfo" method="post" action="../customerCenter/list">
 	    <h6 class="h6 mb-3 fw-normal">문의할 때 입력했던 이름과 메일을 입력해 주세요</h6>
 	
 		<div class="mb-3">
@@ -72,7 +71,7 @@
 	    <div class="mb-3">
 	     <button class="w-100 btn btn-lg btn-primary" type="submit" onclick="">조회하기</button>
 	    </div>
-	     <button class="w-100 btn btn-lg btn-primary" type="button" onclick="location.href='add'">문의하기</button>
+	     <button class="w-100 btn btn-lg btn-warning" type="button" onclick="location.href='add'">문의하기</button>
 	  </form>
 	</main>
 	</div>

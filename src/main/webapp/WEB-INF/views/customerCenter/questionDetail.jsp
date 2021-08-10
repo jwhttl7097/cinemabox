@@ -44,7 +44,7 @@
 							<col width="25%">
 						</colgroup>
 				<thead style="background: #FFBF00">
-					<tr>
+					<tr >
 						<th>${questionDetail.questionTitle }</th>
 						<th>등록일<span><fmt:formatDate value="${questionDetail.questionDate }" pattern="yyyy.MM.dd"/></span></th>
 					</tr>
@@ -57,16 +57,67 @@
 		</tbody>
 	</table>
 
-		<div style="text-align: right;">
+		<div style="text-align: right;" class="mb-3">
 			<button type="button" class="btn btn-warning" onclick="location.href='list'">목록</button>
 			<button type="button" class="btn btn-warning" onclick="del(${questionDetail.questionNo})">삭제</button>
-			<button type="button" class="btn btn-warning" onclick="location.href='insertAnswer'">답글</button>
+			<button type="button" class="btn btn-warning" onclick="location.href='addAnswer?questionNo=${questionDetail.questionNo }'">답글</button>
+			
 		</div>
+		
+		<div class="mb-3">
+			<h5>답글</h5>
+			<h6 class="text-end">답변일:<fmt:formatDate value="${questionDetail.answerDate }" pattern="yyyy.MM.dd"/></h6>
+			<ul class="list-group">
+				<li class="list-group-item flex-fill" style="padding:35px;">${questionDetail.answerContent }</li>
+			</ul>
+		</div>
+		
+		<table>
+			<tbody>
+			<tr>
+                <th scope="row"><strong>만족도</strong></th>
+               
+                <td id="tdPointArea">
+                    
+                            <input type="radio" id="rdoPoint_317" name="rdoPoint" value="317"> 
+                            <label for="rdoPoint_317">매우만족</label>
+                        
+                            <input type="radio" id="rdoPoint_318" name="rdoPoint" value="318"> 
+                            <label for="rdoPoint_318">만족</label>
+                        
+                            <input type="radio" id="rdoPoint_319" name="rdoPoint" value="319"> 
+                            <label for="rdoPoint_319">보통</label>
+                        
+                            <input type="radio" id="rdoPoint_320" name="rdoPoint" value="320"> 
+                            <label for="rdoPoint_320">불만족</label>
+                        
+                            <input type="radio" id="rdoPoint_321" name="rdoPoint" value="321"> 
+                            <label for="rdoPoint_321">매우불만족</label>
+                        
+                    <button type="button" id="btnCheckReplyPoint" class="round gray"><span>평가하기</span></button>
+                </td>
+            </tr>
+            </tbody>
+		</table>
+		
+		
+		
 	</div>	
 				
 </div>
 	<%@ include file="../common/footer.jsp"%>
 	
 </div>
+<script type="text/javascript">
+
+function del(no) {
+	var chk = confirm("정말 삭제하시겠습니까?");
+	if (chk) {
+		//location.href= 'list';
+		location.href='delete?questionNo='+questionNo;
+	}
+}	
+
+</script>
 </body>
 </html>

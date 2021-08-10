@@ -38,7 +38,7 @@
 		</table>
 	</div>
 		<div class="col-9">
-			<div class="border p-2 bg-light">
+			<div class="border p-2 bg-light mb-3">
 				<table class="table">
 					<colgroup>
 						<col width="10%">
@@ -48,7 +48,7 @@
 						<col width="15%">
 					</colgroup>
 					<thead>
-						<tr>
+						<tr class="text-center">
 							<th>번호</th>
 							<th>카테고리</th>
 							<th>제목</th>
@@ -58,7 +58,7 @@
 					</thead>
 					<tbody>
 						<c:forEach var="noticeList" items="${noticeList }">
-							<tr>
+							<tr class="text-center">
 								<td>${noticeList.no }</td>
 								<td>${noticeList.division }</td>
 								<td><a class="text-decoration-none" href="detail?no=${noticeList.no }">${noticeList.title }</a></td>

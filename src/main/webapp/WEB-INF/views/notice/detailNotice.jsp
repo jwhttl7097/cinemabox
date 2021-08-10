@@ -55,23 +55,22 @@
 			<tr class="content">
 				<td colspan="3" style="padding:35px;">${noticeDetail.content }</td>	
 			</tr>
-			<tr class="link">
+		
+			<tr>
 				<td colspan="3">
-					<a href="detail?no=${noticeDetail.nextNo }">
-						<span class="next">다음글</span> ${noticeDetail.nextTitle }
-				
+					<span style="margin-right:20px">다음글</span><a href="detail?no=${noticeDetail.nextNo }">${noticeDetail.nextTitle }</a>
+					
 				</td>
-			</tr>
-			<tr class="link">
-				<td colspan="3">
-					<a href="detail?no=${noticeDetail.preNo }">
-						<span class="prev">이전글</span>${noticeDetail.preTitle }
-					</a>
-				</td>
-			</tr>
+				</tr>
+				<tr>
+					<td colspan="3">
+						<span style="margin-right:20px">이전글</span><a href="detail?no=${noticeDetail.preNo }">${noticeDetail.preTitle }</a>
+					</td>
+				</tr>
+			
 		</tbody>
 	</table>
-
+	
 		<div style="text-align: right;">
 			<button type="button" class="btn btn-warning" onclick="location.href='list'">목록</button>
 			<button type="button" class="btn btn-warning"  onclick="location.href='modify?no=${noticeDetail.no}'">수정</button>

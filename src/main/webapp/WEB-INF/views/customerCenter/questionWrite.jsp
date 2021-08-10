@@ -59,7 +59,7 @@
 		</div>
 	
 		<div style="text-align: right;">
-			<button type="submit" id="insertBt" class="btn btn-warning"  onclick="checkForm()">등록</button>
+			<button type="submit" id="insertBt" class="btn btn-warning" >등록</button>
 		</div>	
 		
 	</div>
@@ -78,27 +78,36 @@ function checkForm() {
 	var title = document.insertForm.title;
 	var content = document.insertForm.content;
 	
-	if(name.value==""){
-        alert("이름을 입력해주세요.");
-        name.focus();
-        return false;
-    }else if(email.value==""){
-        alert("메일을 입력해주세요.");
-        email.focus();
-        return false;
-    }else if(phone.value==""){
-         alert("전화번호를 입력해주세요.");
-         phone.focus();
-         return false;
-
-    }else{
-        alert("글이 등록됩니다!");
-        return true;
-    }
-	
-	return true;
 	
 }
+
+
+$(function() {
+	// 입력값 유효성 체크해서 아이디와 비밀번호가 전부 값이 입력되어 있을 때만 폼 입력값이 서버로 제출되게 하기
+	$("#question-form").submit(function() {
+		var name = $("#name").val();
+		var email = $("#email").val();
+		var phone = $("#phone").val();
+		if(name==""){
+	        alert("이름을 입력해주세요.");
+	        $("#name").focus();
+	        return false;
+	    }else if(email==""){
+	        alert("메일을 입력해주세요.");
+	        $("#email").focus();
+	        return false;
+	    }else if(email==""){
+	        alert("메일을 입력해주세요.");
+	        $("#email").focus();
+	        return false;
+	        
+	    }else{
+				 alert("글이 등록됩니다!");
+				 return true;
+			}
+		return false;
+	});
+})
 
 </script>
 </body>
