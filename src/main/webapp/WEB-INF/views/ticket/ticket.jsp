@@ -164,16 +164,17 @@
 				</div>
 			</div>
 			<!-- 선택한 값 넘겨받는 form -->
-			<form action="post" id="form-ticketing">
-				<input type="hidden" name="영화번호">
-				<input type="hidden" name="상영관">
-				<input type="hidden" name="날짜">
-				<input type="hidden" name="시간">
+			<form action="post" method="post" id="form-ticketing">
+				<input type="hidden" name="theaterNo">
+				<input type="hidden" name="movieNo">
+				<input type="hidden" name="screeningDate">
+				<input type="hidden" name="screeningTime">
+				<input type="hidden" name="hallNo">
 			</form>
 		</div>
 	</div>
 	<!-- 최종확인팝업 -->
-	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content shadow">
 
@@ -188,6 +189,8 @@ $(function(){
 	var movieNo;
 	//오늘날짜	
 	var screeningDate = moment().format("YYYYMMDD");
+	var time;
+	var screeningNo;
 	
 	//header nav js
 	$('.mainnav').mouseover(function(){
@@ -242,7 +245,7 @@ $(function(){
 	});
 	
 	
-	//탭 타이틀 변경, 극장선택
+	// 지역 전체탭 타이틀 변경, 극장선택
 	$('#ul-location2').on('click', 'li', function(){
 		//선택한 극장명
 		$(this).css({'font-weight':'bolder', 'color':'#ffc107'}).siblings().css({'font-weight':'normal', 'color':''});
@@ -258,6 +261,50 @@ $(function(){
 		
 		//선택한 극장번호
 		theaterNo = $(this).data('theater-no');
+		
+		$("#div-time-title").remove();
+		$("#ul-list-time").empty();
+		
+		//극장에서 상영중인 영화 가져오기
+		$.ajax({
+			type:"GET",
+			url:"ticketing/movie",
+			data:{sort:sort, theaterNo:theaterNo},
+			dataType:"json",
+			success:function(movieList){
+				var mvlist = _.uniqBy(movieList, "movieNo");
+				$("#ul-movieList").empty();
+				$.each(mvlist, function(index, item){
+					var content = 
+					"<li data-movie-no="+item.movieNo+" data-hall-no="+item.hallNo+">"+
+						"<img src='/cinemabox/resources/images/icon/txt-age-small-"+item.age+".png' alt='' class='me-2'>"+
+						"<strong>"+item.title+"</strong>"+
+					"</li>"
+					$('#ul-movieList').append(content);
+				})
+			}
+		});
+	})
+	
+	// 특별관 탭 타이틀 변경, 극장선택
+	$('#ul-special-location2').on('click', 'li', function(){
+		//선택한 극장명
+		$(this).css({'font-weight':'bolder', 'color':'#ffc107'}).siblings().css({'font-weight':'normal', 'color':''});
+		var theater = $(this).text();
+		$("#div-theater>h5").empty().text(theater);
+		$("#div-movie>h5").empty().text('영화 선택');		
+		
+		//정렬값 구하기
+		var sort;
+		if(sort == null) {
+			sort = "ticket";
+		}
+		
+		//선택한 극장번호
+		theaterNo = $(this).data('theater-no');
+		
+		$("#div-time-title").remove();
+		$("#ul-list-time").empty();
 		
 		//극장에서 상영중인 영화 가져오기
 		$.ajax({
@@ -340,7 +387,7 @@ $(function(){
 			data:{theaterNo:theaterNo, movieNo:movieNo, screeningDate:screeningDate},
 			dataType:"json",
 			success:function(movieTime){
-				$("#div-time-title").empty();
+				$("#div-time-title").remove();
 				$("#ul-list-time").empty();
 				var content=
 					'<div class="div-time-select-tit" id="div-time-title">'+
@@ -354,11 +401,11 @@ $(function(){
 				$.each(movieTime, function(index, item){
 					var seat = 70-item.seatCnt;
 					if(item.screeningStatus == 'Y'){
-						var timeTable = '<li class="rounded-3 me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">'
+						var timeTable = '<li class="rounded-3 me-2" data-bs-toggle="modal" data-bs-target="#confirmModal" data-screening-no='+item.screeningNo+'>'
 							timeTable +=	'<dl class="text-center p-2">'
 							timeTable +=		'<dt class="d-none">상영시간</dt>'
 							timeTable +=		'<dd class="dd-time">'
-							if(index == 0 && item.screeningTime.replace(":","") <= 1100 ){
+							if(index == 0 && item.screeningTime.replace(":","") <= 1100 && item.screeningTime.replace(":","") >= 700 ){
 								timeTable += 		'<strong>'+'<i class="bi bi-sun" style="color: #ffc107"></i>'+item.screeningTime+'</strong>'
 							}else{
 								timeTable += 		'<strong>'+item.screeningTime+'</strong>'
@@ -445,10 +492,8 @@ $(function(){
 			
 			//첫번째 날짜는 무조건 선택되어 있게 하기
 			$('#ul-days li:eq(0)').trigger('click');
-			
 		});
 	}
-
 	
 	//날짜를 눌렀을 때 체크되게하기
 	$('#ul-days').on('click', 'li', function(){
@@ -468,7 +513,7 @@ $(function(){
 			data:{theaterNo:theaterNo, movieNo:movieNo, screeningDate:screeningDate},
 			dataType:"json",
 			success:function(movieTime){
-				$("#div-time-title").empty();
+				$("#div-time-title").remove();
 				$("#ul-list-time").empty();
 				var content=
 					'<div class="div-time-select-tit" id="div-time-title">'+
@@ -483,11 +528,11 @@ $(function(){
 					var seat = 70-item.seatCnt;
 					
 					if(item.screeningStatus == 'Y'){
-						var timeTable = '<li class="rounded-3 me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">'
+						var timeTable = '<li class="rounded-3 me-2" data-bs-toggle="modal" data-bs-target="#confirmModal" data-screening-no='+item.screeningNo+'>'
 							timeTable +=	'<dl class="text-center p-2">'
 							timeTable +=		'<dt class="d-none">상영시간</dt>'
 							timeTable +=		'<dd class="dd-time">'
-							if(index == 0 && item.screeningTime.replace(":","") <= 1100 ){
+							if(index == 0 && item.screeningTime.replace(":","") <= 1100 && item.screeningTime.replace(":","") >= 700 ){
 								timeTable += '<strong>'+'<i class="bi bi-sun" style="color: #ffc107"></i>'+item.screeningTime+'</strong>'
 							}else{
 								timeTable += '<strong>'+item.screeningTime+'</strong>'
@@ -512,21 +557,24 @@ $(function(){
 	
 	//최종 확인 팝업
 	$('#ul-list-time').on('click', 'li', (function(){
-		$('.modal').show();
-		var time = $(this).find(".dd-time").text();
+		$('#confirmModal').show();
+		time = $(this).find(".dd-time").text();
+		screeningNo = $(this).data('screening-no');
 		$.ajax({
 			type:"GET",
 			url:"ticketing/selectMovie",
-			data:{theaterNo:theaterNo, movieNo:movieNo, screeningDate:screeningDate, time:time},
+			data:{theaterNo:theaterNo, movieNo:movieNo, screeningDate:screeningDate, time:time, screeningNo:screeningNo},
 			dataType:"json",
-			success:function(movie){		
-				$("#exampleModal > div > div").empty();
+			success:function(m){		
+				$("#confirmModal > div > div").empty();
 				
-				var endTime = moment.unix(movie.screeningDate/1000).add(movie.runningTime, "m").format("HH:mm");
-				var seat = 70-movie.seatCnt;
+				//끝나는 시간 구하기
+				var endTime = moment.unix(m.movieInfo.screeningDate/1000).add(m.movieInfo.runningTime, "m").format("HH:mm");
+				//남은 좌석 수 구하기
+				var seat = 70-m.movieInfo.seatCnt;
 				
 				var content = '<div class="modal-header bg-dark text-white justify-content-center">'
-				content += '<h5 class="modal-title" id="exampleModalLabel">'+movie.screeningTime+'~'+endTime+'('+movie.hallName+')</h5>'
+				content += '<h5 class="modal-title" id="exampleModalLabel">'+m.movieInfo.screeningTime+'~'+endTime+'('+m.movieInfo.hallName+')</h5>'
 				content += '</div>'
 				content += '<div class="modal-body text-center">'
 				content +=	'<span>잔여좌석 <strong style="font-size:25px;">'+seat+'</strong>/70</span>'
@@ -535,38 +583,63 @@ $(function(){
 				content +=	'<span class="text-muted" style="font-size:13px;">S&nbsp;C&nbsp;R&nbsp;E&nbsp;E&nbsp;N</span>'
 				content +=	'<br/>'
 				content +=	'<br/>'
-				content +=	'<div style="font-size:12px;">'
-				content +=		'□□□ □□■■□□■□□■ □□■ <br/>'
-				content +=		'□□■ □□■■□□■□□■ □□■ <br/>'
-				content +=		'□□■ □□■■□□■□□■ □□■ <br/>'
-				content +=		'□□■ □□■■□□■□□■ □□■ <br/>'
+				content +=	'<div style="font-size:10px;">'
+				
+				$.each(m.ticketInfo, function(index, item){
+					//좌석번호 문자열로 변경
+					var seatNum = String(item.seatNo);
+					//좌석번호의 마지막 숫자만 구하기
+					var lastNo = seatNum.substring(seatNum.length-1);
+					//현재 좌석상태 구하기
+					var t = item.ticketStatus;
+					//좌석이 비어있을 경우 □, 있을 경우 ■
+					var status = (t == "N"? "□" : "■")
+					
+					content += status
+					
+					if(lastNo == 2){
+						content += '&nbsp;'
+					}
+					if(lastNo == 8){
+						content += '&nbsp;'
+					}
+					if(lastNo == 0){
+						content += '<br/>'
+					}
+				})
+				
 				content +=	'</div>'
 				content +=	'<div class="my-4">'
-				content +=		'<img src="/cinemabox/resources/images/icon/txt-age-small-'+movie.age+'.png" alt="" class="me-2">'
-				if(movie.age == "ALL"){
-					content +=	'본 영화는 전체관람가 영화입니다.'
+				content +=		'<img src="/cinemabox/resources/images/icon/txt-age-small-'+m.movieInfo.age+'.png" alt="" class="me-2">'
+				if(m.movieInfo.age == "ALL"){
+					content += '본 영화는  <span style="color:#5BC77E; text-decoration:underline;"><strong>전체관람가</strong></span> 영화입니다.'
 				}
-				if(movie.age == "12"){
-					content +=	'본 영화는 12세관람가 영화입니다.'
+				if(m.movieInfo.age == "12"){
+					content += '본 영화는 <span style="color:#4DD6FF; text-decoration:underline;"><strong>12세관람가</strong></span> 영화입니다.'
+					content += '<span style="font-size:9px;">만 12세 미만의 고객님(영, 유아 포함)은 반드시 부모님 또는 성인 보호자의 동반하에<br/>관람이 가능합니다. 연령 확인 불가 시 입장이 제한될 수 있습니다.</span>'
 				}
-				if(movie.age == "15"){
-					content +=	'본 영화는 15세관람가 영화입니다.<br/>'
+				if(m.movieInfo.age == "15"){
+					content +=	'본 영화는 <span style="color:#FFC134; text-decoration:underline;"><strong>15세관람가</strong></span> 영화입니다.<br/>'
 					content +=	'<span style="font-size:9px;">만 15세 미만의 고객님(영, 유아 포함)은 반드시 부모님 또는 성인 보호자의 동반하에<br/>관람이 가능합니다. 연령 확인 불가 시 입장이 제한될 수 있습니다.</span>'
 				}
-				if(movie.age == "19"){
-					content +=	'본 영화는 19세관람가 영화입니다.'
+				if(m.movieInfo.age == "19"){
+					content +=	'본 영화는 <span style="color:#ED4C6B; text-decoration:underline;"><strong>19세관람가</strong></span> 영화입니다.'
 					content +=	'<span style="font-size:9px;">만 18세 미만의 고객님(영, 유아 포함)은 부모님 또는 성인 보호자를 동반하여도<br/>관람이 불가합니다. 또한 만 18세 이상이라도 재학중인 학생은 관람이 불가합니다.<br/>영화 관람 시, 반드시 신분증을 지참하여 주시기 바랍니다.</span>'
 				}
 				content +=	'</div>'
 				content +='</div>'
 				content +='<div class="modal-footer">'
 				content +=	'<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>'
-				content +=	'<button type="submit" class="btn btn-warning">인원/좌석 선택</button>'
+				content +=	'<button type="submit" class="btn btn-warning" id="btn-confirm">인원/좌석 선택</button>'
 				content += '</div>'	
-				$('#exampleModal > div > div').append(content);
+				
+				$('#confirmModal > div > div').append(content);
 			}
 		})
 	}))
+	
+	$("#btn-confirm").on('click', function(){
+	})
 })
 </script>
 </body>

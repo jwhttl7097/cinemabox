@@ -16,23 +16,21 @@ public class TicketServiceImpl implements TicketService{
 	
 	@Autowired TicketDao ticketDao;
 	
-//	@Override
-//	public List<TicketDto> getMovieListByTheaterNo(@Param("sort") String sort, int theaterNo) {
-//		return ticketDao.getMovieListByTheaterNo(sort, theaterNo);
-//	}
-	
+	//예매
 	@Override
 	public List<TicketDto> getMovieListByTheaterNo(Map<String, Object> map) {
 		return ticketDao.getMovieListByTheaterNo(map);
 	}
-	
 	@Override
 	public List<TicketDto> getMovieTime(Map<String, Object> map) {
 		return ticketDao.getMovieTime(map);
 	}
-	
 	@Override
 	public TicketDto getMovieByTime(Map<String, Object> map) {
 		return ticketDao.getMovieByTime(map);
+	}
+	@Override
+	public List<TicketDto> getTicketStatusByScreeningNo(int screeningNo) {
+		return ticketDao.getTicketStatusByScreeningNo(screeningNo);
 	}
 }
