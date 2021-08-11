@@ -21,6 +21,7 @@ import com.cinemabox.dto.Question.AnswerDto;
 import com.cinemabox.dto.Question.QuestionDto;
 import com.cinemabox.service.theater.Notice.NoticeService;
 import com.cinemabox.service.theater.Question.QuestionService;
+import com.cinemabox.vo.Notice;
 import com.cinemabox.vo.Question;
 
 @Controller
@@ -30,6 +31,9 @@ public class QuestionViewController {
 	@Autowired
 	QuestionService questionService;
 	
+	@Autowired
+	NoticeService noticeService;
+	
 	/**
 	 * 고객센터 메인페이지
 	 * @param no
@@ -37,9 +41,11 @@ public class QuestionViewController {
 	 * @return
 	 */
 	@GetMapping("/main")
-	public String maincustomerCenter() {
-		
-		
+	public String maincustomerCenter(Model model) {
+		List<Notice> noticeList = noticeService.noticeMain();
+		// 페이지에 공지사항 목록 전달하기
+		model.addAttribute("noticeList", noticeList);
+		// 뷰페이지로 내부이동하기
 		return "customerCenter/questionMain";
 	}
 	

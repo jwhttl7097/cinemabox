@@ -18,6 +18,21 @@
 	</select>
 	
 	
+	<select id="noticeMain" resultType="com.cinemabox.vo.Notice">
+		select 
+			notice_no				no,
+			notice_division			division,
+			notice_title			title,
+			notice_date				creatDate,
+			notice_hits				hits,
+			notice_important		important
+		from
+			cinemabox_notice
+		where ROWNUM &lt;= 4
+		order by notice_important asc, notice_no desc
+	</select> 
+	
+	
 	<select id="getDetailNoticeByNo" parameterType="int" resultType="com.cinemabox.dto.Notice.NoticeDetailDto">
 		select *
 		from
