@@ -88,12 +88,12 @@ a:hover{
 #div-location2, #nav-entireTime{
 	overflow-y:auto;
 }
-#ul-location1{
+#ul-location1, #ul-special-location1{
 	background:#F5F5F5;
 	margin:0;
 	padding:0;
 }
-.li-location1{
+.li-location1, .li-location2{
 	padding: 15px !important;
 }
 .form-select{

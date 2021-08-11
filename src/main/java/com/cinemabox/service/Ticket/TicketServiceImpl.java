@@ -30,4 +30,9 @@ public class TicketServiceImpl implements TicketService{
 	public List<TicketDto> getMovieTime(Map<String, Object> map) {
 		return ticketDao.getMovieTime(map);
 	}
+	
+	@Override
+	public TicketDto getMovieByTime(Map<String, Object> map) {
+		return ticketDao.getMovieByTime(map);
+	}
 }
