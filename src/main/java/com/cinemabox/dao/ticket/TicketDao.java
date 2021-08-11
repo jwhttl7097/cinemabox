@@ -10,4 +10,5 @@ public interface TicketDao {
 
 	List<TicketDto> getMovieListByTheaterNo(Map<String, Object> map);
 	List<TicketDto> getMovieTime(Map<String, Object> map);
+	TicketDto getMovieByTime(Map<String, Object> map);
 }
