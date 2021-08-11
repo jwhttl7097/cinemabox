@@ -1,15 +1,34 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+<script>
+        // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
+        Kakao.init('99049ace9c7bdff941b33ca319b803c8');
+
+        // SDK 초기화 여부를 판단합니다.
+        console.log(Kakao.isInitialized());
+        Kakao.isInitialized();
+</script>
 <header class="pt-4 container" id="header">
 	<nav class="row">
 		<div class="text-center p-0" id="topnav-container">
 			<a class="navbar-brand" href="/cinemabox/home" style="font-size:25px; color:black; font-weight: bolder;"><i class="fas fa-film mx-2"></i>CINEMA BOX</a>
-			<ul class="nav justify-content-end" id="top-nav">
-				<li class="nav-item"><a class="nav-link" id="loginForm">로그인</a></li>
-				<li class="nav-item"><a class="nav-link" href="register">회원가입</a></li>
-				<li class="nav-item"><a class="nav-link" href="/cinemabox/notice/list">고객센터</a></li>
-				<li class="nav-item"><a class="nav-link last-a" href="/cinemabox/admin">관리자</a></li>
-			</ul>
+			<c:choose>
+				<c:when test="${empty LOGINED_USER }">
+					<ul class="nav justify-content-end" id="top-nav">
+						<li class="nav-item"><a class="nav-link" id="loginForm">로그인</a></li>
+						<li class="nav-item"><a class="nav-link" href="register">회원가입</a></li>
+						<li class="nav-item"><a class="nav-link" href="/cinemabox/notice/list">고객센터</a></li>
+					</ul>
+				</c:when>
+				<c:otherwise>
+					<ul class="nav justify-content-end" id="top-nav">
+						<li class="nav-item"><a class="nav-link" href="/cinemabox/myPage">마이페이지</a></li>
+						<li class="nav-item"><a class="nav-link" href="/cinemabox/notice/list">고객센터</a></li>
+						<li class="nav-item"><a class="nav-link" href="logout">로그아웃</a></li>
+					</ul>
+				</c:otherwise>
+			</c:choose>
 		</div>
 		
 		<div class="position-relative p-0" id="sticky-nav">
@@ -66,6 +85,12 @@
       		<div class="modal-body">
         		<div class="row">
         			<div class="col-6 py-4">
+        				<form action="loginKakao" method="post" id="login-kakao">
+        					<input type="hidden" value="" id="kakaoId" name="id">
+        					<input type="hidden" value="" id="kakaoName" name="name">
+        					<input type="hidden" value="" id="kakaoBirth" name="birth">
+        					<input type="hidden" value="Y" id="isKakao" name="isKakao">
+        				</form>
         				<form id="form-login" method="post" action="login" novalidate="novalidate">
         					<div class="row px-2 mt-4 mb-3">
         						<input type="text" class="form-control" id="userId" name="id" placeholder="아이디">
@@ -96,8 +121,10 @@
         				<div class="row mt-4">
         					<div class="sign-logo">
         						<div class=" text-center">
-        							<img alt="naver" src="/cinemabox/resources/images/user/naver.png" class="me-2">
-        							<img alt="kakao" src="/cinemabox/resources/images/user/kakao.png">
+        							<img alt="naver" src="/cinemabox/resources/images/user/login/naver.png" class="me-2">
+        							<a id="custom-login-btn" href="javascript:loginWithKakao()">
+        								<img alt="kakao" src="/cinemabox/resources/images/user/login/kakao.png">
+        							</a>
         						</div>
         						<div class=" col-3 mt-2 d-grid mx-auto d-inline-block">
         						</div>
@@ -105,7 +132,7 @@
         				</div>
         			</div>
         			<div class="col-6">
-        				<a href="https://direct.hi.co.kr/service.do?m=3293e8e708&HDMS1=banner&HDMS2=megabox&HDMS3=%eb%a1%9c%ea%b7%b8%ec%9d%b8%ed%8c%9d%ec%97%85_%ec%9a%b0%ec%b8%a1&HDMS4=%EB%A7%8C%EA%B8%B0%EB%9D%BC%EB%A9%B4_STOP&src=image&kw=03EBFE&utm_source=megabox&utm_medium=display&utm_campaign=%eb%a1%9c%ea%b7%b8%ec%9d%b8%ed%8c%9d%ec%97%85_%ec%9a%b0%ec%b8%a1&utm_content=%EB%A7%8C%EA%B8%B0%EB%9D%BC%EB%A9%B4_STOP"><img alt="hyundaiAd" src="/cinemabox/resources/images/user/Hyundai.jpg"></a>
+        				<a href="https://direct.hi.co.kr/service.do?m=3293e8e708&HDMS1=banner&HDMS2=megabox&HDMS3=%eb%a1%9c%ea%b7%b8%ec%9d%b8%ed%8c%9d%ec%97%85_%ec%9a%b0%ec%b8%a1&HDMS4=%EB%A7%8C%EA%B8%B0%EB%9D%BC%EB%A9%B4_STOP&src=image&kw=03EBFE&utm_source=megabox&utm_medium=display&utm_campaign=%eb%a1%9c%ea%b7%b8%ec%9d%b8%ed%8c%9d%ec%97%85_%ec%9a%b0%ec%b8%a1&utm_content=%EB%A7%8C%EA%B8%B0%EB%9D%BC%EB%A9%B4_STOP"><img alt="hyundaiAd" src="/cinemabox/resources/images/user/login/Hyundai.jpg"></a>
         			</div>
         		</div>
       		</div>
@@ -113,9 +140,46 @@
   	</div>
 </div>
 <script type="text/javascript">
-
-$(function(){
 	
+	postPage(){
+		$('#login-kakao').submit();
+	}
+
+	function loginWithKakao(){
+	    Kakao.Auth.login({
+	      success: function(authObj) {
+	        var accessToken = authObj.access_token;
+	    	Kakao.Auth.setAccessToken(accessToken);
+	    	Kakao.API.request({
+	    	    url: '/v2/user/me',
+	    	    success: function(response) {
+	    	    	alert(JSON.stringify(response));
+	    	    	//alert(response.properties.nickname);
+	    	    	//alert(response.kakao_account.birthday);
+	    	    	var id = response.id;
+	    	    	var name = response.properties.nickname;
+	    	    	var birth = response.kakao_account.birthday;
+	    	    	
+	    	    	$("#kakaoId").value(id);
+	    	    	$("#kakaoName").value(name);
+	    	    	$("#kakaoBirth").value(birth);
+	    	    	
+	    	    	postPage();
+	    	    	
+	    	    },
+	    	    fail: function(error) {
+	    	    	alert(error);
+	    	    }
+	    	});
+	      },
+	      fail: function(err) {
+	        alert(JSON.stringify(err))
+	      },
+	    })
+	  }
+	
+$(function(){
+		
 	var loginModal = new bootstrap.Modal(document.getElementById("loginModal"), {
 	      keyboard: false
 	   });

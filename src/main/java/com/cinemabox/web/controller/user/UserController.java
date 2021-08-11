@@ -30,6 +30,22 @@ public class UserController {
 		return "redirect:home";
 	}
 	
+	/*
+	@PostMapping("/loginKakao")
+	public String login(@RequestParam("id") String kakaoId, @RequestParam("name") String kakaoName, 
+						@RequestParam("birth") String kakaoBirth, @RequestParam("isKakao") String isKakao) {
+		
+		userService.login(userId, userPassword);
+		
+		userService.kakaoLogin();
+		//-->isKakao Y --> 
+		
+		//카카오로그인을~.~ 클릭했을때 DB에 있는지 없는지도 확인해야함..!
+		
+		return "redirect:home";
+	}
+	*/
+	
 	
 	@GetMapping(path = {"/register"})
 	public String register() {
