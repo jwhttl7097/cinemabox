@@ -639,6 +639,10 @@ $(function(){
 	}))
 	
 	$("#btn-confirm").on('click', function(){
+		var isLogined = ${not empty LOGINED_USER};
+		if(isLogined == false){
+			
+		}
 	})
 })
 </script>

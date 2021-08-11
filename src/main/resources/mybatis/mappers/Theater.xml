@@ -24,6 +24,24 @@
          theater_location = #{value}
    </select>
    
+   <select id="allLocations" resultType="com.cinemabox.vo.Theater">
+      select
+         theater_no as theaterNo,
+         theater_name as theaterName,
+         THEATER_LOCATION as theaterLocation,
+         THEATER_ADDRESS as theaterAddress,
+         THEATER_FACILITY as theaterFacility,
+         SPECIAL_HALL_EXIST as theaterHallExist,
+         THEATER_LATITUDE as theaterLatitude,
+         THEATER_LONGITUDE as theaterLongitude,
+         THEATER_CONTENT_FIRST as contentFirst,
+         THEATER_CONTENT_SECOND as contentSecond,
+         THEATER_CONTENT_MERIT as contentMerit,
+         THEATER_NUMBER as theaterNumber
+      from
+         cinemabox_theater
+   </select>
+   
    <select id="getLocationByNo" parameterType="int" resultType="com.cinemabox.vo.Theater" >
       select
          THEATER_NO as theaterNo,

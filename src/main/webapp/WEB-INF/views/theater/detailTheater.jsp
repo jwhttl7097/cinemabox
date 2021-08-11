@@ -228,7 +228,7 @@
 				<!-- kakaoMapAPI -->
 				<div class="col-12 kakaoMap mt-1">
 					<button type="button" class="btn btn-lg text-white" data-bs-toggle="modal" id="latLng" data-bs-target="#mapBtn" 
-					data-lng="${theaterDto.theaterLongitude }" data-lat="${theaterDto.theaterLatitude }" style="background-color: #ffc107">
+						data-lng="${theaterDto.theaterLongitude }" data-lat="${theaterDto.theaterLatitude }" style="background-color: #ffc107">
 						<i class="fas fa-map-marked-alt"></i> 약도보기
 					</button>
 					<div class="modal" tabindex="-1" id="mapBtn">

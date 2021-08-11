@@ -25,5 +25,11 @@ public class TheateHomeAjaxController{
 		List<Theater> allLocations = theaterService.getAllLocation(location);
 		return new ResponseEntity<List<Theater>>(allLocations, HttpStatus.OK);
 	}
+	
+	@RequestMapping("/specialDetail")
+	public @ResponseBody ResponseEntity<List<Theater>> specialDetail(@RequestParam("specialHall")String specialHall) {
+		List<Theater> specialHallName = theaterService.specialHallLoca(specialHall);
+		return new ResponseEntity<List<Theater>>(specialHallName, HttpStatus.OK);	
+	}
 
 }
