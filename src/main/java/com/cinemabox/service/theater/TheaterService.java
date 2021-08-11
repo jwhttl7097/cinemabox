@@ -15,6 +15,19 @@ public interface TheaterService {
    List<Theater> getAllLocation(String location);
    
    /**
+    * 전체 지역들의 전체 극장 정보를 반환한다.
+    * @return 전체 지역들의 전체 극장 정보
+    */
+   List<Theater> allLocations();
+   
+   /**
+    * 특별관 이름을 전달받아 해당 상영관들을 반환한다.
+    * @param specialHall 특별관 이름
+    * @return 전달받은 특별관이 존재 하는 상영관 정보
+    */
+   List<Theater> specialHallLoca(String specialHall);
+   
+   /**
     * 극장번호를 전달받아 극장정보 반환
     * @return 극장정보
     */
