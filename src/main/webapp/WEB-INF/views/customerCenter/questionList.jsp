@@ -12,6 +12,11 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="/cinemabox/resources/js/common.js"></script>
 <title>TITLE</title>
+<style type="text/css">
+ a:link { color: black; text-decoration: none;}
+ a:visited { color: black; text-decoration: none;}
+ a:hover { color: #ecbd35; text-decoration: underline;}
+</style>
 </head>
 <body>
 <div class="container-fluid">
@@ -26,7 +31,7 @@
 		<table class="table">
 		<tbody>
 			<tr>
-		<td><a href="main">고객센터</a></td>
+		<td><a href="main">고객센터 메인</a></td>
 			</tr>
 			<tr>
 				<td><a href="../notice/list">공지사항</a></td>

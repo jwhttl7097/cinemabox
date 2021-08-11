@@ -23,6 +23,8 @@ public interface NoticeService {
 	// 공지 등록 
 	void changeNotice(NoticeDetailDto notice);
 	// 공지사항 수정 
+	List<Notice> noticeMain();
+	// 고객센터 메인페이지에 공지사항 추가
 
 
 	
