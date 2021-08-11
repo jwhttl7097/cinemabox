@@ -18,13 +18,13 @@
 					<ul class="nav justify-content-end" id="top-nav">
 						<li class="nav-item"><a class="nav-link" id="loginForm">로그인</a></li>
 						<li class="nav-item"><a class="nav-link" href="/cinemabox/register">회원가입</a></li>
-						<li class="nav-item"><a class="nav-link" href="/cinemabox/notice/list">고객센터</a></li>
+						<li class="nav-item"><a class="nav-link" href="/cinemabox/customerCenter/main">고객센터</a></li>
 					</ul>
 				</c:when>
 				<c:otherwise>
 					<ul class="nav justify-content-end" id="top-nav">
 						<li class="nav-item"><a class="nav-link" href="/cinemabox/myPage">마이페이지</a></li>
-						<li class="nav-item"><a class="nav-link" href="/cinemabox/notice/list">고객센터</a></li>
+						<li class="nav-item"><a class="nav-link" href="/cinemabox/customerCenter/main">고객센터</a></li>
 						<li class="nav-item"><a class="nav-link" href="/cinemabox/logout">로그아웃</a></li>
 					</ul>
 				</c:otherwise>
