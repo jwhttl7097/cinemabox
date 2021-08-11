@@ -27,6 +27,13 @@ public class UserController {
 		
 		userService.login(userId, userPassword);
 		
+		// 로그인 전 페이지로 되돌아가기
+		String returnPath = (String) SessionUtils.getAttribute("returnPath");
+		SessionUtils.removeAttribute("returnPath");
+		if (returnPath != null) {
+			return "redirect:" + returnPath;
+		}
+		
 		return "redirect:home";
 	}
 	
@@ -64,6 +71,7 @@ public class UserController {
 		return "redirect:register";
 	}
 	
+	
 	@GetMapping(path = {"/myPage"})
 	public String myPage() {
 		return "user/myPage";	
@@ -72,6 +80,14 @@ public class UserController {
 	@GetMapping("/logout")
 	public String logout() {
 		SessionUtils.destroySession();
+		
+		// 로그아웃 전 페이지로 되돌아가기
+		String returnPath = (String) SessionUtils.getAttribute("returnPath");
+		SessionUtils.removeAttribute("returnPath");
+		if (returnPath != null) {
+			return "redirect:" + returnPath;
+		}
+		
 		return "redirect:home";
 	}
 }

@@ -54,6 +54,7 @@
 			m.MOVIE_RUNNING_TIME as runningTime,
 			s.SCREENING_Date as screeningDate,
 			s.SCREENING_TIME as screeningTime,
+			s.SCREENING_STATUS as screeningStatus,
 			m.MOVIE_AGE as age,
 			m.MOVIE_STATUS as movieStatus,
             h.hall_name as hallName,
@@ -64,10 +65,40 @@
 		where 
 			s.THEATER_NO = #{theaterNo}
             and s.MOVIE_NO = #{movieNo}
-            and s.SCREENING_DATE = #{screeningDate}
+            and to_date(to_char(s.SCREENING_DATE, 'YYYYMMDD')) = #{screeningDate}
             and s.movie_no = m.movie_no
             and s.theater_no = t.theater_no
             and s.hall_no = h.hall_no
             and m. MOVIE_STATUS = 'Y'
+        order by 
+        	s.SCREENING_DATE asc
 	</select>
+	
+	<select id="getMovieByTime" parameterType="hashmap" resultType="com.cinemabox.dto.ticket.TicketDto">
+		select 
+			s.MOVIE_NO as movieNo,
+			s.theater_no as theaterNo,
+			s.hall_no as hallNo,
+			m.MOVIE_TITLE as title,
+			m.MOVIE_RUNNING_TIME as runningTime,
+			s.SCREENING_Date as screeningDate,
+			s.SCREENING_TIME as screeningTime,
+			s.SCREENING_STATUS as screeningStatus,
+			m.MOVIE_AGE as age,
+			m.MOVIE_STATUS as movieStatus,
+            h.hall_name as hallName,
+            (select count(*) from CINEMABOX_TICKET ticket 
+            	where ticket.screening_no = s.screening_no
+            	and ticket.TICKET_RESERVATION_STATUS = 'Y') as seatCnt
+		from CINEMABOX_MOVIE m, CINEMABOX_SCREENING s, CINEMABOX_THEATER t, CINEMABOX_HALL h
+		where 
+			s.THEATER_NO = #{theaterNo}
+            and s.MOVIE_NO = #{movieNo}
+            and to_date(to_char(s.SCREENING_DATE, 'YYYYMMDD')) = #{screeningDate}
+			and s.screening_time = #{time}            
+            and s.movie_no = m.movie_no
+            and s.theater_no = t.theater_no
+            and s.hall_no = h.hall_no
+            and m. MOVIE_STATUS = 'Y'
+	</select>	
 </mapper>

@@ -17,7 +17,7 @@
 				<c:when test="${empty LOGINED_USER }">
 					<ul class="nav justify-content-end" id="top-nav">
 						<li class="nav-item"><a class="nav-link" id="loginForm">로그인</a></li>
-						<li class="nav-item"><a class="nav-link" href="register">회원가입</a></li>
+						<li class="nav-item"><a class="nav-link" href="/cinemabox/register">회원가입</a></li>
 						<li class="nav-item"><a class="nav-link" href="/cinemabox/notice/list">고객센터</a></li>
 					</ul>
 				</c:when>
@@ -25,7 +25,7 @@
 					<ul class="nav justify-content-end" id="top-nav">
 						<li class="nav-item"><a class="nav-link" href="/cinemabox/myPage">마이페이지</a></li>
 						<li class="nav-item"><a class="nav-link" href="/cinemabox/notice/list">고객센터</a></li>
-						<li class="nav-item"><a class="nav-link" href="logout">로그아웃</a></li>
+						<li class="nav-item"><a class="nav-link" href="/cinemabox/logout">로그아웃</a></li>
 					</ul>
 				</c:otherwise>
 			</c:choose>
@@ -49,7 +49,7 @@
 					<li class="nav-item mainnav"><a class="nav-link text-body" href="/cinemabox/theaterHome">극장</a>
 						<ul class="nav justify-content-center subnav" id="subnav-03">
 							<li class="nav-item"><a class="nav-link" href="/cinemabox/theaterHome">전체극장</a></li>
-							<li class="nav-item"><a class="nav-link" href="">특별관</a></li>
+							<li class="nav-item"><a class="nav-link" href="/cinemabox/specialHall">특별관</a></li>
 						</ul>
 					</li>
 					<li class="nav-item mainnav"><a class="nav-link text-body" href="#">이벤트</a>
@@ -140,10 +140,18 @@
   	</div>
 </div>
 <script type="text/javascript">
+$(function(){
 	
-	postPage(){
-		$('#login-kakao').submit();
-	}
+	var loginModal = new bootstrap.Modal(document.getElementById("loginModal"), {
+	      keyboard: false
+	   });
+	   
+	$("#loginForm").click(function(){
+		loginModal.show();
+	});
+	
+	
+	
 
 	function loginWithKakao(){
 	    Kakao.Auth.login({
@@ -176,17 +184,9 @@
 	        alert(JSON.stringify(err))
 	      },
 	    })
-	  }
+	  };
 	
-$(function(){
-		
-	var loginModal = new bootstrap.Modal(document.getElementById("loginModal"), {
-	      keyboard: false
-	   });
-	$("#loginForm").click(function(){
-		loginModal.show();
-	})
-	
+
 	//브라우져 쿠키에 값을 저장한다.
 	//name은 쿠키명, value는 쿠키값, days는 만료일까지의 일 수
 	function setCookie(name, value, days) {
@@ -218,7 +218,6 @@ $(function(){
 		event.preventDefault()
 		setCookie("step","level1",1);
 		location.href="/cinemabox/register" 
-	}
-
-})
+	};
+});
 </script>
