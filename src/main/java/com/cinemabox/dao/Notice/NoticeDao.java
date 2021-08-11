@@ -45,5 +45,11 @@ public interface NoticeDao {
 	 */
 	void changeNotice(NoticeDetailDto no);
 
+	/**
+	 *  고객센터 메인페이지에 공지사항 추가
+	 * @return
+	 */
+	List<Notice> noticeMain();
+
 
 }

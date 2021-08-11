@@ -35,6 +35,7 @@ public class NoticeViewController {
 	 */
 	@GetMapping("/list")
 	public String Notice(Model model) {
+
 		// 공지사항 리스트 조회하기
 		List<Notice> noticeList = noticeService.getNoticeAll();
 		

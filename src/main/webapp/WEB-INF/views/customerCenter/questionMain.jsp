@@ -12,6 +12,11 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="/cinemabox/resources/js/common.js"></script>
 <title>TITLE</title>
+<style type="text/css">
+ a:link { color: black; text-decoration: none;}
+ a:visited { color: black; text-decoration: none;}
+ a:hover { color: #ecbd35; text-decoration: underline;}
+</style>
 </head>
 <body>
 <div class="container-fluid">
@@ -42,8 +47,8 @@
 	</div>
 		
 		<div class="col-8">
-			<div class="mb-5">
-				<h4>자주찾는 서비스</h4>
+			<div style="margin-bottom: 80px;">
+			<h5 style="margin-bottom: 20px;">자주찾는서비스</h5>
 					<ul class="list-group list-group-horizontal">
 						<li class="list-group-item flex-fill text-center">
 							<a href=""><img src="../resources/images/customerCenter/looking.png"
@@ -62,25 +67,26 @@
 								 alt="문의" width="53px"height="55px" style="margin:15px"></a><div>문의</div></li>
 					</ul>	
 				</div>	
-				<div>
-					<a href="../notice/list"><span class="tit">공지사항</span></a>
-					<table>
-						<tr>
-							<td><a href="detail?no=${noticeList.no }">${noticeList.title }</a></td>
-						</tr>
-						<tr>
-							<td><a href="../notice/list"></a></td>
-						</tr>
-						<tr>
-							<td><a href="../notice/list"></a></td>
-						</tr>
-						<tr>
-							<td><a href="../notice/list"></a></td>
-						</tr>
+				<div class="notice">
+					<div class="mb-2">
+						<button type="button" class="btn btn-outline-warning" style="color: #846e4d" onclick="location.href='../notice/list'">공지사항</button>
+					</div>
+					<table class="table">
+						<colgroup>
+							<col width="*">
+							<col width="15%">
+						</colgroup>
+							<tbody>
+								<c:forEach var="noticeList" items="${noticeList }">
+								<tr>
+									<td><a class="text-decoration-none" href="../notice/detail?no=${noticeList.no }">${noticeList.title }</a></td>
+									<td><fmt:formatDate value="${noticeList.creatDate }" pattern="yyyy.MM.dd"/></td>
+								</tr>
+								</c:forEach>
+							</tbody>
 					</table>
-				</div>
-				
-	</div>
+				</div>		
+		</div>
 		
 	
 		

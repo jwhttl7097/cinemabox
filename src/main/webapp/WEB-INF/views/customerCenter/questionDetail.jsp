@@ -12,6 +12,44 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="/cinemabox/resources/js/common.js"></script>
 <title>TITLE</title>
+<style type="text/css">
+ a:link { color: black; text-decoration: none;}
+ a:visited { color: black; text-decoration: none;}
+ a:hover { color: #ecbd35; text-decoration: underline;}
+
+.star-rating {
+  display: flex;
+  flex-direction: row-reverse;
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+  justify-content: space-around;
+  padding: 0 0.2em;
+  text-align: center;
+  width: 5em;
+}
+ 
+.star-rating input {
+  display: none;
+}
+ 
+.star-rating label {
+  -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
+  -webkit-text-stroke-width: 2.3px;
+  -webkit-text-stroke-color: #2b2a29;
+  cursor: pointer;
+}
+ 
+.star-rating :checked ~ label {
+  -webkit-text-fill-color: gold;
+}
+ 
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+  -webkit-text-fill-color: #fff58c;
+}
+
+</style>
+
 </head>
 <body>
 <div class="container-fluid">
@@ -26,10 +64,10 @@
 		<table class="table">
 		<tbody>
 			<tr>
-				<td><a href="../customerCenter/main">고객센터</a></td>
+				<td><a href="../customerCenter/main">고객센터 메인</a></td>
 			</tr>
 			<tr>
-				<td><a href="list">공지사항</a></td>
+				<td><a href="../notice/list">공지사항</a></td>
 			</tr>
 			<tr>
 				<td><a href="../customerCenter/userInfo">1:1 문의</a></td>
@@ -43,7 +81,7 @@
 							<col width="*">
 							<col width="25%">
 						</colgroup>
-				<thead style="background: #FFBF00">
+				<thead style="background: #fbe5a5">
 					<tr >
 						<th>${questionDetail.questionTitle }</th>
 						<th>등록일<span><fmt:formatDate value="${questionDetail.questionDate }" pattern="yyyy.MM.dd"/></span></th>
@@ -64,43 +102,29 @@
 			
 		</div>
 		
-		<div class="mb-3">
+		<div class="mb-5">
 			<h5>답글</h5>
 			<h6 class="text-end">답변일:<fmt:formatDate value="${questionDetail.answerDate }" pattern="yyyy.MM.dd"/></h6>
 			<ul class="list-group">
 				<li class="list-group-item flex-fill" style="padding:35px;">${questionDetail.answerContent }</li>
 			</ul>
 		</div>
-		
-		<table>
-			<tbody>
-			<tr>
-                <th scope="row"><strong>만족도</strong></th>
-               
-                <td id="tdPointArea">
-                    
-                            <input type="radio" id="rdoPoint_317" name="rdoPoint" value="317"> 
-                            <label for="rdoPoint_317">매우만족</label>
-                        
-                            <input type="radio" id="rdoPoint_318" name="rdoPoint" value="318"> 
-                            <label for="rdoPoint_318">만족</label>
-                        
-                            <input type="radio" id="rdoPoint_319" name="rdoPoint" value="319"> 
-                            <label for="rdoPoint_319">보통</label>
-                        
-                            <input type="radio" id="rdoPoint_320" name="rdoPoint" value="320"> 
-                            <label for="rdoPoint_320">불만족</label>
-                        
-                            <input type="radio" id="rdoPoint_321" name="rdoPoint" value="321"> 
-                            <label for="rdoPoint_321">매우불만족</label>
-                        
-                    <button type="button" id="btnCheckReplyPoint" class="round gray"><span>평가하기</span></button>
-                </td>
-            </tr>
-            </tbody>
-		</table>
-		
-		
+		<form action="" class="review" id="satisfaction"> 
+            <h5>만족도</h5>
+            <div class="star-rating space-x-4 mx-auto">
+				<input type="radio" id="5-stars" name="rating" value="5"/>
+				<label for="5-stars" class="star pr-4">★</label>
+				<input type="radio" id="4-stars" name="rating" value="4" />
+				<label for="4-stars" class="star">★</label>
+				<input type="radio" id="3-stars" name="rating" value="3"/>
+				<label for="3-stars" class="star">★</label>
+				<input type="radio" id="2-stars" name="rating" value="2"/>
+				<label for="2-stars" class="star">★</label>
+				<input type="radio" id="1-star" name="rating" value="1" />
+				<label for="1-star" class="star">★</label>
+			</div>
+			<button type="submit" class="btn btn-warning btn-sm" style="float: right;" onclick="saticefaction()">완료</button>
+		</form>
 		
 	</div>	
 				
@@ -117,6 +141,33 @@ function del(no) {
 		location.href='delete?questionNo='+questionNo;
 	}
 }	
+
+$(function() {
+	$("#satisfaction").submit(function() {
+		
+		var star = (
+		$("#1-star").val() = 1;
+		$("#2-stars").val() = 2;
+		$("#3-stars").val() = 3;
+		$("#4-stars").val() = 4;
+		$("#5-stars").val() = 5;
+		);
+		
+		$.ajax({
+			type: "POST",
+			url: "/question/satisfaction",
+			data: star,
+			async:false,
+			dataType: 'json',
+			success: function(count) {
+				questionCount = count;
+			},
+			complete: function() {
+				alert("감사합니다~^^");
+			}
+		});
+	})
+
 
 </script>
 </body>

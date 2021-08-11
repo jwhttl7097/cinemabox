@@ -57,5 +57,12 @@ public class NoticeServiceImpl implements NoticeService {
 		
 	}
 
+	@Override
+	public List<Notice> noticeMain(){
+		// 공지사항 조회 
+		List<Notice> noticeList = noticeDao.noticeMain();
+		// 공지사항을 반환한다.
+		return noticeList;
+	}
 
 }

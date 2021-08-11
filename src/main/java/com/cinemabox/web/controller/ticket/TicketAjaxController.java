@@ -3,6 +3,7 @@ package com.cinemabox.web.controller.ticket;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -22,6 +23,7 @@ public class TicketAjaxController {
 
 	@Autowired TicketService ticketService;
 	
+	//영화목록 불러오기
 	@RequestMapping("/movie")
 	public @ResponseBody ResponseEntity<List<TicketDto>> movieList
 	(@RequestParam(value="sort",required = false)String sort, @RequestParam(value="theaterNo",required = false) int theaterNo){
@@ -32,6 +34,7 @@ public class TicketAjaxController {
 		return new ResponseEntity<List<TicketDto>>(movieList, HttpStatus.OK);
 	}
 	
+	//선택한 영화 시간 불러오기
 	@RequestMapping("/time")
 	public @ResponseBody ResponseEntity<List<TicketDto>> movieTime
 	(//@RequestParam(value="hallNo",required = false) int hallNo
@@ -47,20 +50,28 @@ public class TicketAjaxController {
 		return new ResponseEntity<List<TicketDto>>(movieTime, HttpStatus.OK);
 	}
 	
+	//선택한 시간의 영화 정보 및 좌석 정보 불러오기
 	@RequestMapping("/selectMovie")
-	public @ResponseBody ResponseEntity<TicketDto> movie
+	public @ResponseBody ResponseEntity<Map<String, Object>> movieAndSeat
 	(@RequestParam(value="theaterNo",required = false) int theaterNo
 	,@RequestParam(value="movieNo",required = false)int movieNo
 	,@RequestParam(value="screeningDate",required = false) @DateTimeFormat(pattern = "yyyyMMdd") Date screeningDate
-	,@RequestParam(value="time",required = false) String time){
-		HashMap<String, Object> map = new HashMap<String, Object>();
+	,@RequestParam(value="time",required = false) String time
+	,@RequestParam(value="screeningNo",required = false)int screeningNo){
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("theaterNo",theaterNo);
 		map.put("movieNo",movieNo);
 		map.put("screeningDate",screeningDate);
 		map.put("time",time);
-		TicketDto movie = ticketService.getMovieByTime(map);
-		return new ResponseEntity<TicketDto>(movie, HttpStatus.OK);
+		TicketDto movieInfo = ticketService.getMovieByTime(map);
+
+		List<TicketDto> ticketInfo = ticketService.getTicketStatusByScreeningNo(screeningNo);
+		
+		Map<String, Object> info = new HashMap<String, Object>();
+		info.put("movieInfo", movieInfo);
+		info.put("ticketInfo", ticketInfo);
+		
+		return new ResponseEntity<Map<String, Object>>(info, HttpStatus.OK);
 	}
-	
 	
 }

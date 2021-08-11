@@ -78,6 +78,7 @@ public class QuestionServiceImpl implements QuestionService {
 		// 메일발송
 		// 메일 전송을 위한 메일 정보 
 		String userMail = answer.getEmail();
+	
 		// gmail로 보내는 권한 부여 
 		Properties props = System.getProperties();
 		props.put("mail.smtp.user", "abpple0405@gmail.com");
@@ -93,7 +94,7 @@ public class QuestionServiceImpl implements QuestionService {
 		 Authenticator auth = new com.cinemabox.web.utils.MyAuthentication();
 		 
 		// 메일 제목, 내용 
-		 String subject = "문의에 대한 답변입니다!";
+		 String subject = "[CINEMA BOX]문의에 대한 답변입니다!";
 		 String content = "";
 		 String fromName = "cinemabox";
 		  
