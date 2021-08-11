@@ -22,4 +22,6 @@ public class TicketDto {
 	private String age;
 	private String movieStatus;
 	private String hallName;
+	private String ticketStatus;
+	private int seatNo;
 }
