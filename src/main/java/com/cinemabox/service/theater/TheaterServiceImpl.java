@@ -1,5 +1,6 @@
 package com.cinemabox.service.theater;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.jsoup.Jsoup;
@@ -20,9 +21,31 @@ public class TheaterServiceImpl implements TheaterService{
 	@Autowired
 	TheaterDao theaterDao;
 	
+	// 전체 각 지역들의 극장 정보
+	@Override
+	public List<Theater> allLocations() {
+		return theaterDao.allLocations();
+	}
+	
 	@Override
 	public List<Theater> getAllLocation(String location) {
 		return theaterDao.getAllLocation(location);
+	}
+	
+	@Override
+	public List<Theater> specialHallLoca(String specialHall) {
+		List<Theater> allLoactions = theaterDao.allLocations();
+		List<Theater> specialHallInfo = new ArrayList<>();
+		
+		for (Theater theater : allLoactions) {
+			String[] str = theater.getTheaterFacility().split(" ");
+			for (String strFacility : str) {
+				if(specialHall.equals(strFacility)) {
+					specialHallInfo.add(theater);
+				}
+			}
+		}
+		return specialHallInfo;
 	}
 	
 	@Override

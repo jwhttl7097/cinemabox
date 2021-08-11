@@ -44,7 +44,7 @@
 					<c:forEach var="item" items="${locations }">
 						<div class='col-3 theaterLi' style="border-right: 1px solid #ffc107">
 							<ul class='list-group list-group-horizontal'>
-								<li class="list-group-item"><a href="detailTheater?no=${item.theaterNo }&number=${item.theaterNumber}" class="text-body nav-link p-0">${item.theaterName }</a></li>
+								<li class="list-group-item" style="border-left:none;"><a href="detailTheater?no=${item.theaterNo }&number=${item.theaterNumber}" class="text-body nav-link p-0">${item.theaterName }</a></li>
 							</ul>
 						</div>
 					</c:forEach>
@@ -106,7 +106,10 @@
 	<script type="text/javascript">
 		$(function() {
 			
-			$(".theaterLi:last-child").css('border-right', 'none');
+			$("#theater-location div:eq(3)").css('border-right', 'none');
+			$("#theater-location div:eq(7)").css('border-right', 'none');
+			$("#theater-location div:eq(11)").css('border-right', 'none');
+			$("#theater-location div:eq(15)").css('border-right', 'none');
 			
 			$("#theater-place li").click(
 					function() {
@@ -125,10 +128,16 @@
 									var $div = $("<div class='col-3'></div>");
 									var $ul = $("<ul class='list-group list-group-horizontal'></ul>")
 									var $li = $("<li class='list-group-item' ></li>")
-									var $a = $("<a class='text-body nav-link'></a>")
+									var $a = $("<a class='text-body nav-link ajax-a'></a>")
 									$a.attr("href", "detailTheater?no="+ item.theaterNo + "&number=" + item.theaterNumber).text(item.theaterName).css("border-right", "1px solid #ffc107").appendTo($li).appendTo($ul).appendTo($div);
 									$loca.append($div);
 								})
+								$(".ajax-a:eq(3)").css('border-right', 'none');
+								$(".ajax-a:eq(7)").css('border-right', 'none');
+								$(".ajax-a:eq(11)").css('border-right', 'none');
+								$(".ajax-a:eq(15)").css('border-right', 'none');
+								$(".ajax-a:eq(19)").css('border-right', 'none');
+								$(".ajax-a:eq(23)").css('border-right', 'none');
 							},
 							error: function() {
 								alert("지역 조회중 오류가 발생하였습니다.");

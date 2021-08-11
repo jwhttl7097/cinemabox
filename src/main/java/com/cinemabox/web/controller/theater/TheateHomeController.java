@@ -35,7 +35,7 @@ public class TheateHomeController{
 	}
 	
 	@GetMapping("/specialHall")
-	public String theaterHome() {
+	public String specialHall() {
 		return "theater/specialHall";	
 	}
 
