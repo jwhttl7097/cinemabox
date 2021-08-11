@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
-<mapper namespace="com.cinemabox.dao.CustomerCenterDao">
+<mapper namespace="com.cinemabox.dao.Question.CustomerCenterDao">
 
 <select id="getQuestionByName" parameterType="HashMap" resultType="com.cinemabox.vo.Question">
 		select 
@@ -41,7 +41,7 @@
 		insert into cinemabox_question
 		(question_no, question_title, question_content, question_date, question_name, question_email, question_phone)
 		values
-		(question_seq.nextval, #{questionTitle}, #{questionContent},  #{questionDate},  #{name},  #{email},  #{phone})
+		(question_seq.nextval, #{questionTitle}, #{questionContent},  sysDate,  #{name},  #{email},  #{phone})
 	</insert>
 	
 	
@@ -71,17 +71,22 @@
 		update
 			cinemabox_question
 		set		
-			answer_content	= #{answerContent},			
-			answer_date		= #{answerDate}					
+			answer_content	= #{answerContent}				
 			
 		where
 			question_no = #{questionNo}
 	</update>
-
-
-
-
-
+	
+	
+	<select id="getQuestionCountByName" parameterType="com.cinemabox.dto.Question.QuestionDto" resultType="int">
+		select 
+			count(*)
+		from
+			cinemabox_question
+		where
+			question_name = #{name}
+			and question_email = #{email}
+	</select>
 
 
 </mapper>
