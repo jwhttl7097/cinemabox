@@ -198,7 +198,7 @@ p {
 			    				<ul class="nav justify-content-center" id="nav-ul">
 								</ul>
 			    			</div>
-			    			<div class="col-12 mt-2" id="specialIntroImg">
+			    			<div class="col-12 mt-2" id="specialIntroImg" style="padding: 3px;">
 			    			</div>
 			    		</div>
 			    	</div>
@@ -261,6 +261,7 @@ p {
 				var $MX = 'MX';
 				var $KIDS = 'KIDS';
 				var $name = '';
+				console.log($specialHallName);
 				if ('돌비' == $specialHallName) {
 					$name = $dolby;
 				} else if ('부티크' == $specialHallName) {
@@ -279,8 +280,15 @@ p {
 					dataType: "json",
 					success: function(specialHallName) {
 						$('#nav-ul').empty();
-						var specialImg = '<img src="resources/images/specialHall/'+$name+'-intro.png" alt="" style="margin-right: 1px;"/>';
-						$('#specialIntroImg').append(specialImg);
+						$('#specialIntroImg').empty();
+						if ('부티크' == $specialHallName) {
+							var specialImg = '<img src="resources/images/specialHall/'+$name+'-1-intro.png" alt="" style="width: 1117px; height: 1020 px"/>';
+							specialImg += '<img src="resources/images/specialHall/'+$name+'-intro.png" alt="" style="width: 1117px; height: 1020 px"/>';
+							$('#specialIntroImg').append(specialImg);
+						} else {
+							var specialImg = '<img src="resources/images/specialHall/'+$name+'-intro.png" alt="" style="width: 1117px; height: 1020 px"/>';
+							$('#specialIntroImg').append(specialImg);
+						}
 						if ('돌비' == $specialHallName) {
 							$('#exampleModalLabel').text('특별관 ' + $dolby);
 						} else if ('부티크' == $specialHallName) {
