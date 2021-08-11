@@ -10,6 +10,7 @@
 	rel="stylesheet">
 <link rel="stylesheet" href="/cinemabox/resources/css/common.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="/cinemabox/resources/js/common.js"></script>
@@ -93,8 +94,8 @@ p {
 									<div style="padding: 30px 20px 30px 30px; color: #fff; background-color: transparent;">
 										<p class="tit">COMFORT</p>
 										<p class="txt" style="margin-top: -25px;">
-											더욱 편안한 영화 관람을 위한<br>
-											다양한 여유공간
+											더욱 편안한 영화 관람을 <br/>
+											위한 다양한 여유공간
 										</p>
 									</div>
 									<div class="hover">
@@ -112,7 +113,7 @@ p {
 									<div style="padding: 30px 20px 30px 30px; color: #fff; background-color: transparent;">
 										<p class="tit">DOLBY CINEMA</p>
 										<p class="txt" style="margin-top: -25px;">
-											국내 최초로 메가박스가 선보이는<br>
+											국내 최초로 CINEMA BOX가 선보이는<br>
 											세계 최고 기술력의 몰입 시네마
 										</p>
 									</div>
@@ -149,7 +150,7 @@ p {
 										<p class="tit" style="margin-top: -5px;">MX</p>
 										<p class="txt" style="margin-top: -25px;">
 											진정한 영화 사운드를 통한 최고의 영화!<br>
-											메가박스의 차세대 표준 상영관
+											CINEMA BOX의 차세대 표준 상영관
 										</p>
 									</div>
 									<div class="hover">
@@ -196,6 +197,8 @@ p {
 			    			<div class="col-12" style="border-bottom: 1px solid #ffc107">
 			    				<ul class="nav justify-content-center" id="nav-ul">
 								</ul>
+			    			</div>
+			    			<div class="col-12 mt-2" id="specialIntroImg">
 			    			</div>
 			    		</div>
 			    	</div>
@@ -252,6 +255,23 @@ p {
 			$('.detailBtn').click(function() {
 				$('#modalDetail').show();
 				var $specialHallName = $(this).data('special');
+				var $dolby = 'DOLBY CINEMA';
+				var $boutique = 'THE BOUTIQUE';
+				var $comfort = 'COMFORT';
+				var $MX = 'MX';
+				var $KIDS = 'KIDS';
+				var $name = '';
+				if ('돌비' == $specialHallName) {
+					$name = $dolby;
+				} else if ('부티크' == $specialHallName) {
+					$name = $boutique;
+				} else if ('컴포트' == $specialHallName) {
+					$name = $comfort;
+				} else if ('MX' == $specialHallName) {
+					$name = $MX;
+				} else if ('KIDS' == $specialHallName) {
+					$name = $KIDS;
+				}
 				$.ajax({
 					type: "GET",
 					url: "theater/specialDetail",
@@ -259,11 +279,24 @@ p {
 					dataType: "json",
 					success: function(specialHallName) {
 						$('#nav-ul').empty();
-						$('#exampleModalLabel').text('특별관 ' + $specialHallName);
+						var specialImg = '<img src="resources/images/specialHall/'+$name+'-intro.png" alt="" style="margin-right: 1px;"/>';
+						$('#specialIntroImg').append(specialImg);
+						if ('돌비' == $specialHallName) {
+							$('#exampleModalLabel').text('특별관 ' + $dolby);
+						} else if ('부티크' == $specialHallName) {
+							$('#exampleModalLabel').text('특별관 ' + $boutique);
+						} else if ('컴포트' == $specialHallName) {
+							$('#exampleModalLabel').text('특별관 ' + $comfort);
+						} else if ('MX' == $specialHallName) {
+							$('#exampleModalLabel').text('특별관 ' + $MX);
+						} else if ('KIDS' == $specialHallName) {
+							$('#exampleModalLabel').text('특별관 ' + $KIDS);
+						}
 						$.each(specialHallName, function(index, item) {
-							var content =	'<li class="nav-item"><a href="detailTheater?no='+item.theaterNo+'&number='+item.theaterNumber+'" class="nav-link text-muted">'+item.theaterName+'</a></li>';
+							var content =	'<li class="nav-item"><a href="detailTheater?no='+item.theaterNo+'&number='+item.theaterNumber+'" class="nav-link text-muted"> <i class="bi bi-arrow-right-short"></i> '+item.theaterName+'</a></li>';
 							$('#nav-ul').append(content);
 						})
+						
 					},
 					error: function() {
 						alert("특별관이름 전달중 오류가 발생하였습니다.");
