@@ -116,15 +116,16 @@
 		    and s.SCREENING_NO = #{screeningNo}
 	</select>
 	
-	<select id="getAllSeat" resultType="com.cinemabox.vo.Seat">
+	<select id="getAllSeat" parameterType="int" resultType="com.cinemabox.dto.ticket.TicketDto">
 		select
-			SEAT_NO as seatNo,
-			SEAT_COL as seatCol,
-			SEAT_ROW as seatRow,
-			HALL_NO as hallNo
+			s.seat_no as seatNo, s.seat_col as seatCol, s.seat_row as seatRow,
+			t.screening_no as screeningNo,
+			t.ticket_reservation_status as ticketStatus
 		from
-			CINEMABOX_SEAT
+			CINEMABOX_SEAT s, CINEMABOX_TICKET t, CINEMABOX_SCREENING sc
 		where
-			HALL_NO = 1
+			s.seat_no = t.seat_no
+			and t.screening_no = sc.screening_no
+			and t.screening_no = #{value}
 	</select>
 </mapper>
