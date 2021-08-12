@@ -14,6 +14,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <title>CINEMA BOX</title>
 <style type="text/css">
+	body{overflow-x: hidden;}
 	.container-fluid{position: relative;}
 	header .navbar-brand, #top-nav>li>a, #mainnav-02>li>a{color:white !important;}
 	.mainnav>a{color:white !important;}
@@ -402,20 +403,20 @@
 	<!-- 
 		Trailer 모달 부분
 	 -->
-	<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  		<div class="modal-dialog">
-    		<div class="modal-content">
+	<div class="modal fade" id="staticBackdrop" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  		<div class="modal-dialog modal-dialog-centered modal-xl">
+    		<div class="modal-content w-100">
       			<div class="modal-header">
         			
         			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       			</div>
       			<div class="modal-body">
-       			 	<iframe width="560" height="315" src="" title="YouTube video player" 
+       			 	<iframe width="100%" height="500" src="" title="YouTube video player" 
       					frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       			</div>
-      			<div class="modal-footer">
-        			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-     	 		</div>
+<!--       			<div class="modal-footer"> -->
+<!--         			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+<!--      	 		</div> -->
     		</div>
   	  	</div>
 	</div>
