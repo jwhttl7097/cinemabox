@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.cinemabox.dto.ticket.TicketDto;
+import com.cinemabox.vo.Seat;
 
 public interface TicketService {
 
@@ -34,6 +35,12 @@ public interface TicketService {
 	 * @return 좌석상태
 	 */
 	List<TicketDto> getTicketStatusByScreeningNo(int screeningNo);
+	
+	/**
+	 * 1관의 모든 좌석을 가져온다.
+	 * @return
+	 */
+	List<Seat> getAllSeat();
 
 
 }

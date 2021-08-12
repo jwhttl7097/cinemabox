@@ -93,69 +93,29 @@
 							<span class="text-muted" style="font-size:1.3rem;">S&nbsp;C&nbsp;R&nbsp;E&nbsp;E&nbsp;N</span>
 						</div>
 						<div class="p-5 row justify-content-center">
-							<!-- 좌석 행 시작  -->
-							<div class="col-8 row">
-								<div class="col text-end text-white">A</div>
-								<div class="col text-center">
-									<input type="checkbox" name="seat" value="1"> 
-									<input type="checkbox" name="seat" value="1"> 
+							<!-- 좌석 행 시작 seats -->
+							<c:forEach var="i" items="${seats}" begin="0" step="10" end="69">
+								<div class="col-8 row mt-2">
+									<div class="col text-end text-white">${i.seatCol }</div>
+									<div class="col text-center">
+							<c:forEach var="j" items="${seats}" begin="0" step="1" end="1">
+										<label class="text-white"><i class="fas fa-couch"></i></label>
+										<input type="checkbox" name="seat" value="${j.seatRow }"> 
+							</c:forEach>
+									</div>
+									<div class="col text-center">
+							<c:forEach var="x" items="${seats}" begin="0" step="1" end="5">
+										<input type="checkbox" name="seat" value="${x.seatRow }"> 
+							</c:forEach>
+									</div>
+									<div class="col text-center">
+							<c:forEach var="j" items="${seats}" begin="0" step="1" end="1">
+										<input type="checkbox" name="seat" value="${j.seatRow }"> 
+							</c:forEach>
+									</div>
+									<div class="col"></div>
 								</div>
-								<div class="col-5 text-center">
-									<input type="checkbox" name="seat" value="1"> 
-									<input type="checkbox" name="seat" value="1"> 
-									<input type="checkbox" name="seat" value="1"> 
-									<input type="checkbox" name="seat" value="1"> 
-									<input type="checkbox" name="seat" value="1"> 
-									<input type="checkbox" name="seat" value="1"> 
-								</div>
-								<div class="col text-center">
-									<input type="checkbox" name="seat" value="1"> 
-									<input type="checkbox" name="seat" value="1"> 
-								</div>
-								<div class="col"></div>
-							</div> 
-							
-							<div class="col-8 row mt-2">
-								<div class="col text-end text-white">B</div>
-								<div class="col text-center">
-									<input type="checkbox" name="seat" value="1"> 
-									<input type="checkbox" name="seat" value="1"> 
-								</div>
-								<div class="col-5 text-center">
-									<input type="checkbox" name="seat" value="1"> 
-									<input type="checkbox" name="seat" value="1"> 
-									<input type="checkbox" name="seat" value="1"> 
-									<input type="checkbox" name="seat" value="1"> 
-									<input type="checkbox" name="seat" value="1"> 
-									<input type="checkbox" name="seat" value="1"> 
-								</div>
-								<div class="col text-center">
-									<input type="checkbox" name="seat" value="1"> 
-									<input type="checkbox" name="seat" value="1"> 
-								</div>
-								<div class="col"></div>
-							</div> 							
-							
-							<div class="col-8 row mt-2">
-								<div class="col text-end text-white">C</div>
-								<div class="col text-center">
-									<input type="checkbox" name="seat" value="1"> 
-									<input type="checkbox" name="seat" value="1"> 
-								</div>
-								<div class="col-5 text-center">
-									<input type="checkbox" name="seat" value="1"> 
-									<input type="checkbox" name="seat" value="1"> 
-									<input type="checkbox" name="seat" value="1"> 
-									<input type="checkbox" name="seat" value="1"> 
-									<input type="checkbox" name="seat" value="1"> 
-									<input type="checkbox" name="seat" value="1"> 
-								</div>
-								<div class="col text-center">
-									<input type="checkbox" name="seat" value="1"> 
-									<input type="checkbox" name="seat" value="1"> 
-								</div>
-								<div class="col"></div>
-							</div> 							
+							</c:forEach>
 							<!-- 좌석 행 끝 -->
 						</div>
 					</div>
@@ -182,6 +142,7 @@ $(function(){
 	   $(this).children('.subnav').stop().slideUp();
 	})
 
+	
 })
 </script>
 </body>

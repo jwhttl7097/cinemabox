@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.cinemabox.dto.ticket.TicketDto;
+import com.cinemabox.vo.Seat;
 
 
 public interface TicketDao {
@@ -15,6 +16,6 @@ public interface TicketDao {
 	List<TicketDto> getTicketStatusByScreeningNo(int screeningNo);
 	
 	//좌석
-	
+	List<Seat> getAllSeat();
 	//결제
 }
