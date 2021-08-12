@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.cinemabox.dto.ticket.TicketDto;
-import com.cinemabox.vo.Seat;
 
 public interface TicketService {
 
@@ -37,10 +36,11 @@ public interface TicketService {
 	List<TicketDto> getTicketStatusByScreeningNo(int screeningNo);
 	
 	/**
-	 * 1관의 모든 좌석을 가져온다.
-	 * @return
+	 * 상영번호를 전달하여 해당 상영스케쥴 정보 중 좌석번호, 좌석예매상태, 상영정보 목록을 가져온다.
+	 * @param screeningNo 상영번호
+	 * @return 좌석번호, 좌석예매상태, 상영정보 목록
 	 */
-	List<Seat> getAllSeat();
+	List<TicketDto> getAllSeat(int screeningNo);
 
 
 }

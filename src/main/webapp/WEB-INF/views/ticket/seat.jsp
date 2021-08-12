@@ -94,24 +94,24 @@
 						</div>
 						<div class="p-5 row justify-content-center">
 							<!-- 좌석 행 시작 seats -->
-							<c:forEach var="i" items="${seats}" begin="0" step="10" end="69">
+							<c:forEach var="i" items="${seats}" begin="0" step="10" end="69" varStatus="status">
 								<div class="col-8 row mt-2">
 									<div class="col text-end text-white">${i.seatCol }</div>
 									<div class="col text-center">
-							<c:forEach var="j" items="${seats}" begin="0" step="1" end="1">
-										<label class="text-white"><i class="fas fa-couch"></i></label>
-										<input type="checkbox" name="seat" value="${j.seatRow }"> 
-							</c:forEach>
+										<input type="checkbox" name="seat" value="${i.seatNo}" checked="${i.ticketStatus eq 'Y' ? checked : '' }"> 
+										<input type="checkbox" name="seat" value="${i.seatNo + 1}" checked="${i.ticketStatus eq 'Y' ? checked : '' }"> 
 									</div>
 									<div class="col text-center">
-							<c:forEach var="x" items="${seats}" begin="0" step="1" end="5">
-										<input type="checkbox" name="seat" value="${x.seatRow }"> 
-							</c:forEach>
+										<input type="checkbox" name="seat" value="${i.seatNo + 2}" ${i.ticketStatus eq 'Y' ? checked : '' }"> 
+										<input type="checkbox" name="seat" value="${i.seatNo + 3}" checked="${i.ticketStatus eq 'Y' ? checked : '' }"> 
+										<input type="checkbox" name="seat" value="${i.seatNo + 4}" checked="${i.ticketStatus eq 'Y' ? checked : '' }">
+										<input type="checkbox" name="seat" value="${i.seatNo + 5}" checked="${i.ticketStatus eq 'Y' ? checked : '' }"> 
+										<input type="checkbox" name="seat" value="${i.seatNo + 6}" checked="${i.ticketStatus eq 'Y' ? checked : '' }"> 
+										<input type="checkbox" name="seat" value="${i.seatNo + 7}" checked="${i.ticketStatus eq 'Y' ? checked : '' }"> 
 									</div>
 									<div class="col text-center">
-							<c:forEach var="j" items="${seats}" begin="0" step="1" end="1">
-										<input type="checkbox" name="seat" value="${j.seatRow }"> 
-							</c:forEach>
+										<input type="checkbox" name="seat" value="${i.seatNo + 8}" checked="${i.ticketStatus eq 'Y' ? checked : '' }"> 
+										<input type="checkbox" name="seat" value="${i.seatNo + 9}" checked="${i.ticketStatus eq 'Y' ? checked : '' }"> 
 									</div>
 									<div class="col"></div>
 								</div>

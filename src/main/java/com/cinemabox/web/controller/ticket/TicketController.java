@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.cinemabox.dto.ticket.TicketDto;
 import com.cinemabox.service.Ticket.TicketService;
-import com.cinemabox.vo.Seat;
 
 @Controller
 @SessionAttributes({"ticketDto"})
@@ -29,8 +28,7 @@ public class TicketController{
 	
 	@PostMapping(path = {"/seat"})
 	public String seat(Model model, @ModelAttribute("ticketDto") TicketDto ticketDto) {
-		System.out.println("========" + ticketDto.getTitle());
-		List<Seat> seats = ticketService.getAllSeat();
+		List<TicketDto> seats = ticketService.getAllSeat(ticketDto.getScreeningNo());
 		model.addAttribute("seats", seats);
 		return "ticket/seat";	
 	}
