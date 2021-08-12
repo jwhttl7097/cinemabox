@@ -59,7 +59,7 @@
 						<p class="cont"><i class="fas fa-users"></i>&nbsp;<fmt:formatNumber value="${movieDetail.cumulativeAudienceCnt }" type="number" /> 명</p>
 					</div>
 				</div>
-				<button class="btn btn-warning col-12 mt-2 fw-bold">예매하기</button>
+				<button class="btn btn-warning col-12 mt-2 fw-bold" onclick="location.href='ticket?location=서울&theaterNo=10001&movieNo=${movie.no }'">예매하기</button>
 			</div>
 			<div class="col-4">
 				<div class="poster p-5">
@@ -125,37 +125,44 @@
 			<div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
 				<div class="row mt-5">
 			        <div class="col-md-12">
-						<form action="" class="fomr-review"> 
-							<div class="input-group justify-content-center">
-							<div class="stars">
-									<label class="rate">
-										<input type="radio" name="radio1" id="star1" value="star1">
-										<div class="face"></div>
-										<i class="far fa-star star one-star"></i>
-									</label>
-									<label class="rate">
-										<input type="radio" name="radio1" id="star2" value="star2">
-										<div class="face"></div>
-										<i class="far fa-star star two-star"></i>
-									</label>
-									<label class="rate">
-										<input type="radio" name="radio1" id="star3" value="star3">
-										<div class="face"></div>
-										<i class="far fa-star star three-star"></i>
-									</label>
-									<label class="rate">
-										<input type="radio" name="radio1" id="star4" value="star4">
-										<div class="face"></div>
-										<i class="far fa-star star four-star"></i>
-									</label>
-									<label class="rate">
-										<input type="radio" name="radio1" id="star5" value="star5">
-										<div class="face"></div>
-										<i class="far fa-star star five-star"></i>
-									</label>
+						<form action="movieDeatil?no=${movieDetail.no}" method="post" class="fomr-review"> 
+							<div class="justify-content-center row">
+								<div class="col-12 input-group">
+									<div class="stars col-2">
+											<label class="rate">
+												<input type="radio" name="radio1" id="star1" value="star1">
+												<div class="face"></div>
+												<i class="far fa-star star one-star"></i>
+											</label>
+											<label class="rate">
+												<input type="radio" name="radio1" id="star2" value="star2">
+												<div class="face"></div>
+												<i class="far fa-star star two-star"></i>
+											</label>
+											<label class="rate">
+												<input type="radio" name="radio1" id="star3" value="star3">
+												<div class="face"></div>
+												<i class="far fa-star star three-star"></i>
+											</label>
+											<label class="rate">
+												<input type="radio" name="radio1" id="star4" value="star4">
+												<div class="face"></div>
+												<i class="far fa-star star four-star"></i>
+											</label>
+											<label class="rate">
+												<input type="radio" name="radio1" id="star5" value="star5">
+												<div class="face"></div>
+												<i class="far fa-star star five-star"></i>
+											</label>
+									</div>
+									<div class="input-group col">
+										<textarea class="form-control" placeholder="${empty LOGINED_USER ?'로그인 후 작성 가능합니다.':'관람평을 작성해주세요.'}" ${empty LOGINED_USER ?"readonly":""} style="resize: none;"></textarea>
+										<button type="submit" class="btn btn-warning">작성</button>
+									</div>
+		<!-- 								<input type="text" class="input-review mx-2"  -->
+		<%-- 								placeholder="${empty LOGINED_USER ?'로그인 후 작성 가능합니다.':'관람평을 작성해주세요' }"  --%>
+		<%-- 								readonly="${empty LOGINED_USER ?'readonly':'' }"> --%>
 								</div>
-								<input type="text" class="input-review mx-2" placeholder="관람평을 작성해주세요">
-								<button type="submit" class="btn btn-warning btn-sm">관람평 작성</button>
 							</div>
 						</form>
 			        </div>
@@ -238,7 +245,7 @@ $(function(){
         alert('주소를 복사하였습니다');
     });
     
-	//star rating
+	//star rating(별점)
 	$(document).on({
 		mouseover: function(event) {
 			$(this).find('.far').addClass('star-over');

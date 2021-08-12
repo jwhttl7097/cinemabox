@@ -18,7 +18,7 @@
 	.container-fluid{position: relative;}
 	header .navbar-brand, #top-nav>li>a, #mainnav-02>li>a{color:white !important;}
 	.mainnav>a{color:white !important;}
-	header{width:100%; background-color: rgba(0,0,0,0.5) !important; position: absolute; top: 8.5%; left: 50%; transform: translate(-50%, -50%); z-index: 10;}
+	header{width:100%; background-color: rgba(0,0,0,0.5) !important; position: absolute; top:70px; left: 50%; transform: translate(-50%, -50%); z-index: 10;}
 	
 	.posterinfo{
 		width: 184px;
