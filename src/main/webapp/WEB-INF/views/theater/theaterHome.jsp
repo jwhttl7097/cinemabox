@@ -29,7 +29,7 @@
 			<div id="theater-box">
 				<div class="row">
 					<div id="theater-place" class="col-12">
-						<ul class="list-group list-group-horizontal">
+						<ul class="list-group list-group-horizontal" style="border-bottom: 1px solid #ddd">
 							<li class="list-group-item flex-fill text-center" style="background-color: #ffc107;">서울</li>
 							<li class="list-group-item flex-fill text-center">경기</li>
 							<li class="list-group-item flex-fill text-center">인천</li>
@@ -42,7 +42,7 @@
 				</div>
 				<div class="row" id="theater-location">
 					<c:forEach var="item" items="${locations }">
-						<div class='col-3 theaterLi' style="border-right: 1px solid #ffc107">
+						<div class='col-3 theaterLi' style="border-right: 1px solid #ddd">
 							<ul class='list-group list-group-horizontal'>
 								<li class="list-group-item" style="border-left:none;"><a href="detailTheater?no=${item.theaterNo }&number=${item.theaterNumber}" class="text-body nav-link p-0">${item.theaterName }</a></li>
 							</ul>
@@ -129,7 +129,7 @@
 									var $ul = $("<ul class='list-group list-group-horizontal'></ul>")
 									var $li = $("<li class='list-group-item' ></li>")
 									var $a = $("<a class='text-body nav-link ajax-a'></a>")
-									$a.attr("href", "detailTheater?no="+ item.theaterNo + "&number=" + item.theaterNumber).text(item.theaterName).css("border-right", "1px solid #ffc107").appendTo($li).appendTo($ul).appendTo($div);
+									$a.attr("href", "detailTheater?no="+ item.theaterNo + "&number=" + item.theaterNumber).text(item.theaterName).css("border-right", "1px solid #ddd").appendTo($li).appendTo($ul).appendTo($div);
 									$loca.append($div);
 								})
 								$(".ajax-a:eq(3)").css('border-right', 'none');

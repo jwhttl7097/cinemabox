@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cinemabox.dao.ticket.TicketDao;
 import com.cinemabox.dto.ticket.TicketDto;
+import com.cinemabox.vo.Seat;
 
 @Service
 @Transactional
@@ -32,5 +33,11 @@ public class TicketServiceImpl implements TicketService{
 	@Override
 	public List<TicketDto> getTicketStatusByScreeningNo(int screeningNo) {
 		return ticketDao.getTicketStatusByScreeningNo(screeningNo);
+	}
+	
+	// 좌석
+	@Override
+	public List<Seat> getAllSeat() {
+		return ticketDao.getAllSeat();
 	}
 }

@@ -22,6 +22,8 @@
          cinemabox_theater
       where
          theater_location = #{value}
+      order by convert
+      	 (theater_name, 'ISO2022-KR')
    </select>
    
    <select id="allLocations" resultType="com.cinemabox.vo.Theater">
@@ -40,6 +42,8 @@
          THEATER_NUMBER as theaterNumber
       from
          cinemabox_theater
+      order by convert
+      	 (theater_name, 'ISO2022-KR')
    </select>
    
    <select id="getLocationByNo" parameterType="int" resultType="com.cinemabox.vo.Theater" >
@@ -60,6 +64,8 @@
          cinemabox_theater
       where
          THEATER_NO = #{value}
+      order by convert
+      	 (theater_name, 'ISO2022-KR')
    </select>
 	
 	<update id="updateTheaterDetail" parameterType="com.cinemabox.vo.Theater">

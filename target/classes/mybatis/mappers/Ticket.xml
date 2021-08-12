@@ -115,4 +115,16 @@
 		    s.SCREENING_NO = t.SCREENING_NO
 		    and s.SCREENING_NO = #{screeningNo}
 	</select>
+	
+	<select id="getAllSeat" resultType="com.cinemabox.vo.Seat">
+		select
+			SEAT_NO as seatNo,
+			SEAT_COL as seatCol,
+			SEAT_ROW as seatRow,
+			HALL_NO as hallNo
+		from
+			CINEMABOX_SEAT
+		where
+			HALL_NO = 1
+	</select>
 </mapper>
