@@ -11,6 +11,7 @@ public class AnswerDto {
 	private String answerContent;
 	private Date answerDate;
 	private String email;
+	private char state ='Y';
 
 
 }

@@ -71,7 +71,8 @@
 		update
 			cinemabox_question
 		set		
-			answer_content	= #{answerContent}				
+			answer_content = #{answerContent}	
+			question_state =  #{state}='Y'
 			
 		where
 			question_no = #{questionNo}

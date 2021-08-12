@@ -6,6 +6,6 @@ import lombok.Data;
 public class NoticeDto {
 	private String title;
 	private String content;
-	private String important ="0";
+	private String important;
 	private String division = "전체";
 }
