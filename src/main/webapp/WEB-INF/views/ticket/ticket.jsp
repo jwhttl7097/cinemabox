@@ -50,10 +50,10 @@
 					<h5 class="p-3 text-center text-white m-0">영화관 선택</h5>
 					<nav style="background: white;">
 						<div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-							<button class="nav-link active" id="nav-entire-tab"
+							<button class="nav-link active btn-select-theater" id="nav-entire-tab"
 								data-bs-toggle="tab" data-bs-target="#nav-entire" type="button"
 								role="tab" aria-controls="nav-entire" aria-selected="true"><strong>전체</strong></button>
-							<button class="nav-link" id="nav-special-tab"
+							<button class="nav-link btn-select-theater" id="nav-special-tab"
 								data-bs-toggle="tab" data-bs-target="#nav-special"
 								type="button" role="tab" aria-controls="nav-special"
 								aria-selected="false"><strong>특별관</strong></button>
@@ -164,12 +164,19 @@
 				</div>
 			</div>
 			<!-- 선택한 값 넘겨받는 form -->
-			<form action="post" method="post" id="form-ticketing">
-				<input type="hidden" name="theaterNo">
-				<input type="hidden" name="movieNo">
-				<input type="hidden" name="screeningDate">
-				<input type="hidden" name="screeningTime">
-				<input type="hidden" name="hallNo">
+			<form action="seat" method="post" id="form-ticketing">
+				<input type="hidden" name="screeningNo" id="input-screening-no">
+				<input type="hidden" name="movieNo" id="input-movie-no">
+				<input type="hidden" name="theaterNo" id="input-theater-no">
+				<input type="hidden" name="hallNo" id="input-hall-no">
+				<input type="hidden" name="hallName" id="input-hall-name">
+				<input type="hidden" name="screeningDate" id="input-screening-date">
+				<input type="hidden" name="screeningTime" id="input-screening-time">
+				<input type="hidden" name="screeningEndTime" id="input-screening-end-time">
+				<input type="hidden" name="screeningStatus" id="input-screening-status">
+				<input type="hidden" name="title" id="input-title">
+				<input type="hidden" name="age" id="input-age">
+				<input type="hidden" name="movieStatus" id="input-movie-status">
 			</form>
 		</div>
 	</div>
@@ -181,16 +188,29 @@
 			</div>
 		</div>
 	</div>	
+	<input type="hidden" name="isLogined" value="${not empty LOGINED_USER ? 'yes':'no' }">
 	<%@include file="../common/footer.jsp" %>
 </div>
 <script type="text/javascript">
 $(function(){
+	//지역
+	var location;
+	//극장번호
 	var theaterNo;
+	//영화번호
 	var movieNo;
 	//오늘날짜	
 	var screeningDate = moment().format("YYYYMMDD");
+	//상영시간
 	var time;
+	//상영번호
 	var screeningNo;
+	var sort;
+	
+	//parameter로 받아온 지역, 극장번호, 영화번호
+	var defaultLocation = '${param.location}'
+	var defaultTheaterNo = '${param.theaterNo}'
+	var defaultMovieNo = '${param.movieNo}'
 	
 	//header nav js
 	$('.mainnav').mouseover(function(){
@@ -200,257 +220,6 @@ $(function(){
 	   $(this).children('.subnav').stop().slideUp();
 	})
 	
-	//영화관 지역
-	$(".li-location1").click(function(){
-		$(this).addClass('loc-act').siblings().removeClass('loc-act');
-		var location = $(this).text();
-		$.ajax({
-			type:"GET",
-			url:"theater/place",
-			data:{location:location},
-			dataType:"json",
-			success:function(locations){
-				$('#ul-location2').empty();
-				$.each(locations, function(index, item){
-					var content = "<li style='font-size:0.8rem;' data-theater-no="+item.theaterNo+">";
-					content += item.theaterName;
-					content += "</li>";
-					$('#ul-location2').append(content);
-				})
-			}
-		});
-	});
-	
-	//특별관 있는 영화관 지역
-	$(".li-location2").click(function(){
-		$(this).addClass('loc-act').siblings().removeClass('loc-act');
-		var location = $(this).text();
-		$.ajax({
-			type:"GET",
-			url:"theater/place",
-			data:{location:location},
-			dataType:"json",
-			success:function(locations){
-				$('#ul-special-location2').empty();
-				$.each(locations, function(index, item){
-					if(item.theaterHallExist == 'Y'){
-						var content = "<li style='font-size:0.8rem;' data-theater-no="+item.theaterNo+">";
-						content += item.theaterName;
-						content += "</li>";
-						$('#ul-special-location2').append(content);
-					}
-				})
-			}
-		});
-	});
-	
-	
-	// 지역 전체탭 타이틀 변경, 극장선택
-	$('#ul-location2').on('click', 'li', function(){
-		//선택한 극장명
-		$(this).css({'font-weight':'bolder', 'color':'#ffc107'}).siblings().css({'font-weight':'normal', 'color':''});
-		var theater = $(this).text();
-		$("#div-theater>h5").empty().text(theater);
-		$("#div-movie>h5").empty().text('영화 선택');		
-		
-		//정렬값 구하기
-		var sort;
-		if(sort == null) {
-			sort = "ticket";
-		}
-		
-		//선택한 극장번호
-		theaterNo = $(this).data('theater-no');
-		
-		$("#div-time-title").remove();
-		$("#ul-list-time").empty();
-		
-		//극장에서 상영중인 영화 가져오기
-		$.ajax({
-			type:"GET",
-			url:"ticketing/movie",
-			data:{sort:sort, theaterNo:theaterNo},
-			dataType:"json",
-			success:function(movieList){
-				var mvlist = _.uniqBy(movieList, "movieNo");
-				$("#ul-movieList").empty();
-				$.each(mvlist, function(index, item){
-					var content = 
-					"<li data-movie-no="+item.movieNo+" data-hall-no="+item.hallNo+">"+
-						"<img src='/cinemabox/resources/images/icon/txt-age-small-"+item.age+".png' alt='' class='me-2'>"+
-						"<strong>"+item.title+"</strong>"+
-					"</li>"
-					$('#ul-movieList').append(content);
-				})
-			}
-		});
-	})
-	
-	// 특별관 탭 타이틀 변경, 극장선택
-	$('#ul-special-location2').on('click', 'li', function(){
-		//선택한 극장명
-		$(this).css({'font-weight':'bolder', 'color':'#ffc107'}).siblings().css({'font-weight':'normal', 'color':''});
-		var theater = $(this).text();
-		$("#div-theater>h5").empty().text(theater);
-		$("#div-movie>h5").empty().text('영화 선택');		
-		
-		//정렬값 구하기
-		var sort;
-		if(sort == null) {
-			sort = "ticket";
-		}
-		
-		//선택한 극장번호
-		theaterNo = $(this).data('theater-no');
-		
-		$("#div-time-title").remove();
-		$("#ul-list-time").empty();
-		
-		//극장에서 상영중인 영화 가져오기
-		$.ajax({
-			type:"GET",
-			url:"ticketing/movie",
-			data:{sort:sort, theaterNo:theaterNo},
-			dataType:"json",
-			success:function(movieList){
-				var mvlist = _.uniqBy(movieList, "movieNo");
-				$("#ul-movieList").empty();
-				$.each(mvlist, function(index, item){
-					var content = 
-					"<li data-movie-no="+item.movieNo+" data-hall-no="+item.hallNo+">"+
-						"<img src='/cinemabox/resources/images/icon/txt-age-small-"+item.age+".png' alt='' class='me-2'>"+
-						"<strong>"+item.title+"</strong>"+
-					"</li>"
-					$('#ul-movieList').append(content);
-				})
-			}
-		});
-	})
-	
-	//정렬선택
-	$("#select-sort").change(function(){
-		sort = $(this).val();
-		if(theaterNo == null){
-			alert("영화관을 선택하세요");
-		}
-		//정렬시킨 상태에서 영화목록 가져오기
-		$.ajax({
-			type:"GET",
-			url:"ticketing/movie",
-			data:{sort:sort, theaterNo:theaterNo},
-			dataType:"json",
-			success:function(movieList){
-				$("#div-time-title").empty();
-				$("#ul-list-time").empty();		
-				
-				var mvlist = _.uniqBy(movieList, "movieNo");
-				$("#ul-movieList").empty();
-				$.each(mvlist, function(index, item){
-					var content = 
-						"<li data-movie-no="+item.movieNo+" data-hall-no="+item.hallNo+">"+
-						"<img src='/cinemabox/resources/images/icon/txt-age-small-"+item.age+".png' alt='' class='me-2'>"+
-						"<strong>"+item.title+"</strong>"+
-					"</li>"
-					$('#ul-movieList').append(content);
-				})		
-			}
-		})
-	});	
-	
-	$(".tab-list").click(function(){
-		var hour = $(this).data("hour");
-		if(!hour){
-			$("#ul-list-time li").show();
-			return;
-		}
-		$("#ul-list-time li").hide().filter(function(){
-			hour = parseInt(hour);
-			var movieHour = $(this).find(".dd-time").text().substring(0,2);
-			return movieHour - hour >= 0;
-		}).show();
-	})
-	
-	//탭 타이틀 변경, 영화선택	
-	$('#ul-movieList').on('click', 'li', function(){
-		//선택한 영화명
-		$(this).css({'font-weight':'bolder', 'color':'#ffc107'}).siblings().css({'font-weight':'normal', 'color':''});
-		var title = $(this).text();
-		$("#div-movie>h5").empty().text(title);		
-		
-		//영화번호
-		movieNo = $(this).data('movie-no');
-		
-		//극장, 영화번호, 오늘날짜로 영화 시간 불러오기
-		$.ajax({
-			type:"GET",
-			url:"ticketing/time",
-			data:{theaterNo:theaterNo, movieNo:movieNo, screeningDate:screeningDate},
-			dataType:"json",
-			success:function(movieTime){
-				$("#div-time-title").remove();
-				$("#ul-list-time").empty();
-				var content=
-					'<div class="div-time-select-tit" id="div-time-title">'+
-						'<span>'+
-							'<img src="/cinemabox/resources/images/icon/txt-age-small-'+movieTime[0].age+'.png" alt="" class="me-2">'+
-							'<strong>'+movieTime[0].title+'</strong>'+
-						'</span>'+
-					'</div>'
-				$('#div-time').prepend(content);
-					
-				$.each(movieTime, function(index, item){
-					var seat = 70-item.seatCnt;
-					if(item.screeningStatus == 'Y'){
-						var timeTable = '<li class="rounded-3 me-2" data-bs-toggle="modal" data-bs-target="#confirmModal" data-screening-no='+item.screeningNo+'>'
-							timeTable +=	'<dl class="text-center p-2">'
-							timeTable +=		'<dt class="d-none">상영시간</dt>'
-							timeTable +=		'<dd class="dd-time">'
-							if(index == 0 && item.screeningTime.replace(":","") <= 1100 && item.screeningTime.replace(":","") >= 700 ){
-								timeTable += 		'<strong>'+'<i class="bi bi-sun" style="color: #ffc107"></i>'+item.screeningTime+'</strong>'
-							}else{
-								timeTable += 		'<strong>'+item.screeningTime+'</strong>'
-							}
-							timeTable +=		'</dd>'
-							timeTable +=		'<dt class="d-none">좌석</dt>'
-							timeTable +=		'<dd class="dd-seat d-inline-block me-2">'
-							timeTable +=			'<strong>'+seat+'</strong>/70'
-							timeTable +=		'</dd>'
-							timeTable +=		'<dt class="d-none">상영관</dt>'
-							timeTable +=		'<dd class="dd-hall d-inline-block">'+item.hallName+'</dd>'
-							timeTable +=	'</dl>'
-							timeTable +='</li>'
-						$('#ul-list-time').append(timeTable);
-					}
-				})		
-			}
-		})		
-	})
-	
-	/* 달력 날짜 표시하기 */
-	//화살표 클릭 시 날짜 변경
-	var nextCnt = 0;
-	var prevCnt = 0;
-	$("#btn-prev").prop("disabled", true);
-	$('#btn-next').click(function(){
-		week++;
-		if(nextCnt >= 0){
-			$(this).prop("disabled", true);
-			$("#btn-prev").prop("disabled", false);
-		}else{
-			$(this).prop("disabled", false);
-		}
-		nextCnt++;
-		changeDays();
-	})
-	$('#btn-prev').click(function(){
-		week--;
-		if(prevCnt >= 0){
-			$(this).prop("disabled", true);
-			$("#btn-next").prop("disabled", false);
-		}
-		prevCnt++;
-		changeDays();
-	})
 	//1주일 단위로 날짜 변경하기
 	var week = 0;
 	function changeDays(){
@@ -495,18 +264,103 @@ $(function(){
 		});
 	}
 	
-	//날짜를 눌렀을 때 체크되게하기
-	$('#ul-days').on('click', 'li', function(){
-		//선택한 날짜 표시
-		$(this).css({'font-weight':'bolder', 'border-bottom':'4px solid #ffc107'}).siblings().css({'font-weight':'', 'border-bottom':''});
-		var ymd = $(this).data(ymd);
-		$.each(ymd, function(index, item){
-			$("#div-date>h5").empty().text(item);					
-		})
-
-		screeningDate = $(this).data('select-day');
-
-		//극장, 영화번호, 오늘날짜로 영화 시간 불러오기
+	//일반 영화관
+	function displayTheater(location){
+		$.ajax({
+			type:"GET",
+			url:"theater/place",
+			data:{location:location},
+			dataType:"json",
+			success:function(locations){
+				$('#ul-location2').empty();
+				$.each(locations, function(index, item){
+					var content = "<li style='font-size:0.8rem;' data-theater-no="+item.theaterNo+">";
+					content += item.theaterName;
+					content += "</li>";
+					$('#ul-location2').append(content);
+				})
+				//파라미터에 극장번호가 있다면
+				if(defaultTheaterNo){
+					$("#ul-location2 li:eq(0)").trigger('click');
+				}
+			}
+		});
+	}
+	
+	//특별관
+	function displaySpecialTheater(location){
+		$.ajax({
+			type:"GET",
+			url:"theater/place",
+			data:{location:location},
+			dataType:"json",
+			success:function(locations){
+				$('#ul-special-location2').empty();
+				$("#ul-movieList").empty();
+				$.each(locations, function(index, item){
+					if(item.theaterHallExist == 'Y'){
+						var content = "<li style='font-size:0.8rem;' data-theater-no="+item.theaterNo+">";
+						content += item.theaterName;
+						content += "</li>";
+						$('#ul-special-location2').append(content);
+					}
+				})
+			}
+		});		
+	}
+	
+	//상영중인 영화목록
+	function displayMovieList(sort, theaterNo){
+		$.ajax({
+			type:"GET",
+			url:"ticketing/movie",
+			data:{sort:sort, theaterNo:theaterNo},
+			dataType:"json",
+			success:function(movieList){
+				var mvlist = _.uniqBy(movieList, "movieNo");
+				$("#ul-movieList").empty();
+				$.each(mvlist, function(index, item){
+					var content = 
+					"<li data-movie-no="+item.movieNo+" data-hall-no="+item.hallNo+">"+
+						"<img src='/cinemabox/resources/images/icon/txt-age-small-"+item.age+".png' alt='' class='me-2'>"+
+						"<strong>"+item.title+"</strong>"+
+					"</li>"
+					$('#ul-movieList').append(content);
+				})
+				if(defaultMovieNo){
+					$("#ul-movieList li[data-movie-no="+defaultMovieNo+"]").trigger('click');
+				}
+			}
+		});
+	}
+	
+	//정렬한 영화목록
+	function displayMovieListBySort(sort, theaterNo){
+		$.ajax({
+			type:"GET",
+			url:"ticketing/movie",
+			data:{sort:sort, theaterNo:theaterNo},
+			dataType:"json",
+			success:function(movieList){
+				$("#div-time-title").empty();
+				$("#ul-list-time").empty();		
+				
+				var mvlist = _.uniqBy(movieList, "movieNo");
+				$("#ul-movieList").empty();
+				$.each(mvlist, function(index, item){
+					var content = 
+						"<li data-movie-no="+item.movieNo+" data-hall-no="+item.hallNo+">"+
+						"<img src='/cinemabox/resources/images/icon/txt-age-small-"+item.age+".png' alt='' class='me-2'>"+
+						"<strong>"+item.title+"</strong>"+
+					"</li>"
+					$('#ul-movieList').append(content);
+				})		
+			}
+		})		
+	}
+	
+	//상영시간 불러오기
+	function displayTime(theaterNo,movieNo,screeningDate){
 		$.ajax({
 			type:"GET",
 			url:"ticketing/time",
@@ -523,19 +377,18 @@ $(function(){
 						'</span>'+
 					'</div>'
 				$('#div-time').prepend(content);
-				
+					
 				$.each(movieTime, function(index, item){
 					var seat = 70-item.seatCnt;
-					
 					if(item.screeningStatus == 'Y'){
 						var timeTable = '<li class="rounded-3 me-2" data-bs-toggle="modal" data-bs-target="#confirmModal" data-screening-no='+item.screeningNo+'>'
 							timeTable +=	'<dl class="text-center p-2">'
 							timeTable +=		'<dt class="d-none">상영시간</dt>'
 							timeTable +=		'<dd class="dd-time">'
 							if(index == 0 && item.screeningTime.replace(":","") <= 1100 && item.screeningTime.replace(":","") >= 700 ){
-								timeTable += '<strong>'+'<i class="bi bi-sun" style="color: #ffc107"></i>'+item.screeningTime+'</strong>'
+								timeTable += 		'<strong>'+'<i class="bi bi-sun" style="color: #ffc107"></i>'+item.screeningTime+'</strong>'
 							}else{
-								timeTable += '<strong>'+item.screeningTime+'</strong>'
+								timeTable += 		'<strong>'+item.screeningTime+'</strong>'
 							}
 							timeTable +=		'</dd>'
 							timeTable +=		'<dt class="d-none">좌석</dt>'
@@ -550,16 +403,11 @@ $(function(){
 					}
 				})		
 			}
-		})	
-	})
-
-	changeDays();
+		})		
+	} 
 	
-	//최종 확인 팝업
-	$('#ul-list-time').on('click', 'li', (function(){
-		$('#confirmModal').show();
-		time = $(this).find(".dd-time").text();
-		screeningNo = $(this).data('screening-no');
+	//최종확인모달
+	function displayConfirmModal(theaterNo, movieNo, screeningDate, time, screeningNo){
 		$.ajax({
 			type:"GET",
 			url:"ticketing/selectMovie",
@@ -630,20 +478,234 @@ $(function(){
 				content +='</div>'
 				content +='<div class="modal-footer">'
 				content +=	'<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>'
-				content +=	'<button type="submit" class="btn btn-warning" id="btn-confirm">인원/좌석 선택</button>'
+				content +=	'<button type="button" class="btn btn-warning" id="btn-confirm">인원/좌석 선택</button>'
 				content += '</div>'	
 				
 				$('#confirmModal > div > div').append(content);
+				
+				//form값 넣기
+				$('#input-screening-no').val(screeningNo);
+				$('#input-movie-no').val(movieNo);
+				$('#input-theater-no').val(theaterNo);
+				$('#input-hall-no').val(m.movieInfo.hallNo);
+				$('#input-hall-name').val(m.movieInfo.hallName);
+				$('#input-screening-date').val(screeningDate);
+				$('#input-screening-time').val(time);
+				$('#input-screening-end-time').val(endTime);
+				$('#input-screening-status').val(m.movieInfo.screeningStatus);
+				$('#input-title').val(m.movieInfo.title);
+				$('#input-age').val(m.movieInfo.age);
+				$('#input-movie-status').val(m.movieInfo.movieStatus);
 			}
+		})		
+	}
+	
+	//영화를 선택해서 예매하는 경우(파라미터에 값이 들어있는 경우)
+	if(!defaultLocation){
+		displayTheater(defaultLocation);		
+	}
+	if(!defaultTheaterNo){
+		displayMovieList(sort, defaultTheaterNo);
+	}
+	if(!defaultMovieNo){
+		displayTime(theaterNo,movieNo,screeningDate);
+	}
+	
+	//일반 영화관 고르기
+	$(".li-location1").click(function(){
+		$(this).addClass('loc-act').siblings().removeClass('loc-act');
+		location = $(this).text();
+		
+		displayTheater(location);
+	});
+	
+	//특별관 있는 영화관 고르기
+	$(".li-location2").click(function(){
+		$(this).addClass('loc-act').siblings().removeClass('loc-act');
+		var location = $(this).text();
+		
+		displaySpecialTheater(location);
+	});
+	
+	$(".btn-select-theater").click(function(){
+		$("#ul-location2").empty();
+		$("#ul-special-location2").empty();
+	})
+	
+	// 선택한 영화 타이틀 변경, 영화선택
+	$('#ul-location2').on('click', 'li', function(){
+		//선택한 극장명
+		$(this).css({'font-weight':'bolder', 'color':'#ffc107'}).siblings().css({'font-weight':'normal', 'color':''});
+		var theater = $(this).text();
+		$("#div-theater>h5").empty().text(theater);
+		$("#div-movie>h5").empty().text('영화 선택');		
+		
+		//정렬값 구하기
+		if(sort == null) {
+			sort = "ticket";
+		}
+		
+		//선택한 극장번호
+		theaterNo = $(this).data('theater-no');
+		
+		$("#div-time-title").remove();
+		$("#ul-list-time").empty();
+		
+		//극장에서 상영중인 영화 가져오기
+		displayMovieList(sort, theaterNo);
+	})
+	
+	// 선택한 영화 타이틀 변경, 영화선택(특별관)
+	$('#ul-special-location2').on('click', 'li', function(){
+		//선택한 극장명
+		$(this).css({'font-weight':'bolder', 'color':'#ffc107'}).siblings().css({'font-weight':'normal', 'color':''});
+		var theater = $(this).text();
+		$("#div-theater>h5").empty().text(theater);
+		$("#div-movie>h5").empty().text('영화 선택');		
+		
+		//정렬값 구하기
+		if(sort == null) {
+			sort = "ticket";
+		}
+		
+		//선택한 극장번호
+		theaterNo = $(this).data('theater-no');
+		
+		$("#div-time-title").remove();
+		$("#ul-list-time").empty();
+		
+		//극장에서 상영중인 영화 가져오기
+		displayMovieList(sort, theaterNo);
+	})
+	
+	// 선택한 영화 타이틀 변경(특별관), 극장선택
+	$('#ul-special-location2').on('click', 'li', function(){
+		//선택한 극장명
+		$(this).css({'font-weight':'bolder', 'color':'#ffc107'}).siblings().css({'font-weight':'normal', 'color':''});
+		var theater = $(this).text();
+		$("#div-theater>h5").empty().text(theater);
+		$("#div-movie>h5").empty().text('영화 선택');		
+		
+		//정렬값 구하기
+		if(sort == null) {
+			sort = "ticket";
+		}
+		
+		//선택한 극장번호
+		theaterNo = $(this).data('theater-no');
+		
+		$("#div-time-title").remove();
+		$("#ul-list-time").empty();
+		
+		//극장에서 상영중인 영화 가져오기
+		displayMovie(sort, theaterNo);
+	})
+	
+	//정렬선택
+	$("#select-sort").change(function(){
+		sort = $(this).val();
+		if(theaterNo == null){
+			alert("영화관을 선택하세요");
+		}
+		//정렬시킨 상태에서 영화목록 가져오기
+		displayMovieListBySort(sort, theaterNo);
+	});	
+	
+	//13시이후, 19시이후 선택하는거에 따라 시간표 표시하기
+	$(".tab-list").click(function(){
+		var hour = $(this).data("hour");
+		if(!hour){
+			$("#ul-list-time li").show();
+			return;
+		}
+		$("#ul-list-time li").hide().filter(function(){
+			hour = parseInt(hour);
+			var movieHour = $(this).find(".dd-time").text().substring(0,2);
+			return movieHour - hour >= 0;
+		}).show();
+	})
+	
+	//날짜탭 타이틀 변경, 선택한 영화를 오늘날짜로 상영시간 표시하기	
+	$('#ul-movieList').on('click', 'li', function(){
+		//선택한 영화명
+		$(this).css({'font-weight':'bolder', 'color':'#ffc107'}).siblings().css({'font-weight':'normal', 'color':''});
+		var title = $(this).text();
+		$("#div-movie>h5").empty().text(title);		
+		
+		//영화번호
+		movieNo = $(this).data('movie-no');
+		
+		//극장, 영화번호, 오늘날짜로 영화 시간 불러오기
+		displayTime(theaterNo,movieNo,screeningDate);
+	})
+	
+	/* 달력 날짜 표시하기 */
+	//화살표 클릭 시 날짜 변경
+	var nextCnt = 0;
+	var prevCnt = 0;
+	$("#btn-prev").prop("disabled", true);
+	$('#btn-next').click(function(){
+		week++;
+		if(nextCnt >= 0){
+			$(this).prop("disabled", true);
+			$("#btn-prev").prop("disabled", false);
+		}else{
+			$(this).prop("disabled", false);
+		}
+		nextCnt++;
+		changeDays();
+	})
+	$('#btn-prev').click(function(){
+		week--;
+		if(prevCnt >= 0){
+			$(this).prop("disabled", true);
+			$("#btn-next").prop("disabled", false);
+		}
+		prevCnt++;
+		changeDays();
+	})
+
+	//날짜를 눌렀을 때 체크되게하기
+	$('#ul-days').on('click', 'li', function(){
+		//선택한 날짜 표시
+		$(this).css({'font-weight':'bolder', 'border-bottom':'4px solid #ffc107'}).siblings().css({'font-weight':'', 'border-bottom':''});
+		var ymd = $(this).data(ymd);
+		$.each(ymd, function(index, item){
+			$("#div-date>h5").empty().text(item);					
 		})
+
+		screeningDate = $(this).data('select-day');
+
+		//극장, 영화번호, 선택한 날짜로 영화 시간 불러오기
+		displayTime(theaterNo,movieNo,screeningDate);
+	})
+		
+	changeDays();
+	
+	//최종 확인 팝업
+	$('#ul-list-time').on('click', 'li', (function(){
+		$('#confirmModal').show();
+		time = $(this).find(".dd-time").text();
+		screeningNo = $(this).data('screening-no');
+		displayConfirmModal(theaterNo, movieNo, screeningDate, time, screeningNo);
 	}))
 	
-	$("#btn-confirm").on('click', function(){
-		var isLogined = ${not empty LOGINED_USER};
-		if(isLogined == false){
-			
+	$("#confirmModal").on('click','button#btn-confirm', function(){
+		var isLogined = $("[name=isLogined]").val();
+		if(isLogined == 'no'){
+			alert("로그인이 필요한 서비스입니다.");
+			$('#confirmModal').hide();
+			$("#loginModal").show();
+			return;
 		}
+		$("#form-ticketing").submit();
 	})
+	
+	//영화상세에서 넘어온거 처리
+	if(defaultLocation == '서울'){
+		$(".li-location1:eq(0)").trigger('click');
+	}
+	
 })
 </script>
 </body>
