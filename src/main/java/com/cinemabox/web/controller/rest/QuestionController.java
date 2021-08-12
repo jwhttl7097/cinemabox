@@ -21,7 +21,7 @@ public class QuestionController {
 	QuestionService questionService;
 	
 	@PostMapping("/satisfaction")
-	public void updateSatisfaction(@RequestBody Question question) { //프론트에서든 Question 객체에 값을 넣기
+	public @ResponseBody void updateSatisfaction(Question question) { //프론트에서든 Question 객체에 값을 넣기
 		
 		// 서비스를 호출하여 만족도를 수정
 		questionService.updateSatisfaction(question);

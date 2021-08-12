@@ -11,6 +11,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="/cinemabox/resources/js/common.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <title>TITLE</title>
 <style type="text/css">
  a:link { color: black; text-decoration: none;}
@@ -98,8 +99,7 @@
 		<div style="text-align: right;" class="mb-3">
 			<button type="button" class="btn btn-warning" onclick="location.href='list'">목록</button>
 			<button type="button" class="btn btn-warning" onclick="del(${questionDetail.questionNo})">삭제</button>
-			<button type="button" class="btn btn-warning" onclick="location.href='addAnswer?questionNo=${questionDetail.questionNo }'">답글</button>
-			
+			<button type="button" class="btn btn-warning" onclick="location.href='addAnswer?questionNo=${questionDetail.questionNo }'">답글</button>	
 		</div>
 		
 		<div class="mb-5">
@@ -112,18 +112,20 @@
 		<form action="" class="review" id="satisfaction"> 
             <h5>만족도</h5>
             <div class="star-rating space-x-4 mx-auto">
-				<input type="radio" id="5-stars" name="rating" value="5"/>
+            	<input type="hidden" id="questionNo" name="questionNo" value="${questionDetail.questionNo}"/>
+           		<input type="hidden" id="satisfaction1" name="satisfaction1" value="${questionDetail.satisfaction}"/> 
+				<input type="radio" id="5-stars" name="rating" value="5" />
 				<label for="5-stars" class="star pr-4">★</label>
 				<input type="radio" id="4-stars" name="rating" value="4" />
 				<label for="4-stars" class="star">★</label>
-				<input type="radio" id="3-stars" name="rating" value="3"/>
+				<input type="radio" id="3-stars" name="rating" value="3" />
 				<label for="3-stars" class="star">★</label>
-				<input type="radio" id="2-stars" name="rating" value="2"/>
+				<input type="radio" id="2-stars" name="rating" value="2" />
 				<label for="2-stars" class="star">★</label>
-				<input type="radio" id="1-star" name="rating" value="1" />
+				<input type="radio" id="1-star" name="rating" value="1"  />
 				<label for="1-star" class="star">★</label>
 			</div>
-			<button type="submit" class="btn btn-warning btn-sm" style="float: right;" onclick="saticefaction()">완료</button>
+			<button type="button" id="btn1" class="btn btn-warning btn-sm" style="float: right;" onclick="satisfaction()">완료</button>
 		</form>
 		
 	</div>	
@@ -133,8 +135,13 @@
 	
 </div>
 <script type="text/javascript">
+window.onload = function(){
+	var a = $('#questionNo').val();
+	var b = $('#satisfaction1').val();
+	debugger;
+}
 
-function del(no) {
+function del(questionNo) {
 	var chk = confirm("정말 삭제하시겠습니까?");
 	if (chk) {
 		//location.href= 'list';
@@ -142,17 +149,38 @@ function del(no) {
 	}
 }	
 
-$(function() {
-	$("#satisfaction").submit(function() {
+function satisfaction(){
+	var radioValue = $('input:radio[name=rating]:checked').val();
+	var questionNo = $('#questionNo').val();
+	var ajaxData = {satisfaction:radioValue,questionNo:questionNo};
+
+		$.ajax({
+			type: "POST",
+			url: "../question/satisfaction",
+			data:ajaxData,
+			async:false,
+			dataType: 'json',
+			success: function(count) {
+				questionCount = count;
+			},
+			complete: function() {
+				alert("감사합니다~^^");
+				
+			}
+			
+		});
+}
+/* $(function() {
+	 $("#satisfaction").submit(function() {
 		
-		var star = (
+ 		var star = (
 		$("#1-star").val() = 1;
 		$("#2-stars").val() = 2;
 		$("#3-stars").val() = 3;
 		$("#4-stars").val() = 4;
 		$("#5-stars").val() = 5;
 		);
-		
+		 
 		$.ajax({
 			type: "POST",
 			url: "/question/satisfaction",
@@ -166,7 +194,8 @@ $(function() {
 				alert("감사합니다~^^");
 			}
 		});
-	})
+	}) 
+}) */
 
 
 </script>
