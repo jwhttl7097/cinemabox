@@ -432,7 +432,10 @@ $(function(){
    $('.mainnav').mouseleave(function(){
       $(this).children('.subnav').stop().slideUp();
    })
-   
+   //헤더수정
+   $("#header").removeClass('container').addClass('justify-content-center');
+   $("#header>nav").removeClass('row').addClass('col-12 container');
+      
    
    //Trailer 뜨게하기
    var myModal = new bootstrap.Modal(document.getElementById('staticBackdrop'))
@@ -453,7 +456,7 @@ $(function(){
 	   var randomImage = Math.trunc(Math.random()*yourImages.length);
 	   $("#adImg").attr("src", yourImages[randomImage]);
    })
-  
+
 });
 
 </script>
