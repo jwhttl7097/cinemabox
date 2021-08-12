@@ -27,7 +27,7 @@
 					<h1 class="text-white">${movieDetail.title}</h1>
 					<div>
 						<button class="btn btnStyle me-1 mt-2" id="btn-like"><i class="far fa-heart"></i>&nbsp;${movieDetail.like}</button>
-						<button class="btn btnStyle mt-2" id="btn-share"><i class="far fa-share-square"></i>&nbsp;공유하기</button>
+						<button class="btn btnStyle mt-2" id="btn-share" data-bs-toggle="modal" data-bs-target="#modal-share"><i class="far fa-share-square"></i>&nbsp;공유하기</button>
 					</div>
 				</div>
 					<div id="movie-info">
@@ -189,6 +189,24 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- 공유하기 모달 -->
+	<div class="modal fade" id="modal-share" tabindex="-1"	aria-labelledby="modal-share-title" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header justify-content-center bg-dark text-white">
+					<h5 class="modal-title" id="modal-share-title" style="font-size:1rem;"><strong>공유하기</strong></h5>
+				</div>
+				<div class="modal-body">
+					<input type="text" class="form-control" id="input-share-link" readonly/>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"	data-bs-dismiss="modal">취소</button>
+					<button type="button" class="btn btn-warning" id="btn-link-copy">주소복사</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	<%@include file="../common/footer.jsp" %>
 </div>
 <script type="text/javascript">
@@ -209,8 +227,18 @@ $(function(){
 		$(this).children('i').removeClass('fas').addClass('far').css('color','white');
 	})
 	
+	/* 공유하기 */
+	//공유하기 주소 출력
+	var shareLink = $(location).attr('href');
+	$("#input-share-link").val(shareLink);
+	//복사 버튼 눌렀을 때 복사되게 하기
+    $('#btn-link-copy').click(function() {
+    	$("#input-share-link").select();
+    	document.execCommand('copy');
+        alert('주소를 복사하였습니다');
+    });
+    
 	//star rating
-		
 	$(document).on({
 		mouseover: function(event) {
 			$(this).find('.far').addClass('star-over');
@@ -222,7 +250,6 @@ $(function(){
 		}
 	}, '.rate');
 
-
 	$(document).on('click', '.rate', function() {
 		if ( !$(this).find('.star').hasClass('rate-active') ) {
 			$(this).siblings().find('.star').addClass('far').removeClass('fas rate-active');
@@ -232,8 +259,6 @@ $(function(){
 			console.log('has');
 		}
 	});
-
-})
 
 	//예매율 chart
 	var ctr = document.getElementById("chart-rate");
@@ -293,7 +318,11 @@ $(function(){
 	
 	    // Configuration options go here
 	    options: {}
-	});
+	});	
+	
+})
+
+
 </script>
 </body>
 </html>
