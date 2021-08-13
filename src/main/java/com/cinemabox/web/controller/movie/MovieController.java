@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.cinemabox.service.movie.MovieService;
+import com.cinemabox.service.movie.ReviewService;
 import com.cinemabox.vo.Movie;
 
 @Controller
@@ -28,6 +30,14 @@ public class MovieController{
 	public String movieDetail(Model model, int no) {
 		Movie movieDetail = movieService.getMovieByNo(no);
 		model.addAttribute("movieDetail", movieDetail);
+		return "movie/movieDetail";	
+	}
+	
+	@PostMapping(path = {"/movieDetail"})
+	public String movieReview(Model model, int no) {
+		Movie movieDetail = movieService.getMovieByNo(no);
+		model.addAttribute("movieDetail", movieDetail);
+		
 		return "movie/movieDetail";	
 	}
 }
