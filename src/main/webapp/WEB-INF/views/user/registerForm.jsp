@@ -46,7 +46,7 @@
     			<button class="nav-link" id="nav-registerSuccess-tab" data-bs-toggle="tab" data-bs-target="#nav-registerSuccess" type="button" role="tab" aria-controls="nav-registerSuccess" aria-selected="false">STEP3. 가입완료 </button>
   			</div>
 		</nav>
-		<div class="tab-content" id="nav-tabContent">
+		<div class="tab-content d-flex justify-content-center" id="nav-tabContent">
   			<div class="tab-pane fade show active" id="nav-agreement" role="tabpanel" aria-labelledby="nav-agreement-tab">
   				<div class="row mt-4">
   					<div class="col-12">

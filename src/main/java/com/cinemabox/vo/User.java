@@ -23,4 +23,5 @@ public class User {
 	private Date deletedDate;
 	private Date lockDate;
 	private String roleType;
+	private String isKakao;
 }
