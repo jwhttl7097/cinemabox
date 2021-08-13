@@ -32,17 +32,19 @@ public class UserAjaxController {
 		}
 	}
 	
-	/*
+	
 	@PostMapping("/kakaoLogin")
-	public @ResponseBody ResponseEntity<void> kakaoLogin(String id, String name, @DateTimeFormat(pattern="mmdd") Date birth){
+	public @ResponseBody ResponseEntity<Void> kakaoLogin(String id, String name){
 		User kakaoUser = new User();
 		
 		kakaoUser.setId(id);
+		kakaoUser.setName(name);
 		
+		userService.kakaoLogin(kakaoUser);
 		
-		return ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
-	*/
+	
 	
 	/*
 	@PostMapping("/kakaoLogin")

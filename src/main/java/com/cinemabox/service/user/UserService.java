@@ -30,7 +30,7 @@ public interface UserService {
 	 * @param userId
 	 * @return
 	 */
-	void kakaoLogin(String userId);
+	void kakaoLogin(User kakaoUser);
 	
 	
 	Map<String, Object> getUserDetail(String userId);
