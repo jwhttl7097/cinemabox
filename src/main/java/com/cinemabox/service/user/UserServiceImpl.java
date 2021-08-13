@@ -54,18 +54,19 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	@Override
-	public void kakaoLogin(String userId) {
+	public void kakaoLogin(User kakaoUser) {
 		
-		User user = userDao.getUserById(userId);
+		User user = userDao.getUserById(kakaoUser.getId());
 		
 		//사용자가 존재하지 않을 경우
-		if(user ==null) {
-			user.setId(userId);
-			userDao.insertUser(user);
+		if(user == null) {
+			
+			userDao.insertUser(kakaoUser);
+			SessionUtils.addAttribute("LOGINED_USER", kakaoUser);
 		}
 		
 		//사용자가 존재할 경우 바로 로그인
-		SessionUtils.addAttribute("LOGINED_USER", user);
+		SessionUtils.addAttribute("LOGINED_USER", kakaoUser);
 	}
 	
 	@Override

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+<script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" charset="utf-8"></script>
 <script>
         // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
         Kakao.init('99049ace9c7bdff941b33ca319b803c8');
@@ -76,10 +77,9 @@
       		<div class="modal-body">
         		<div class="row">
         			<div class="col-6 py-4" data-kakaoLog="${value}">
-        				<form action="loginKakao" method="post" id="login-kakao">
+        				<form action="kakaoLogin" method="post" id="login-kakao">
         					<input type="hidden" value="id" id="kakaoId" name="id">
         					<input type="hidden" value="name" id="kakaoName" name="name">
-        					<input type="hidden" value="birth" id="kakaoBirth" name="birth">
         				</form>
         				<form id="form-login" method="post" action="login" novalidate="novalidate">
         					<div class="mt-4" id="error-message" style="display:none;">
@@ -189,32 +189,26 @@ function loginWithKakao(){
     	Kakao.API.request({
     	    url: '/v2/user/me',
     	    success: function(response) {
-    	    	alert(JSON.stringify(response));
-    	    	//alert(response.properties.nickname);
-    	    	//alert(response.kakao_account.birthday);
+    	    	var result = confirm("카카오 로그인으로 회원가입 / 로그인 하시겠습니까?");
     	    	var id = response.id;
     	    	var name = response.properties.nickname;
-    	    	var birth = response.kakao_account.birthday;
+    	    	//var birth = response.kakao_account.birthday;
     	    	
-    	    	/*
-    	    	$("#kakaoId").val(id);
-    	    	$("#kakaoName").val(name);
-    	    	$("#kakaoBirth").val(birth);
-    	    	*/
-    	    	
-    	    	$ajax({
-    	    		type:"post",
-    	    		url:"kakaoLogin",
-    	    		data:{id:id, name:name, birth:birth},
-    	    		success: function(){
-    	    			$("#login-link").hide();
-    	    			$("#register-link").hide();
-    	    			$("#logout-link").show();
-    	    			$("#myPage-link").show();
+    	    	if(result){
+    	    		$.ajax({
+    	    			type:"post",
+    	    			url:"userLogin/kakaoLogin",
+    	    			data:{id:id, name:name},
+    	    			success: function(){
+    	    				$("#login-link").hide();
+    	    				$("#register-link").hide();
+    	    				$("#logout-link").show();
+    	    				$("#myPage-link").show();
     	    			
-    	    			loginModal.hide();
-    	    		}
-    	    	})
+    	    				loginModal.hide();
+    	    			}
+    	    		})
+    	    	}
     	    },
     	   fail: function(error) {
     	    	alert(error);
