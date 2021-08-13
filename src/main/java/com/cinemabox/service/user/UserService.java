@@ -24,5 +24,14 @@ public interface UserService {
 	 * @param id 사용자 아이디
 	 * @return 사용자에 대한 상세정보가 포함된 Map객체
 	 */
+	
+	/**
+	 * 카카오 로그인
+	 * @param userId
+	 * @return
+	 */
+	void kakaoLogin(String userId);
+	
+	
 	Map<String, Object> getUserDetail(String userId);
 }

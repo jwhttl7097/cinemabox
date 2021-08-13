@@ -20,7 +20,8 @@
 			coupon_no 			as CouponNo, 
 			wishlist_no 		as wishNo, 
 			user_role_type 		as roleType, 
-			grade_no 			as gradeNo 
+			grade_no 			as gradeNo, 
+			user_iskakao		as isKakao 
 	
 		from
 			cinemabox_users
@@ -44,7 +45,8 @@
 			coupon_no 			as CouponNo, 
 			wishlist_no 		as wishNo, 
 			user_role_type 		as roleType, 
-			grade_no 			as gradeNo
+			grade_no 			as gradeNo, 
+			user_iskakao		as isKakao 
 			
 		from
 			cinemabox_users
