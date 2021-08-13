@@ -125,43 +125,40 @@
 			<div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
 				<div class="row mt-5">
 			        <div class="col-md-12">
-						<form action="movieDeatil?no=${movieDetail.no}" method="post" class="fomr-review"> 
+						<form action="movieDetail?no=${movieDetail.no}" method="post" class="fomr-review"> 
 							<div class="justify-content-center row">
 								<div class="col-12 input-group">
 									<div class="stars col-2">
 											<label class="rate">
-												<input type="radio" name="radio1" id="star1" value="star1">
+												<input type="radio" name="radio1" id="star1" value="1">
 												<div class="face"></div>
 												<i class="far fa-star star one-star"></i>
 											</label>
 											<label class="rate">
-												<input type="radio" name="radio1" id="star2" value="star2">
+												<input type="radio" name="radio1" id="star2" value="2">
 												<div class="face"></div>
 												<i class="far fa-star star two-star"></i>
 											</label>
 											<label class="rate">
-												<input type="radio" name="radio1" id="star3" value="star3">
+												<input type="radio" name="radio1" id="star3" value="3">
 												<div class="face"></div>
 												<i class="far fa-star star three-star"></i>
 											</label>
 											<label class="rate">
-												<input type="radio" name="radio1" id="star4" value="star4">
+												<input type="radio" name="radio1" id="star4" value="4">
 												<div class="face"></div>
 												<i class="far fa-star star four-star"></i>
 											</label>
 											<label class="rate">
-												<input type="radio" name="radio1" id="star5" value="star5">
+												<input type="radio" name="radio1" id="star5" value="5">
 												<div class="face"></div>
 												<i class="far fa-star star five-star"></i>
 											</label>
 									</div>
-									<div class="input-group col">
+									<div class="input-group col" id="div-review">
 										<textarea class="form-control" placeholder="${empty LOGINED_USER ?'로그인 후 작성 가능합니다.':'관람평을 작성해주세요.'}" ${empty LOGINED_USER ?"readonly":""} style="resize: none;"></textarea>
-										<button type="submit" class="btn btn-warning">작성</button>
+										<button type="button" id="btn-review" class="btn btn-warning" ${empty LOGINED_USER ?"disabled":""}>작성</button>
 									</div>
-		<!-- 								<input type="text" class="input-review mx-2"  -->
-		<%-- 								placeholder="${empty LOGINED_USER ?'로그인 후 작성 가능합니다.':'관람평을 작성해주세요' }"  --%>
-		<%-- 								readonly="${empty LOGINED_USER ?'readonly':'' }"> --%>
 								</div>
 							</div>
 						</form>
@@ -266,7 +263,35 @@ $(function(){
 			console.log('has');
 		}
 	});
+	
+	//리뷰
+	var point = 0;
+	$("[name='radio1']").click(function(){
+		point = $(this).val();		
+	})
 
+	$("#btn-review").click(function(){
+		var review = new Object();
+		review.content = "$('#div-review textarea').val()";
+		review.rating = point;
+		review.userId = '${LOGINED_USER.id}';
+// 		var review = {
+// 				content:$("#div-review textarea").val(),
+// 				rating: point,
+// 				userId: '${LOGINED_USER.id}'
+// 		}
+		var movieNo = '${param.no}';
+		
+		$.ajax({
+			type:"POST",
+			url:"boxoffice/review",
+			data:{review:review, movieNo:movieNo},
+			success: function(){
+				
+			}
+		})
+	})
+	
 	//예매율 chart
 	var ctr = document.getElementById("chart-rate");
 	var chartRate = new Chart(ctr, {
