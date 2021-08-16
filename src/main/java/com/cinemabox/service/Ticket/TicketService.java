@@ -34,6 +34,13 @@ public interface TicketService {
 	 * @return 좌석상태
 	 */
 	List<TicketDto> getTicketStatusByScreeningNo(int screeningNo);
+	
+	/**
+	 * 상영번호를 전달하여 해당 상영스케쥴 정보 중 좌석번호, 좌석예매상태, 상영정보 목록을 가져온다.
+	 * @param screeningNo 상영번호
+	 * @return 좌석번호, 좌석예매상태, 상영정보 목록
+	 */
+	List<TicketDto> getAllSeat(int screeningNo);
 
 
 }

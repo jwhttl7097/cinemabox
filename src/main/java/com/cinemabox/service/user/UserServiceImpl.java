@@ -35,8 +35,8 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	@Override
-	public void login(String userId, String userPassword) {
-		User user = userDao.getUserById(userId);
+	public void login(String id, String password) {
+		User user = userDao.getUserById(id);
 		if (user == null) {
 			throw new RuntimeException("아이디 혹은 비밀번호가 유효하지 않습니다.");
 		}
@@ -45,12 +45,28 @@ public class UserServiceImpl implements UserService{
 			throw new RuntimeException( "탈퇴 혹은 일시정지 처리된 사용자입니다.");
 		}
 		
-		String secretPassword = DigestUtils.sha256Hex(userPassword);
+		String secretPassword = DigestUtils.sha256Hex(password);
 		if (!user.getPassword().equals(secretPassword)) {
 			throw new RuntimeException("아이디 혹은 비밀번호가 유효하지 않습니다.");
 		}
 		
 		SessionUtils.addAttribute("LOGINED_USER", user);
+	}
+	
+	@Override
+	public void kakaoLogin(User kakaoUser) {
+		
+		User user = userDao.getUserById(kakaoUser.getId());
+		
+		//사용자가 존재하지 않을 경우
+		if(user == null) {
+			
+			userDao.insertUser(kakaoUser);
+			SessionUtils.addAttribute("LOGINED_USER", kakaoUser);
+		}
+		
+		//사용자가 존재할 경우 바로 로그인
+		SessionUtils.addAttribute("LOGINED_USER", kakaoUser);
 	}
 	
 	@Override

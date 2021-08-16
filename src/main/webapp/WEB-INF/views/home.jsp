@@ -14,10 +14,11 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <title>CINEMA BOX</title>
 <style type="text/css">
+	body{overflow-x: hidden;}
 	.container-fluid{position: relative;}
 	header .navbar-brand, #top-nav>li>a, #mainnav-02>li>a{color:white !important;}
 	.mainnav>a{color:white !important;}
-	header{width:100%; background-color: rgba(0,0,0,0.5) !important; position: absolute; top: 8.5%; left: 50%; transform: translate(-50%, -50%); z-index: 10;}
+	header{width:100%; background-color: rgba(0,0,0,0.5) !important; position: absolute; top:70px; left: 50%; transform: translate(-50%, -50%); z-index: 10;}
 	
 	.posterinfo{
 		width: 184px;
@@ -403,35 +404,32 @@
 		Trailer 모달 부분
 	 -->
 	<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  		<div class="modal-dialog">
-    		<div class="modal-content">
+  		<div class="modal-dialog modal-dialog-centered modal-xl">
+    		<div class="modal-content w-100">
       			<div class="modal-header">
-        			
-        			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        			<button type="button" class="btn-close" id="modal-youtube-close" data-bs-dismiss="modal" aria-label="Close"></button>
       			</div>
-      			<div class="modal-body">
-       			 	<iframe width="560" height="315" src="" title="YouTube video player" 
+      			<div class="modal-body" id="modal-youtube-body">
+       			 	<iframe width="100%" height="500" src="" title="YouTube video player" 
       					frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       			</div>
-      			<div class="modal-footer">
-        			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-     	 		</div>
     		</div>
   	  	</div>
 	</div>
 	<%@include file="./common/footer.jsp" %>    
 
 <script type="text/javascript">
-//header
 $(function(){
-   //sub nav
+   //header sub nav
    $('.mainnav').mouseover(function(){
       $(this).children('.subnav').stop().slideDown().css('display','flex');
    })
    $('.mainnav').mouseleave(function(){
       $(this).children('.subnav').stop().slideUp();
    })
-   
+   //헤더수정
+   $("#header").removeClass('container').addClass('justify-content-center');
+   $("#header>nav").removeClass('row').addClass('col-12 container');
    
    //Trailer 뜨게하기
    var myModal = new bootstrap.Modal(document.getElementById('staticBackdrop'))
@@ -441,6 +439,11 @@ $(function(){
     	
     	$('#staticBackdrop iframe').attr("src",url)
     	myModal.show();
+   })
+      
+   //Trailer 닫기버튼 시 재생 종료 시키기
+   $("#modal-youtube-close").click(function(){
+	   location.reload();
    })
    
    //adImg 부분에 랜덤으로 이미지 나오게 하기
@@ -452,7 +455,7 @@ $(function(){
 	   var randomImage = Math.trunc(Math.random()*yourImages.length);
 	   $("#adImg").attr("src", yourImages[randomImage]);
    })
-  
+
 });
 
 </script>

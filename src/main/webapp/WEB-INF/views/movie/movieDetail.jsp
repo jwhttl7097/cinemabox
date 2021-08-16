@@ -27,7 +27,7 @@
 					<h1 class="text-white">${movieDetail.title}</h1>
 					<div>
 						<button class="btn btnStyle me-1 mt-2" id="btn-like"><i class="far fa-heart"></i>&nbsp;${movieDetail.like}</button>
-						<button class="btn btnStyle mt-2" id="btn-share"><i class="far fa-share-square"></i>&nbsp;공유하기</button>
+						<button class="btn btnStyle mt-2" id="btn-share" data-bs-toggle="modal" data-bs-target="#modal-share"><i class="far fa-share-square"></i>&nbsp;공유하기</button>
 					</div>
 				</div>
 					<div id="movie-info">
@@ -59,7 +59,7 @@
 						<p class="cont"><i class="fas fa-users"></i>&nbsp;<fmt:formatNumber value="${movieDetail.cumulativeAudienceCnt }" type="number" /> 명</p>
 					</div>
 				</div>
-				<button class="btn btn-warning col-12 mt-2 fw-bold">예매하기</button>
+				<button class="btn btn-warning col-12 mt-2 fw-bold" onclick="location.href='ticket?location=서울&theaterNo=10001&movieNo=${movie.no }'">예매하기</button>
 			</div>
 			<div class="col-4">
 				<div class="poster p-5">
@@ -125,37 +125,41 @@
 			<div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
 				<div class="row mt-5">
 			        <div class="col-md-12">
-						<form action="" class="fomr-review"> 
-							<div class="input-group justify-content-center">
-							<div class="stars">
-									<label class="rate">
-										<input type="radio" name="radio1" id="star1" value="star1">
-										<div class="face"></div>
-										<i class="far fa-star star one-star"></i>
-									</label>
-									<label class="rate">
-										<input type="radio" name="radio1" id="star2" value="star2">
-										<div class="face"></div>
-										<i class="far fa-star star two-star"></i>
-									</label>
-									<label class="rate">
-										<input type="radio" name="radio1" id="star3" value="star3">
-										<div class="face"></div>
-										<i class="far fa-star star three-star"></i>
-									</label>
-									<label class="rate">
-										<input type="radio" name="radio1" id="star4" value="star4">
-										<div class="face"></div>
-										<i class="far fa-star star four-star"></i>
-									</label>
-									<label class="rate">
-										<input type="radio" name="radio1" id="star5" value="star5">
-										<div class="face"></div>
-										<i class="far fa-star star five-star"></i>
-									</label>
+						<form action="movieDetail?no=${movieDetail.no}" method="post" class="fomr-review"> 
+							<div class="justify-content-center row">
+								<div class="col-12 input-group">
+									<div class="stars col-2">
+											<label class="rate">
+												<input type="radio" name="radio1" id="star1" value="1">
+												<div class="face"></div>
+												<i class="far fa-star star one-star"></i>
+											</label>
+											<label class="rate">
+												<input type="radio" name="radio1" id="star2" value="2">
+												<div class="face"></div>
+												<i class="far fa-star star two-star"></i>
+											</label>
+											<label class="rate">
+												<input type="radio" name="radio1" id="star3" value="3">
+												<div class="face"></div>
+												<i class="far fa-star star three-star"></i>
+											</label>
+											<label class="rate">
+												<input type="radio" name="radio1" id="star4" value="4">
+												<div class="face"></div>
+												<i class="far fa-star star four-star"></i>
+											</label>
+											<label class="rate">
+												<input type="radio" name="radio1" id="star5" value="5">
+												<div class="face"></div>
+												<i class="far fa-star star five-star"></i>
+											</label>
+									</div>
+									<div class="input-group col" id="div-review">
+										<textarea class="form-control" placeholder="${empty LOGINED_USER ?'로그인 후 작성 가능합니다.':'관람평을 작성해주세요.'}" ${empty LOGINED_USER ?"readonly":""} style="resize: none;"></textarea>
+										<button type="button" id="btn-review" class="btn btn-warning" ${empty LOGINED_USER ?"disabled":""}>작성</button>
+									</div>
 								</div>
-								<input type="text" class="input-review mx-2" placeholder="관람평을 작성해주세요">
-								<button type="submit" class="btn btn-warning btn-sm">관람평 작성</button>
 							</div>
 						</form>
 			        </div>
@@ -189,6 +193,24 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- 공유하기 모달 -->
+	<div class="modal fade" id="modal-share" tabindex="-1"	aria-labelledby="modal-share-title" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header justify-content-center bg-dark text-white">
+					<h5 class="modal-title" id="modal-share-title" style="font-size:1rem;"><strong>공유하기</strong></h5>
+				</div>
+				<div class="modal-body">
+					<input type="text" class="form-control" id="input-share-link" readonly/>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"	data-bs-dismiss="modal">취소</button>
+					<button type="button" class="btn btn-warning" id="btn-link-copy">주소복사</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	<%@include file="../common/footer.jsp" %>
 </div>
 <script type="text/javascript">
@@ -209,8 +231,18 @@ $(function(){
 		$(this).children('i').removeClass('fas').addClass('far').css('color','white');
 	})
 	
-	//star rating
-		
+	/* 공유하기 */
+	//공유하기 주소 출력
+	var shareLink = $(location).attr('href');
+	$("#input-share-link").val(shareLink);
+	//복사 버튼 눌렀을 때 복사되게 하기
+    $('#btn-link-copy').click(function() {
+    	$("#input-share-link").select();
+    	document.execCommand('copy');
+        alert('주소를 복사하였습니다');
+    });
+    
+	//star rating(별점)
 	$(document).on({
 		mouseover: function(event) {
 			$(this).find('.far').addClass('star-over');
@@ -222,7 +254,6 @@ $(function(){
 		}
 	}, '.rate');
 
-
 	$(document).on('click', '.rate', function() {
 		if ( !$(this).find('.star').hasClass('rate-active') ) {
 			$(this).siblings().find('.star').addClass('far').removeClass('fas rate-active');
@@ -232,9 +263,35 @@ $(function(){
 			console.log('has');
 		}
 	});
+	
+	//리뷰
+	var point = 0;
+	$("[name='radio1']").click(function(){
+		point = $(this).val();		
+	})
 
-})
-
+	$("#btn-review").click(function(){
+		var review = new Object();
+		review.content = "$('#div-review textarea').val()";
+		review.rating = point;
+		review.userId = '${LOGINED_USER.id}';
+// 		var review = {
+// 				content:$("#div-review textarea").val(),
+// 				rating: point,
+// 				userId: '${LOGINED_USER.id}'
+// 		}
+		var movieNo = '${param.no}';
+		
+		$.ajax({
+			type:"POST",
+			url:"boxoffice/review",
+			data:{review:review, movieNo:movieNo},
+			success: function(){
+				
+			}
+		})
+	})
+	
 	//예매율 chart
 	var ctr = document.getElementById("chart-rate");
 	var chartRate = new Chart(ctr, {
@@ -293,7 +350,11 @@ $(function(){
 	
 	    // Configuration options go here
 	    options: {}
-	});
+	});	
+	
+})
+
+
 </script>
 </body>
 </html>

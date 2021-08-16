@@ -16,6 +16,7 @@ public class TicketDto {
 	@DateTimeFormat(pattern = "yyyyMMdd")
 	private Date screeningDate;
 	private String screeningTime;
+	private String screeningEndTime;
 	private String screeningStatus;
 	private String title;
 	private String runningTime;
@@ -23,5 +24,11 @@ public class TicketDto {
 	private String movieStatus;
 	private String hallName;
 	private String ticketStatus;
+	private String ageGroup;
+	private int adultCnt;
+	private int teenagerCnt;
 	private int seatNo;
+	private String seatCol;
+	private String seatRow;
+	private int totalPrice;
 }

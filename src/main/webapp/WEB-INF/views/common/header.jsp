@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+<script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" charset="utf-8"></script>
 <script>
         // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
         Kakao.init('99049ace9c7bdff941b33ca319b803c8');
@@ -13,22 +14,13 @@
 	<nav class="row">
 		<div class="text-center p-0" id="topnav-container">
 			<a class="navbar-brand" href="/cinemabox/home" style="font-size:25px; color:black; font-weight: bolder;"><i class="fas fa-film mx-2"></i>CINEMA BOX</a>
-			<c:choose>
-				<c:when test="${empty LOGINED_USER }">
-					<ul class="nav justify-content-end" id="top-nav">
-						<li class="nav-item"><a class="nav-link" id="loginForm">로그인</a></li>
-						<li class="nav-item"><a class="nav-link" href="/cinemabox/register">회원가입</a></li>
-						<li class="nav-item"><a class="nav-link" href="/cinemabox/customerCenter/main">고객센터</a></li>
-					</ul>
-				</c:when>
-				<c:otherwise>
-					<ul class="nav justify-content-end" id="top-nav">
-						<li class="nav-item"><a class="nav-link" href="/cinemabox/myPage">마이페이지</a></li>
-						<li class="nav-item"><a class="nav-link" href="/cinemabox/customerCenter/main">고객센터</a></li>
-						<li class="nav-item"><a class="nav-link" href="/cinemabox/logout">로그아웃</a></li>
-					</ul>
-				</c:otherwise>
-			</c:choose>
+				<ul class="nav justify-content-end" id="top-nav">
+					<li id="login-link" class="nav-item" style="display:${empty LOGINED_USER ? '' :'none'}"><a class="nav-link" id="loginForm">로그인</a></li>
+					<li id="register-link" class="nav-item" style="display:${empty LOGINED_USER ? '' : 'none'}"><a class="nav-link" href="/cinemabox/register">회원가입</a></li>
+					<li id="myPage-link" class="nav-item" style="display:${not empty LOGINED_USER ? '' : 'none'}"><a class="nav-link" href="/cinemabox/myPage">마이페이지</a></li>
+					<li class="nav-item"><a class="nav-link" href="/cinemabox/customerCenter/main">고객센터</a></li>
+					<li id="logout-link" class="nav-item" style="display:${not empty LOGINED_USER ? '' : 'none'}"><a class="nav-link" href="/cinemabox/logout">로그아웃</a></li>
+				</ul>
 		</div>
 		
 		<div class="position-relative p-0" id="sticky-nav">
@@ -84,15 +76,16 @@
       		</div>
       		<div class="modal-body">
         		<div class="row">
-        			<div class="col-6 py-4">
-        				<form action="loginKakao" method="post" id="login-kakao">
-        					<input type="hidden" value="" id="kakaoId" name="id">
-        					<input type="hidden" value="" id="kakaoName" name="name">
-        					<input type="hidden" value="" id="kakaoBirth" name="birth">
-        					<input type="hidden" value="Y" id="isKakao" name="isKakao">
+        			<div class="col-6 py-4" data-kakaoLog="${value}">
+        				<form action="kakaoLogin" method="post" id="login-kakao">
+        					<input type="hidden" value="id" id="kakaoId" name="id">
+        					<input type="hidden" value="name" id="kakaoName" name="name">
         				</form>
         				<form id="form-login" method="post" action="login" novalidate="novalidate">
-        					<div class="row px-2 mt-4 mb-3">
+        					<div class="mt-4" id="error-message" style="display:none;">
+     										
+        					</div>
+        					<div class="row px-2 mb-3">
         						<input type="text" class="form-control" id="userId" name="id" placeholder="아이디">
         					</div>
         					<div class="row px-2 mb-3">
@@ -108,7 +101,7 @@
         					</div>
         					<div class="row">
         						<div class="col mt-2 d-grid gap-2 col-6 mx-auto">
-        							<button type="submit" class="btn btn-light btn-lg" style="color:black; font-size:15px; length:150px">로그인</button>
+        							<button type="submit" class="btn btn-light btn-lg" style="color:black; font-size:15px; length:150px" id="btn-login">로그인</button>
         						</div>
         					</div>
         				</form>
@@ -140,84 +133,129 @@
   	</div>
 </div>
 <script type="text/javascript">
-$(function(){
-	
-	var loginModal = new bootstrap.Modal(document.getElementById("loginModal"), {
-	      keyboard: false
-	   });
+
+var loginModal = new bootstrap.Modal(document.getElementById("loginModal"), {
+	     keyboard: false
+	  });
 	   
-	$("#loginForm").click(function(){
-		loginModal.show();
+$("#loginForm").click(function(){
+	loginModal.show();
+});
+
+
+$("#form-login").submit(function(event){
+	$("#error-message").hide();
+	event.preventDefault();
+	
+	// 아이디, 비밀번호 입력했는지 체크
+	if ($("#userId").val() == "") {
+		$("#error-message").text("아이디는 필수입력값입니다.").show();
+		$("#userId").focus();
+		return false;
+	}
+	
+	if($("#userPassword").val() == ""){
+		$("#error-message").text("비밀번호는 필수 입력값입니다.").show();
+		$("userPassword").focus();
+		return false;
+	}
+	
+	$.ajax({
+		type:"post",
+		url:"userLogin/login",
+		data: {id:$("#userId").val(), password:$("#userPassword").val()},
+		success:function() {
+			$("#login-link").hide();
+			$("#register-link").hide();
+			$("#logout-link").show();
+			$("#myPage-link").show();
+			
+			loginModal.hide();
+				
+		},
+		error:function() {
+			$("#error-message").text("아이디 비밀번호가 올바르지 않습니다.").show();
+		}
 	});
-	
-	
-	
+})
 
-	function loginWithKakao(){
-	    Kakao.Auth.login({
-	      success: function(authObj) {
-	        var accessToken = authObj.access_token;
-	    	Kakao.Auth.setAccessToken(accessToken);
-	    	Kakao.API.request({
-	    	    url: '/v2/user/me',
-	    	    success: function(response) {
-	    	    	alert(JSON.stringify(response));
-	    	    	//alert(response.properties.nickname);
-	    	    	//alert(response.kakao_account.birthday);
-	    	    	var id = response.id;
-	    	    	var name = response.properties.nickname;
-	    	    	var birth = response.kakao_account.birthday;
-	    	    	
-	    	    	$("#kakaoId").value(id);
-	    	    	$("#kakaoName").value(name);
-	    	    	$("#kakaoBirth").value(birth);
-	    	    	
-	    	    	postPage();
-	    	    	
-	    	    },
-	    	    fail: function(error) {
-	    	    	alert(error);
-	    	    }
-	    	});
-	      },
-	      fail: function(err) {
-	        alert(JSON.stringify(err))
-	      },
-	    })
-	  };
-	
 
-	//브라우져 쿠키에 값을 저장한다.
-	//name은 쿠키명, value는 쿠키값, days는 만료일까지의 일 수
-	function setCookie(name, value, days) {
-				var d = new Date();
-				d.setTime(d.getTime() + (days*24*60*60*1000));
-				var expires = "expires=" + d.toUTCString();
-				 // 쿠키는 name=value; expires=Thu, 18 Dec 2021 12:00:00 UTC; path=/
-				document.cookie = name + "=" + value + ";" + expires + ";path=/";
-		};
+function loginWithKakao(){
+    Kakao.Auth.login({
+      success: function(authObj) {
+    	//console.log(JSON.stringify(authObj))
+        var accessToken = authObj.access_token;
+    	Kakao.Auth.setAccessToken(accessToken);
+    	Kakao.API.request({
+    	    url: '/v2/user/me',
+    	    success: function(response) {
+    	    	var result = confirm("카카오 로그인으로 회원가입 / 로그인 하시겠습니까?");
+    	    	var id = response.id;
+    	    	var name = response.properties.nickname;
+    	    	//var birth = response.kakao_account.birthday;
+    	    	
+    	    	if(result){
+    	    		$.ajax({
+    	    			type:"post",
+    	    			url:"userLogin/kakaoLogin",
+    	    			data:{id:id, name:name},
+    	    			success: function(){
+    	    				$("#login-link").hide();
+    	    				$("#register-link").hide();
+    	    				$("#logout-link").show();
+    	    				$("#myPage-link").show();
+    	    			
+    	    				loginModal.hide();
+    	    			}
+    	    		})
+    	    	}
+    	    },
+    	   fail: function(error) {
+    	    	alert(error);
+    	   }
+    	});
+     },
+     fail: function(err) {
+       alert(JSON.stringify(err))
+     },
+   })
+};
+ 
+ /*
+브라우져 쿠키에 값을 저장한다.
+name은 쿠키명, value는 쿠키값, days는 만료일까지의 일 수
+*/
+function setCookie(name, value, days) {
+	var d = new Date();
+	d.setTime(d.getTime() + (days*24*60*60*1000));
+	var expires = "expires=" + d.toUTCString();
+	// 쿠키는 name=value; expires=Thu, 18 Dec 2021 12:00:00 UTC; path=/
+	document.cookie = name + "=" + value + ";" + expires + ";path=/";
+};
 
-	//브라우져 쿠키저장소에 지정된 이름의 쿠키값을 찾아서 반환한다.
-	function getCookie(name) {
-				name = name + "=";
-				var decodedCookie = decodeURIComponent(document.cookie);
-				var items = decodedCookie.split(";");
-			for (var i=0; i<items.length; i++) {
-			var item = items[i];
-		while (item.charAt(0) == ' ') {
+//브라우져 쿠키저장소에 지정된 이름의 쿠키값을 찾아서 반환한다.
+function getCookie(name) {
+	name = name + "=";
+	var decodedCookie = decodeURIComponent(document.cookie);
+	var items = decodedCookie.split(";");
+	for (var i=0; i<items.length; i++) {
+	var item = items[i];
+	while (item.charAt(0) == ' ') {
 	  	item = item.substring(1);
-			}
+		}
 		if (item.indexOf(name) == 0) {
 	  	return item.substring(name.length, item.length);
 		}
-		 }
-		return "";
-	};
-
+	}
+	return "";
+};
+	
+	/*
 	document.getElementById("register-link").onclick= function(event){
 		event.preventDefault()
 		setCookie("step","level1",1);
 		location.href="/cinemabox/register" 
 	};
-});
+	*/
+
 </script>

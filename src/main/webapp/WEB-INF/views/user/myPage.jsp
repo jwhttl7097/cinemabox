@@ -86,7 +86,7 @@
 					</div>
 					<div class="row mt-2">
 						<div class="col text-center">
-							<strong>홍길동</strong>님 반가워요!
+							<strong>${LOGINED_USER.name }</strong>님 반가워요!
 						</div>
 					</div>
 				</div>
@@ -129,7 +129,7 @@
             <div class="row mx-2 mt-4 mb-4 border-top border-bottom">
             	<div class="col text-center" style="padding:20px 20px">
 					<span><strong>POINT</strong></span>
-					<span>100p</span>
+					<span>${LOGINED_USER.point } p</span>
             	</div>
             	<div class="3tabs col text-center" style="padding:20px 20px">
 					<span><strong>쿠폰함</strong></span>

@@ -15,6 +15,6 @@ public interface TicketDao {
 	List<TicketDto> getTicketStatusByScreeningNo(int screeningNo);
 	
 	//좌석
-	
+	List<TicketDto> getAllSeat(int screeningNo);
 	//결제
 }

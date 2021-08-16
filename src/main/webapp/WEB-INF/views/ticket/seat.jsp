@@ -93,69 +93,29 @@
 							<span class="text-muted" style="font-size:1.3rem;">S&nbsp;C&nbsp;R&nbsp;E&nbsp;E&nbsp;N</span>
 						</div>
 						<div class="p-5 row justify-content-center">
-							<!-- 좌석 행 시작  -->
-							<div class="col-8 row">
-								<div class="col text-end text-white">A</div>
-								<div class="col text-center">
-									<input type="checkbox" name="seat" value="1"> 
-									<input type="checkbox" name="seat" value="1"> 
+							<!-- 좌석 행 시작 seats -->
+							<c:forEach var="i" items="${seats}" begin="0" step="10" end="69" varStatus="status">
+								<div class="col-8 row mt-2">
+									<div class="col text-end text-white">${i.seatCol }</div>
+									<div class="col text-center">
+										<input type="checkbox" name="seat" value="${i.seatNo}" checked="${i.ticketStatus eq 'Y' ? checked : '' }"> 
+										<input type="checkbox" name="seat" value="${i.seatNo + 1}" checked="${i.ticketStatus eq 'Y' ? checked : '' }"> 
+									</div>
+									<div class="col text-center">
+										<input type="checkbox" name="seat" value="${i.seatNo + 2}" ${i.ticketStatus eq 'Y' ? checked : '' }"> 
+										<input type="checkbox" name="seat" value="${i.seatNo + 3}" checked="${i.ticketStatus eq 'Y' ? checked : '' }"> 
+										<input type="checkbox" name="seat" value="${i.seatNo + 4}" checked="${i.ticketStatus eq 'Y' ? checked : '' }">
+										<input type="checkbox" name="seat" value="${i.seatNo + 5}" checked="${i.ticketStatus eq 'Y' ? checked : '' }"> 
+										<input type="checkbox" name="seat" value="${i.seatNo + 6}" checked="${i.ticketStatus eq 'Y' ? checked : '' }"> 
+										<input type="checkbox" name="seat" value="${i.seatNo + 7}" checked="${i.ticketStatus eq 'Y' ? checked : '' }"> 
+									</div>
+									<div class="col text-center">
+										<input type="checkbox" name="seat" value="${i.seatNo + 8}" checked="${i.ticketStatus eq 'Y' ? checked : '' }"> 
+										<input type="checkbox" name="seat" value="${i.seatNo + 9}" checked="${i.ticketStatus eq 'Y' ? checked : '' }"> 
+									</div>
+									<div class="col"></div>
 								</div>
-								<div class="col-5 text-center">
-									<input type="checkbox" name="seat" value="1"> 
-									<input type="checkbox" name="seat" value="1"> 
-									<input type="checkbox" name="seat" value="1"> 
-									<input type="checkbox" name="seat" value="1"> 
-									<input type="checkbox" name="seat" value="1"> 
-									<input type="checkbox" name="seat" value="1"> 
-								</div>
-								<div class="col text-center">
-									<input type="checkbox" name="seat" value="1"> 
-									<input type="checkbox" name="seat" value="1"> 
-								</div>
-								<div class="col"></div>
-							</div> 
-							
-							<div class="col-8 row mt-2">
-								<div class="col text-end text-white">B</div>
-								<div class="col text-center">
-									<input type="checkbox" name="seat" value="1"> 
-									<input type="checkbox" name="seat" value="1"> 
-								</div>
-								<div class="col-5 text-center">
-									<input type="checkbox" name="seat" value="1"> 
-									<input type="checkbox" name="seat" value="1"> 
-									<input type="checkbox" name="seat" value="1"> 
-									<input type="checkbox" name="seat" value="1"> 
-									<input type="checkbox" name="seat" value="1"> 
-									<input type="checkbox" name="seat" value="1"> 
-								</div>
-								<div class="col text-center">
-									<input type="checkbox" name="seat" value="1"> 
-									<input type="checkbox" name="seat" value="1"> 
-								</div>
-								<div class="col"></div>
-							</div> 							
-							
-							<div class="col-8 row mt-2">
-								<div class="col text-end text-white">C</div>
-								<div class="col text-center">
-									<input type="checkbox" name="seat" value="1"> 
-									<input type="checkbox" name="seat" value="1"> 
-								</div>
-								<div class="col-5 text-center">
-									<input type="checkbox" name="seat" value="1"> 
-									<input type="checkbox" name="seat" value="1"> 
-									<input type="checkbox" name="seat" value="1"> 
-									<input type="checkbox" name="seat" value="1"> 
-									<input type="checkbox" name="seat" value="1"> 
-									<input type="checkbox" name="seat" value="1"> 
-								</div>
-								<div class="col text-center">
-									<input type="checkbox" name="seat" value="1"> 
-									<input type="checkbox" name="seat" value="1"> 
-								</div>
-								<div class="col"></div>
-							</div> 							
+							</c:forEach>
 							<!-- 좌석 행 끝 -->
 						</div>
 					</div>
@@ -182,6 +142,7 @@ $(function(){
 	   $(this).children('.subnav').stop().slideUp();
 	})
 
+	
 })
 </script>
 </body>

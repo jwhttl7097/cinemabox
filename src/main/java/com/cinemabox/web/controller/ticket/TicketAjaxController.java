@@ -26,10 +26,12 @@ public class TicketAjaxController {
 	//영화목록 불러오기
 	@RequestMapping("/movie")
 	public @ResponseBody ResponseEntity<List<TicketDto>> movieList
-	(@RequestParam(value="sort",required = false)String sort, @RequestParam(value="theaterNo",required = false) int theaterNo){
+	(@RequestParam(value="sort",required = false, defaultValue = "-1")String sort, @RequestParam(value="theaterNo",required = false) int theaterNo){
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("sort",sort);
-		map.put("theaterNo",theaterNo);
+		if(theaterNo != -1) {
+			map.put("theaterNo",theaterNo);
+		}
 		List<TicketDto> movieList = ticketService.getMovieListByTheaterNo(map);
 		return new ResponseEntity<List<TicketDto>>(movieList, HttpStatus.OK);
 	}
@@ -37,14 +39,16 @@ public class TicketAjaxController {
 	//선택한 영화 시간 불러오기
 	@RequestMapping("/time")
 	public @ResponseBody ResponseEntity<List<TicketDto>> movieTime
-	(//@RequestParam(value="hallNo",required = false) int hallNo
-	@RequestParam(value="theaterNo",required = false) int theaterNo
-	,@RequestParam(value="movieNo",required = false)int movieNo
+	(@RequestParam(value="theaterNo",required = false, defaultValue = "-1") int theaterNo
+	,@RequestParam(value="movieNo",required = false, defaultValue = "-1")int movieNo
 	,@RequestParam(value="screeningDate",required = false) @DateTimeFormat(pattern = "yyyyMMdd") Date screeningDate){
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		//map.put("hallNo",hallNo);
-		map.put("theaterNo",theaterNo);
-		map.put("movieNo",movieNo);
+		if(theaterNo != -1) {
+			map.put("theaterNo",theaterNo);
+		}
+		if(movieNo != -1) {
+			map.put("movieNo",movieNo);
+		}
 		map.put("screeningDate",screeningDate);
 		List<TicketDto> movieTime = ticketService.getMovieTime(map);
 		return new ResponseEntity<List<TicketDto>>(movieTime, HttpStatus.OK);
@@ -53,14 +57,19 @@ public class TicketAjaxController {
 	//선택한 시간의 영화 정보 및 좌석 정보 불러오기
 	@RequestMapping("/selectMovie")
 	public @ResponseBody ResponseEntity<Map<String, Object>> movieAndSeat
-	(@RequestParam(value="theaterNo",required = false) int theaterNo
-	,@RequestParam(value="movieNo",required = false)int movieNo
+	(@RequestParam(value="theaterNo",required = false, defaultValue = "-1") int theaterNo
+	,@RequestParam(value="movieNo",required = false, defaultValue = "-1")int movieNo
 	,@RequestParam(value="screeningDate",required = false) @DateTimeFormat(pattern = "yyyyMMdd") Date screeningDate
 	,@RequestParam(value="time",required = false) String time
-	,@RequestParam(value="screeningNo",required = false)int screeningNo){
+	,@RequestParam(value="screeningNo",required = false, defaultValue = "-1")int screeningNo){
+		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("theaterNo",theaterNo);
-		map.put("movieNo",movieNo);
+		if(theaterNo != -1) {
+			map.put("theaterNo",theaterNo);
+		}
+		if(movieNo != -1) {
+			map.put("movieNo",movieNo);
+		}
 		map.put("screeningDate",screeningDate);
 		map.put("time",time);
 		TicketDto movieInfo = ticketService.getMovieByTime(map);

@@ -33,4 +33,10 @@ public class TicketServiceImpl implements TicketService{
 	public List<TicketDto> getTicketStatusByScreeningNo(int screeningNo) {
 		return ticketDao.getTicketStatusByScreeningNo(screeningNo);
 	}
+	
+	// 좌석
+	@Override
+	public List<TicketDto> getAllSeat(int screeningNo) {
+		return ticketDao.getAllSeat(screeningNo);
+	}
 }
