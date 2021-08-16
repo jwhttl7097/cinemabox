@@ -27,8 +27,11 @@
 			question_date				questionDate,
 			question_state				state,
 			question_name				name,
+			question_email				email,
+			question_satisfaction		satisfaction,
 			answer_content				answerContent,
-			answer_date					answerDate			
+			answer_date					answerDate
+			
 		from
 			cinemabox_question
 		where
@@ -71,8 +74,9 @@
 		update
 			cinemabox_question
 		set		
-			answer_content = #{answerContent}	
-			question_state =  #{state}='Y'
+			answer_content = #{answerContent},	
+			question_state ='Y',
+			answer_date = sysDate
 			
 		where
 			question_no = #{questionNo}

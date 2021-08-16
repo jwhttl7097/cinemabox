@@ -43,6 +43,14 @@
 		</table>
 	</div>
 		<div class="col-9">
+		<nav class="navbar">
+  			<div class="container-fluid">
+   				 <form class="d-flex">
+     				 <input class="form-control me-2" type="search" placeholder="검색어를 입력해주세요." aria-label="Search">
+     				 <button class="btn btn-outline-dark" style="width: 80px;" type="button">검색</button>
+    			</form>
+  			</div>
+		</nav>
 			<div class=" mb-3">
 				<table class="table">
 					<colgroup>

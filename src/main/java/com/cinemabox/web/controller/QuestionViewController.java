@@ -72,6 +72,7 @@ public class QuestionViewController {
 	public String questionDetail(int no, Model model) {
 		Question questionDetail = questionService.detailQuestion(no);
 		model.addAttribute("questionDetail", questionDetail);
+		System.out.println("questionDetail ===> "+questionDetail.toString());
 		return "customerCenter/questionDetail";
 	}
 	

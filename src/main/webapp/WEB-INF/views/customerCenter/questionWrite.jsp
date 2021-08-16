@@ -32,35 +32,32 @@
 	<div class="mb-3">
 		<h5>문의 내용</h5>
 	</div>
-	<div class="mb-3">
+	<div class="mb-3 ">
 	  <label for="exampleFormControlInput1" class="form-label">제목</label>
 	  <input type="text" class="form-control" id="title" name="questionTitle">
 	</div>
-	
 	<div class="mb-5">
 	  <label for="exampleFormControlTextarea1" class="form-label">내용</label>
 	  <textarea class="form-control" id="content" name="questionContent" rows="3"></textarea>
 	</div>
 	
-	
 	  <div class="col">
         <h5 class="mb-3">고객정보(*필수입력사항입니다)</h5>
-          <div class="row g-3">
+          <div class="row g-3" style="background: #f5f5f5;">
             <div class="col-sm-6">
+            	<div class="mb-3">
               <label for="firstName" class="form-label">성명*</label>
               <input type="text" class="form-control" id="firstName" name="name" value="" required>
-            </div>
-            
-            <div class="col-12">
+              </div>
+         	<div class="mb-3">
               <label for="email" class="form-label">이메일*<span class="text-muted"></span></label>
               <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com">
-              
-            </div>
-
-            <div class="col-12 mb-3">
+              </div>
+      		 <div class="mb-3">
               <label for="phone" class="form-label">휴대폰 번호*</label>
               <input type="text" class="form-control" id="phone" name="phone" placeholder="-를 제외하고 적어주세요"  required>
             </div>
+           </div>
 		</div>
 	
 		<div style="text-align: right;">

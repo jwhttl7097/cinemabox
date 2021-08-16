@@ -112,7 +112,6 @@
 		<form action="" class="review" id="satisfaction"> 
             <h5>만족도</h5>
             <div class="star-rating space-x-4 mx-auto">
-            	<input type="hidden" id="questionNo" name="questionNo" value="${questionDetail.questionNo}"/>
            		<input type="hidden" id="satisfaction1" name="satisfaction1" value="${questionDetail.satisfaction}"/> 
 				<input type="radio" id="5-stars" name="rating" value="5" />
 				<label for="5-stars" class="star pr-4">★</label>
@@ -136,9 +135,8 @@
 </div>
 <script type="text/javascript">
 window.onload = function(){
-	var a = $('#questionNo').val();
-	var b = $('#satisfaction1').val();
-	debugger;
+	var satisfaction = $('#satisfaction1').val();
+	$("input:radio[name='rating']:radio[value="+satisfaction+"]").prop('checked', true); 
 }
 
 function del(questionNo) {

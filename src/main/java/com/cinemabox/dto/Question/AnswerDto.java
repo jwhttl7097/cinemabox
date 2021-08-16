@@ -8,6 +8,7 @@ import lombok.Data;
 public class AnswerDto {
 	
 	private int questionNo;
+	private String name;
 	private String answerContent;
 	private Date answerDate;
 	private String email;

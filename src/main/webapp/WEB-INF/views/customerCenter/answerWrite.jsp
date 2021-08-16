@@ -27,7 +27,9 @@
 	</div>
 	
 		<form id="question-form" name="insertForm" method="post" action="../customerCenter/insertAnswer">
-	
+	<input type="hidden" name="questionNo" id="questionNo"  value="${questionDetail.questionNo}"/>
+	<input type="hidden" name="email" id="email"  value="${questionDetail.email}"/>
+	<input type="hidden" name="name" id="name"  value="${questionDetail.name}"/>
 	<div style="padding:80px">
 	<div class="mb-3">
 	<h4>문의 답글</h4>

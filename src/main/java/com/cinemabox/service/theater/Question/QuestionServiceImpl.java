@@ -74,10 +74,13 @@ public class QuestionServiceImpl implements QuestionService {
 	public void addAnswer(AnswerDto answer) {
 		// 답변 등록함 (update)
 		customerDao.insertAnswer(answer);
-		
+		System.out.println("answer DATA ==>"+answer.toString());
 		// 메일발송
 		// 메일 전송을 위한 메일 정보 
 		String userMail = answer.getEmail();
+		String answerContent = answer.getAnswerContent();
+		String name = answer.getName();
+
 	
 		// gmail로 보내는 권한 부여 
 		Properties props = System.getProperties();
@@ -95,7 +98,7 @@ public class QuestionServiceImpl implements QuestionService {
 		 
 		// 메일 제목, 내용 
 		 String subject = "[CINEMA BOX]문의에 대한 답변입니다!";
-		 String content = "";
+		 String content = "<html><head></head><body><div style=\"margin:20px 10px; max-width:470px\"><div align=\"left\" style=\"text-align:left\"><img src=\"\" alt=\"\" style=\"-ms-interpolation-mode:bicubic; clear:both; display:block; max-width:100%; outline:none; text-decoration:none; width:107px\" width=\"107\" loading=\"lazy\"></div><div style=\"background-color:#FFF; border:1px solid #d3c1e4; color:#a834af; font-size:0.875em; margin:20px 0; word-break:keep-all\" bgcolor=\"#FFFFFF\"><div style=\"padding:30px\"><h1>"+name+"님의 문의에 대한 답변입니다.</h1><p align=\"left\" style=\"margin:0; color:#4d4d4d; font-family:Helvetica, Arial, sans-serif; font-weight:normal; line-height:1.3; padding:0; text-align:left; font-size:1em; margin-bottom:20px\">"+answerContent+"</p><p align=\"left\" style=\"margin:0; color:#4d4d4d; font-family:Helvetica, Arial, sans-serif; font-weight:normal; line-height:1.3; padding:0; text-align:left; font-size:1em; margin-bottom:20px\">감사합니다.</p></div></div></div></body></html>";
 		 String fromName = "cinemabox";
 		  
 	    // 권한 부여과 id, password를 전달할 연결 통로 

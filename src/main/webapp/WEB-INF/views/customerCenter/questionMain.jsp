@@ -24,13 +24,10 @@
 	<div class="top" style="margin-left:150px;  margin-top:30px;">
 	<h3>고객센터</h3>
 	</div>
-	
-	<div class="row mb-3" style="padding:60px; margin-left:30px;">
-	<div class="col-2"  style="margin-right:70px;">
-		
+	<div class="row mb-3"  style="padding:25px; margin-right:15px; margin-left:15px; margin-bottom:20px;">
+	<div class="col-2"  style="margin-right:60px; margin-left:50px; margin-top:20px;">		
 	<table class="table">
 		<tbody>
-
 			<tr>
 				<td><a href="main">고객센터 메인</a></td>
 			</tr>
@@ -40,7 +37,6 @@
 			<tr>
 				<td><a href="userInfo">1:1 문의</a></td>
 			</tr>
-
 			</tbody>
 		</table>
 		
@@ -67,7 +63,7 @@
 								 alt="문의" width="53px"height="55px" style="margin:15px"></a><div>문의</div></li>
 					</ul>	
 				</div>	
-				<div class="notice">
+				<div class="notice" style="margin-bottom: 35px;">
 					<div class="mb-2">
 						<button type="button" class="btn btn-outline-warning" style="color: #846e4d" onclick="location.href='../notice/list'">공지사항</button>
 					</div>
