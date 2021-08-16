@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cinemabox.dto.Notice.NoticeDetailDto;
 import com.cinemabox.dto.Notice.NoticeDto;
+import com.cinemabox.dto.Notice.NoticeListDto;
 import com.cinemabox.service.theater.Notice.NoticeService;
 import com.cinemabox.vo.Notice;
 
@@ -34,14 +35,18 @@ public class NoticeViewController {
 	 * @return 뷰페이지의 이름 (공지사항 페이지)
 	 */
 	@GetMapping("/list")
-	public String Notice(Model model) {
-
+	public String Notice(NoticeListDto searchData, Model model) {
+		int page = searchData.getPage();
+		searchData.setStartPage(((page-1)*5)+1);
+		searchData.setEndPage(5*page);
+		System.out.println("searchData ==> "+searchData.toString());
 		// 공지사항 리스트 조회하기
-		List<Notice> noticeList = noticeService.getNoticeAll();
-		
+		List<Notice> noticeList = noticeService.getNoticeAll(searchData);
+		int pageAllCnt = noticeService.getPageAllCnt(searchData);
+		System.out.println("controller pageAllCnt ====>" + pageAllCnt);
 		// 뷰 페이지에 공지사항 목록 전달하기
 		model.addAttribute("noticeList", noticeList);
-		
+		model.addAttribute("pageAllCnt", pageAllCnt);
 		// 뷰페이지로 내부이동하기
 		// /WEB-INF/views/notice/noticeMain.jsp로 내부이동해서 JSP 실행시키기
 		return "notice/noticeMain";

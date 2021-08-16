@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.cinemabox.dao.Notice.NoticeDao;
 import com.cinemabox.dto.Notice.NoticeDetailDto;
 import com.cinemabox.dto.Notice.NoticeDto;
+import com.cinemabox.dto.Notice.NoticeListDto;
 import com.cinemabox.vo.Notice;
 
 
@@ -17,9 +18,9 @@ public class NoticeServiceImpl implements NoticeService {
 	@Autowired NoticeDao noticeDao;
 	
 	@Override
-	public List<Notice> getNoticeAll(){
+	public List<Notice> getNoticeAll(NoticeListDto searchData){
 		// 공지사항 조회 
-		List<Notice> notice = noticeDao.getNoticeAll();
+		List<Notice> notice = noticeDao.getNoticeAll(searchData);
 		// 공지사항을 반환한다.
 		return notice;
 	}
@@ -63,6 +64,11 @@ public class NoticeServiceImpl implements NoticeService {
 		List<Notice> noticeList = noticeDao.noticeMain();
 		// 공지사항을 반환한다.
 		return noticeList;
+	}
+
+	@Override
+	public int getPageAllCnt(NoticeListDto searchData) {
+		return noticeDao.getPageAllCnt(searchData);
 	}
 
 }

@@ -96,9 +96,13 @@
         <span aria-hidden="true">&laquo;</span>
       </a>
     </li>
-    <li class="page-item"><a class="page-link" href="#">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <% 
+    	int pageAllCnt123 =(int)request.getAttribute("pageAllCnt");
+    	for(int i=0; i<pageAllCnt123; i++){ %>
+    		<li class="page-item"><a class="page-link" href="../notice/list?page=<%=i+1%>"><%=i+1 %></a></li> 
+    <%
+    	}
+    %>
     <li class="page-item">
       <a class="page-link" href="#" aria-label="Next">
         <span aria-hidden="true">&raquo;</span>

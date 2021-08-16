@@ -5,15 +5,17 @@ import java.util.List;
 
 import com.cinemabox.dto.Notice.NoticeDetailDto;
 import com.cinemabox.dto.Notice.NoticeDto;
+import com.cinemabox.dto.Notice.NoticeListDto;
 import com.cinemabox.vo.Notice;
 
 public interface NoticeDao {
 	
 	/**
 	 * 전체공지사항 조회 
+	 * @param searchData 
 	 * @return no
 	 */
-	List<Notice> getNoticeAll();
+	List<Notice> getNoticeAll(NoticeListDto searchData);
 	
 	/**
 	 * 번호로 공지사항 상세 조회 
@@ -50,6 +52,8 @@ public interface NoticeDao {
 	 * @return
 	 */
 	List<Notice> noticeMain();
+
+	int getPageAllCnt(NoticeListDto searchData);
 
 
 }

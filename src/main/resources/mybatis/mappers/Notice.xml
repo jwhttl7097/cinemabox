@@ -4,19 +4,39 @@
 
 <mapper namespace="com.cinemabox.dao.Notice.NoticeDao">
 
-	<select id="getNoticeAll" resultType="com.cinemabox.vo.Notice">
+	<select id="getNoticeAll" parameterType="com.cinemabox.dto.Notice.NoticeListDto" resultType="com.cinemabox.vo.Notice">
 		select 
-			notice_no				no,
-			notice_division			division,
-			notice_title			title,
-			notice_date				creatDate,
-			notice_hits				hits,
-			notice_important		important
-		from
-			cinemabox_notice
-		order by notice_important asc, notice_no desc
+		    no,
+		    division,
+		    title,
+		    creatDate,
+		    hits,
+		    important
+		from (
+		    select 
+		        notice_no				no,
+		        notice_division			division,
+		        notice_title			title,
+		        notice_date				creatDate,
+		        notice_hits				hits,
+		        notice_important		important,
+		        ROW_NUMBER() OVER (order by notice_no desc) num
+		    from
+		    	cinemabox_notice
+			 where 
+			    notice_title like '%${searchWord}%' 
+			order by notice_important asc, notice_no desc )
+		where num between ${startPage} and ${endPage}
 	</select>
 	
+	<select id="getPageAllCnt" parameterType="com.cinemabox.dto.Notice.NoticeListDto" resultType="int">
+		select 
+		   ceil(count(*)/5)
+		from
+		    cinemabox_notice
+	  where 
+		    notice_title like '%${searchWord}%' 
+	</select>
 	
 	<select id="noticeMain" resultType="com.cinemabox.vo.Notice">
 		select 
