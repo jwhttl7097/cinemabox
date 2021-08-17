@@ -21,17 +21,14 @@
 <body>
 <div class="container-fluid">
 	<%@ include file="../common/header.jsp"%>
-	<div class="top" style="margin-left:150px;  margin-top:30px;">
+	<div class="top" style="margin-left:150px;  margin-top:50px;">
 	<h3 >1:1문의</h3>
 	</div>
-	
 		<form id="question-form" name="insertForm" method="post" action="../customerCenter/insertQuestion">
-	
-	<div style="padding:80px">
-	
-	<div class="mb-3">
-		<h5>문의 내용</h5>
-	</div>
+	<div style="padding:80px; margin-top:-30px">
+		<div class="mb-3">
+			<h5>문의 내용</h5>
+		</div>
 	<div class="mb-3 ">
 	  <label for="exampleFormControlInput1" class="form-label">제목</label>
 	  <input type="text" class="form-control" id="title" name="questionTitle">

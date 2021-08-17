@@ -56,7 +56,7 @@
 <div class="container-fluid">
 	<%@ include file="../common/header.jsp"%>
 	
-	<div class="top" style="margin-left:150px;  margin-top:30px;">
+	<div class="top" style="margin-left:150px;  margin-top:50px;">
 	<h3 >1:1문의</h3>
 	</div>
 

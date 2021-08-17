@@ -22,7 +22,7 @@
 <div class="container-fluid">
 	<%@ include file="../common/header.jsp"%>
 	
-	<div class="top" style="margin-left:150px;  margin-top:30px;">
+	<div class="top" style="margin-left:150px;  margin-top:50px;">
 	<h3 >공지사항</h3>
 	</div>
 	
@@ -41,7 +41,6 @@
 	
 			<div style="text-align: right;">
                 <input type=submit value="수정" onclick="checkForm()"/>
-            
                 <input type=button value="목록" onclick="location.href='list'"/>
             </div>
     </form>

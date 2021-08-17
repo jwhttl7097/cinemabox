@@ -47,6 +47,7 @@ public class NoticeViewController {
 		// 뷰 페이지에 공지사항 목록 전달하기
 		model.addAttribute("noticeList", noticeList);
 		model.addAttribute("pageAllCnt", pageAllCnt);
+		model.addAttribute("searchWord", searchData.getSearchWord());
 		// 뷰페이지로 내부이동하기
 		// /WEB-INF/views/notice/noticeMain.jsp로 내부이동해서 JSP 실행시키기
 		return "notice/noticeMain";

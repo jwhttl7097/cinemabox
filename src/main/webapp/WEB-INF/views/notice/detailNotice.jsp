@@ -22,12 +22,12 @@
 <div class="container-fluid">
 	<%@ include file="../common/header.jsp"%>
 	
-	<div class="top" style="margin-left:150px;  margin-top:30px;">
+	<div class="top" style="margin-left:150px;  margin-top:50px;">
 	<h3 >공지사항</h3>
 	</div>
 
-<div class="row mb-3" style="padding:80px">
-<div class="col-2">
+<div class="row mb-3" style="padding:65px">
+<div class="col-2" style="margin-left:50px;">
 		<table class="table">
 		<tbody>
 			<tr>
@@ -53,7 +53,7 @@
 					<tr>
 						<th>${noticeDetail.title }</th>
 						<th>등록일<span><fmt:formatDate value="${noticeDetail.creatDate }" pattern="yyyy.MM.dd"/></span></th>
-						<th>조회수<span>${noticeDetail.hits }</span></th>
+						<th style="text-end">조회수<span>${noticeDetail.hits }</span></th>
 					</tr>
 			</thead>
 			<tbody>

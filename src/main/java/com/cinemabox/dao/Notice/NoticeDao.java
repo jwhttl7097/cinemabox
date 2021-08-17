@@ -53,6 +53,11 @@ public interface NoticeDao {
 	 */
 	List<Notice> noticeMain();
 
+	/**
+	 * 공지사항 페이지수 
+	 * @param searchData
+	 * @return
+	 */
 	int getPageAllCnt(NoticeListDto searchData);
 
 

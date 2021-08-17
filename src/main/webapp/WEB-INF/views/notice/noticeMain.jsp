@@ -22,7 +22,7 @@
 <div class="container-fluid">
 	<%@ include file="../common/header.jsp"%>
 	
-	<div class="top" style="margin-left:150px;  margin-top:30px;">
+	<div class="top" style="margin-left:150px;  margin-top:50px;">
 	<h3>공지사항</h3>
 	</div>
 	
@@ -43,14 +43,15 @@
 		</table>
 	</div>
 		<div class="col-9">
-		<nav class="navbar">
-  			<div class="container-fluid">
-   				 <form class="d-flex">
-     				 <input class="form-control me-2" type="search" placeholder="검색어를 입력해주세요." aria-label="Search">
-     				 <button class="btn btn-outline-dark" style="width: 80px;" type="button">검색</button>
-    			</form>
-  			</div>
-		</nav>
+			<nav class="navbar">
+	  			<div class="container-fluid">
+	   				 <form class="d-flex"id="search" method="get" action="../notice/list">
+	   				 	 <input type="hidden" name="page" id="page" value="1">
+	     				 <input class="form-control me-2" type="search" id="searchWord" name="searchWord" value="${searchWord }" placeholder="검색어를 입력해주세요." aria-label="Search">
+	     				 <button class="btn btn-outline-dark" style="width: 100px;" onclick="serch_click()">검색</button>
+	    			</form>
+	  			</div>
+			</nav>
 			<div class=" mb-3">
 				<table class="table">
 					<colgroup>
@@ -58,7 +59,7 @@
 						<col width="15%">
 						<col width="*">
 						<col width="15%">
-						<col width="15%">
+						<col width="10%">
 					</colgroup>
 					<thead style="background: #fbe5a5;">
 						<tr class="text-center">
@@ -85,35 +86,43 @@
 		<div style="text-align: right;">
 			<button type="button" class="btn btn-warning" onclick="location.href='add'">글쓰기</button>
 		</div>	
-	</div>		
+		<div style="margin-left: 40%; margin-top: 15px;"> 
+			<nav aria-label="Page navigation example">
+	 		<ul class="pagination">
+	   			<li class="page-item">
+	    			<a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+	  			</li>
+	  	 	<% 
+				int pageAllCnt123 =(int)request.getAttribute("pageAllCnt");
+	  	 	 	String searchWord = (String)request.getAttribute("searchWord");
+				for(int i=0; i<pageAllCnt123; i++){ %>
+				<li class="page-item"><a class="page-link" href="../notice/list?page=<%=i+1%>&searchWord=<%=searchWord%>"><%=i+1 %></a></li> 
+			<%
+				}
+			%>
+	    		<li class="page-item">
+	     			<a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+	    		</li>
+	  		</ul>
+		</nav>
+	</div>
+	</div>	
+	<div>
+	
+	</div>	
  </div>
-	
-	
-	<nav aria-label="Page navigation example">
-  <ul class="pagination">
-    <li class="page-item">
-      <a class="page-link" href="#" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
-    </li>
-    <% 
-    	int pageAllCnt123 =(int)request.getAttribute("pageAllCnt");
-    	for(int i=0; i<pageAllCnt123; i++){ %>
-    		<li class="page-item"><a class="page-link" href="../notice/list?page=<%=i+1%>"><%=i+1 %></a></li> 
-    <%
-    	}
-    %>
-    <li class="page-item">
-      <a class="page-link" href="#" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
-    </li>
-  </ul>
-</nav>
-	
 	<%@ include file="../common/footer.jsp"%>
 	
 </div>
+<script type="text/javascript">
+function serch_click() {
+//	var searchWord = $("#searchWord").val();
+//	debugger;
+//	window.location.href="../notice/list?page=3"
+			
+}	
+
+</script>
 </body>
 
 <style>
