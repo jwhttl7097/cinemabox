@@ -8,17 +8,29 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.cinemabox.service.movie.APIMovieService;
 import com.cinemabox.service.movie.MovieService;
 import com.cinemabox.service.movie.ReviewService;
 import com.cinemabox.vo.Movie;
+import com.cinemabox.vo.Review;
+import com.cinemabox.vo.User;
+import com.cinemabox.vo.Wishlist;
+import com.cinemabox.web.utils.SessionUtils;
 
 @Controller
 public class MovieController{
 	
 	@Autowired MovieService movieService;
+	@Autowired APIMovieService apiMovieService;
+	@Autowired ReviewService reviewService;
 	
 	@GetMapping(path = {"/movie"})
-	public String boxoffice(Model model, String sort) {
+	public String boxoffice(Model model, String sort) throws Exception {
+		//새로 올라온 영화 추가하기
+		apiMovieService.saveMoive();
+		//예매율, 누적관객수 추가하기
+		apiMovieService.crawler();
+		
 		List<Movie> nowMovies = movieService.getNowMovieList(sort);
 		List<Movie> unreleased = movieService.getUnreleasedMovieList(sort);
 		model.addAttribute("nowMovies", nowMovies);
@@ -30,6 +42,22 @@ public class MovieController{
 	public String movieDetail(Model model, int no) {
 		Movie movieDetail = movieService.getMovieByNo(no);
 		model.addAttribute("movieDetail", movieDetail);
+
+		User loginedUser = (User) SessionUtils.getAttribute("LOGINED_USER");
+		Wishlist wishlist = new Wishlist();
+		if(loginedUser != null) {
+			wishlist.setUserId(loginedUser.getId());
+		}
+		wishlist.setMovieNo(no);
+		Wishlist wish = movieService.getLikeByUserId(wishlist);
+		model.addAttribute("wish", wish);
+		
+		int reviewCnt = reviewService.getReviewCntByMovieNo(no);
+		model.addAttribute("reviewCnt", reviewCnt);
+		
+		List<Review> reviews = reviewService.getAllReviews(no);
+		model.addAttribute("reviews", reviews);
+		
 		return "movie/movieDetail";	
 	}
 	
@@ -37,7 +65,7 @@ public class MovieController{
 	public String movieReview(Model model, int no) {
 		Movie movieDetail = movieService.getMovieByNo(no);
 		model.addAttribute("movieDetail", movieDetail);
-		
+
 		return "movie/movieDetail";	
 	}
 }

@@ -11,15 +11,31 @@
 		(REVIEW_SEQ.nextval, #{content}, #{rating}, #{movieNo}, #{userId})
 	</insert>
 	
-	<update id="deleteReview" parameterType="com.cinemabox.vo.Review">
-		update
+	<delete id="deleteReview" parameterType="com.cinemabox.vo.Review">
+		delete from
 			CINEMABOX_REVIEW
-		set
-			REVIEW_STATUS = 'N'
 		where 
-			REVIEW_NO = #{no}
+			MOVIE_NO = #{movieNo}
 			and USER_ID = #{userId}
+	</delete>
+	
+	<update id="updateMovieRating" parameterType="com.cinemabox.vo.Movie">
+		update
+			CINEMABOX_MOVIE
+		set
+			MOVIE_RATING = #{rating}
+		where 
+			MOVIE_NO = #{no}
 	</update>
+	
+	<select id="getReviewCntByMovieNo" parameterType="int" resultType="int">
+		select
+			COUNT(REVIEW_NO) as count
+		from
+			CINEMABOX_REVIEW
+		where
+			movie_no = #{value}
+	</select>
 	
 	<select id="getAllReviews" parameterType="int" resultType="com.cinemabox.vo.Review">
 		select 

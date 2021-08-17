@@ -24,9 +24,19 @@
 		<div class="container movie-info row">
 			<div class="col-8 pt-5">
 				<div class="d-flex justify-content-between" style="padding-bottom:15px; border-bottom: 1px solid gray;">
-					<h1 class="text-white">${movieDetail.title}</h1>
+					<h1 class="text-white" style="${fn:length(movieDetail.title) ge 15 ?'font-size:2rem;':'' }">${movieDetail.title}</h1>
 					<div>
-						<button class="btn btnStyle me-1 mt-2" id="btn-like"><i class="far fa-heart"></i>&nbsp;${movieDetail.like}</button>
+						<button class="btn btnStyle me-1 mt-2" id="btn-like">
+							<c:choose>
+								<c:when test="${wish.userId eq LOGINED_USER.id && wish.movieNo eq movieDetail.no}">
+									<i class="fas fa-heart" style="color:red;"></i>&nbsp;
+								</c:when>
+								<c:otherwise>
+									<i class="far fa-heart"></i>&nbsp;
+								</c:otherwise>
+							</c:choose>
+							<span>${movieDetail.userLike}</span>
+						</button>
 						<button class="btn btnStyle mt-2" id="btn-share" data-bs-toggle="modal" data-bs-target="#modal-share"><i class="far fa-share-square"></i>&nbsp;공유하기</button>
 					</div>
 				</div>
@@ -47,7 +57,7 @@
 					</div>
 				<div class="row info">
 					<div class="score col text-center">
-						<p class="tit">실관람 평점</p>
+						<p class="tit">평점</p>
 						<p class="cont"><i class="fas fa-star-half-alt"></i>&nbsp;<fmt:formatNumber value="${movieDetail.rating}" pattern="0.0" />점</p>
 					</div>
 					<div class="rating col text-center">
@@ -59,7 +69,7 @@
 						<p class="cont"><i class="fas fa-users"></i>&nbsp;<fmt:formatNumber value="${movieDetail.cumulativeAudienceCnt }" type="number" /> 명</p>
 					</div>
 				</div>
-				<button class="btn btn-warning col-12 mt-2 fw-bold" onclick="location.href='ticket?location=서울&theaterNo=10001&movieNo=${movie.no }'">예매하기</button>
+				<button class="btn btn-warning col-12 mt-2 fw-bold" onclick="location.href='ticket?location=서울&theaterNo=10001&movieNo=${movieDetail.no }'">예매하기</button>
 			</div>
 			<div class="col-4">
 				<div class="poster p-5">
@@ -78,7 +88,7 @@
 					role="tab" aria-controls="nav-home" aria-selected="true">영화정보</button>
 				<button class="nav-link text-body" id="nav-review-tab" data-bs-toggle="tab"
 					data-bs-target="#nav-profile" type="button" role="tab"
-					aria-controls="nav-profile" aria-selected="false">평점 및 관람평</button>
+					aria-controls="nav-profile" aria-selected="false">평점 및 관람평 (${reviewCnt })</button>
 			</div>
 		</nav>
 		<!-- 영화정보 -->
@@ -93,7 +103,7 @@
 				<div class="row mt-4" id="chart">
 					<h5 class="mb-4"><strong>예매분포(이부분은 빠질 수도 있음)</strong></h5>
 					<div class="col border p-3 text-center justify-content-center">
-						<h6 class="mb-5" style="font-size:14px;"><strong>실관람 평점</strong></h6>
+						<h6 class="mb-5" style="font-size:14px;"><strong>평점</strong></h6>
 						<div style="width: 120px; height: 120px; border-radius: 120px; background:#ffc107; display: inline-block;">
 							<span style="font-size: 34px; line-height: 120px; color:white;">
 								<strong>
@@ -165,30 +175,49 @@
 			        </div>
 			    </div>
 		        <div class="comment mt-5">
-		        	<div class="row mb-1 border">
-			        	<div class="col-1 p-3 text-center align-self-center">
-			        		<i class="far fa-frown"></i>
-			        	</div>
-			        	<div class="col-2 p-3 bg-light align-self-center">
-			        		sdf**d
-			        	</div>
-			        	<div class="col-9 p-3">
-			        		<span style="vertical-align: -webkit-baseline-middle;">등록된 글 ㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹ</span>
-			        		<button class="btn float-end text-danger"><i class="fas fa-times"></i></button>
-			        	</div>
-		        	</div>
-		        	<div class="row mb-1 border">
-			        	<div class="col-1 p-3 text-center align-self-center">
-			        		<i class="far fa-frown"></i>
-			        	</div>
-			        	<div class="col-2 p-3 bg-light align-self-center">
-			        		sdf**d
-			        	</div>
-			        	<div class="col-9 p-3 align-self-center">
-			        		<span style="vertical-align: -webkit-baseline-middle;">등록된 글 ㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹ</span>
-			        		<button class="btn float-end text-danger"><i class="fas fa-times"></i></button>
-			        	</div>
-		        	</div>
+		        <!-- 댓글시작 -->
+	        		<c:choose>
+	        			<c:when test="${empty reviews }">
+	        				<p class="text-center">아직 등록된 리뷰가 없습니다. 리뷰를 남겨보세요!</p>
+	        			</c:when>
+	        			<c:otherwise>
+			        		<c:forEach items="${reviews }" var="review">
+					        	<div class="row mb-1 border" id="div-review">
+						        	<div class="col-1 p-3 text-center align-self-center">
+						        		<c:choose>
+							        		<c:when test="${review.rating eq 1 }">
+								        		<i class="far fa-frown fs-2 text-warning"></i>
+							        		</c:when>
+							        		<c:when test="${review.rating eq 2 }">
+								        		<i class="far fa-meh fs-2 text-warning"></i>
+							        		</c:when>
+							        		<c:when test="${review.rating eq 3 }">
+								        		<i class="far fa-smile fs-2 text-warning"></i>
+							        		</c:when>
+							        		<c:when test="${review.rating eq 4 }">
+								        		<i class="far fa-grin fs-2 text-warning"></i>
+							        		</c:when>
+							        		<c:when test="${review.rating eq 5 }">
+								        		<i class="far fa-laugh-beam fs-2 text-warning"></i>
+							        		</c:when>
+						        		</c:choose>
+						        	</div>
+						        	<div class="col-2 p-3 bg-light align-self-center">
+						        		<c:set var="userid" value="${review.userId }"></c:set>
+						        		${fn:substring(userid, 0, fn:length(userid) - 3)}***
+						        		<span style="font-size:8px; color:gray;"> | </span>
+						        		<span style="font-size:12px;"><span style="color:#ffc107;">★</span>${review.rating }</span>
+						        	</div>
+						        	<div class="col-9 p-3" id="div-delete">
+						        		<span style="vertical-align: -webkit-baseline-middle;">${review.content}</span>
+						        		<c:if test="${LOGINED_USER.id eq review.userId}">
+							        		<button class="btn float-end text-danger" id="btn-review-delete"><i class="fas fa-times"></i></button>
+						        		</c:if>
+						        	</div>
+					        	</div>
+				        	</c:forEach>
+	        			</c:otherwise>
+	        		</c:choose>
 		        </div>
 			</div>
 		</div>
@@ -215,6 +244,15 @@
 </div>
 <script type="text/javascript">
 $(function(){
+	//로그인한 사용자
+	var userId = '${LOGINED_USER.id}';
+	//현재 영화 번호
+	var movieNo = '${param.no}';
+	//영화썸네일번호
+	var posterNo = ${movieDetail.no};
+
+	//뒷배경
+	$("#movie-detail>.container").css("background", "linear-gradient(to right, rgba(0, 0, 0, 1),rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 1)),url(/cinemabox/resources/images/movie/"+posterNo+".jpg)");
 
 	//찜, 공유 마우스오버 시 아이콘 색상 변경
 	$('#btn-like').mouseover(function(){
@@ -242,6 +280,27 @@ $(function(){
         alert('주소를 복사하였습니다');
     });
     
+	//찜하기
+	$("#btn-like").click(function(){
+		if(!userId){
+			alert('로그인 후 이용 가능합니다.');
+			return;
+		}
+		$.ajax({
+			type:"post",
+			url:"boxoffice/like",
+			data:{movieNo:movieNo, userId:userId},
+			success:function(result){
+				if(!result){
+					$("#btn-like").find('i').removeClass('fas').addClass('far').css('color','white');
+				}else{
+					$("#btn-like").find('span').text(result.userLike);
+					$("#btn-like").find('i').removeClass('far').addClass('fas').css('color','red');
+				}
+			}
+		})
+	});
+	
 	//star rating(별점)
 	$(document).on({
 		mouseover: function(event) {
@@ -264,32 +323,132 @@ $(function(){
 		}
 	});
 	
-	//리뷰
+	//관람평 등록
 	var point = 0;
 	$("[name='radio1']").click(function(){
 		point = $(this).val();		
 	})
 
 	$("#btn-review").click(function(){
-		var review = new Object();
-		review.content = "$('#div-review textarea').val()";
-		review.rating = point;
-		review.userId = '${LOGINED_USER.id}';
-// 		var review = {
-// 				content:$("#div-review textarea").val(),
-// 				rating: point,
-// 				userId: '${LOGINED_USER.id}'
-// 		}
-		var movieNo = '${param.no}';
+		var content = JSON.stringify($('#div-review textarea').val()).replace(/\"/gi, "");
+		var rating = JSON.parse(point);
 		
+		if(point == 0){
+			alert('별점을 선택하세요');
+			return;
+		}
+		if(!($('#div-review textarea').val())){
+			alert('내용을 입력하세요')
+			$('#div-review textarea').focus();
+			return;
+		}
+
 		$.ajax({
 			type:"POST",
 			url:"boxoffice/review",
-			data:{review:review, movieNo:movieNo},
-			success: function(){
-				
+			data:{content:content, rating:rating, userId:userId, movieNo:movieNo},
+			success: function(result){
+				if(!result){
+					alert('고객님은 이미 관람평을 등록하였습니다.');
+					return;
+				}else{
+					alert('관람평이 등록되었습니다.');
+					$(".comment").empty();
+					$(".comment>p").remove();
+					$('#div-review textarea').val('');
+					$.each(result, function(index, item){
+						var content = '<div class="row mb-1 border" id="div-review">'
+							content += '<div class="col-1 p-3 text-center align-self-center">'
+							if(item.rating == 1){
+					        	content += '<i class="far fa-frown fs-2 text-warning"></i>'
+							}
+							if(item.rating == 2){
+								content += '<i class="far fa-meh fs-2 text-warning"></i>'							
+							}
+							if(item.rating == 3){
+								content += '<i class="far fa-smile fs-2 text-warning"></i>'							
+							}
+							if(item.rating == 4){
+								content += '<i class="far fa-grin fs-2 text-warning"></i>'							
+							}
+							if(item.rating == 5){
+								content += '<i class="far fa-laugh-beam fs-2 text-warning"></i>'							
+							}
+							content += '</div>'
+							content += '<div class="col-2 p-3 bg-light align-self-center">'
+							content += (item.userId).slice(0,-3)+'***'
+							content += '<span style="font-size:8px; color:gray;"> | </span>'
+							content += '<span style="font-size:12px;"><span style="color:#ffc107;">★</span>'
+							content += item.rating
+							content += '</span>'
+							content += '</div>'
+							content += '<div class="col-9 p-3" id="div-delete">'
+							content += '<span style="vertical-align: -webkit-baseline-middle;">'
+							content += item.content
+							content += '</span>'
+							if(item.userId == userId){
+								content += '<button class="btn float-end text-danger" id="btn-review-delete"><i class="fas fa-times"></i></button>'
+							}
+							content += '</div>'
+							content += '</div>'
+						$(".comment").append(content);
+					})
+				}
 			}
 		})
+	})
+	
+	//관람평 삭제
+	$("#btn-review-delete").click(function(){
+		$.ajax({
+			type:"POST",
+			url:"boxoffice/delete",
+			data:{movieNo:movieNo, userId:userId},
+			success: function(result){
+				alert('관람평이 삭제되었습니다.');
+				$(".comment").empty();
+				$(".comment>p").remove();
+				$('#div-review textarea').val('');
+				$.each(result, function(index, item){
+					var content = '<div class="row mb-1 border" id="div-review">'
+						content += '<div class="col-1 p-3 text-center align-self-center">'
+						if(item.rating == 1){
+				        	content += '<i class="far fa-frown fs-2 text-warning"></i>'
+						}
+						if(item.rating == 2){
+							content += '<i class="far fa-meh fs-2 text-warning"></i>'							
+						}
+						if(item.rating == 3){
+							content += '<i class="far fa-smile fs-2 text-warning"></i>'							
+						}
+						if(item.rating == 4){
+							content += '<i class="far fa-grin fs-2 text-warning"></i>'							
+						}
+						if(item.rating == 5){
+							content += '<i class="far fa-laugh-beam fs-2 text-warning"></i>'							
+						}
+						content += '</div>'
+						content += '<div class="col-2 p-3 bg-light align-self-center">'
+						content += (item.userId).slice(0,-3)+'***'
+						content += '<span style="font-size:8px; color:gray;"> | </span>'
+						content += '<span style="font-size:12px;"><span style="color:#ffc107;">★</span>'
+						content += item.rating
+						content += '</span>'
+						content += '</div>'
+						content += '<div class="col-9 p-3" id="div-delete">'
+						content += '<span style="vertical-align: -webkit-baseline-middle;">'
+						content += item.content
+						content += '</span>'
+						if(item.userId == userId){
+							content += '<button class="btn float-end text-danger" id="btn-review-delete"><i class="fas fa-times"></i></button>'
+						}
+						content += '</div>'
+						content += '</div>'
+						
+					$(".comment").append(content);
+				})
+			}
+		})		
 	})
 	
 	//예매율 chart

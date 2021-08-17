@@ -10,9 +10,9 @@
 #movie-detail>.container {
 	height: inherit;
 	margin: 0 auto;
-	background: linear-gradient(to right, rgba(0, 0, 0, 1),
-		rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 1)),
-		url("/cinemabox/resources/images/movie/17623_103_1.jpg");
+/* 	background: linear-gradient(to right, rgba(0, 0, 0, 1), */
+/* 		rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 1)), */
+/* 		url("/cinemabox/resources/images/movie/17623_103_1.jpg"); */
 	background-size: cover;
 }
 .movie-info{
