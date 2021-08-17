@@ -14,5 +14,5 @@ public class Review {
 	private String userId;
 	private String status;
 	private Date createdDate;
-	
+	private int count;
 }
