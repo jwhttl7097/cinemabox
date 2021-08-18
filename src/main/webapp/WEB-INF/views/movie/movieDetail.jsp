@@ -55,7 +55,7 @@
 						<p class="tit m-0"><strong>감독</strong>&nbsp;&nbsp;${movieDetail.director}</p>
 						<p class="tit m-0 mb-2"><strong>출연</strong>&nbsp;&nbsp;${movieDetail.casting}</p>
 					</div>
-				<div class="row info">
+				<div class="row info" style="${fn:length(movieDetail.casting) ge 77 ?'margin-top: 122px':'' }">
 					<div class="score col text-center">
 						<p class="tit">평점</p>
 						<p class="cont"><i class="fas fa-star-half-alt"></i>&nbsp;<fmt:formatNumber value="${movieDetail.rating}" pattern="0.0" />점</p>
@@ -232,6 +232,12 @@
 				</div>
 				<div class="modal-body">
 					<input type="text" class="form-control" id="input-share-link" readonly/>
+					<div class="text-center mt-3">
+						<button id="btn-facebook" class="btn"><img src="/cinemabox/resources/images/icon/icon-facebook.png" alt="facebook"></button>
+						<button id="btn-twitter" class="btn"><img src="/cinemabox/resources/images/icon/icon-twitter.png" alt="twitter"></button>
+						<button id="btn-line" class="btn"><img src="/cinemabox/resources/images/icon/icon-line.png" alt="line"></button>
+					</div>
+					</a>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"	data-bs-dismiss="modal">취소</button>
@@ -279,7 +285,38 @@ $(function(){
     	document.execCommand('copy');
         alert('주소를 복사하였습니다');
     });
-    
+	
+	//페이스북
+    $(document).on('click', '#btn-facebook', function() {
+        var gotoUrl = encodeURIComponent(shareLink),
+            facebook = 'http://www.facebook.com/sharer/sharer.php?u=',
+            link = facebook + gotoUrl;
+
+            window.open(link);
+
+            return false;
+	})  
+	
+	//네이버
+	$(document).on('click', '#btn-twitter', function() {
+	    var gotoUrl = encodeURIComponent(shareLink),
+	        twitter = 'https://twitter.com/intent/tweet?text=' + '${movieDetail.title}' + '&url=',
+	        link = twitter + gotoUrl;
+	
+	        window.open(link);
+	})  
+	
+	//라인
+	$(document).on('click', '#btn-line', function() {
+    var gotoUrl = encodeURIComponent($(this).closest('.share').data('share')),
+        line = 'https://social-plugins.line.me/lineit/share?url=',
+        link = line + gotoUrl;
+
+        window.open(link);
+
+        return false;
+  }) 
+	
 	//찜하기
 	$("#btn-like").click(function(){
 		if(!userId){
