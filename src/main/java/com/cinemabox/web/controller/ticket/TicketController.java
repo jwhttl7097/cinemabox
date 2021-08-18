@@ -34,12 +34,14 @@ public class TicketController{
 	@PostMapping(path = {"/seat"})
 	public String seat(Model model, @ModelAttribute("ticketDto") TicketDto ticketDto) {
 		List<TicketDto> seats = ticketService.getAllSeat(ticketDto.getScreeningNo());
+		model.addAttribute("tickets", ticketDto);
 		model.addAttribute("seats", seats);
 		return "ticket/seat";	
 	}
 	
-	@GetMapping(path = {"/payment"})
-	public String payment() {
+	@PostMapping(path = {"/payment"})
+	public String payment(Model model, @ModelAttribute("ticketDto") TicketDto ticketDto) {
+		System.out.println(ticketDto.toString());
 		return "ticket/payment";
 	}
 	

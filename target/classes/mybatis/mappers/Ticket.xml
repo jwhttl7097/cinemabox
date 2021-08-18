@@ -128,4 +128,33 @@
 			and t.screening_no = sc.screening_no
 			and t.screening_no = #{value}
 	</select>
+	
+	<select id="getWebSocketData" parameterType="com.cinemabox.dto.ticket.WebsocketTicketDto" resultType="com.cinemabox.dto.ticket.WebsocketTicketDto">
+		select
+			s.seat_no as webSeatNo, 
+			t.ticket_no as webTicketNo,
+			t.screening_no as webScreeningNo, 
+			t.TICKET_RESERVATION_STATUS as webTicketStatus,
+			s.seat_row as webSeatRow,
+			s.seat_col as webSeatCol, 
+			t.SEAT_SELECTED_DATE as seatSelectedDate
+		from
+			CINEMABOX_SEAT s, CINEMABOX_TICKET t, CINEMABOX_SCREENING sc
+		where
+			s.seat_no = t.seat_no
+			and t.screening_no = sc.screening_no
+			and t.screening_no = #{webScreeningNo}
+            and s.seat_no = #{webSeatNo}
+	</select>
+	
+	<update id="updateWebSocetStatus" parameterType="com.cinemabox.dto.ticket.WebsocketTicketDto">
+		update 
+			CINEMABOX_TICKET
+		set
+			TICKET_RESERVATION_STATUS = #{webTicketStatus},
+			SEAT_SELECTED_DATE = #{seatSelectedDate}
+		where
+			TICKET_NO = #{webTicketNo}
+	</update>
+	
 </mapper>

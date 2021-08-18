@@ -48,6 +48,10 @@ public interface TicketService {
 	 * @return 좌석번호, 좌석예매상태, 상영정보 목록
 	 */
 	List<TicketDto> getAllSeat(int screeningNo);
-
+	
+	/**
+	 * 
+	 */
+	void webSocketAjax(int screeningNo, String col, String row);
 
 }
