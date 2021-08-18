@@ -149,7 +149,7 @@
                <button class="infoTab nav-link" id="coupon-tab" data-bs-toggle="tab" data-bs-target="#coupon" type="button" role="tab" aria-controls="coupon" aria-selected="false"><strong>쿠폰함</strong></button>
             </li>
             <li class="nav-item infoTabBack rounded" role="presentation">
-               <button class="infoTab nav-link" id="event-tab" data-bs-toggle="tab" data-bs-target="#event" type="button" role="tab" aria-controls="event" aria-selected="false"><strong>MY 이벤트</strong></button>
+               <button class="infoTab nav-link" id="movie-tab" data-bs-toggle="tab" data-bs-target="#watchedMovies" type="button" role="tab" aria-controls="movie" aria-selected="false"><strong>관람 영화</strong></button>
             </li>
             <li class="nav-item infoTabBack rounded" role="presentation">
                <button class="infoTab nav-link" id="movieNote-tab" data-bs-toggle="tab" data-bs-target="#movieNote" type="button" role="tab" aria-controls="movieNote" aria-selected="false"><strong>MY 무비노트</strong></button>
@@ -174,10 +174,10 @@
                		소유하신 쿠폰이 없습니다.
                </p>
             </div>
-            <div class="tab-pane fade mt-4 mb-4" id="event" role="tabpanel" aria-labelledby="event-tab">
+            <div class="tab-pane fade mt-4 mb-4" id="watchedMovies" role="tabpanel" aria-labelledby="movie-tab">
             	<p class="text-center" style="padding:20px">
                		<img alt="ryan" src="./resources/images/user/myPage/ryan.gif" id="ryan" style="padding: 20px"></br>
-               		응모하신 이벤트가 없습니다.
+               		최근 관람하신 영화가 없습니다.
                </p>
             </div>
             <div class="tab-pane fade mt-4 mb-4" id="movieNote" role="tabpanel" aria-labelledby="movieNote-tab">

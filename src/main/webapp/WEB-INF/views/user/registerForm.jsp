@@ -51,12 +51,12 @@
   				<div class="row mt-4">
   					<div class="col-12">
   						<strong style="font-size : 20px">약관동의 및 정보활용 동의</strong>
-  						<p class="mt-4 mb-2">메가박스 서비스 이용을 위한 약관에 동의해주세요.</p>
+  						<p class="mt-4 mb-2">시네마박스 서비스 이용을 위한 약관에 동의해주세요.</p>
   					</div>
   				</div>
   				<div class="row mt-4">
   					<div class="col-12 mb-2">
-  						<input type="checkbox"><strong>필수항목 전체동의</strong>
+  						<input type="checkbox" id="allCheck"><strong>필수항목 전체동의</strong> 
   					</div>
   				</div>
   				<div class="row mb-4">
@@ -65,24 +65,24 @@
   				</div>
   				<div class="row mb-4">
   					<div class="col-12">
-  						<input type="checkbox">서비스 이용 약관 동의 (필수)
-  						<p class="mt-4"><%@include file="./conditions/registerCondition1.jsp" %> </p>
+  						<input type="checkbox" id="serviceCheck">서비스 이용 약관 동의 (필수)
+  						<p class="mt-4" id="serviceP"><%@include file="./conditions/registerCondition1.jsp" %> </p>
   					</div>
   				</div>
   				<div class="row mb-4">
   					<div class="col-12">
-  						<input type="checkbox">개인정보 수집 및 이용 동의 (필수)
+  						<input type="checkbox" id="userInfoCheck">개인정보 수집 및 이용 동의 (필수)
   						<p class="mt-4"><%@include file="./conditions/registerCondition2.jsp" %> </p>
   					</div>
   				</div>
   				<div class="row mb-4">
   					<div class="col-12">
-  						<input type="checkbox">마케팅 활용을 위한 개인 정보 수집 이용 안내(선택)
+  						<input type="checkbox" id="marketingCheck">마케팅 활용을 위한 개인 정보 수집 이용 안내(선택)
   						<p class="mt-4"><%@include file="./conditions/registerCondition3.jsp" %> </p>
   					</div>
   				</div>
   				<div class="text-center  d-grid gap-2 col-4 mx-auto mb-4">
-					<button type="button" class="btn btn-warning" id="agreeButton" style="font-size:15px"><strong>확인</strong></button>
+					<button type="button" class="btn btn-warning" id="agreeButton" style="font-size:15px"><strong>다음</strong></button>
 				</div>
   			</div>
   			<div class="tab-pane fade" id="nav-userInfo" role="tabpanel" aria-labelledby="nav-userInfo-tab">
@@ -205,23 +205,89 @@ $(function(){
 	   })
 	   
 	 
-	   //체크항목 다 확인했는지 체크
-	   
+	    //체크항목 다 확인했는지 체크
+		//전체 동의하기
+		
+		/*한번에 전체 체크/해제
+		$("#allCheck").change(function(){
+			$(this).find("checkbox:not(:disabled)").prop("checked", $(this).prop("checked"));
+		})
+		*/
+		
+		$("#allCheck").click(function(){
+			$('#userInfoCheck, #serviceCheck, #marketingCheck').prop("checked", $(this).prop("checked"));
+		});
+		
 	   $('#agreeButton').click(function(){
-	      
-	      $('#nav-agreement-tab').addClass("disabled");
-	      $('#nav-userInfo-tab').removeClass("disabled").trigger("click");
-	      $('#nav-registerSuccess-tab').addClass("disabled");
-	   })
+	     	console.log("#####################################step", getCookie("step")); 
+			var $checkedCheckboxes = $("#nav-agreement :checkbox:checked");
+		
+			//필수 항목을 체크 검사 - 하나도 체크하지 않았을 때
+			if($checkedCheckboxes.length == 0){
+	
+			  alert("동의 항목이 존재하지 않습니다.");
+			  return false;
+			}
+			 
+			//전체 체크 했을 때
+			if($checkedCheckboxes.length == 4){
+				$('#nav-agreement-tab').addClass("disabled");
+      			$('#nav-userInfo-tab').removeClass("disabled").trigger("click");
+      			$('#nav-registerSuccess-tab').addClass("disabled");
+			}
+			
+			//필수항목 1 체크하지 않았을 때
+			if($("#serviceCheck").is(" :checked") == false){
+				alert("서비스 이용 약관 동의 (필수)가 필요합니다.");
+				//$("#serviceP").focus(); --> focus 하게
+				return false;
+			};
+				
+				
+			//필수항목 2 체크하지 않았을 때
+			if($("#userInfoCheck").is(" :checked") == false){
+				alert("개인정보 수집 및 이용 동의(필수)가 필요합니다.");
+				return false;
+			};
+			
+			//필수 항목만 체크를 했을 때 
+			if($("#marketingCheck").is(" :checked") == false){
+				var result = confirm("마케팅 활용을 위한 개인 정보 수집 이용에 체크하지 않으셨습니다. 계속 진행하시겠습니까?");
+				
+				if(result){
+	      			$('#nav-agreement-tab').addClass("disabled");
+	      			$('#nav-userInfo-tab').removeClass("disabled").trigger("click");
+	      			$('#nav-registerSuccess-tab').addClass("disabled");
+				}else {
+					return false;
+				}
+			};
+		
+			//세 개 항목 다 체크했을 때(따로따로)
+			if($("#serviceCheck, #userInfoCheck, #marketingCheck").is(" :checked") == true){
+				$('#nav-agreement-tab').addClass("disabled");
+      			$('#nav-userInfo-tab').removeClass("disabled").trigger("click");
+      			$('#nav-registerSuccess-tab').addClass("disabled");
+      			$("#allCheck").prop("checked", $(this).prop("checked"));
+			}
+		});
 	   
 	   $('#registerSuccessButton').click(function(){
 		  
 	      $('#nav-registerSuccess-tab').removeClass("disabled").trigger("click");
 	      $('#nav-agreement-tab').addClass("disabled");
 	      $('#nav-userInfo-tab').addClass("disabled");
+	      $('#userInfoCheck, #serviceCheck, #marketingCheck').prop("checked", $(this).prop("checked"));
 	      
 	   });
 	   
+	   $('#previousButton').click(function(){
+		   $('#nav-agreement-tab').removeClass("disabled").trigger("click");
+		   $('#nav-registerSuccess-tab').removeClass("disabled")
+		   $('#nav-registerSuccess-tab').addClass("disabled");
+	   });
+	   
+<%-----------------------------------------쿠키 값 저장하기-----------------------------------------------------%>
 	// 브라우져 쿠키에 값을 저장한다.
 	// name은 쿠키명, value는 쿠키값, days는 만료일까지의 일 수
 	function setCookie(name, value, days) {
@@ -262,8 +328,9 @@ $(function(){
 	      } else if (step == "level2") {
 	         $("#nav-userInfo-tab").removeClass("disabled").trigger('click');
 	      } 
-	   })();   
-	});
+	   });
+});
+
 
 </script>  
 </body>
