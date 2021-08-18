@@ -26,6 +26,11 @@ public class TicketController{
 		return "ticket/ticket";	
 	}
 	
+	@GetMapping(path = {"/schedule"})
+	public String schedule(Model model) {
+		return "ticket/schedule";	
+	}
+	
 	@PostMapping(path = {"/seat"})
 	public String seat(Model model, @ModelAttribute("ticketDto") TicketDto ticketDto) {
 		List<TicketDto> seats = ticketService.getAllSeat(ticketDto.getScreeningNo());

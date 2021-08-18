@@ -20,6 +20,7 @@ import com.cinemabox.dao.movie.MovieDao;
 import com.cinemabox.vo.Movie;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 @Service
@@ -74,6 +75,29 @@ public class APIMovieServiceImpl implements APIMovieService{
 				String rd = movieInfo.get("openDt").getAsString();
 				SimpleDateFormat fm = new SimpleDateFormat("yyyyMMdd");
 				Date releaseDate = fm.parse(rd); 
+				//연령
+				JsonArray audits = movieInfo.getAsJsonArray("audits");
+				JsonElement watchGradeNm = audits.get(0);
+				String age = watchGradeNm.getAsJsonObject().get("watchGradeNm").getAsString();
+				//감독
+				JsonArray directors = movieInfo.getAsJsonArray("directors");
+				if(directors.size() == 0) {
+					continue;
+				}
+				JsonElement peopleNm = directors.get(0);
+				String director = peopleNm.getAsJsonObject().get("peopleNm").getAsString();
+				//배우
+				JsonArray actors = movieInfo.getAsJsonArray("actors");
+				if(actors.size() == 0) {
+					continue;
+				}
+				String casting = "";
+				for(int x=0; x<actors.size(); x++) {
+					JsonElement peopleName = actors.get(x);
+					casting += peopleName.getAsJsonObject().get("peopleNm").getAsString() + ",";
+				}
+				int castingLength = casting.length();
+				String cast = casting.substring(0,castingLength-1);
 				
 		 		Movie movie = new Movie();
 		 		movie.setNo(no);
@@ -82,7 +106,17 @@ public class APIMovieServiceImpl implements APIMovieService{
 		 		movie.setReleaseDate(releaseDate);
 		 		movie.setGenre(genre);
 		 		movie.setRunningTime(runningTime);
-		 		
+		 		if(age.equals("전체관람가")) {
+		 			movie.setAge("ALL");
+		 		}else if(age.equals("12세이상관람가")) {
+		 			movie.setAge("12");
+		 		}else if(age.equals("15세이상관람가")) {
+		 			movie.setAge("15");
+		 		}else if(age.equals("청소년관람불가")) {
+		 			movie.setAge("19");
+		 		}
+		 		movie.setDirector(director);
+		 		movie.setCasting(cast);
 		 		movieDao.insertMovie(movie);
 		 		System.out.println("등록완료");
 			}
@@ -151,6 +185,7 @@ public class APIMovieServiceImpl implements APIMovieService{
 						movie.setReservationRate(r);
 						movie.setCumulativeAudienceCnt(c);
 						movieDao.updateMovieRateCnt(movie);
+						System.out.println("----------관객,예매율 갱신완료----------");
 					}
 				}
 			}

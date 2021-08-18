@@ -83,4 +83,17 @@ public class TicketAjaxController {
 		return new ResponseEntity<Map<String, Object>>(info, HttpStatus.OK);
 	}
 	
+	//상영시간표 - 극장선택으로 영화목록, 상영시간 불러오기
+	@RequestMapping("/schedule")
+	public @ResponseBody ResponseEntity<List<TicketDto>> scheduleMovieTime
+	(@RequestParam(value="theaterNo",required = false, defaultValue = "-1") int theaterNo
+	,@RequestParam(value="screeningDate",required = false) @DateTimeFormat(pattern = "yyyyMMdd") Date screeningDate){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		if(theaterNo != -1) {
+			map.put("theaterNo",theaterNo);
+		}
+		map.put("screeningDate",screeningDate);
+		List<TicketDto> movieTime = ticketService.getAllMovieTime(map);
+		return new ResponseEntity<List<TicketDto>>(movieTime, HttpStatus.OK);
+	}
 }

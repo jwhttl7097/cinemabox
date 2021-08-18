@@ -33,6 +33,10 @@ public class TicketServiceImpl implements TicketService{
 	public List<TicketDto> getTicketStatusByScreeningNo(int screeningNo) {
 		return ticketDao.getTicketStatusByScreeningNo(screeningNo);
 	}
+	@Override
+	public List<TicketDto> getAllMovieTime(Map<String, Object> map) {
+		return ticketDao.getAllMovieTime(map);
+	}
 	
 	// 좌석
 	@Override
