@@ -22,5 +22,11 @@ public class EventController {
 		
 		return "event/discountMain";
 	}
+	
+	@GetMapping("/lotto")
+	public String lotto(Model model) {
+		
+		return "event/lotto";
+	}
 
 }

@@ -46,9 +46,8 @@
 					</li>
 					<li class="nav-item mainnav"><a class="nav-link text-body" href="#">이벤트</a>
 						<ul class="nav justify-content-center subnav" id="subnav-04">
-							<li class="nav-item"><a class="nav-link" href="">진행중인 이벤트</a></li>
-							<li class="nav-item"><a class="nav-link" href="">당첨자 발표</a></li>
-							<li class="nav-item "><a class="nav-link" href="">종료된 이벤트</a></li>
+							<li class="nav-item"><a class="nav-link" href="/cinemabox/event/main">홈</a></li>
+							<li class="nav-item"><a class="nav-link" href="/cinemabox/event/discount">제휴할인</a></li>
 						</ul>
 					</li>
 					<li class="nav-item mainnav"><a class="nav-link text-body" href="#">스토어</a>
