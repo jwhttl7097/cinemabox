@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.cinemabox.dao.movie.MovieDao;
 import com.cinemabox.vo.Movie;
+import com.cinemabox.vo.Wishlist;
 
 @Service
 public class MovieServiceImpl implements MovieService{
@@ -14,9 +15,28 @@ public class MovieServiceImpl implements MovieService{
 	@Autowired MovieDao movieDao;
 	
 	@Override
+	public void insertWishlist(Wishlist wishlist) {
+		movieDao.insertWishlist(wishlist);
+	}
+	
+	@Override
+	public void deleteWishlist(Wishlist wishlist) {
+		movieDao.deleteWishlist(wishlist);
+	}
+	
+	@Override
 	public void updateMovieLike(Movie movie) {
-		movie.setLike(movie.getLike()+1);
 		movieDao.updateMovieLike(movie);
+	}
+	
+	@Override
+	public Wishlist getLikeByUserId(Wishlist wishlist) {
+		return movieDao.getLikeByUserId(wishlist);
+	}	
+	
+	@Override
+	public List<Movie> getAllmovies() {
+		return movieDao.getAllmovies();
 	}
 	
 	@Override

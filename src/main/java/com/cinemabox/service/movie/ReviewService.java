@@ -3,6 +3,7 @@ package com.cinemabox.service.movie;
 import java.util.List;
 import java.util.Map;
 
+import com.cinemabox.vo.Movie;
 import com.cinemabox.vo.Review;
 
 public interface ReviewService {
@@ -18,6 +19,19 @@ public interface ReviewService {
 	 * @param review 리뷰
 	 */
 	void deleteReview(Review review);
+	
+	/**
+	 * 영화 관람 평점을 갱신시키기
+	 * @param rm 평점, 영화번호를 담은 맵
+	 */
+	void updateMovieRating(Movie movie);
+	
+	/**
+	 * 영화번호의 영화의 리뷰 수 가져오기
+	 * @param movieNo 영화번호
+	 * @return 리뷰 총 개수
+	 */
+	int getReviewCntByMovieNo(int movieNo);
 	
 	/**
 	 * 작성된 모든 리뷰를 불러오기

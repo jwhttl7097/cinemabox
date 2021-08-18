@@ -22,7 +22,7 @@ public class Movie {
 	private String status;
 	private String director;
 	private String casting;
-	private int like;
+	private int userLike;
 	private Date createdDate;
 	private Date closeDate;
 }

@@ -181,7 +181,7 @@
 		</div>
 	</div>
 	<!-- 최종확인팝업 -->
-	<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModal" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content shadow">
 
@@ -385,7 +385,7 @@ $(function(){
 							timeTable +=	'<dl class="text-center p-2">'
 							timeTable +=		'<dt class="d-none">상영시간</dt>'
 							timeTable +=		'<dd class="dd-time">'
-							if(index == 0 && item.screeningTime.replace(":","") <= 1100 && item.screeningTime.replace(":","") >= 700 ){
+							if(item.screeningTime.replace(":","") <= 1100 && item.screeningTime.replace(":","") >= 700 ){
 								timeTable += 		'<strong>'+'<i class="bi bi-sun" style="color: #ffc107"></i>'+item.screeningTime+'</strong>'
 							}else{
 								timeTable += 		'<strong>'+item.screeningTime+'</strong>'
@@ -422,7 +422,7 @@ $(function(){
 				var seat = 70-m.movieInfo.seatCnt;
 				
 				var content = '<div class="modal-header bg-dark text-white justify-content-center">'
-				content += '<h5 class="modal-title" id="exampleModalLabel">'+m.movieInfo.screeningTime+'~'+endTime+'('+m.movieInfo.hallName+')</h5>'
+				content += '<h5 class="modal-title" id="confirmModalLabel">'+m.movieInfo.screeningTime+'~'+endTime+'('+m.movieInfo.hallName+')</h5>'
 				content += '</div>'
 				content += '<div class="modal-body text-center">'
 				content +=	'<span>잔여좌석 <strong style="font-size:25px;">'+seat+'</strong>/70</span>'
@@ -694,11 +694,11 @@ $(function(){
 		var isLogined = $("[name=isLogined]").val();
 		if(isLogined == 'no'){
 			alert("로그인이 필요한 서비스입니다.");
-			$('#confirmModal').hide();
-			$("#loginModal").show();
+ 			$('#confirmModal').hide();
+ 			loginModal.show();
 			return;
 		}
-		$("#form-ticketing").submit();
+ 		$("#form-ticketing").submit();
 	})
 	
 	//영화상세에서 넘어온거 처리

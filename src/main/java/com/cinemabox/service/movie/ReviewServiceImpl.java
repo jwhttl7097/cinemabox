@@ -7,9 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cinemabox.dao.movie.ReviewDao;
+import com.cinemabox.vo.Movie;
 import com.cinemabox.vo.Review;
-import com.cinemabox.vo.User;
-import com.cinemabox.web.utils.SessionUtils;
 
 @Service
 public class ReviewServiceImpl implements ReviewService{
@@ -19,16 +18,26 @@ public class ReviewServiceImpl implements ReviewService{
 	@Override
 	public void insertReview(Review review) {
 		//로그인한 사용자 가져오기
-		User loginedUser = (User) SessionUtils.getAttribute("LOGINED_USER");
+		//User loginedUser = (User) SessionUtils.getAttribute("LOGINED_USER");
 
 		//리뷰 추가하기
 		Review comment = new Review();
 		comment.setContent(review.getContent());
 		comment.setRating(review.getRating());
-		comment.setUserId(loginedUser.getId());
+		comment.setUserId(review.getUserId());
 		comment.setMovieNo(review.getMovieNo());
 		
 		reviewDao.insertReview(comment);
+	}
+	
+	@Override
+	public void updateMovieRating(Movie movie) {
+		reviewDao.updateMovieRating(movie);
+	}
+	
+	@Override
+	public int getReviewCntByMovieNo(int movieNo) {
+		return reviewDao.getReviewCntByMovieNo(movieNo);
 	}
 	
 	@Override
