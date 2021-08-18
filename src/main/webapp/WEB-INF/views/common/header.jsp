@@ -188,7 +188,7 @@ function loginWithKakao(){
     	Kakao.API.request({
     	    url: '/v2/user/me',
     	    success: function(response) {
-    	    	var result = confirm("카카오 로그인으로 회원가입 / 로그인 하시겠습니까?");
+    	    	var result = confirm("카카오 로그인으로 회원가입  & 로그인 하시겠습니까?");
     	    	var id = response.id;
     	    	var name = response.properties.nickname;
     	    	//var birth = response.kakao_account.birthday;
@@ -205,6 +205,7 @@ function loginWithKakao(){
     	    				$("#myPage-link").show();
     	    			
     	    				loginModal.hide();
+    	    				location.reload();
     	    			}
     	    		})
     	    	}

@@ -21,19 +21,6 @@ public class UserController {
 
 	@Autowired UserService userService;
 	
-	/*
-	@GetMapping(path = {"/login"})
-	public String login() {
-		return "user/loginForm";	
-	}
-	*/
-	
-	@GetMapping(path = {"/kakaoRegister"})
-	public String kakaoRegister() {
-		return "user/kakaoRegister";	
-	}
-	
-	
 	@GetMapping(path = {"/register"})
 	public String register() {
 		return "user/registerForm";	
