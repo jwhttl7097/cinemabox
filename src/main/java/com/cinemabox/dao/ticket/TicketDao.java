@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.cinemabox.dto.ticket.TicketDto;
+import com.cinemabox.dto.ticket.WebsocketTicketDto;
 
 
 public interface TicketDao {
@@ -16,5 +17,8 @@ public interface TicketDao {
 	
 	//좌석
 	List<TicketDto> getAllSeat(int screeningNo);
+	// 웹소켓 좌석
+	WebsocketTicketDto getWebSocketData(WebsocketTicketDto wsDto);
+	void updateWebSocetStatus(WebsocketTicketDto wstDto);
 	//결제
 }

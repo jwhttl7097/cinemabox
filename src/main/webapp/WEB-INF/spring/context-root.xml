@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
 	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
 	xmlns:tx="http://www.springframework.org/schema/tx"
-	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
-		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
 	<context:annotation-config/>
@@ -29,6 +31,7 @@
 		p:username="admin"
 		p:password="Cinemabox1234"/>
 		
+	
 	<!-- 
 		선언적 트랜잭션 처리를 지원하는 트랜잭션 매니저를  스프링 컨테이너의 빈으로 등록한다.
 	 -->
@@ -57,5 +60,16 @@
 	<mybatis-spring:scan 
 		base-package="com.cinemabox.dao"
 		factory-ref="sqlSessionFactory"/>
+		
+	<!-- 
+		웹소켓 통신을 지원하는 AlarmHandler를 스프링의 빈으로 등록 한다.
+	 -->
+	<bean id="alarmHandler" class="com.cinemabox.websocket.handler.AlarmHandler"></bean>	
+	<!-- 
+		스프링의 빈으로 등록된 웹소켓핸들러들을 지정된 경로와 매핑시킨다.
+	 -->
+	<websocket:handlers allowed-origins="*">
+		<websocket:mapping handler="alarmHandler" path="/ws/alarm"/>
+	</websocket:handlers>
 
 </beans>
