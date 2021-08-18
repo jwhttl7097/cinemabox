@@ -6,9 +6,9 @@
 	<!-- api로 받아온 영화추가 -->
 	<insert id="insertMovie" parameterType="com.cinemabox.vo.Movie">	
 		insert into CINEMABOX_MOVIE
-		(MOVIE_NO, MOVIE_TITLE, MOVIE_THUMBNAIL, MOVIE_GENRE, MOVIE_RELEASE_DATE, MOVIE_RUNNING_TIME)
+		(MOVIE_NO, MOVIE_TITLE, MOVIE_THUMBNAIL, MOVIE_GENRE, MOVIE_RELEASE_DATE, MOVIE_RUNNING_TIME, MOVIE_AGE, MOVIE_DIRECTOR, MOVIE_CASTING)
 		values
-		(#{no}, #{title}, #{thumbnail}, #{genre}, #{releaseDate}, #{runningTime})
+		(#{no}, #{title}, #{thumbnail}, #{genre}, #{releaseDate}, #{runningTime}, #{age}, #{director}, #{casting})
 	</insert>
 
 	<!-- 선택한 영화 위시리스트 추가 -->
@@ -80,6 +80,34 @@
 		    MOVIE_CLOSE_DATE as closeDate			
 		from
 			CINEMABOX_MOVIE
+	</select>
+	
+	<!-- 개봉안한 모든 영화 가져오기 -->
+	<select id="getUnreleaseMovies" resultType="com.cinemabox.vo.Movie">
+		select
+		    MOVIE_NO as no,
+		    MOVIE_TITLE as title, 
+		    MOVIE_THUMBNAIL as thumbnail, 
+		    MOVIE_RATING as rating, 
+		    MOVIE_RESERVATION_RATE as reservationRate,
+		    MOVIE_CUMULATIVE_AUDIENCE_CNT as cumulativeAudienceCnt,
+		    MOVIE_GENRE as genre, 
+		    MOVIE_RELEASE_DATE as releaseDate, 
+		    MOVIE_RUNNING_TIME as runningTime, 
+		    MOVIE_SYNOPSIS as synopsis,
+		    MOVIE_TRAILER_FIRST as trailerFirst,
+		    MOVIE_TRAILER_SECOND as trailerSecond,
+		    MOVIE_AGE as age,
+		    MOVIE_DIRECTOR as director,
+		    MOVIE_CASTING as casting,
+		    MOVIE_LIKE as userLike,
+		    MOVIE_STATUS as status,
+		    MOVIE_CLOSE_DATE as closeDate			
+		from
+			CINEMABOX_MOVIE
+		where
+			MOVIE_RELEASE_DATE &gt;= to_date(to_char(sysdate, 'YYYYMMDD'))
+			and MOVIE_STATUS = 'N'
 	</select>
 	
 	<!-- 영화 번호와 사용자 아이디로 찜한 내역 가져오기 -->
@@ -166,8 +194,9 @@
 				MOVIE_AGE,MOVIE_DIRECTOR,MOVIE_CASTING,MOVIE_STATUS,MOVIE_CLOSE_DATE
 			from
 				CINEMABOX_MOVIE
-			where MOVIE_RELEASE_DATE &gt; sysdate - 30
-			and MOVIE_STATUS = 'Y')
+			where 
+				MOVIE_STATUS = 'Y'
+				and MOVIE_RELEASE_DATE &gt; sysdate - 30)
 		where 
 			row_number &lt;= 12
 	</select>

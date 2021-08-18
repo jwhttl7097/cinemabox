@@ -184,7 +184,7 @@
           <artifactId>activation</artifactId>
           <version>1.1</version>
       </dependency>
-		<!-- 데이터베이스엑세스와 트랜잭션 처리를 지원하는 스프링 라이브러리 추가 -->
+		<!-- 웹소켓 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-websocket</artifactId>

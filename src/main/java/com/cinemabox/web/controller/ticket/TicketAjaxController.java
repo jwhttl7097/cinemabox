@@ -95,6 +95,7 @@ public class TicketAjaxController {
 		map.put("screeningDate",screeningDate);
 		List<TicketDto> movieTime = ticketService.getAllMovieTime(map);
 		return new ResponseEntity<List<TicketDto>>(movieTime, HttpStatus.OK);
+	}
 	// websocket Ajax 좌석 클릭시 동작
 	@RequestMapping("/webSeat")
 	public @ResponseBody ResponseEntity<Void> webSocketAjax(@RequestParam("screeningNo") int screeningNo,
