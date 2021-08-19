@@ -2,6 +2,8 @@ package com.cinemabox.vo;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Data;
 
 @Data
@@ -13,11 +15,18 @@ public class Movie {
 	private double reservationRate;
 	private int cumulativeAudienceCnt;
 	private String genre;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date releaseDate;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date closeDate;
 	private int runningTime;
 	private String synopsis;
-	private String trailer;
+	private String trailerFirst;
+	private String trailerSecond;
 	private String age;
+	private String director;
+	private String casting;
 	private String status;
 	private Date createdDate;
 }
+
