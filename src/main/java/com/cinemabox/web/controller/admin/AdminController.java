@@ -63,8 +63,16 @@ public class AdminController {
 //		// 뷰페이지로 내부이동하기
 //		return "admin/movieModify";
 //	}
+	
 	@RequestMapping("/movieModify")
 	public @ResponseBody ResponseEntity<Void> movieModify(Model model, @RequestParam("no") int movieNo) {
+		Movie savedmovie = adminService.getMovieByNo(movieNo);
+		model.addAttribute("movies", savedmovie);
+		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+	
+	@RequestMapping("/movieDetail")
+	public @ResponseBody ResponseEntity<Void> movieDetail(Model model, @RequestParam("no") int movieNo) {
 		Movie savedmovie = adminService.getMovieByNo(movieNo);
 		model.addAttribute("movies", savedmovie);
 		return new ResponseEntity<Void>(HttpStatus.OK);
