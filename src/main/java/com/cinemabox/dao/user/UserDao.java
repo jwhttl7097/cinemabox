@@ -1,5 +1,9 @@
 package com.cinemabox.dao.user;
 
+import java.util.List;
+
+import com.cinemabox.dto.user.UserDto;
+import com.cinemabox.vo.Movie;
 import com.cinemabox.vo.User;
 
 public interface UserDao {
@@ -23,4 +27,19 @@ public interface UserDao {
 	 * @return 사용자정보, null일 수 있음
 	 */
 	User getUserByEmail(String userEmail);
+	
+	/**
+	 * 지정된 사용자 아이디로 위시리스트를 가져온다.
+	 * @param userId 사용자 아이디
+	 * @return
+	 */
+	List<UserDto> getwishListById(String userId);
+	
+	/**
+	 * 사용자 아이디로 위시리스트 개수 가져오기
+	 * @param userId 사용자 아이디
+	 * @return
+	 */
+	int countWishlists(String userId);
+	
 }

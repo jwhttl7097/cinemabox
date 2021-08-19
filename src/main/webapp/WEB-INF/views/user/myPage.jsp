@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -67,10 +65,19 @@
    	width:150px;
    	height:150px;
    }
+   
+   .wishImg{
+   	width: 70%;
+   	height:100%;
+   }
+   
+   .heart{
+   	width : 13px;
+	height : 14px;
+   }
 </style>
 </head>
 <body>
-
 <%@include file="../common/header.jsp" %>
    <div class="container-fluid" id="myPageBg">
       <div class="container" id="myPage">
@@ -137,7 +144,7 @@
             	</div>
             	<div class="3tabs col text-center" style="padding:20px 20px">
 					<span><strong>찜한 영화</strong></span>
-					<span>22개</span>
+					<span id="wishlistMovie">${countWish }개</span>
             	</div>
             </div>
          </div>
@@ -188,19 +195,122 @@
             </div>
             <div class="tab-pane fade mt-4 mb-4" id="qna" role="tabpanel" aria-labelledby="qna-tab">
             	<p class="text-center" style="padding:20px">
-               		<img alt="ryan" src="./resources/images/user/myPage/ryan.gif" id="ryan" style="padding: 20px"></br>
-               		작성하신 QnA가 없습니다.
+               		<button class="btn btn-warning" href="/cinemabox/customerCenter/userInfo">나의 문의 내역 확인하기</button>
                </p>
             </div>
             <div class="tab-pane fade mt-4 mb-4" id="info" role="tabpanel" aria-labelledby="info-tab">
-            
+            	<div class="row">
+            		<div class="col-6 offset-3 text-center">
+            			<form>
+						<div class=" border pr-3 pl-3 mb-3">
+							<div class="form-group row mb-1">
+								<label class="col-3 col-form-label">아이디</label>
+								<label class="col-3 col-form-label">${LOGINED_USER.id } 님</label>
+							</div>
+							<div class="form-group row mb-1">
+								<label class="col-3 col-form-label">이름</label>
+								<label class="col-3 col-form-label">${LOGINED_USER.name }</label>
+							</div>
+							<div class="form-group row mb-1">
+								<label class="col-3 col-form-label">비밀번호</label>
+								<div class="col-8">
+									<div class="form-group row mb-1">
+										<label class="col-4 col-form-label">현재 비밀번호</label>
+										<div class="col-8">
+											<input type="password" id="currentPassword" name="currentPassword" class="form-control">
+										</div>
+									</div>
+									<div class="form-group row mb-1">
+										<label class="col-4 col-form-label">새로운 비밀번호</label>
+										<div class="col-8">
+											<input type="password" id="newPassword" name="newPassword"class="form-control">
+										</div>
+									</div>
+									<div class="form-group row mb-1">
+										<label class="col-4 col-form-label">비밀번호 확인</label>
+										<div class="col-8">
+											<input type="password" id="newPasswordConfirm" name="newPasswordConfirm" class="form-control">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group row mb-1">
+								<label class="col-3 col-form-label">주소</label>
+								<div class="col-8">
+									<input type="text" id="address" name="address" class="form-control">
+								</div>
+							</div>
+							<div class="form-group row mb-1">
+								<label class="col-3 col-form-label">이메일</label>
+								<div class="col-8">
+									<input type="text" id="email" name="email" class="form-control">
+								</div>
+							</div>
+							<div class="form-group row mb-3">
+								<label class="col-3 col-form-label">전화번호</label>
+								<div class="col-8">
+									<input type="text" id="phoneNumber" name="phoneNumber" class="form-control">
+								</div>
+							</div>
+							</div>
+							<div class="text-center mb-2">
+								<button class="btn btn-warning px-5">확인</button>
+							</div>
+						</form>
+            		</div>
+            	</div>
             </div>
         </div>
      </div>
   </div>
+<%-------------------찜한 영화 모달 ---------------------------%>
+ <div class="modal fade" id="wishlistMovieModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><strong>${LOGINED_USER.name }</strong>님이 <img class="heart" alt="heart"
+								src="/cinemabox/resources/images/main/movieCurrentLists/heart.png">한 영화</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+        	<div class="col-6">
+        		<div class="text-center">
+        			<c:choose>
+        				<c:when test="${not empty wishlists }">
+        					<c:forEach var="wish"  items="${wishlists }">
+        						<div class="row">
+        							<div class="col-12">
+        								<img  class="wishImg" src="/cinemabox/resources/images/movie/${wish.movieNo }.jpg">
+        							</div>
+        						</div>
+        						<strong>${wish.movieTitle }</strong>
+        					</c:forEach>
+        				</c:when>
+        				<c:otherwise>
+        					0
+        				</c:otherwise>
+        			</c:choose>
+        		</div>
+        	</div>
+        </div>
+      </div>
+      <div class="modal-footer">
+       <a href="myWishlist" class="btn btn-warning " tabindex="-1" role="button" aria-disabled="true">찜한 영화 모두 보러가기</a>
+      </div>
+    </div>
+  </div>
+</div>
  <%@include file="../common/footer.jsp" %>
- <script type="text/javascript">
+<script type="text/javascript">
+ var wishlistMovieModal = new bootstrap.Modal(document.getElementById("wishlistMovieModal"), {
+     keyboard: false
+  });
  
+ $("#wishlistMovie").click(function(){
+	 wishlistMovieModal.show();
+	});
+
  </script>
 </body>
 </html>

@@ -53,11 +53,36 @@
 		where
 			user_email = #{value}
 	</select>
-
+	
+	<select id="getwishListById" parameterType="string" resultType="com.cinemabox.dto.user.UserDto">
+		select 
+       		W.wishlist_no as wishlistNo, 
+       		M.movie_no as movieNo,
+       		M.movie_thumbnail as movieThumbnail, 
+       		M.movie_title as movieTitle, 
+       		W.wishlist_created_date as wishlistCreatedDate
+       		
+		from 
+			cinemabox_wishlists W , cinemabox_movie M
+		where 
+			W.movie_no = M.movie_no
+			and
+			W.user_id = #{value} 
+	</select>
+	
 	<insert id="insertUser" parameterType="com.cinemabox.vo.User">
 		insert into cinemabox_users
 		(user_id, user_password, user_name, user_email, user_birth, user_phone_number)
 		values
 		(#{id}, #{password}, #{name}, #{email}, TO_DATE(#{birth},'YYYY-MM-DD'), #{phone})
 	</insert>
+	
+	<select id="countWishlists" parameterType="com.cinemabox.vo.Wishlist" resultType="int">
+		select 
+			count(*) 
+		from 
+			CINEMABOX_WISHLISTS
+		where 
+			user_id=#{value}
+	</select>
 </mapper>

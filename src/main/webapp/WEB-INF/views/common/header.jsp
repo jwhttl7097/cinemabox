@@ -67,6 +67,7 @@
 		</div>
 	</nav>
 </header>
+<%-----------------------------------------------로그인 모달--------------------------------------------%>
 <div class="modal" tabindex="0" id="loginModal">
   	<div class="modal-dialog modal-dialog-centered modal-lg">
     	<div class="modal-content">
@@ -165,12 +166,20 @@ $("#form-login").submit(function(event){
 		url:"userLogin/login",
 		data: {id:$("#userId").val(), password:$("#userPassword").val()},
 		success:function() {
+			
+			//관리자가 로그인 했을 때
+			var id = $("#userId").val();	
+            if (id == "admin"){
+               location.href="admin"
+            };
+            
 			$("#login-link").hide();
 			$("#register-link").hide();
 			$("#logout-link").show();
 			$("#myPage-link").show();
 			
 			loginModal.hide();
+			location.reload();
 				
 		},
 		error:function() {
@@ -204,7 +213,7 @@ function loginWithKakao(){
     	    				$("#register-link").hide();
     	    				$("#logout-link").show();
     	    				$("#myPage-link").show();
-    	    			
+    	    				
     	    				loginModal.hide();
     	    				location.reload();
     	    			}
