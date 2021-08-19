@@ -65,8 +65,6 @@
 							<col width="20%">
 							<col width="15%">
 							<col width="10%">
-<%-- 							<col width="10%"> --%>
-<%-- 							<col width="15%"> --%>
 							<col width="10%">
 							<col width="10%">
 							<col width="10%">
@@ -77,8 +75,6 @@
 								<th>제목</th>
 								<th>장르</th>
 								<th>러닝타임</th>
-<!-- 								<th>감독</th> -->
-<!-- 								<th>배우</th> -->
 								<th>관람가</th>
 								<th>개봉일</th>
 								<th>마감일</th>
@@ -96,12 +92,15 @@
 									<c:forEach var="movie" items="${movies }">
 										<tr class="text-center" id="info">
 											<td>${movie.no }</td>
+											<td id="trailerFirst-${movie.no }" style="display:none;">${movie.trailerFirst }</td>
+											<td id="trailerSecond-${movie.no }" style="display:none;">${movie.trailerSecond }</td>
+											<td id="director-${movie.no }" style="display:none;">${movie.director }</td>
+											<td id="casting-${movie.no }" style="display:none;">${movie.casting }</td>
 											<!-- 버튼 누르면 영화 개봉현황 페이지로 가게끔 -->
-											<td><button data-movie-trailer="${movie.trailerFirst }" class="btn btn-link btn-sm" data-movie-no="${movie.no }">${movie.title }</button></td>
+											<td><button id="detailTrailer-${movie.no }" class="btn btn-link btn-sm" data-movie-no="${movie.no }" >${movie.title }</button>
+											</td>
 											<td>${movie.genre }</td>
 											<td>${movie.runningTime }분</td>
-<%-- 											<td>${movie.director }</td> --%>
-<%-- 											<td>${movie.casting }</td> --%>
 											<td>${movie.age }</td>
 											<td><fmt:formatDate value="${movie.releaseDate }" /></td>
 											<td><fmt:formatDate value="${movie.closeDate }" /></td>
@@ -140,18 +139,32 @@
 		</c:if>	
 	</main>
 	<div class="modal fade" id="trailer-movie-modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-	  	<div class="modal-dialog">
+	  	<div class="modal-dialog modal-xl">
 	    	<div class="modal-content">
 	     		<div class="modal-header">
 	        		<h5 class="modal-title">영화 상세정보</h5>
 	       			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-     	 		</div>
+	    	 		</div>
 	      		<div class="modal-body">
-	       			 <p>Modal body text goes here.</p>
+	      			<table>
+	      			</table>
+	      				<div align="center" id="detailModal1">
+	      				</div> 					
+	      				<div align="center" id="detailModal2">
+	      				</div>
+	      				<div align="center">
+	      					<strong>감독</strong>
+	      				</div>
+	      				<div align="center" id="detailModal3">
+	      				</div>
+	      				<div align="center">
+	      					<strong>배우</strong>
+	      				</div>
+	      				<div align="center" id="detailModal4">
+	      				</div>	
 	     	 	</div>
-     			<div class="modal-footer">
-			        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-			        <button type="button" class="btn btn-primary">Save changes</button>
+	    			<div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
 	      		</div>
 	    	</div>
 	  	</div>
@@ -200,13 +213,6 @@
 </div>	
 <script>
 function selChange() {
-// 	var sel = document.getElementById('cntPerPage').value;
-// 	var last = document.getElementById('lastPage').value;
-// 	if (sel > last){
-// 	location.href="movieList?nowPage=1&cntPerPage="+last;	
-// 	}else {
-// 	location.href="movieList?nowPage=1&cntPerPage="+sel;
-// 	}
 	var sel = document.getElementById('cntPerPage').value;
 	location.href="movieList?nowPage=1&cntPerPage="+sel;
 }
@@ -217,7 +223,62 @@ $(function() {
 	var movieModal = new bootstrap.Modal(document.getElementById("form-movie-modal"), {
 		keyboard: false
 	})
+	var trailerModal = new bootstrap.Modal(document.getElementById("trailer-movie-modal"), {
+		keyboard: false
+	})
+	
+	// 배정 버튼을 클릭했을 때 실행된다.
+	$("#table-movies .btn-outline-warning").click(function() {
+		var movieNo = $(this).data("movie-no")
+		$("#movie-no").val(movieNo)
+		$("#movie-theaterNo").val("");
+		$("#movie-hallNo").val("");
+		$("#screening-date").val("");
+		movieModal.show();
+	});
+	
+	// 제목 버튼을 클릭했을 때 실행된다.
+	$("[id^=detailTrailer]").click(function() {
+		var movieNo = $(this).data("movie-no")
+		var trailer1 = $("#trailerFirst-"+ movieNo).html();
+		var trailer2 = $("#trailerSecond-"+ movieNo).html();
+		var director = $("#director-"+ movieNo).html();
+		var casting = $("#casting-"+ movieNo).html();
+		$('#detailModal1').html(trailer1);
+		$('#detailModal2').html(trailer2);
+		$('#detailModal3').html(director);
+		$('#detailModal4').html(casting);
+		trailerModal.show();
+	});	
+	
+	//Trailer 닫기버튼 시 재생 종료 시키기
+	   $(".btn-secondary").click(function(){
+	      location.reload();
+	   })
+	
+	// 제목을 클릭했을 때
+// 	$("#info").on('click', '.btn-link', function(event) {
+// 		requestURI = "movieDetail";
 		
+// 		$.getJSON("movieDetail?no=" + $(this).data("movie-no"))
+// 			.done(function(movieDetail) {
+				
+// 				trailerModal.show();
+// 			})
+// 	)};
+	
+	// 제목을 클릭했을 때
+// 	$("#info").on('click', '.btn-link', function(event) {
+		
+// 	)};
+	
+// 	function makeRow(movieDetail) {
+// 		var movieDetail = "<tr class='align-middle' id='moive-detail'>"
+// 		row += "<td>"+movie.director+"</td>";
+// 		row += "<td>"+movie.casting+"</td>";
+// 		row += "</tr>";
+// 		return movieDetail;
+// 	}	
 	
 	// 배정 버튼을 클릭했을 때 실행된다.
 	$("#table-movies .btn-outline-warning").click(function() {
