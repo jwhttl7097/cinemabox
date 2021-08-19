@@ -184,8 +184,18 @@
           <artifactId>activation</artifactId>
           <version>1.1</version>
       </dependency>
-      
-      
+		<!-- 웹소켓 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-websocket</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<!-- JDBC 드라이브 라이브러리 의존성 추가 -->
+		<dependency>
+		    <groupId>com.h2database</groupId>
+		    <artifactId>h2</artifactId>
+		    <version>1.4.200</version>
+		</dependency>
    </dependencies>
    <build>
       <plugins>

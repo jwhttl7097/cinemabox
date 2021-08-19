@@ -17,7 +17,7 @@ public class User {
 	private int couponNo;
 	private int point;
 	private int grade;
-	private int wishlistNo;
+	private int wishNo;
 	private String status;
 	private Date createdDate;
 	private Date deletedDate;

@@ -91,7 +91,7 @@
   						<strong style="font-size : 20px">CINEMABOX에 오신 것을 환영합니다!</strong>
   					</div>
   				</div>
-  				<p class="mt-4">회원정보를 입력해주세요.</p>
+  				<p class="mt-4">회원정보를 입력해주세요.<small>(*는 필수입력 사항입니다.)</small></p>
 					<div class="row mt-3 mb-3">
 							<div class="col-12">
 								<div class="register-wrap border-top border-bottom p-2" style="solid black 1px">
@@ -103,7 +103,7 @@
 									<tbody>
 										<tr>
 											<th scope="row">
-												<label for="cinemaboxUserLoginId">아이디</label>
+												<label for="cinemaboxUserLoginId">아이디*</label>
 											</th>
 											<td>
 												<input maxlength="12" id="cinemaboxUserLoginId" type="text" placeholder="영문,숫자 조합(8~12자)" class="input-text" name="id">
@@ -112,7 +112,7 @@
 										</tr>
 										<tr>
 											<th scope="row">
-												<label for="cinemaboxUserName">이름</label>
+												<label for="cinemaboxUserName">이름*</label>
 											</th>
 											<td>
 												<input maxlength="10" id="cinemaboxUserName" type="text" class="input-text" name="name">
@@ -120,7 +120,7 @@
 										</tr>
 										<tr>
 											<th scope="row">
-												<label for="cinemaboxUserPwd">비밀번호</label>
+												<label for="cinemaboxUserPwd">비밀번호*</label>
 											</th>
 											<td>
 												<input type="password" id="cinemaboxUserPwd" placeholder="영문, 숫자, 특수기호 중 2가지 이상 조합" class="input-text w260px" name="password">
@@ -128,7 +128,7 @@
 										</tr>
 										<tr>
 											<th scope="row">
-												<label for="cinemaboxUserPwdCnfm">비밀번호 확인</label>
+												<label for="cinemaboxUserPwdCnfm">비밀번호 확인*</label>
 											</th>
 											<td>
 												<input  type="password" id="cinemaboxUserPwdCnfm" placeholder="영문, 숫자, 특수기호 중 2가지 이상 조합" class="input-text w260px" name="passwordConfirm">
@@ -136,7 +136,7 @@
 										</tr>
 										<tr>
 											<th scope="row">
-												<label for="cinemaboxUserPhone">전화번호</label>
+												<label for="cinemaboxUserPhone">전화번호*</label>
 											</th>
 											<td>
 												<input maxlength="50" id="cinemaboxUserPhone" placeholder="-를 제외한 번호를 입력해주세요" type="text" class="input-text w260px" name="phone">
@@ -144,7 +144,7 @@
 										</tr>
 										<tr>
 											<th scope="row">
-												<label for="cinemaboxUserEmail">이메일</label>
+												<label for="cinemaboxUserEmail">이메일*</label>
 											</th>
 											<td>
 												<input maxlength="50" id="cinemaboxUserEmail" placeholder="이메일 주소를 입력해주세요" type="text" class="input-text w260px" name="email">
@@ -152,7 +152,7 @@
 										</tr>
 										<tr>
 											<th scope="row">
-												<label for="cinemaboxUserAddress">주소 (선택)</label>
+												<label for="cinemaboxUserAddress">주소</label>
 											</th>
 											<td>
 												<input maxlength="50" id="cinemaboxUserAddress" placeholder="주소를 입력해주세요" type="text" class="input-text w260px" name="address">
@@ -160,7 +160,7 @@
 										</tr>
 										<tr>
 											<th scope="row">
-												<label for="cinemaboxUserBirth">생년월일(선택)</label>
+												<label for="cinemaboxUserBirth">생년월일</label>
 											</th>
 											<td>
 												<input type="date" id="cinemaboxUserBirth" name="birth">
@@ -180,7 +180,13 @@
 				</div>
 			</div>
 			<div class="tab-pane fade" id="nav-registerSuccess" role="tabpanel" aria-labelledby="nav-registerSuccess-tab">
-  			가입축!
+  				<div class="row">
+  					<div class="col-12">
+  						<p>가입을 축하합니다.</p>
+  						<p>로그인 후 서비스를 이용해주세요!</p>
+  						<button type="button" class="btn btn-warning" id="homeButton">홈으로 돌아가기</button>
+  					</div>
+  				</div>
   			</div>
   		</div>
 	</div>
@@ -189,6 +195,7 @@
 <script type="text/javascript">
 $(function(){
 	   
+		console.log("***********************************step", getCookie("step"));
 	   // 각각의 탭이 화면에 표시될 때 show.bs.tab 이벤트가 발생함.
 	   // 각각의 탭이 화면에 표시될 때 브라우져 쿠키에 사용자정의 쿠키값을 저장함
 	   $("#nav-agreement-tab").on("show.bs.tab", function() {
@@ -219,7 +226,6 @@ $(function(){
 		});
 		
 	   $('#agreeButton').click(function(){
-	     	console.log("#####################################step", getCookie("step")); 
 			var $checkedCheckboxes = $("#nav-agreement :checkbox:checked");
 		
 			//필수 항목을 체크 검사 - 하나도 체크하지 않았을 때
@@ -277,8 +283,6 @@ $(function(){
 	      $('#nav-registerSuccess-tab').removeClass("disabled").trigger("click");
 	      $('#nav-agreement-tab').addClass("disabled");
 	      $('#nav-userInfo-tab').addClass("disabled");
-	      $('#userInfoCheck, #serviceCheck, #marketingCheck').prop("checked", $(this).prop("checked"));
-	      
 	   });
 	   
 	   $('#previousButton').click(function(){
@@ -287,6 +291,9 @@ $(function(){
 		   $('#nav-registerSuccess-tab').addClass("disabled");
 	   });
 	   
+	   $('#homeButton').click(function(){
+		   return "/";
+	   })
 <%-----------------------------------------쿠키 값 저장하기-----------------------------------------------------%>
 	// 브라우져 쿠키에 값을 저장한다.
 	// name은 쿠키명, value는 쿠키값, days는 만료일까지의 일 수
@@ -321,14 +328,14 @@ $(function(){
 	      $("#nav-userInfo-tab, #nav-registerSuccess-tab").addClass("disabled");
 	      // 브라우져 쿠키에서 step이라는 이름으로 저장된 쿠키값을 조회한다.
 	      var step = getCookie("step");
-	      
+	      console.log("-----------------------------------------------------step", getCookie("step"));
 	      // 웹페이지가 로딩될 때 쿠키값을 사용해서 구현할 내용을 코딩한다.
 	      if (step == "" || step == "level1") {
 	         $("#nav-agreement-tab").removeClass("disabled").trigger('click');
 	      } else if (step == "level2") {
 	         $("#nav-userInfo-tab").removeClass("disabled").trigger('click');
 	      } 
-	   });
+	   })();
 });
 
 

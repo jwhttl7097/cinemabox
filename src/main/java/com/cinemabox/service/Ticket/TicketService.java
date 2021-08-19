@@ -15,6 +15,13 @@ public interface TicketService {
 	List<TicketDto> getMovieListByTheaterNo(Map<String, Object> map);
 	
 	/**
+	 * 극장번호, 상영날짜로 영화목록, 상영시간 받아오기
+	 * @param ticketDto 극장번호, 상영날짜
+	 * @return 영화목록, 상영시간
+	 */
+	List<TicketDto> getAllMovieTime(Map<String, Object> map);
+	
+	/**
 	 * 극장번호, 영화번호, 상영날짜로 예매하려는 영화 시간 구하기
 	 * @param map 극장번호, 영화번호, 상영날짜
 	 * @return 선택된 영화 시간목록
@@ -41,6 +48,10 @@ public interface TicketService {
 	 * @return 좌석번호, 좌석예매상태, 상영정보 목록
 	 */
 	List<TicketDto> getAllSeat(int screeningNo);
-
+	
+	/**
+	 * 
+	 */
+	void webSocketAjax(int screeningNo, String col, String row);
 
 }

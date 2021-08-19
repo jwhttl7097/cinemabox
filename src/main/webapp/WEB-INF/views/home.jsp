@@ -1,17 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!doctype html>
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 <link rel="stylesheet" href="/cinemabox/resources/css/common.css">
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <title>CINEMA BOX</title>
 <style type="text/css">
 	body{overflow-x: hidden;}
@@ -20,10 +20,48 @@
 	.mainnav>a{color:white !important;}
 	header{width:100%; background-color: rgba(0,0,0,0.5) !important; position: absolute; top:70px; left: 50%; transform: translate(-50%, -50%); z-index: 10;}
 	
+	a { 
+		text-decoration:none; 
+		color : black;
+	}
+	 
 	.posterinfo{
 		width: 184px;
 		margin-right : 10px;
 	}
+	
+	.swiper-container {
+        width: 100%;
+        height: 300px;
+      }
+
+    .swiper-slide {
+        text-align: center;
+        font-size: 18px;
+        background: #fff;
+
+        /* Center slide text vertically */
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+      }
+
+    .swiper-slide img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      
 	#currentMovies{
 		color: black;
 	}
@@ -108,165 +146,64 @@
 
 <div class="container-fluid" id="silder-container">
 <%@include file="common/header.jsp" %>
-   <div class="row" id="wholeCarousel">
-     <div class="col-12 p-0">
-  	   <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
-  			<div class="carousel-indicators">
-    			<button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-    			<button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-    			<button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-  			</div>
-  		<div class="carousel-inner">
-    		<div class="carousel-item active" id="freeguyImg"  >
-      			<img src="/cinemabox/resources/images/main/mainVisuals/freeguy2.jpg" class="d-block w-100"  data-trailer-url="https://www.youtube.com/embed/LeWwoGjGklc" title="YouTube video player" alt="freeguy" />
-    		</div>
-    		<div class="carousel-item" >
-      			<img src="/cinemabox/resources/images/main/mainVisuals/mogadishu.jpg" class="d-block w-100" data-trailer-url="https://www.youtube.com/embed/VOdDMmSjle0" title="YouTube video player" id="mogadishuImg" alt="mogadishu"/>
-    		</div>
-    		<div class="carousel-item">
-      			<img src="/cinemabox/resources/images/main/mainVisuals/squad.jpg" class="d-block w-100"  data-trailer-url="https://www.youtube.com/embed/OHq3UxfthZQ" title="YouTube video player" id="squadImg" alt="squad">
-    		</div>
-  		</div>
-  		<button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
-    		<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    		<span class="visually-hidden">Previous</span>
-  		</button>
-  		<button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
-    		<span class="carousel-control-next-icon" aria-hidden="true"></span>
-    		<span class="visually-hidden">Next</span>
-  		</button>
-	   </div>
-     </div>
-
-</div>
+   	<div class="row" id="wholeCarousel">
+     	<div class="col-12 p-0">
+  	   		<div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+  				<div class="carousel-indicators">
+    				<button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    				<button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    				<button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  				</div>
+  				<div class="carousel-inner">
+    				<div class="carousel-item active" id="freeguyImg"  >
+      					<img src="/cinemabox/resources/images/main/mainVisuals/freeguy2.jpg" class="d-block w-100"  data-trailer-url="https://www.youtube.com/embed/LeWwoGjGklc" title="YouTube video player" alt="freeguy" />
+    				</div>
+    				<div class="carousel-item" >
+      					<img src="/cinemabox/resources/images/main/mainVisuals/mogadishu.jpg" class="d-block w-100" data-trailer-url="https://www.youtube.com/embed/VOdDMmSjle0" title="YouTube video player" id="mogadishuImg" alt="mogadishu"/>
+    				</div>
+    				<div class="carousel-item">
+      					<img src="/cinemabox/resources/images/main/mainVisuals/squad.jpg" class="d-block w-100"  data-trailer-url="https://www.youtube.com/embed/OHq3UxfthZQ" title="YouTube video player" id="squadImg" alt="squad">
+    				</div>
+  				</div>
+  				<button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+    				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    				<span class="visually-hidden">Previous</span>
+  				</button>
+  				<button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+    				<span class="carousel-control-next-icon" aria-hidden="true"></span>
+    				<span class="visually-hidden">Next</span>
+  				</button>
+	   		</div>
+    	</div>
+	</div>
 </div>
 <!-- 
-	현재 상영작 (예매율 순위로 정렬)
+	현재 상영작 (박스오피스, 예매율 순위로 정렬)
  -->
 	<div class="row p-5" id="currentMovies" style="background:black;">
 		<div class="col-10 offset-1">
-			<div id="movieListCarousel" class="carousel slide" data-bs-ride="carousel">
-				<div class="carousel-inner row w-100 mx-auto">
-					<div class="carousel-item col-12 active">
-						<div class="carousel-inner-container text-center">
-							<div class="d-inline-block">
-								<img
+			<div class="swiper-container mySwiper">
+        		<div class="swiper-wrapper">
+        			<div class="swiper-slide">
+        				<div class="d-inline-block rounded-3">
+							<img
 									src="/cinemabox/resources/images/main/movieCurrentLists/blackwidow.jpg" 
 									id="movieCurrent1" class="posterinfo rounded-3" alt="blackwidow">
-								<div class="text-white"> <small>블랙위도우</small>
-									<p class="currentRate text-start">예매율 16.0% |  
-									<span><img class="rateStar" alt="star" 
-									src="/cinemabox/resources/images/main/movieCurrentLists/star.png" /> 9.1</span>
-									<span> | <img class="heart" alt="heart"
-									src="/cinemabox/resources/images/main/movieCurrentLists/heart.png"></span>
-									</p>
-								</div>
-								
+								<div class="text-white"> <small>블랙위도우</small></div>
 							</div>
-							<div class="d-inline-block rounded-3">
-								<img
-									src="/cinemabox/resources/images/main/movieCurrentLists/bossbaby.jpg"
-									id="movieCurrent2" class="posterinfo rounded-3" alt="bossbaby">
-								<div class="text-white"><small>보스 베이비</small>
-									<p class="currentRate text-start">예매율 16.0% |  
-									<span><img class="rateStar" alt="star" 
-									src="/cinemabox/resources/images/main/movieCurrentLists/star.png" /> 9.1</span>
-									<span> | <img class="heart" alt="heart"
-									src="/cinemabox/resources/images/main/movieCurrentLists/heart.png"></span></p>
-								</div>
-								
-									
-							</div>
-							<div class="d-inline-block rounded-3">
-								<img
-									src="/cinemabox/resources/images/main/movieCurrentLists/cruella.jpg"
-									id="movieCurrent3" class="posterinfo rounded-3" alt="cruella">
-								<div class="text-white"><small>크루엘라</small>
-									<p class="currentRate text-start">예매율 16.0% |  
-									<span><img class="rateStar" alt="star" 
-									src="/cinemabox/resources/images/main/movieCurrentLists/star.png" /> 9.1</span>
-									<span> | <img class="heart" alt="heart"
-									src="/cinemabox/resources/images/main/movieCurrentLists/heart.png"></span></p>
-								</div>									
-							</div>
-							<div class="d-inline-block rounded-3">
-								<img
-									src="/cinemabox/resources/images/main/movieCurrentLists/escaperoom2.jpg"
-									id="movieCurrent4" class="posterinfo rounded-3" alt="escaperoom2">
-								<div class="text-white"><small>이스케이프룸2</small>
-									<p class="currentRate text-start">예매율 16.0% |  
-									<span><img class="rateStar" alt="star" 
-									src="/cinemabox/resources/images/main/movieCurrentLists/star.png" /> 9.1</span>
-									<span> | <img class="heart" alt="heart"
-									src="/cinemabox/resources/images/main/movieCurrentLists/heart.png"></span></p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="carousel-item col-12">
-						<div class="carouel-inner-container text-center">
-							<div class="d-inline-block rounded-3">
-								<img
-									src="/cinemabox/resources/images/main/movieCurrentLists/langzong.jpg"
-									id="movieCurrent5" class="posterinfo rounded-3" alt="langzong">
-								<div class="text-white"><small>랑종</small>
-									<p class="currentRate text-start">예매율16.0% |  
-									<span><img class="rateStar" alt="star" 
-									src="/cinemabox/resources/images/main/movieCurrentLists/star.png" /> 9.1</span>
-									<span> | <img class="heart" alt="heart"
-									src="/cinemabox/resources/images/main/movieCurrentLists/heart.png"></span></p>
-								</div>
-							</div>
-							<div class="d-inline-block rounded-3">
-								<img
-									src="/cinemabox/resources/images/main/movieCurrentLists/mogadishu2.jpg"
-									id="movieCurrent6" class="posterinfo rounded-3" alt="mogadishu2">
-								<div class="text-white"><small>모가디슈</small>
-									<p class="currentRate text-start">예매율 16.0% |  
-									<span><img class="rateStar" alt="star" 
-									src="/cinemabox/resources/images/main/movieCurrentLists/star.png" /> 9.1</span>
-									<span> | <img class="heart" alt="heart"
-									src="/cinemabox/resources/images/main/movieCurrentLists/heart.png"></span></p>
-								</div>
-							</div>
-							<div class="d-inline-block rounded-3">
-								<img
-									src="/cinemabox/resources/images/main/movieCurrentLists/bang.jpg"
-									id="movieCurrent7" class="posterinfo rounded-3" alt="bang">
-								<div class="text-white"><small>방법</small>
-									<p class="currentRate text-start">예매율 16.0% |  
-									<span><img class="rateStar" alt="star" 
-									src="/cinemabox/resources/images/main/movieCurrentLists/star.png" /> 9.1</span>
-									<span> | <img class="heart" alt="heart"
-									src="/cinemabox/resources/images/main/movieCurrentLists/heart.png"></span></p>
-								</div>
-							</div>
-							<div class="d-inline-block rounded-3">
-								<img
-									src="/cinemabox/resources/images/main/movieCurrentLists/junglecruise.jpg"
-									id="movieCurrent8" class="posterinfo rounded-3" alt="junglecruise">
-								<div class="text-white"><small>정글크루즈</small>
-									<p class="currentRate text-start">예매율 16.0% |  
-									<span><img class="rateStar" alt="star" 
-									src="/cinemabox/resources/images/main/movieCurrentLists/star.png" /> 9.1</span>
-									<span> | <img class="heart" alt="heart"
-									src="/cinemabox/resources/images/main/movieCurrentLists/heart.png"></span></p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<button class="carousel-control-prev" type="button"
-					data-bs-target="#movieListCarousel" data-bs-slide="prev">
-					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-					<span class="visually-hidden">Previous</span>
-				</button>
-				<button class="carousel-control-next" type="button"
-					data-bs-target="#movieListCarousel" data-bs-slide="next">
-					<span class="carousel-control-next-icon" aria-hidden="true"></span>
-					<span class="visually-hidden">Next</span>
-				</button>
-			</div>
+        			</div>
+        			<div class="swiper-slide">Slide 2</div>
+        			<div class="swiper-slide">Slide 3</div>
+        			<div class="swiper-slide">Slide 4</div>
+        			<div class="swiper-slide">Slide 5</div>
+        			<div class="swiper-slide">Slide 6</div>
+        			<div class="swiper-slide">Slide 7</div>
+        			<div class="swiper-slide">Slide 8</div>
+        			<div class="swiper-slide">Slide 9</div>
+      			</div>
+      			
+      			<div class="swiper-pagination"></div><!-- 페이징 -->
+    		</div>
    		</div>
    	</div>
    	<div class="row">
@@ -372,7 +309,7 @@
 			<div class="col-8 offset-2 mt-5">
 				<div class="row mb-3">
 					<div class="col-2 mt-1">
-						<div class="text-left"><strong><small>공지사항</small></strong></div>
+						<a href="/cinemabox/notice/list"><div class="text-left"><strong><small>공지사항</small></strong></div></a>
 					</div>
 	<!-- 
 		rolling-container (공지사항 title) 시작
@@ -380,10 +317,9 @@
 					<div class="col-10">
 						<div class="rolling-container">
 							<ul class="mainNoticeLists">
-								<li class="noticeList">[마스크 착용 의무화 행정명령 시행안내]</li>
-								<li class="noticeList">CINEMABOX 영구 VIP 서비스 실행 종료 안내</li>
-								<li class="noticeList">SKT 멤버십 영화예매 적립 서비스 안내</li>
-								<li class="noticeList">[문화가 있는 날 가격 변경 안내]</li>
+							<c:forEach var="noticeList" items="${noticeList }">
+								<a href="/cinemabox/notice/detail?no=${noticeList.no}"><li class="noticeList">${noticeList.title }</li></a>
+							</c:forEach>
 							</ul>
 						</div>
 					</div>
@@ -417,7 +353,6 @@
   	  	</div>
 	</div>
 	<%@include file="./common/footer.jsp" %>    
-
 <script type="text/javascript">
 $(function(){
    //header sub nav
@@ -455,8 +390,23 @@ $(function(){
 	   var randomImage = Math.trunc(Math.random()*yourImages.length);
 	   $("#adImg").attr("src", yourImages[randomImage]);
    })
-
 });
+
+//boxOffice 
+var swiper = new Swiper(".mySwiper", {
+    slidesPerView: 3,
+    spaceBetween: 30,
+    freeMode: true,
+    loop: true,
+    autoplay: {
+      delay: 1500,
+      disableOnInteraction: false
+    },
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true
+    }
+  });
 
 </script>
 </body>
