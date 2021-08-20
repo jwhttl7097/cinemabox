@@ -99,13 +99,13 @@ public class TicketAjaxController {
 	// websocket Ajax 좌석 클릭시 동작
 	@RequestMapping("/webSeat")
 	public @ResponseBody ResponseEntity<Void> webSocketAjax(@RequestParam("screeningNo") int screeningNo,
-					@RequestParam("col") String col, @RequestParam("row") String row){
+					@RequestParam("col") String col, @RequestParam("row") String row, @RequestParam("selectType") String selectType){
 		try {
 //			User user = (User) SessionUtils.getAttribute("LOGINED_USER");
 //			if (user == null) {
 //				throw new RuntimeException("로그인이 필요합니다.");
 //			}
-			ticketService.webSocketAjax(screeningNo, col, row);
+			ticketService.webSocketAjax(screeningNo, col, row, selectType);
 			return new ResponseEntity<Void>(HttpStatus.OK);
 		} catch (RuntimeException ex) {
 			return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
