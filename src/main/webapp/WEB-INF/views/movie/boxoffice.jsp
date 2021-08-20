@@ -18,8 +18,50 @@
 <body>
 <div class="container-fluid">
 	<%@include file="../common/header.jsp" %>
+	<!-- slider -->
+	<div id="carouselMovieIndicators" class="carousel slide" data-bs-ride="carousel">
+		<div class="carousel-indicators">
+			<button type="button" data-bs-target="#carouselMovieIndicators"
+				data-bs-slide-to="0" class="active" aria-current="true"
+				aria-label="Slide 1"></button>
+			<button type="button" data-bs-target="#carouselMovieIndicators"
+				data-bs-slide-to="1" aria-label="Slide 2"></button>
+			<button type="button" data-bs-target="#carouselMovieIndicators"
+				data-bs-slide-to="2" aria-label="Slide 3"></button>
+			<button type="button" data-bs-target="#carouselMovieIndicators"
+				data-bs-slide-to="3" aria-label="Slide 4"></button>
+			<button type="button" data-bs-target="#carouselMovieIndicators"
+				data-bs-slide-to="4" aria-label="Slide 5"></button>
+		</div>
+		<div class="carousel-inner">
+			<div class="carousel-item active">
+				<img src="/cinemabox/resources/images/banner/slider/Maly_1920420.jpg" class="d-block w-100" alt="...">
+			</div>
+			<div class="carousel-item">
+				<img src="/cinemabox/resources/images/banner/slider/Puppy_1920420.jpg" class="d-block w-100" alt="...">
+			</div>
+			<div class="carousel-item">
+				<img src="/cinemabox/resources/images/banner/slider/Sake_1920420.jpg" class="d-block w-100" alt="...">
+			</div>
+			<div class="carousel-item">
+				<img src="/cinemabox/resources/images/banner/slider/Sangy_1920420.jpg" class="d-block w-100" alt="...">
+			</div>
+			<div class="carousel-item">
+				<img src="/cinemabox/resources/images/banner/slider/Sence_1920420.jpg" class="d-block w-100" alt="...">
+			</div>
+		</div>
+		<button class="carousel-control-prev" type="button" data-bs-target="#carouselMovieIndicators" data-bs-slide="prev">
+			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			<span class="visually-hidden">Previous</span>
+		</button>
+		<button class="carousel-control-next" type="button" data-bs-target="#carouselMovieIndicators" data-bs-slide="next">
+			<span class="carousel-control-next-icon" aria-hidden="true"></span>
+			<span class="visually-hidden">Next</span>
+		</button>
+	</div>
+	<!-- slider end -->
 	<div class="container">
-		<h2 class="mt-5">박스오피스</h2>
+		<h2 class="mt-4">박스오피스</h2>
 		<ul class="nav mt-3">
 			<li class="nav-item me-3 main-nav navStyle"><button class="btn p-0" id="btn-nowPlaying" style="color:#A4A4A4;">현재 상영작</button></li>
 			<li class="nav-item main-nav"><button class="btn p-0" id="btn-scheduled" style="color:#A4A4A4;" data-status="unreleased">상영 예정작</button></li>
