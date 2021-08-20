@@ -3,6 +3,7 @@ package com.cinemabox.dao.ticket;
 import java.util.List;
 import java.util.Map;
 
+import com.cinemabox.dto.ticket.ScreeningDto;
 import com.cinemabox.dto.ticket.TicketDto;
 import com.cinemabox.dto.ticket.WebsocketTicketDto;
 
@@ -19,7 +20,7 @@ public interface TicketDao {
 	List<TicketDto> getMovieTime(Map<String, Object> map);
 	TicketDto getMovieByTime(Map<String, Object> map);
 	List<TicketDto> getTicketStatusByScreeningNo(int screeningNo);
-	List<TicketDto> getAllMovieTime(Map<String, Object> map); //상영시간표
+	List<ScreeningDto> getAllMovieTime(Map<String, Object> map); //상영시간표
 	
 	//좌석
 	List<TicketDto> getAllSeat(int screeningNo);

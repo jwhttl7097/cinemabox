@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cinemabox.dto.ticket.ScreeningDto;
 import com.cinemabox.dto.ticket.TicketDto;
 import com.cinemabox.service.Ticket.TicketService;
 
@@ -85,16 +86,21 @@ public class TicketAjaxController {
 	
 	//상영시간표 - 극장선택으로 영화목록, 상영시간 불러오기
 	@RequestMapping("/schedule")
-	public @ResponseBody ResponseEntity<List<TicketDto>> scheduleMovieTime
+	public @ResponseBody ResponseEntity<List<ScreeningDto>> scheduleMovieTime
 	(@RequestParam(value="theaterNo",required = false, defaultValue = "-1") int theaterNo
 	,@RequestParam(value="screeningDate",required = false) @DateTimeFormat(pattern = "yyyyMMdd") Date screeningDate){
-		HashMap<String, Object> map = new HashMap<String, Object>();
+		//극장과 날짜에 따른 영화목록 시간표
+		HashMap<String, Object> time = new HashMap<String, Object>();
+		
 		if(theaterNo != -1) {
-			map.put("theaterNo",theaterNo);
+			time.put("theaterNo", theaterNo);
 		}
-		map.put("screeningDate",screeningDate);
-		List<TicketDto> movieTime = ticketService.getAllMovieTime(map);
-		return new ResponseEntity<List<TicketDto>>(movieTime, HttpStatus.OK);
+		
+		time.put("screeningDate", screeningDate);
+		List<ScreeningDto> times = ticketService.getAllMovieTime(time);
+		System.out.println("--------------"+times);
+		
+		return new ResponseEntity<List<ScreeningDto>>(times, HttpStatus.OK);
 	}
 	// websocket Ajax 좌석 클릭시 동작
 	@RequestMapping("/webSeat")

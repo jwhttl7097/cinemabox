@@ -148,13 +148,13 @@
 						<div class="tab-pane fade show active p-4" id="nav-entireTime" role="tabpanel" aria-labelledby="nav-entireTime-tab">
 							<!-- 영화타이틀, 영화관, 시간 시작  -->
 							<div class="div-group-time-select mb-3" id="div-time">
+								<span class="text-center d-block" style="margin-top: 3%; padding: 145px;">
+									<i class="fas fa-exclamation-circle"></i> 극장/영화를 선택하세요.
+								</span> 
 								<div class="div-time-select-tit" id="div-time-title">
 								</div>
 								<div class="div-time-select-wrap mt-3">
 									<ul class="nav" id="ul-list-time">
-										<span class="text-center d-block" style="margin-top: 3%; padding: 145px;">
-											<i class="fas fa-exclamation-circle"></i> 극장/영화를 선택하세요.
-										</span> 
 									</ul>
 								</div>
 							</div>
@@ -627,6 +627,8 @@ $(function(){
 	
 	//날짜탭 타이틀 변경, 선택한 영화를 오늘날짜로 상영시간 표시하기	
 	$('#ul-movieList').on('click', 'li', function(){
+		$("#div-time span").removeClass('d-block').css('display','none');
+
 		//선택한 영화명
 		$(this).css({'font-weight':'bolder', 'color':'#ffc107'}).siblings().css({'font-weight':'normal', 'color':''});
 		var title = $(this).text();

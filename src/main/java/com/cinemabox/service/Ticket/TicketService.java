@@ -3,6 +3,7 @@ package com.cinemabox.service.Ticket;
 import java.util.List;
 import java.util.Map;
 
+import com.cinemabox.dto.ticket.ScreeningDto;
 import com.cinemabox.dto.ticket.TicketDto;
 
 public interface TicketService {
@@ -19,7 +20,7 @@ public interface TicketService {
 	 * @param ticketDto 극장번호, 상영날짜
 	 * @return 영화목록, 상영시간
 	 */
-	List<TicketDto> getAllMovieTime(Map<String, Object> map);
+	List<ScreeningDto> getAllMovieTime(Map<String, Object> map);
 	
 	/**
 	 * 극장번호, 영화번호, 상영날짜로 예매하려는 영화 시간 구하기
