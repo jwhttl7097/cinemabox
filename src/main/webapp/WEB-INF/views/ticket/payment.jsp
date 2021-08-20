@@ -56,13 +56,13 @@
 						<h6><img src="/cinemabox/resources/images/icon/txt-age-small-${tickets.age }.png" alt="" class="me-2"><strong>${tickets.title }</strong></h6>
 						<dl class="dl-ticketing">
 							<dt><strong>일시</strong></dt><dd><fmt:formatDate value="${tickets.screeningDate }" pattern="yy.MM.dd(E)"/>&nbsp; ${tickets.screeningTime } ~ ${tickets.screeningEndTime }</dd>
-							<dt><strong>영화관</strong></dt><dd>가산디지털 ${tickets.hallName }-2D</dd>
-							<dt><strong>인원</strong></dt><dd>성인1</dd>
+							<dt><strong>영화관</strong></dt><dd><i class="fas fa-film mx-2"></i>${tickets.theaterName }점  ${tickets.hallName }</dd>
+							<dt><strong>인원</strong></dt><dd>성인${tickets.adultCnt } 청소년${tickets.teenagerCnt }</dd>
 						</dl>						
 					</div>
 					<div class="px-5 py-3" style="border-bottom:1px solid #ddd;">
 						<dl class="dl-ticketing">
-							<dt><strong>좌석</strong></dt><dd>F11</dd>
+							<dt><strong>좌석</strong></dt><dd>${seat }</dd>
 						</dl>			
 					</div>
 				</div>
@@ -75,55 +75,23 @@
 								<li>
 									<button class="btn p-3 border" id="btn-pay-card">
 										<h3><i class="bi bi-credit-card"></i></h3>
-										신용카드
+										<span style="font-size: 0.75rem;">신용카드</span>
 									</button>
 								</li>
 								<li>
 									<button class="btn p-3 border" id="btn-pay-simple">
 										<h3><i class="bi bi-wallet2"></i></h3>
-										간편결제
+										<span style="font-size: 0.75rem;">간편결제</span>
 									</button>
 								</li>
 								<li>
-									<button class="btn p-3 border">
+									<button class="btn p-3 border" id="btn-pay-deposit">
 										<h3><i class="bi bi-cash-stack"></i></h3>
-										무통장입금
+										<span style="font-size: 0.75rem;">실시간 계좌이체</span>
 									</button>
 								</li>
 							</ul>
 						</div>
-<!-- 						<ul class="nav" id="ul-selectPay-card" style="display:none;"> -->
-<!-- 							<li> -->
-<!-- 								<button class="btn p-2 border"> -->
-<!-- 									<h3></h3> -->
-<!-- 									롯데카드 -->
-<!-- 								</button> -->
-<!-- 							</li> -->
-<!-- 							<li> -->
-<!-- 								<button class="btn p-2 border"> -->
-<!-- 									<h3></h3> -->
-<!-- 									국민카드 -->
-<!-- 								</button> -->
-<!-- 							</li> -->
-<!-- 							<li> -->
-<!-- 								<button class="btn p-2 border"> -->
-<!-- 									<h3></h3> -->
-<!-- 									카카오뱅크 -->
-<!-- 								</button> -->
-<!-- 							</li> -->
-<!-- 							<li> -->
-<!-- 								<button class="btn p-2 border"> -->
-<!-- 									<h3></h3> -->
-<!-- 									신한카드 -->
-<!-- 								</button> -->
-<!-- 							</li> -->
-<!-- 							<li> -->
-<!-- 								<button class="btn p-2 border"> -->
-<!-- 									<h3></h3> -->
-<!-- 									삼성카드 -->
-<!-- 								</button> -->
-<!-- 							</li> -->
-<!-- 						</ul> -->
 						<ul class="nav" id="ul-selectPay-simple" style="display:none;">
 							<li data-simple="kakaopay">
 								<button class="btn p-3 border">
@@ -178,28 +146,28 @@
 							<li class="mt-3">
 								<h6>
 									포인트사용
-									<span style="font-size:0.8rem; color:#999;">( 현재 포인트 : ${LOGINED_USER.point}pt )</span>
+									<span style="font-size:0.8rem; color:#999;">( 현재 포인트 : <span id="nowPoint">${LOGINED_USER.point}</span>pt )</span>
 								</h6>
 								<div class="input-group">
-									<button class="btn btn-outline-secondary">전체사용</button>
-									<input type="number" min="0" value="0" class="form-control">
-									<button class="btn btn-outline-secondary">확인</button>
+									<button class="btn btn-outline-secondary" id="allPointBtn">전체사용</button>
+									<input type="number" min="0" value="" placeholder="0" id="pointInput" class="form-control text-end" style="color:#999;">
+									<button class="btn btn-outline-secondary" id="confirmPointBtn">확인</button>
 								</div>
 							</li>
 						</ul>
 					</div>
-					<div class="bg-secondary" id="div-total">
+					<div class="bg-secondary" id="div-total"  data-movie-price="${tickets.totalPrice }">
 						<dl>
 							<dt>상품금액</dt>
 							<dd><fmt:formatNumber value="${tickets.totalPrice }"/>원</dd>
 						</dl>
 						<dl>
 							<dt>할인금액</dt>
-							<dd>-10,000원</dd>
+							<dd><span id="discountPrice"></span>원</dd>
 						</dl>
 						<dl>
 							<dt>결제금액</dt>
-							<dd id="dd-total-price">12,000원</dd>
+							<dd id="dd-total-price"><span id="span-total-price"></span>원</dd>
 						</dl>
 						<a class="" id="a-confirm">결제하기</a>
 					</div>
@@ -217,11 +185,24 @@
 	<%@include file="../common/footer.jsp" %>
 </div>
 <script type="text/javascript">
+//천단위 콤마 제거
+function minusComma(value){
+     value = value.replace(/[^\d]+/g, "");
+     return value; 
+ }
+ 
+//천단위 콤마 포맷팅
+function addComma(value){
+     value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+     return value; 
+ }
+ 
+ 
 $(function(){
 	var selectPayment;
-	var payment;
-    var totalPrice = $("#dd-total-price").text();
-
+	var simplePayment;
+	var inicisPayment;
+	var totalPrice;
 	//header nav js
 	$('.mainnav').mouseover(function(){
 	   $(this).children('.subnav').stop().slideDown().css('display','flex');
@@ -230,22 +211,45 @@ $(function(){
 	   $(this).children('.subnav').stop().slideUp();
 	})
 	
+	// 포인트 전체 사용
+	$("#allPointBtn").click(function() {
+		$("#pointInput").val("");
+		if($('#nowPoint').text() > $('#div-total').data('movie-price')) {
+			$('#pointInput').val($('#div-total').data('movie-price'));
+		} else {
+			$("#pointInput").val($("#nowPoint").text());
+		}
+	})
+	
+	// 포인트 확인 버튼 클릭시
+	$('#confirmPointBtn').click(function() {
+		var point = $('#pointInput').val();
+		var commaPoint = addComma($('#pointInput').val());
+		$('#discountPrice').text("");
+		$('#discountPrice').text('-'+ commaPoint);
+		var price = $('#div-total').data('movie-price');
+		totalPrice = price - point;
+		var commaPoint = addComma(String(totalPrice));
+		$("#span-total-price").text(commaPoint);
+	})
+	
 	//카드결제
 	$("#btn-pay-card").click(function(){
-		//$("#ul-selectPay-card").toggle();
 		selectPayment = "creditCard";
-		payment = "card";
+		inicisPayment = "card";
 		$("#ul-selectPay-simple").hide();
+		console.log('신용결제 버튼 클릭시 ==== 셀렉트 페이먼트 : '+selectPayment + ', 이니시스 페이먼트 값 : ' + inicisPayment);
 	})
 	
 	//간편결제
 	$("#btn-pay-simple").click(function(){
 		$("#ul-selectPay-simple").toggle();
-		//$("#ul-selectPay-card").hide();
 		selectPayment = "simple";
+		console.log('간편결제 버튼 클릭시 ==== 셀렉트 페이먼트 : '+selectPayment)
 	})
 	$("#ul-selectPay-simple").on('click','li',function(){
-		payment = $(this).data('simple');
+		simplePayment = $(this).data('simple');
+		console.log('====심플 페이먼트 : '+simplePayment)
 	})
 	
 	//쿠폰확인
@@ -253,12 +257,23 @@ $(function(){
 		$("#li-coupon-list").toggle();
 	})
 	
+	// 무통장입금
+	$('#btn-pay-deposit').click(function() {
+		$("#ul-selectPay-simple").hide();
+		selectPayment = 'deposit';
+		inicisPayment = 'trans';
+		console.log('무통장입금 버튼 클릭시 ==== 셀렉트 페이먼트 : '+selectPayment + ', 이니시스페이먼트' + inicisPayment);
+	})
+	
 	/*import*/
 	$("#a-confirm").click(function(){
-		if(!selectPayment || !payment){
+		if(!selectPayment){
 			alert("결제 수단을 선택해주세요.")
 		}
-		if(selectPayment == 'creditCard'){
+		if (selectPayment == 'simple' && !simplePayment) {
+			alert("결제 수단을 선택해주세요.")
+		}
+		if(selectPayment == 'creditCard' || selectPayment == 'deposit'){
 			inicis()
 		}
 		if(selectPayment == 'simple'){
@@ -272,7 +287,7 @@ $(function(){
 		//가맹점 식별코드
 	    IMP.init("imp10888924");	
 		IMP.request_pay({
-		    pg : payment,
+		    pg : simplePayment,
 		    pay_method : 'card',
 		    merchant_uid : 'merchant_' + new Date().getTime(),
 		    name : '주문명:결제테스트',
@@ -290,11 +305,12 @@ $(function(){
 		        msg += '상점 거래ID : ' + rsp.merchant_uid;
 		        msg += '결제 금액 : ' + rsp.paid_amount;
 		        msg += '카드 승인번호 : ' + rsp.apply_num;
+		    alert(msg);
 		    } else {
 		    	 var msg = '결제에 실패하였습니다.';
 		         msg += '에러내용 : ' + rsp.error_msg;
-		    }
 		    alert(msg);
+		    }
 		});
 	}
     
@@ -302,7 +318,7 @@ $(function(){
    	    IMP.init("imp10888924");	
     	IMP.request_pay({
     	    pg : 'html5_inicis', //ActiveX 결제창은 inicis를 사용
-    	    pay_method : 'card', //card(신용카드), trans(실시간계좌이체), vbank(가상계좌), phone(휴대폰소액결제)
+    	    pay_method : inicisPayment, //card(신용카드), trans(실시간계좌이체), vbank(가상계좌), phone(휴대폰소액결제)
     	    merchant_uid : 'merchant_' + new Date().getTime(), //상점에서 관리하시는 고유 주문번호를 전달
     	    name : '주문명:결제테스트',
     	    amount : totalPrice,

@@ -90,7 +90,7 @@ public class Scheduler {
 	}
 	
 	//매일 3분마다 실행
-	@Scheduled(cron = "0 0/3 * * * ? ")
+	@Scheduled(cron = "0 0/10 * * * ? ")
 	public void settingWebSocketSeat() {
 		logger.info("-----------임시선택된 좌석 3분마다 갱신후 원상복귀 로직 실행됨-----------");
 		//모든 상영시간 가져오기
