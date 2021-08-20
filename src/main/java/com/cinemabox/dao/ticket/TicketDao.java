@@ -11,6 +11,8 @@ public interface TicketDao {
 	//스케쥴러
 	void updateScreeningStatus(TicketDto ticketDto);
 	List<TicketDto> getAllScreeningTime();
+	// 웹소켓 좌석 스케쥴러
+	List<WebsocketTicketDto> settingWebSocketSeat();
 	
 	//예매
 	List<TicketDto> getMovieListByTheaterNo(Map<String, Object> map);

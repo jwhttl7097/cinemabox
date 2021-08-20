@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import com.cinemabox.dao.movie.MovieDao;
 import com.cinemabox.dao.ticket.TicketDao;
 import com.cinemabox.dto.ticket.TicketDto;
+import com.cinemabox.dto.ticket.WebsocketTicketDto;
 import com.cinemabox.service.movie.APIMovieService;
 import com.cinemabox.vo.Movie;
 
@@ -86,6 +87,20 @@ public class Scheduler {
 		
 		//실시간 예매율에서 예매율, 누적관객수 추가하기
 		apiMovieService.crawler();		
+	}
+	
+	//매일 3분마다 실행
+	@Scheduled(cron = "0 0/3 * * * ? ")
+	public void settingWebSocketSeat() {
+		logger.info("-----------임시선택된 좌석 3분마다 갱신후 원상복귀 로직 실행됨-----------");
+		//모든 상영시간 가져오기
+		List<WebsocketTicketDto> settingSeat = ticketDao.settingWebSocketSeat();
+
+		for(WebsocketTicketDto item : settingSeat) {
+			item.setWebTicketStatus("N");
+			item.setSeatSelectedDate(null);
+			ticketDao.updateWebSocetStatus(item);
+		}
 	}
 	
 }
