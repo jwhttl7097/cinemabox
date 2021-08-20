@@ -4,15 +4,12 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -69,6 +66,10 @@ public class APIMovieServiceImpl implements APIMovieService{
 			 	
 			 	//제목
 				String title = movieSimple.get("movieNm").getAsString();
+				if(title.contains("섹스") || title.contains("에로")) {
+					continue;
+				}
+				
 				//러닝타임
 				int runningTime = movieInfo.get("showTm").getAsInt();
 				//개봉일
@@ -77,6 +78,9 @@ public class APIMovieServiceImpl implements APIMovieService{
 				Date releaseDate = fm.parse(rd); 
 				//연령
 				JsonArray audits = movieInfo.getAsJsonArray("audits");
+				if(audits.size() == 0) {
+					continue;
+				}
 				JsonElement watchGradeNm = audits.get(0);
 				String age = watchGradeNm.getAsJsonObject().get("watchGradeNm").getAsString();
 				//감독

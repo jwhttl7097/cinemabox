@@ -15,6 +15,8 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <%-- moment cdnjs 한국어설정하기 --%>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/ko.min.js"></script>
+<!-- iamport.payment.js -->
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script>
 <title>CINEMABOX :: PAYMENT</title>
 </head>
 <body>
@@ -90,55 +92,55 @@
 								</li>
 							</ul>
 						</div>
-						<ul class="nav" id="ul-selectPay-card" style="display:none;">
-							<li>
-								<button class="btn p-2 border">
-									<h3></h3>
-									롯데카드
-								</button>
-							</li>
-							<li>
-								<button class="btn p-2 border">
-									<h3></h3>
-									국민카드
-								</button>
-							</li>
-							<li>
-								<button class="btn p-2 border">
-									<h3></h3>
-									카카오뱅크
-								</button>
-							</li>
-							<li>
-								<button class="btn p-2 border">
-									<h3></h3>
-									신한카드
-								</button>
-							</li>
-							<li>
-								<button class="btn p-2 border">
-									<h3></h3>
-									삼성카드
-								</button>
-							</li>
-						</ul>
+<!-- 						<ul class="nav" id="ul-selectPay-card" style="display:none;"> -->
+<!-- 							<li> -->
+<!-- 								<button class="btn p-2 border"> -->
+<!-- 									<h3></h3> -->
+<!-- 									롯데카드 -->
+<!-- 								</button> -->
+<!-- 							</li> -->
+<!-- 							<li> -->
+<!-- 								<button class="btn p-2 border"> -->
+<!-- 									<h3></h3> -->
+<!-- 									국민카드 -->
+<!-- 								</button> -->
+<!-- 							</li> -->
+<!-- 							<li> -->
+<!-- 								<button class="btn p-2 border"> -->
+<!-- 									<h3></h3> -->
+<!-- 									카카오뱅크 -->
+<!-- 								</button> -->
+<!-- 							</li> -->
+<!-- 							<li> -->
+<!-- 								<button class="btn p-2 border"> -->
+<!-- 									<h3></h3> -->
+<!-- 									신한카드 -->
+<!-- 								</button> -->
+<!-- 							</li> -->
+<!-- 							<li> -->
+<!-- 								<button class="btn p-2 border"> -->
+<!-- 									<h3></h3> -->
+<!-- 									삼성카드 -->
+<!-- 								</button> -->
+<!-- 							</li> -->
+<!-- 						</ul> -->
 						<ul class="nav" id="ul-selectPay-simple" style="display:none;">
-							<li>
+							<li data-simple="kakaopay">
 								<button class="btn p-3 border">
 									<h3></h3>
 									카카오페이
 								</button>
 							</li>
-							<li>
+							<li data-simple="payco">
 								<button class="btn p-3 border">
 									<h3></h3>
 									페이코
 								</button>
 							</li>
-							<li>
+							<li data-simple="smilepay">
 								<button class="btn p-3 border">
 									<h3></h3>
-									네이버페이
+									스마일페이
 								</button>
 							</li>
 						</ul>
@@ -150,25 +152,25 @@
 						<ul class="p-0 m-0" id="">
 							<li>
 								<h6>쿠폰사용</h6>
-								<button class="btn p-2 border form-control">
+								<button class="btn p-2 border form-control" id="btn-coupon">
 									보유쿠폰확인
 								</button>
 							</li>
-							<li class="mt-3">
+							<li class="mt-3" id="li-coupon-list" style="display:none;">
 								<table class="table border">
 									<colgroup>
 										<col width="75%">
 										<col width="20%">
 									</colgroup>
-									<tr class="text-center">
+									<tr class="text-center" style="font-size:0.8rem;">
 										<td colspan="2">* 사용가능한 쿠폰이 존재하지 않습니다.</td>
 									</tr>
-									<tr class="align-middle">
-										<td>40%할인쿠폰</td>
+									<tr class="align-middle" style="font-size:0.8rem;">
+										<td class="p-3">40%할인쿠폰</td>
 										<td><button class="btn border">사용</button></td>
 									</tr>
-									<tr class="align-middle">
-										<td>40%할인쿠폰</td>
+									<tr class="align-middle" style="font-size:0.8rem;">
+										<td class="p-3">40%할인쿠폰</td>
 										<td><button class="btn border">사용</button></td>
 									</tr>
 								</table>
@@ -176,9 +178,10 @@
 							<li class="mt-3">
 								<h6>
 									포인트사용
-									<span style="font-size:0.8rem; color:#999;">( 현재 포인트 : 3333pt )</span>
+									<span style="font-size:0.8rem; color:#999;">( 현재 포인트 : ${LOGINED_USER.point}pt )</span>
 								</h6>
 								<div class="input-group">
+									<button class="btn btn-outline-secondary">전체사용</button>
 									<input type="number" min="0" value="0" class="form-control">
 									<button class="btn btn-outline-secondary">확인</button>
 								</div>
@@ -196,7 +199,7 @@
 						</dl>
 						<dl>
 							<dt>결제금액</dt>
-							<dd>12,000원</dd>
+							<dd id="dd-total-price">12,000원</dd>
 						</dl>
 						<a class="" id="a-confirm">결제하기</a>
 					</div>
@@ -215,6 +218,10 @@
 </div>
 <script type="text/javascript">
 $(function(){
+	var selectPayment;
+	var payment;
+    var totalPrice = $("#dd-total-price").text();
+
 	//header nav js
 	$('.mainnav').mouseover(function(){
 	   $(this).children('.subnav').stop().slideDown().css('display','flex');
@@ -225,15 +232,119 @@ $(function(){
 	
 	//카드결제
 	$("#btn-pay-card").click(function(){
-		$("#ul-selectPay-card").show();
+		//$("#ul-selectPay-card").toggle();
+		selectPayment = "creditCard";
+		payment = "card";
 		$("#ul-selectPay-simple").hide();
 	})
 	
 	//간편결제
 	$("#btn-pay-simple").click(function(){
-		$("#ul-selectPay-simple").show();
-		$("#ul-selectPay-card").hide();
+		$("#ul-selectPay-simple").toggle();
+		//$("#ul-selectPay-card").hide();
+		selectPayment = "simple";
 	})
+	$("#ul-selectPay-simple").on('click','li',function(){
+		payment = $(this).data('simple');
+	})
+	
+	//쿠폰확인
+	$("#btn-coupon").click(function(){
+		$("#li-coupon-list").toggle();
+	})
+	
+	/*import*/
+	$("#a-confirm").click(function(){
+		if(!selectPayment || !payment){
+			alert("결제 수단을 선택해주세요.")
+		}
+		if(selectPayment == 'creditCard'){
+			inicis()
+		}
+		if(selectPayment == 'simple'){
+			simplePay()
+		}
+	});
+
+	// IMP.request_pay(param, callback) 결제창 호출
+	
+    function simplePay(){
+		//가맹점 식별코드
+	    IMP.init("imp10888924");	
+		IMP.request_pay({
+		    pg : payment,
+		    pay_method : 'card',
+		    merchant_uid : 'merchant_' + new Date().getTime(),
+		    name : '주문명:결제테스트',
+		    amount : totalPrice,
+		    buyer_email : 'iamport@siot.do',
+		    buyer_name : '구매자이름',
+		    buyer_tel : '010-1234-5678',
+		    buyer_addr : '서울특별시 강남구 삼성동',
+		    buyer_postcode : '123-456'
+		}, function(rsp) {
+			console.log(rsp);
+		    if ( rsp.success ) {
+		    	var msg = '결제가 완료되었습니다.';
+		        msg += '고유ID : ' + rsp.imp_uid;
+		        msg += '상점 거래ID : ' + rsp.merchant_uid;
+		        msg += '결제 금액 : ' + rsp.paid_amount;
+		        msg += '카드 승인번호 : ' + rsp.apply_num;
+		    } else {
+		    	 var msg = '결제에 실패하였습니다.';
+		         msg += '에러내용 : ' + rsp.error_msg;
+		    }
+		    alert(msg);
+		});
+	}
+    
+    function inicis(){
+   	    IMP.init("imp10888924");	
+    	IMP.request_pay({
+    	    pg : 'html5_inicis', //ActiveX 결제창은 inicis를 사용
+    	    pay_method : 'card', //card(신용카드), trans(실시간계좌이체), vbank(가상계좌), phone(휴대폰소액결제)
+    	    merchant_uid : 'merchant_' + new Date().getTime(), //상점에서 관리하시는 고유 주문번호를 전달
+    	    name : '주문명:결제테스트',
+    	    amount : totalPrice,
+    	    buyer_email : 'iamport@siot.do',
+    	    buyer_name : '구매자이름',
+    	    buyer_tel : '010-1234-5678', //누락되면 이니시스 결제창에서 오류
+    	    buyer_addr : '서울특별시 강남구 삼성동',
+    	    buyer_postcode : '123-456'
+    	}, function(rsp) {
+    	    if ( rsp.success ) {
+    	    	//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
+    	    	jQuery.ajax({
+    	    		url: "/payments/complete", //cross-domain error가 발생하지 않도록 주의해주세요
+    	    		type: 'POST',
+    	    		dataType: 'json',
+    	    		data: {
+    		    		imp_uid : rsp.imp_uid
+    		    		//기타 필요한 데이터가 있으면 추가 전달
+    	    		}
+    	    	}).done(function(data) {
+    	    		//[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
+    	    		if ( everythings_fine ) {
+    	    			var msg = '결제가 완료되었습니다.';
+    	    			msg += '\n고유ID : ' + rsp.imp_uid;
+    	    			msg += '\n상점 거래ID : ' + rsp.merchant_uid;
+    	    			msg += '\n결제 금액 : ' + rsp.paid_amount;
+    	    			msg += '카드 승인번호 : ' + rsp.apply_num;
+    	    			
+    	    			alert(msg);
+    	    		} else {
+    	    			//[3] 아직 제대로 결제가 되지 않았습니다.
+    	    			//[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
+    	    		}
+    	    	});
+    	    } else {
+    	        var msg = '결제에 실패하였습니다.';
+    	        msg += '에러내용 : ' + rsp.error_msg;
+    	        
+    	        alert(msg);
+    	    }
+    	});
+    }
 })
 </script>
 </body>

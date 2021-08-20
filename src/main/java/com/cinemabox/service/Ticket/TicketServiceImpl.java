@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cinemabox.dao.ticket.TicketDao;
+import com.cinemabox.dto.ticket.ScreeningDto;
 import com.cinemabox.dto.ticket.TicketDto;
 
 @Service
@@ -34,7 +35,7 @@ public class TicketServiceImpl implements TicketService{
 		return ticketDao.getTicketStatusByScreeningNo(screeningNo);
 	}
 	@Override
-	public List<TicketDto> getAllMovieTime(Map<String, Object> map) {
+	public List<ScreeningDto> getAllMovieTime(Map<String, Object> map) {
 		return ticketDao.getAllMovieTime(map);
 	}
 	

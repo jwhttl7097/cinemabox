@@ -128,17 +128,14 @@
 					<div class="tab-content" id="nav-tabContent">
 						<div class="tab-pane fade show active p-4" id="nav-entireTime" role="tabpanel" aria-labelledby="nav-entireTime-tab">
 							<!-- 영화타이틀, 영화관, 시간 시작  -->
-							<div class="div-group-time-select mb-3" id="div-time">
-								<div class="div-time-select-tit" id="div-time-title">
-								</div>
-								<div class="div-time-select-wrap mt-3">
-									<ul class="nav" id="ul-list-time">
-										<span class="text-center d-block" style="margin-top: 3%; padding: 145px;">
-											<i class="fas fa-exclamation-circle"></i> 극장/영화를 선택하세요.
-										</span> 
-									</ul>
-								</div>
-							</div>
+<!-- 							<div class="div-group-time-select mb-3" id="div-time"> -->
+<!-- 								<div class="div-time-select-tit" id="div-time-title"> -->
+<!-- 								</div> -->
+<!-- 								<div class="div-time-select-wrap mt-3"> -->
+<!-- 									<ul class="nav" id="ul-list-time"> -->
+<!-- 									</ul> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
 							<!-- 영화타이틀, 영화관, 시간 끝 -->
 						</div>
 					</div>
@@ -281,50 +278,55 @@ $(function(){
 		});		
 	}
 	
-	//상영중인 영화목록--------------------------------------------------
+	//상영중인 영화목록
 	function displayMovieTime (theaterNo, screeningDate){
 		$.ajax({
 			type:"GET",
 			url:"ticketing/schedule",
 			data:{theaterNo:theaterNo, screeningDate:screeningDate},
 			dataType:"json",
-			success:function(movieList){
-				$("#div-time-title").remove();
-				$("#ul-list-time").empty();
+			success:function(result){
+				$.each(result, function(index, dto){
 					
-				$.each(movieList, function(index, item){
-					$.each(movieList, function(index, item){
-						var content=
-							'<div class="div-time-select-tit" id="div-time-title">'+
-								'<span>'+
-									'<img src="/cinemabox/resources/images/icon/txt-age-small-'+item.age+'.png" alt="" class="me-2">'+
-									'<strong>'+item.title+'</strong>'+
-								'</span>'+
-							'</div>'
-						$('#div-time').prepend(content);
+					var con = '<div class="div-group-time-select mb-3" id="div-time">'
+					
+						con +='<div class="div-time-select-tit" id="div-time-title">'
+						con +='<span>'
+						con +='<img src="/cinemabox/resources/images/icon/txt-age-small-'+dto.age+'.png" alt="" class="me-2">'
+						con +='<strong>'+dto.movieTitle+'</strong>'
+						con +='</span>'
+						con +='</div>'
+					
+						con += '<div class="div-time-select-wrap mt-3">'
+						con += '<ul class="nav" id="ul-list-time">'
+
+						
+					$.each(dto.screenings, function(index, item){
+						var seat = 70-item.seatCnt;
+	
+						con += '<li class="rounded-3 me-2" data-bs-toggle="modal" data-bs-target="#confirmModal" data-screening-no='+item.screeningNo+' data-movie-no='+dto.movieNo+'>'
+						con +=	'<dl class="text-center p-2">'
+						con +=		'<dt class="d-none">상영시간</dt>'
+						con +=		'<dd class="dd-time">'
+						if(item.screeningTime.replace(":","") <= 1100 && item.screeningTime.replace(":","") >= 700 ){
+							con += 		'<strong>'+'<i class="bi bi-sun" style="color: #ffc107"></i>'+item.screeningTime+'</strong>'
+						}else{
+							con += 		'<strong>'+item.screeningTime+'</strong>'
+						}
+						con +=		'</dd>'
+						con +=		'<dt class="d-none">좌석</dt>'
+						con +=		'<dd class="dd-seat d-inline-block me-2">'
+						con +=			'<strong>'+seat+'</strong>/70'
+						con +=		'</dd>'
+						con +=		'<dt class="d-none">상영관</dt>'
+						con +=		'<dd class="dd-hall d-inline-block">'+item.hallName+'</dd>'
+						con +=	'</dl>'
+						con +='</li>'
 					})
-					var seat = 70-item.seatCnt;
-					if(item.screeningStatus == 'Y'){
-						var timeTable = '<li class="rounded-3 me-2" data-bs-toggle="modal" data-bs-target="#confirmModal" data-screening-no='+item.screeningNo+' data-movie-no='+item.movieNo+'>'
-							timeTable +=	'<dl class="text-center p-2">'
-							timeTable +=		'<dt class="d-none">상영시간</dt>'
-							timeTable +=		'<dd class="dd-time">'
-							if(item.screeningTime.replace(":","") <= 1100 && item.screeningTime.replace(":","") >= 700 ){
-								timeTable += 		'<strong>'+'<i class="bi bi-sun" style="color: #ffc107"></i>'+item.screeningTime+'</strong>'
-							}else{
-								timeTable += 		'<strong>'+item.screeningTime+'</strong>'
-							}
-							timeTable +=		'</dd>'
-							timeTable +=		'<dt class="d-none">좌석</dt>'
-							timeTable +=		'<dd class="dd-seat d-inline-block me-2">'
-							timeTable +=			'<strong>'+seat+'</strong>/70'
-							timeTable +=		'</dd>'
-							timeTable +=		'<dt class="d-none">상영관</dt>'
-							timeTable +=		'<dd class="dd-hall d-inline-block">'+item.hallName+'</dd>'
-							timeTable +=	'</dl>'
-							timeTable +='</li>'
-						$('#ul-list-time').append(timeTable);
-					}
+						con +='</ul>'
+						con +='</div>'		
+						con +='</div>'
+					$('#nav-entireTime').append(con);
 				})		
 			}
 		});
@@ -339,7 +341,6 @@ $(function(){
 			dataType:"json",
 			success:function(m){		
 				$("#confirmModal > div > div").empty();
-				
 				//끝나는 시간 구하기
 				var endTime = moment.unix(m.movieInfo.screeningDate/1000).add(m.movieInfo.runningTime, "m").format("HH:mm");
 				//남은 좌석 수 구하기
@@ -460,8 +461,7 @@ $(function(){
 		//선택한 극장번호
 		theaterNo = $(this).data('theater-no');
 		
-		$("#div-time-title").remove();
-		$("#ul-list-time").empty();
+		$("#nav-entireTime").empty();
 		
 		//극장에서 상영중인 영화 가져오기
 		displayMovieTime (theaterNo, screeningDate);
@@ -482,11 +482,10 @@ $(function(){
 		//선택한 극장번호
 		theaterNo = $(this).data('theater-no');
 		
-		$("#div-time-title").remove();
-		$("#ul-list-time").empty();
+		$("#nav-entireTime").empty();
 		
 		//극장에서 상영중인 영화 가져오기
-		displayMovieList(sort, theaterNo);
+		displayMovieTime (theaterNo, screeningDate);
 	})
 	
 	// 선택한 영화 타이틀 변경(특별관), 극장선택
@@ -536,6 +535,8 @@ $(function(){
 		})
 
 		screeningDate = $(this).data('select-day');
+		
+		$("#nav-entireTime").empty();
 
 		//극장, 영화번호, 선택한 날짜로 영화 시간 불러오기
 		displayMovieTime (theaterNo, screeningDate);
@@ -544,7 +545,7 @@ $(function(){
 	changeDays();
 	
 	//최종 확인 팝업
-	$('#ul-list-time').on('click', 'li', (function(){
+	$('#nav-entireTime').on('click', 'li', (function(){
 		$('#confirmModal').show();
 		time = $(this).find(".dd-time").text();
 		screeningNo = $(this).data('screening-no');

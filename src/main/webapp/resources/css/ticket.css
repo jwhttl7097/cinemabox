@@ -83,7 +83,7 @@ a:hover{
 	cursor: pointer;
 }
 #nav-tabContent{
-	height: 57%;
+	height: 582px;
 }
 #div-location2, #nav-entireTime{
 	overflow-y:auto;
@@ -116,7 +116,7 @@ a:hover{
 	cursor: pointer;
 }
 #nav-entireTime{
-	height: 90%;
+	height: 100%;
 }
 #ul-list-time li{
 	cursor:pointer;
