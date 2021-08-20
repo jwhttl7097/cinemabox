@@ -99,5 +99,6 @@ img, svg {
 	font-size: 30px;
 	color: white;
 	text-shadow: 2px 2px 4px black;
-	z-index: 10;
+	z-index: 5;
+	cursor: default;
 }

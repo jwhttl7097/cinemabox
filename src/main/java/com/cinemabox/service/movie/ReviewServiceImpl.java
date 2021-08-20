@@ -17,9 +17,6 @@ public class ReviewServiceImpl implements ReviewService{
 
 	@Override
 	public void insertReview(Review review) {
-		//로그인한 사용자 가져오기
-		//User loginedUser = (User) SessionUtils.getAttribute("LOGINED_USER");
-
 		//리뷰 추가하기
 		Review comment = new Review();
 		comment.setContent(review.getContent());
