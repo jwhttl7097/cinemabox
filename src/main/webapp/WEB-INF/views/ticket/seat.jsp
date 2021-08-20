@@ -302,16 +302,41 @@ $(function(){
 	}
 	
 	var clickCnt = 0;
-	var allseatRow = '';
-	var allseatCol = '';
 	// 아이콘 클릭 시 동작하는 함수
 	$('.couch').click(function() {
+		$(this).attr('data-mine', 'me');
 		var $that = $(this);
 		var selectedSeatCount = getSelectedSeatCount();
 		if ($('#adult-cnt').text() == '0' && $('#teenager-cnt').text() == '0') {
 			alert("인원을 선택해 주십시오.");
 			$('#adult-cnt').focus();
 		} else {
+			var seatRow = $(this).val();
+			var seatCol = $(this).parent().parent().eq(0).text().trim();
+			// 선택한 좌석의 행, 열 모음 밸류값 전달하기 //
+			var selectType = "";
+			if ($(this).prop('checked')) {
+				selectType = "T";
+			} else {
+				selectType = "N";
+			}
+			var row = seatRow;
+			var col = seatCol;
+			var screeningNos =  $('#screening-no').data('scno');
+			console.log('클릭 임시선택T 또는 해제N : '+selectType);
+			console.log('좌석번호 ==='+row);
+			console.log('==='+col);
+			console.log('==='+screeningNos);
+			$.ajax({
+				url:"ticketing/webSeat",
+				data: {screeningNo: screeningNos, col: col, row: row, selectType: selectType},
+				success: function() {
+					console.log("좌석선택 성공.");
+				},
+				error: function() {
+					alert("좌석선택 중 오류가 발생하였습니다.");
+				}
+			})
 			// 인원수에 맞게 클릭횟수가 채워지면  일어날 아이콘 동작 상태에 관한 함수
 			if (totalCnt == selectedSeatCount) {
 				// 인원수에 맞게 클릭횟수가 채워지면 클릭한 부분과 이미 예약된 좌석을 제외한 나머지 구간 disabled
@@ -323,28 +348,10 @@ $(function(){
 					seatRows.push($(item).val());
 					seatCols.push($(item).parent().parent().eq(0).text().trim());
 				})
+				console.log('ajax 웹소켓 관계없음 좌석번호 밸류 확인 :'+seatRows);
+				console.log('ajax 웹소켓 관계없음  좌석행 밸류 확인 :'+seatCols);
 				$('#seat_row').val(seatRows.join(" "));
 				$('#seat_col').val(seatCols.join(" "));
-				console.log('ajax 웹소켓 관계없음 좌석번호 밸류 확인 :'+$('#seat_row').val());
-				console.log('ajax 웹소켓 관계없음  좌석행 밸류 확인 :'+$('#seat_col').val());
-				// 선택한 좌석의 행, 열 모음 밸류값 전달하기 //
-				
-			var row = $('#seat_row').val();
-			var col = $('#seat_col').val();
-			var screeningNos =  $('#screening-no').data('scno');
-			console.log('좌석번호 ==='+row);
-			console.log('==='+col);
-			console.log('==='+screeningNos);
-			$.ajax({
-				url:"ticketing/webSeat",
-				data: {screeningNo: screeningNos, col: col, row: row},
-				success: function() {
-					alert("좌석선택 성공.");
-				},
-				error: function() {
-					alert("좌석선택 중 오류가 발생하였습니다.");
-				}
-			})
 			} else {
 				// 1. 이미 예약된 좌석을 제외하고 비활성화 되어 있는 것을 전부 활성화하고 세컨더리 다 화이트로 선택 가능하게 표시 단, 1좌석 이상이면서 체크가 되어있는 좌석은 체크를 유지해야할것.
 				$('.couch:not(.couch:checked, input[data-selected=Y], input[data-selected=T])').removeClass('disabled').removeAttr('disabled').next().children().removeClass('text-secondary').addClass('text-white');
@@ -389,8 +396,18 @@ $(function(){
 		var sNo = payload.data.webSeatNo;
 		var sStatus = payload.data.webTicketStatus;
 		var sTime = payload.data.seatSelectedDate;
-		console.log('번호 : ' + sRow + ', 행 : ' + sCol);
-		console.log(sNo + ', ' + sStatus + ', ' + sTime);
+		var sType = payload.data.webSelectType;
+		console.log('열 : ' + sRow + ', 행 : ' + sCol);
+		console.log('좌석번호 '+sNo + ', 좌석 상태 ' + sStatus + ', 좌석 상태 날짜' + sTime);
+		console.log('클릭상태 : ' + sType);
+		// 웹소켓 반응 코드 여기다 작성
+		var couchSeatNo = $('.couch').val();
+		console.log('찍힌 밸류 : '+couchSeatNo);
+		if (sType == 'T') {
+			$('input[value='+sNo+'][data-mine!="me"]').prop('disabled', 'true').addClass('disabled').next().children().removeClass('text-secondary').removeClass('text-white').addClass('text-success');
+		} else {
+			$('input[value='+sNo+'][data-mine!="me"]').removeAttr('disabled').removeClass('disabled').next().children().removeClass('text-secondary').removeClass('text-success').addClass('text-white');
+		}
 	}
 
 })

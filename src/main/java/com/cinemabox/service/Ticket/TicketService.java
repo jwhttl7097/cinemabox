@@ -52,6 +52,6 @@ public interface TicketService {
 	/**
 	 * 
 	 */
-	void webSocketAjax(int screeningNo, String col, String row);
+	void webSocketAjax(int screeningNo, String col, String row, String selectType);
 
 }

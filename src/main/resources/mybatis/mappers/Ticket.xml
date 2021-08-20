@@ -217,4 +217,16 @@
 			TICKET_NO = #{webTicketNo}
 	</update>
 	
+	<select id="settingWebSocketSeat" resultType="com.cinemabox.dto.ticket.WebsocketTicketDto">
+		SELECT 
+			TICKET_NO as webTicketNo,
+			SEAT_SELECTED_DATE as seatSelectedDate, 
+			ticket_reservation_status as webTicketStatus
+		FROM
+			cinemabox_ticket
+		where
+			ticket_reservation_status = 'T'
+			and (sysdate+9/24) &gt; SEAT_SELECTED_DATE + 3/24/60
+	</select>
+	
 </mapper>
