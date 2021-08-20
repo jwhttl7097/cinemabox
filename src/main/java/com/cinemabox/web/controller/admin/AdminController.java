@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.cinemabox.service.admin.AdminService;
+import com.cinemabox.vo.Hall;
 import com.cinemabox.vo.Movie;
 import com.cinemabox.vo.Screening;
 import com.cinemabox.vo.Theater;
@@ -53,29 +54,16 @@ public class AdminController {
 		return "admin/deleteMovieList";
 	}
 	
-//	@GetMapping("/movieModify")
-//	public String movieModify(Model model, @RequestParam("no") int movieNo) {
-//		
-//		Movie savedmovie = adminService.getMovieDetail(movieNo);
-//		// 뷰 페이지에 영화정보 목록 전달하기
-//		model.addAttribute("movies", savedmovie);
-//		
-//		// 뷰페이지로 내부이동하기
-//		return "admin/movieModify";
-//	}
-	
-	@RequestMapping("/movieModify")
-	public @ResponseBody ResponseEntity<Void> movieModify(Model model, @RequestParam("no") int movieNo) {
+	@GetMapping("/movieModify")
+	public String movieModify(Model model, @RequestParam("movieNo") int movieNo) {
+		// 상영중인 영화정보 조회하기
 		Movie savedmovie = adminService.getMovieByNo(movieNo);
-		model.addAttribute("movies", savedmovie);
-		return new ResponseEntity<Void>(HttpStatus.OK);
-	}
-	
-	@RequestMapping("/movieDetail")
-	public @ResponseBody ResponseEntity<Void> movieDetail(Model model, @RequestParam("no") int movieNo) {
-		Movie savedmovie = adminService.getMovieByNo(movieNo);
-		model.addAttribute("movies", savedmovie);
-		return new ResponseEntity<Void>(HttpStatus.OK);
+		
+		// 뷰 페이지에 영화정보 목록 전달하기
+		model.addAttribute("movie", savedmovie);
+		
+		// 뷰페이지로 내부이동하기
+		return "admin/movieModify";
 	}
 	
 	@GetMapping("movieList")
@@ -93,10 +81,12 @@ public class AdminController {
 		}
 		page = new Paging(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 		List<Movie> list = adminService.selectMoivePaging(page);
-		List<Theater> theaterList = adminService.getTheaterInfo();
+		List<Theater> theaterList = adminService.getAllTheaterInfo();
+		List<Hall> hallList = adminService.getAllHallInfo();
 		model.addAttribute("paging", page);
 		model.addAttribute("movies", list);
 		model.addAttribute("theaters", theaterList);
+		model.addAttribute("halls", hallList);
 					
 		// 뷰페이지로 내부이동하기
 		return "admin/movieList";
@@ -111,6 +101,7 @@ public class AdminController {
 	
 	@PostMapping("/insert")
 	public String insert(Movie movie, @RequestParam("file") MultipartFile multipartFile) throws IOException {
+		
 		adminService.addMovie(movie);
 		Movie savedMovie = adminService.getMovieByNo(movie.getNo());
 		
@@ -135,6 +126,7 @@ public class AdminController {
 	
 	@PostMapping("/update")
 	public String update(Movie movie, @RequestParam("file") MultipartFile multipartFile) throws IOException {
+		Movie savedMovie = adminService.getMovieByNo(movie.getNo());
 		if (!multipartFile.isEmpty()) {
 			String originalname = multipartFile.getOriginalFilename();
 			String folderName = "C:\\eclipse\\eGovFrameDev-3.10.0-64bit\\workspace\\cinemabox\\src\\main\\webapp\\resources\\images\\movie";
@@ -148,9 +140,10 @@ public class AdminController {
 			String changeFileName = originalname.replaceAll(originalname, StringMovieNo);
 			// 파일이 정해진 폴더에 기록됨
 			FileCopyUtils.copy(in, out);
-			movie.setThumbnail(changeFileName);
+			savedMovie.setThumbnail(changeFileName);
 		}
 		adminService.updateMovie(movie);
+		
 		return "redirect:movieList";
 	}
 	

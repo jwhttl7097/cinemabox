@@ -21,7 +21,7 @@ public class Paging {
 	// end
 	private int end;
 	// 기본페이지 수
-	private int cntPage = 5;
+	private int cntPage = 10;
 	
 	// 기본생성자
 	public Paging() {}

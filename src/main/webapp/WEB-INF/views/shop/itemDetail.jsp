@@ -14,15 +14,10 @@
 
 <title>TITLE</title>
 	<style type="text/css">
-		.form-check-input:checked {
-			background-color: #198754 !important;
-			border-color: #198754 !important;
-		}
-		
-			#detailInfo .line1 { 
-			position: absolute; 
-				top : 490px; 
-			} 
+		#detailInfo .line1 { 
+		position: absolute; 
+			top : 490px; 
+		} 
 		#detailInfo .line2 {  
 			position: absolute;  
 				top : 575px;  
@@ -62,15 +57,17 @@
 <body>
 <div class="container">
 	<%@include file="../common/header.jsp" %>
-	<%@include file="../common/shopHeader.jsp" %>
+	<br>
+	<br>
 	<div class="row">
 		<div class="col-12" id="detail" >
+		<hr>
 			<div class="d-flex justify-content-between">
 				<div id="img" class="col-5">
 				<br>
 					<img alt="상품 대표이미지" src="" class="img-thumbnail">
 				</div>
-				<div class="col-7 ps-5">
+				<div class="col-7 ps-5" style="border-left: 1px #e9e9e9 solid;">
 					<div class="pt-2 pb-3" id="name">
 						<p class="fs-3"><strong>[<c:out value="브랜드명"/>] <c:out value="이름"/></strong></p>
 						<p class="fs-6"><c:out value="서브타이틀"/></p>
@@ -118,7 +115,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="d-flex justify-content-between pb-5">
+			<div class="d-flex justify-content-between pb-5" style="border-bottom:1px gray">
 				<div class="col-6"></div>
 				<div class="col-6">
 					<div class="d-flex flex-row-reverse bd-highlight">
@@ -131,11 +128,12 @@
 						<button class="btn btn-outline-success btn-lg" type="button">구매하기</button>
 					</div>
 				</div>
-			</div>	
+			</div>
 		</div>
+		<hr>
 	</div>
 	<br>
-	<%@include file="../common/shopFooter.jsp" %>
+	<%@include file="shopFooter.jsp" %>
 	<%@include file="../common/footer.jsp" %>
 </div>
 </body>

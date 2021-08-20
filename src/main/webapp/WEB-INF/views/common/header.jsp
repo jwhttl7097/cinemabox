@@ -167,45 +167,19 @@ $("#form-login").submit(function(event){
 		success:function() {
 			
 			//관리자가 로그인 했을 때
-			var id = $("#userId").val();	
+			var id = $("#userId").val();
+			
             if (id == "admin"){
-               location.href="admin"
-            };
+               location.href="admin";
+            }else{
+				$("#login-link").hide();
+				$("#register-link").hide();
+				$("#logout-link").show();
+				$("#myPage-link").show();
             
-			$("#login-link").hide();
-			$("#register-link").hide();
-			$("#logout-link").show();
-			$("#myPage-link").show();
-			
-			loginModal.hide();
-			location.reload();
-				
-		},
-		error:function() {
-			$("#error-message").text("아이디 비밀번호가 올바르지 않습니다.").show();
-		}
-	});
-	
-	$.ajax({
-		type:"post",
-		url:"userLogin/login",
-		data: {id:$("#userId").val(), password:$("#userPassword").val()},
-		success:function() {
-			
-			//관리자가 로그인 했을 때
-			var id = $("#userId").val();	
-            if (id == "admin"){
-               location.href="admin"
+				loginModal.hide();
+				location.reload();
             };
-            
-			$("#login-link").hide();
-			$("#register-link").hide();
-			$("#logout-link").show();
-			$("#myPage-link").show();
-			
-			loginModal.hide();
-			location.reload();
-				
 		},
 		error:function() {
 			$("#error-message").text("아이디 비밀번호가 올바르지 않습니다.").show();

@@ -82,7 +82,7 @@
 	                        </div>
                     	 </div>
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="name" placeholder="영화 제목" name="title">
+                                <input type="text" class="form-control" id="title" placeholder="영화 제목" name="title">
                                 <label for="floatingInput">영화 제목</label>
                             </div>
                             <div class="form-floating mb-3">
@@ -130,7 +130,7 @@
 	                        </div>
                             <h3>대표 이미지</h3> 
                             <div id="image_container" class="form-control">
-                           		 <input type="file" class="form-control" id="picture" name="file">
+                           		 <input type="file" class="form-control" id="thumbnail" name="file">
                             </div>
                         </div>                                                                                  
                     </div>                    
@@ -141,11 +141,11 @@
                                 <label for="floatingTextarea">영화 줄거리</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <textarea class="form-control" id="movieInsertTextarea" id="trailerFirst" placeholder="트레일러 영상 첫번째" style="height: 50px;" name="trailerFirst"></textarea>
+                                <textarea class="form-control" id="trailerFirst" id="trailerFirst" placeholder="트레일러 영상 첫번째" style="height: 50px;" name="trailerFirst"></textarea>
                                 <label for="floatingTextarea">트레일러 영상 첫번째</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <textarea class="form-control" id="movieInsertTextarea" id="trailerSecond" placeholder="트레일러 영상 두번째" style="height: 50px;" name="trailerSecond"></textarea>
+                                <textarea class="form-control" id="trailerSecond" id="trailerSecond" placeholder="트레일러 영상 두번째" style="height: 50px;" name="trailerSecond"></textarea>
                                 <label for="floatingTextarea">트레일러 영상 두번째</label>
                             </div>
                             <div class="d-flex justify-content-end">
@@ -166,8 +166,8 @@ $(function() {
 			$("#genre").focus();
 			return false; 
 		}
-		var name = $.trim($("#name").val());
-		if (!name) {
+		var name = $.trim($("#title").val());
+		if (!title) {
 			alert("영화 제목을 입력해주세요.");
 			$("#name").focus();
 			return false;

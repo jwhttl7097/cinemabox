@@ -4,7 +4,7 @@
 <header class="py-4 container" id="header">
 	<nav class="row">
 		<div class="text-center p-0" id="topnav-container">
-			<a class="navbar-brand" href="#" style="font-size:25px; color:black; font-weight: bolder;"><i class="fas fa-film mx-2"></i>CINEMA BOX</a>
+			<a class="navbar-brand" href="#" style="font-size:25px; color:black; font-weight: bolder;"><i class="fas fa-film mx-2"></i>CINEMA BOX ADMIN</a>
 			<ul class="nav justify-content-end" id="top-nav">
 				<li class="nav-item"><a class="nav-link" href="#">로그인</a></li>
 				<li class="nav-item"><a class="nav-link" href="#">회원가입</a></li>
@@ -27,16 +27,15 @@
 							<li class="nav-item"><a class="nav-link text-body" href="">이벤트 목록</a></li>
 						</ul>
 					</li>
-					<li class="nav-item mainnav"><a class="nav-link text-body" href="#">스토어</a>
+					<li class="nav-item mainnav"><a class="nav-link text-body" href="">스토어</a>
 						<ul class="nav justify-content-center subnav bg-white bg-white" id="subnav-03">
 							<li class="nav-item"><a class="nav-link text-body" href="">스토어 등록</a></li>
-							<li class="nav-item"><a class="nav-link text-body" href="">스토어 목록</a></li>
+							<li class="nav-item"><a class="nav-link text-body" href="shop">스토어 목록</a></li>
 						</ul>
 					</li>
 					<li class="nav-item mainnav"><a class="nav-link text-body" href="#">공지사항</a>
 						<ul class="nav justify-content-center subnav bg-white" id="subnav-04">
 							<li class="bg-white"><a class="nav-link text-body" href="">새 글 등록</a></li>
-							<li class="bg-white"><a class="nav-link text-body" href="">제목 입력</a></li>
 						</ul>
 					</li>
 				</ul>

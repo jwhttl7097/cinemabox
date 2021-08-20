@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cinemabox.dao.admin.AdminDao;
+import com.cinemabox.vo.Hall;
 import com.cinemabox.vo.Movie;
 import com.cinemabox.vo.Screening;
 import com.cinemabox.vo.Seat;
@@ -96,7 +97,12 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public List<Theater> getTheaterInfo() {
-		return adminDao.getTheaterInfo();
+	public List<Theater> getAllTheaterInfo() {
+		return adminDao.getAllTheaterInfo();
+	}
+
+	@Override
+	public List<Hall> getAllHallInfo() {
+		return adminDao.getAllHallInfo();
 	}
 }

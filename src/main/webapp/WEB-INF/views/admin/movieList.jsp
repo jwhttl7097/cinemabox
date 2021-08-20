@@ -106,7 +106,7 @@
 											<td><fmt:formatDate value="${movie.closeDate }" /></td>
 											<td>
 												<button class="btn btn-outline-danger btn-sm" data-movie-no="${movie.no }">삭제</button>
-												<button class="btn btn-outline-primary btn-sm" data-movie-no="${movie.no }">수정</button>
+												<a href="movieModify?movieNo=${movie.no}" class="btn btn-outline-primary btn-sm">수정</a>
 												<button class="btn btn-outline-warning btn-sm" data-movie-no="${movie.no }" id="insert-screening">배정</button>
 												<a href="screening?movieNo=${movie.no}" class="btn btn-outline-info btn-sm">배정 현황</a>
 											</td>
@@ -145,22 +145,22 @@
 	        		<h5 class="modal-title">영화 상세정보</h5>
 	       			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	    	 		</div>
-	      		<div class="modal-body">
+	      		<div class="modal-body" align="center">
 	      			<table>
 	      			</table>
-	      				<div align="center" id="detailModal1">
+	      				<div id="detailModal1">
 	      				</div> 					
-	      				<div align="center" id="detailModal2">
+	      				<div id="detailModal2" style="padding-bottom: 15px;">
 	      				</div>
-	      				<div align="center">
-	      					<strong>감독</strong>
+	      				<div style="width:70%; border-top: 2px #000 solid; padding-bottom: 10px; padding-top: 10px; ">
+	      					<strong>[감독]</strong>
 	      				</div>
-	      				<div align="center" id="detailModal3">
+	      				<div id="detailModal3" style="padding-bottom: 10px;">
 	      				</div>
-	      				<div align="center">
-	      					<strong>배우</strong>
+	      				<div style="width:70%; border-top: 2px #000 solid; padding-bottom: 10px; padding-top: 10px;" >
+	      					<strong>[출연 배우]</strong>
 	      				</div>
-	      				<div align="center" id="detailModal4">
+	      				<div id="detailModal4">
 	      				</div>	
 	     	 	</div>
 	    			<div class="modal-footer">
@@ -183,7 +183,7 @@
 							 <input type="text" class="form-control" id="movie-no" name="movieNo" readonly/>
 						</div>
 						<div class="row px-3 mb-3">
-							<c:if test="${!empty movies }">
+							<c:if test="${!empty theaters }">
 								<label for="floatingInput">상영 [극장번호]입력</label>
 								<select name="theaterNo" id="movie-theaterNo">
 									<c:forEach var="theater" items="${theaters }">
@@ -193,9 +193,14 @@
 							</c:if>	
 						</div>
 						<div class="row px-3 mb-3">
-							<label for="floatingInput">상영 [상영관번호]입력</label>
-							 <input type="text" onKeyup="this.value=this.value.replace(/[^0-9]/g,'')" 
-							class="form-control" id="movie-hallNo" placeholder="상영관 번호를 입력해주세요" name=hallNo />
+							<c:if test="${!empty halls }">
+								<label for="floatingInput">상영 [상영관번호]입력</label>
+								<select name="hallNo" id="movie-hallNo">	
+									<c:forEach var="hall" items="${halls }">
+								 		<option value="${hall.hallNo}">${hall.hallName}</option> 
+								 	</c:forEach>
+								</select>
+							</c:if>
 						</div>
 						<div class="row px-3 mb-3">
 							<label for="floatingInput">상영[날짜/시간]입력</label>
@@ -227,16 +232,6 @@ $(function() {
 		keyboard: false
 	})
 	
-	// 배정 버튼을 클릭했을 때 실행된다.
-	$("#table-movies .btn-outline-warning").click(function() {
-		var movieNo = $(this).data("movie-no")
-		$("#movie-no").val(movieNo)
-		$("#movie-theaterNo").val("");
-		$("#movie-hallNo").val("");
-		$("#screening-date").val("");
-		movieModal.show();
-	});
-	
 	// 제목 버튼을 클릭했을 때 실행된다.
 	$("[id^=detailTrailer]").click(function() {
 		var movieNo = $(this).data("movie-no")
@@ -255,30 +250,6 @@ $(function() {
 	   $(".btn-secondary").click(function(){
 	      location.reload();
 	   })
-	
-	// 제목을 클릭했을 때
-// 	$("#info").on('click', '.btn-link', function(event) {
-// 		requestURI = "movieDetail";
-		
-// 		$.getJSON("movieDetail?no=" + $(this).data("movie-no"))
-// 			.done(function(movieDetail) {
-				
-// 				trailerModal.show();
-// 			})
-// 	)};
-	
-	// 제목을 클릭했을 때
-// 	$("#info").on('click', '.btn-link', function(event) {
-		
-// 	)};
-	
-// 	function makeRow(movieDetail) {
-// 		var movieDetail = "<tr class='align-middle' id='moive-detail'>"
-// 		row += "<td>"+movie.director+"</td>";
-// 		row += "<td>"+movie.casting+"</td>";
-// 		row += "</tr>";
-// 		return movieDetail;
-// 	}	
 	
 	// 배정 버튼을 클릭했을 때 실행된다.
 	$("#table-movies .btn-outline-warning").click(function() {
@@ -335,20 +306,20 @@ $(function() {
 		});
 	});
 	
-	$("#table-movies .btn-outline-primary").click(function() {
-		$.ajax({
-			type: "GET",
-			url: "movieModify", // 수정기능 
-			data: {movieNo: $(this).data("movie-no")},
-			error : function(error) {
-		        alert("Error!");
-		    },
-			success : function(data) {
-			    alert("영화 수정페이지로 이동합니다.");
-			    location.href="movieModify";
-			},
-		});
-	});
+// 	$("#table-movies .btn-outline-primary").click(function() {
+// 		$.ajax({
+// 			type: "GET",
+// 			url: "movieModify", // 수정기능 
+// 			data: {movieNo: $(this).data("movie-no")},
+// 			error : function(error) {
+// 		        alert("Error!");
+// 		    },
+// 			success : function(data) {
+// 			    alert("영화 수정페이지로 이동합니다.");
+// 			    location.href="movieModify";
+// 			},
+// 		});
+// 	});
 })
 </script>
 </body>

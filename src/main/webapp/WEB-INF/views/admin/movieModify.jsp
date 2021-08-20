@@ -18,83 +18,147 @@
     <div class="container">
         <main>
             <div class="container">
-                <form id="insert" method="post" action="insert" enctype="multipart/form-data">
+                <form id="update" method="post" action="update" enctype="multipart/form-data">
                     <div class="row">
                     <a class="navbar-brand" href="admin" style="font-size:25px; color:black; font-weight: bolder;">CINEMA BOX</a>
-                        <span class="border-bottom border-1 border-dark"><strong>영화 정보 추가</strong></span>
+                        <span class="border-bottom border-1 border-dark"><strong>${movie.title }</strong> 정보 수정</span>
                         <div class="col-12">
                         <br/>
-                            <select class="form-select mb-3" id="genre" name="genre">
-                            	<option selected value="">영화 장르 선택</option>
-								<option value="액션">액션</option>
-								<option value="스릴러">스릴러</option>
-								<option value="공포">공포(호러)</option>
-								<option value="코미디">코미디</option>
-								<option value="범죄">범죄</option>
-								<option value="멜로/로멘스">멜로/로맨스</option>
-								<option value="어드벤처">어드벤처</option>
-								<option value="미스터리">미스터리</option>
-								<option value="SF">SF</option>
-								<option value="애니메이션">애니메이션</option>
-								<option value="다큐멘터리">다큐멘터리</option>
-								<option value="판타지">판타지</option>
-								<option value="기타">기타</option>
-                            </select>
+                        <div class="form-floating mb-3">
+                        	<input type="hidden" name="no" value="${movie.no }"/>
+	                        <div class="form-check">
+	                        	※ 영화 장르 선택<br>
+	                           <div class="form-check form-check-inline">
+	                              <input class="form-check-input" type="checkbox" id="genre" name="genre" value="액션">
+	                              <label class="form-check-label">액션</label>
+	                           </div>
+	                           <div class="form-check form-check-inline">
+	                              <input class="form-check-input" type="checkbox" id="genre" name="genre" value="스릴러">
+	                              <label class="form-check-label">스릴러</label>
+	                           </div>
+	                           <div class="form-check form-check-inline">
+	                              <input class="form-check-input" type="checkbox" id="genre" name="genre" value="공포(호러)">
+	                              <label class="form-check-label">공포(호러)</label>
+	                           </div>
+	                           <div class="form-check form-check-inline">
+	                              <input class="form-check-input" type="checkbox" id="genre" name="genre" value="범죄">
+	                              <label class="form-check-label">범죄</label>
+	                           </div>
+	                           <div class="form-check form-check-inline">
+	                              <input class="form-check-input" type="checkbox" id="genre" name="genre" value="코미디">
+	                              <label class="form-check-label">코미디</label>
+	                           </div>
+	                           <div class="form-check form-check-inline">
+	                              <input class="form-check-input" type="checkbox" id="genre" name="genre" value="멜로/로맨스">
+	                              <label class="form-check-label">멜로/로맨스</label>
+	                           </div>
+	                           <div class="form-check form-check-inline">
+	                              <input class="form-check-input" type="checkbox" id="genre" name="genre" value="어드벤처">
+	                              <label class="form-check-label">어드벤처</label>
+	                           </div>
+	                           <div class="form-check form-check-inline">
+	                              <input class="form-check-input" type="checkbox" id="genre" name="genre" value="미스터리">
+	                              <label class="form-check-label">미스터리</label>
+	                           </div>
+	                           <div class="form-check form-check-inline">
+	                              <input class="form-check-input" type="checkbox" id="genre" name="genre" value="SF">
+	                              <label class="form-check-label">SF</label>
+	                           </div>
+	                           <div class="form-check form-check-inline">
+	                              <input class="form-check-input" type="checkbox" id="genre" name="genre" value="애니메이션">
+	                              <label class="form-check-label">애니메이션</label>
+	                           </div>
+	                           <div class="form-check form-check-inline">
+	                              <input class="form-check-input" type="checkbox" id="genre" name="genre" value="다큐멘터리">
+	                              <label class="form-check-label">다큐멘터리</label>
+	                           </div>
+	                           <div class="form-check form-check-inline">
+	                              <input class="form-check-input" type="checkbox" id="genre" name="genre" value="판타지">
+	                              <label class="form-check-label">판타지</label>
+	                           </div>
+	                           <div class="form-check form-check-inline">
+	                              <input class="form-check-input" type="checkbox" id="genre" name="genre" value="기타">
+	                              <label class="form-check-label">기타</label>
+	                           </div>
+	                        </div>
+                    	 </div>
+<!--                                                                       ※ 영화 제목 -->
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="name" placeholder="영화 제목" name="title">
+                                <textarea class="form-control" id="title" placeholder="영화 제목" style="height: 60px;" name="title"></textarea>
                                 <label for="floatingInput">영화 제목</label>
                             </div>
+<!--                                                                       ※ 영화 러닝타임(분) -->
                             <div class="form-floating mb-3">
                             <!-- 숫자만 적을수 있게함 -->
-                               <input type="text" onKeyup="this.value=this.value.replace(/[^0-9]/g,'')" 
-								class="form-control" id="runningTime" placeholder="영화 러닝타임" name="runningTime" />
+								<textarea class="form-control" onKeyup="this.value=this.value.replace(/[^0-9]/g,'')" 
+								id="runningTime" placeholder="영화 러닝타임" style="height: 60px;" name="runningTime">${movie.runningTime }</textarea>
                                 <label for="floatingInput">영화 러닝타임</label>
                             </div>
+<!--                                                                       ※ 감독 -->
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="director" placeholder="감독" name="director">
+                                <textarea class="form-control" id="director" placeholder="감독" style="height: 60px;" name="director">${movie.director }</textarea>
                                 <label for="floatingInput">감독</label>
                             </div>
+<!--                                                                       ※ 배우 -->
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="casting" placeholder="배우" name="casting">
+                                <textarea class="form-control" id="casting" placeholder="배우" style="height: 60px;" name="casting">${movie.casting }</textarea>
                                 <label for="floatingInput">배우</label>
                             </div>
+<!--                                                                       ※ 개봉일 -->
                             <div class="form-floating mb-3">
-                                <input type="date" class="form-control" id="release_date" placeholder="개봉일" name="releaseDate">
-                                <label for="floatingInput">개봉일</label>
+                                <input type="date" class="form-control" value="<fmt:formatDate pattern="yyyy-MM-dd" value="${movie.releaseDate }"/>" id="release_date" placeholder="기존 개봉일 : <fmt:formatDate pattern="MM월 dd일 (E)" value="${movie.releaseDate }"/>" name="releaseDate">
+                                <label for="floatingInput">기존 개봉일 : <fmt:formatDate pattern="MM월 dd일 (E)" value="${movie.releaseDate }"/></label>
                             </div>
+<!--                                                                       ※ 마감일 -->
                             <div class="form-floating mb-3">
-                                <input type="date" class="form-control" id="close_date" placeholder="마감일" name="closeDate">
-                                <label for="floatingInput">마감일</label>
+                                <input type="date" class="form-control" value="<fmt:formatDate pattern="yyyy-MM-dd" value="${movie.closeDate }"/>" id="close_date" placeholder="기존 마감일 : <fmt:formatDate pattern="MM월 dd일 (E)" value="${movie.closeDate }"/>" name="closeDate">
+                                <label for="floatingInput">기존 마감일 :<fmt:formatDate pattern="MM월 dd일 (E)" value="${movie.closeDate }"/></label>
                             </div>
-                            <div class="form-floating mb-3">
-                            	관람가<br>
-	                            <input type='radio' name='age' value='ALL' />전체
-	                            <input type='radio' name='age' value='12' />12세+
-	  							<input type='radio' name='age' value='15' />15세+
-	  							<input type='radio' name='age' value='19' />19세+
-                            </div>
+	  						<div class="form-floating mb-3">
+		                        <div class="form-check">
+		                            	※ 관람가<br>
+		                           <div class="form-check form-check-inline">
+		                              <input class="form-check-input" type="radio" name="age" value="ALL">
+		                              <label class="form-check-label">전체</label>
+		                           </div>
+		                           <div class="form-check form-check-inline">
+		                              <input class="form-check-input" type="radio" name="age" value="12">
+		                              <label class="form-check-label">12세+</label>
+		                           </div>
+		                           <div class="form-check form-check-inline">
+		                              <input class="form-check-input" type="radio" name="age" value="15">
+		                              <label class="form-check-label">15세+</label>
+		                           </div>
+		                           <div class="form-check form-check-inline">
+		                              <input class="form-check-input" type="radio" name="age" value="19">
+		                              <label class="form-check-label">19세+</label>
+		                           </div>
+		                        </div>
+	                        </div>
                             <h3>대표 이미지</h3> 
                             <div id="image_container" class="form-control">
-                           		 <input type="file" class="form-control" id="picture" name="file">
+                           		 <input type="file" class="form-control" id="thumbnail" name="file" >
                             </div>
                         </div>                                                                                  
                     </div>                    
                     <div class="row">
                         <div class="col-12">                        
                             <div class="form-floating mb-3">
-                                <textarea class="form-control" id="synopsis" placeholder="영화 줄거리" style="height: 200px;" name="synopsis"></textarea>
+                                <textarea class="form-control" id="synopsis" placeholder="영화 줄거리" style="height: 200px;" name="synopsis">${movie.synopsis }</textarea>
                                 <label for="floatingTextarea">영화 줄거리</label>
                             </div>
+                                                                      ※ 트레일러 영상 첫번째
                             <div class="form-floating mb-3">
-                                <textarea class="form-control" id="movieInsertTextarea" id="trailerFirst" placeholder="트레일러 영상 첫번째" style="height: 50px;" name="trailerFirst"></textarea>
+                                <textarea class="form-control" id="trailerFirst" id="trailerFirst" placeholder="트레일러 영상 첫번째" style="height: 80px;" name="trailerFirst">${movie.trailerFirst }</textarea>
                                 <label for="floatingTextarea">트레일러 영상 첫번째</label>
                             </div>
+                                                                      ※ 트레일러 영상 두번째
                             <div class="form-floating mb-3">
-                                <textarea class="form-control" id="movieInsertTextarea" id="trailerSecond" placeholder="트레일러 영상 두번째" style="height: 50px;" name="trailerSecond"></textarea>
-                                <label for="floatingTextarea">트레일러 영상 두번째</label>
+                                <textarea class="form-control" id="trailerSecond" id="trailerSecond" placeholder="트레일러 영상 두번째" style="height: 80px;" name="trailerSecond">${movie.trailerSecond }</textarea>
+                                <label for="Textarea">트레일러 영상 두번째</label>
                             </div>
                             <div class="d-flex justify-content-end">
-                               <button type="submit" class="btn btn-primary">등록</button>
+                               <button type="submit" class="btn btn-primary">수정</button>
                             </div>
                         </div>
                     </div>
@@ -105,20 +169,24 @@
 <script> 
 // 입력필드 유효성 체크
 $(function() {
-	$("#insert").submit(function() {
-		var genre = document.getElementById('genre');
-		var optionGenre = genre.options[genre.selectedIndex].value;
-		if (optionGenre == "") {
-			alert("장르를 선택해주세요.");
+	$("#update").submit(function() {
+		if (!$("input:checked[id='genre']").is(":checked")){
+			alert("장르를 선택해주세요."); 
 			$("#genre").focus();
-			return false;
+			return false; 
 		}
-		var name = $.trim($("#name").val());
-		if (!name) {
+		var name = $.trim($("#title").val());
+		if (!title) {
 			alert("영화 제목을 입력해주세요.");
 			$("#name").focus();
 			return false;
 		}
+// 		var name = $.trim($("#thumbnail").val());
+// 		if (!thumbnail) {
+// 			alert("썸네일 사진을 업로드해주세요.");
+// 			$("#thumbnail").focus();
+// 			return false;
+// 		}
 		var runningTime = $.trim($("#runningTime").val());
 		if (!runningTime) {
 			alert("러닝 타임을 입력해주세요.");
@@ -176,8 +244,6 @@ $(function() {
 			$("#synopsis").focus();
 			return false;
 		}
-		
-		
 		return true;	// 폼입력값이 서버로 제출되게 함
 	});
 })

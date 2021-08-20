@@ -46,7 +46,7 @@
 								<th>영화 제목</th>
 								<th>극장 번호</th>
 								<th>극장 이름</th>
-								<th>상영관 홀 번호</th>
+								<th>상영관</th>
 								<th>상영 시간</th>
 							</tr>
 						</thead>
@@ -61,12 +61,11 @@
 									<c:forEach var="screen" items="${screens }">
 										<tr class="text-center">
 											<td>${screen.movieNo }</td>
-											<!-- 버튼 누르면 영화 개봉현황 페이지로 가게끔 -->
 											<td>${screen.screeningNo }</td>
-											<td><a href="" class="btn btn-link btn-sm" data-movie-no="${screen.movieNo }">${screen.title }</a></td>
+											<td>[${screen.title }]</td>
 											<td>${screen.theaterNo }</td>
 											<td>[${screen.theaterName }]</td>
-											<td>${screen.hallNo }관</td>
+											<td>${screen.hallName }</td>
 											<td><strong><fmt:formatDate pattern="MM월 dd일 (E) HH시 mm분 " value="${screen.screeningDate }"/></strong></td>
 									</c:forEach>
 								</c:otherwise>

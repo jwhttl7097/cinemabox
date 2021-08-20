@@ -2,6 +2,7 @@ package com.cinemabox.dao.admin;
 
 import java.util.List;
 
+import com.cinemabox.vo.Hall;
 import com.cinemabox.vo.Movie;
 import com.cinemabox.vo.Screening;
 import com.cinemabox.vo.Seat;
@@ -16,7 +17,8 @@ public interface AdminDao  {
 	void recoveryMovie(int movieNo);
 	Movie getMovieByNo(int movieNo);
 	List<Movie> getAllDeleteMovies();
-	List<Theater> getTheaterInfo();
+	List<Theater> getAllTheaterInfo();
+	List<Hall> getAllHallInfo();
 	
 	List<Seat> getAllSeats();
 	void insertSeat(Screening screening);

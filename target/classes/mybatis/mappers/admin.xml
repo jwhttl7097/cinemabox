@@ -34,7 +34,6 @@
 		update 
 			CINEMABOX_MOVIE
 		set	
-			MOVIE_NO				= 	#{no},
 			MOVIE_GENRE 			=	#{genre},
 			MOVIE_TITLE 			=	#{title},
 			MOVIE_RUNNING_TIME		=	#{runningTime},
@@ -67,7 +66,7 @@
 		update 
 			CINEMABOX_MOVIE
 		set
-			MOVIE_STATUS = 'N'
+			MOVIE_SCREENING_STATUS = 'N'
 		where 
 			MOVIE_NO   	 = #{no}	
 	</update>
@@ -76,7 +75,7 @@
 		update 
 			CINEMABOX_MOVIE
 		set
-			MOVIE_STATUS = 'Y'
+			MOVIE_SCREENING_STATUS = 'Y'
 		where 
 			MOVIE_NO   	 = #{no}	
 	</update>
@@ -102,7 +101,7 @@
 			MOVIE_NO = #{value}
 	</select>
 	
-	<select id="getTheaterInfo" resultType="com.cinemabox.vo.Theater">
+	<select id="getAllTheaterInfo" resultType="com.cinemabox.vo.Theater">
 		select
 			THEATER_NO				as theaterNo,
 			THEATER_NAME 			as theaterName
@@ -110,6 +109,16 @@
 			CINEMABOX_THEATER
 		order by	
 			THEATER_NAME ASC
+	</select>
+	
+	<select id="getAllHallInfo" resultType="com.cinemabox.vo.Hall">
+		select
+			HALL_NO				as hallNo,
+			HALL_NAME 			as hallName
+		from
+			CINEMABOX_HALL
+		order by	
+			HALL_NAME ASC
 	</select>
 	
 	<select id="getScreeningByNo" parameterType="int" resultType="com.cinemabox.vo.Screening">
@@ -125,21 +134,24 @@
 			SCREENING_NO  			= #{screeningNo}
 	</select>
 	
-	<select id="getScreeningsByMovieNo" parameterType="int" resultType="com.cinemabox.vo.Screening">
+	<select id="getScreeningsByMovieNo" parameterType="int" resultType="com.cinemabox.dto.admin.AdminDto">
 		select
+			M.MOVIE_NO				as movieNo,
 			S.SCREENING_NO			as screeningNo,
-			S.MOVIE_NO 				as movieNo,
 			S.THEATER_NO 			as theaterNo,
 			S.HALL_NO				as hallNo,
 			S.SCREENING_DATE		as screeningDate,
 			M.MOVIE_TITLE			as title,
-			T.THEATER_NAME 			as theaterName
+			T.THEATER_NAME 			as theaterName,
+			H.HALL_NAME				as hallName
 		from
-			CINEMABOX_SCREENING S, CINEMABOX_MOVIE M, CINEMABOX_THEATER T
+			CINEMABOX_SCREENING S, CINEMABOX_MOVIE M, CINEMABOX_THEATER T, CINEMABOX_HALL H
 		where 
 			M.MOVIE_NO				= S.MOVIE_NO
 		and
-			S.THEATER_NO			= T.THEATER_NO  
+			S.THEATER_NO			= T.THEATER_NO 
+		and
+			S.HALL_NO				= H.HALL_NO	 
 		and
 			M.MOVIE_NO  			= #{movieNo}
 		order by 
@@ -164,7 +176,7 @@
 		from
 			CINEMABOX_MOVIE
 		where
-			MOVIE_STATUS = 'N'
+			MOVIE_SCREENING_STATUS = 'N'
 		order by
 			MOVIE_NO desc
 	</select>
@@ -175,7 +187,7 @@
 	FROM 
 		CINEMABOX_MOVIE
 	where
-		MOVIE_STATUS != 'N'
+		MOVIE_SCREENING_STATUS = 'Y'
 </select>
 
 <!-- 페이징 처리 후 게시글 조회 -->
@@ -201,7 +213,7 @@
 						from
 							CINEMABOX_MOVIE
 						where
-							MOVIE_STATUS != 'N'
+							MOVIE_SCREENING_STATUS = 'Y'
 						order by
 							MOVIE_NO desc
 						) A
