@@ -41,6 +41,7 @@ public class TicketController{
 	
 	@PostMapping(path = {"/payment"})
 	public String payment(Model model, @ModelAttribute("ticketDto") TicketDto ticketDto) {
+		model.addAttribute("tickets", ticketDto);
 		System.out.println(ticketDto.toString());
 		return "ticket/payment";
 	}

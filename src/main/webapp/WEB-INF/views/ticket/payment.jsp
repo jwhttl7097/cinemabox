@@ -50,13 +50,13 @@
 				<div class="col-3 h-100 bg-white" id="div-movieInfo">
 					<h5 class="p-3 text-center text-white m-0 bg-dark">예매정보</h5>
 					<div class="text-center py-4">
-						<img src="/cinemabox/resources/images/movie/20202185.jpg" alt="" width="120px;">
+						<img src="/cinemabox/resources/images/movie/${tickets.movieNo }.jpg" alt="" width="120px;">
 					</div>
 					<div class="px-5 pb-4" style="border-bottom:1px solid #ddd;">
-						<h6><img src="/cinemabox/resources/images/icon/txt-age-small-12.png" alt="" class="me-2"><strong>모가디슈</strong></h6>
+						<h6><img src="/cinemabox/resources/images/icon/txt-age-small-${tickets.age }.png" alt="" class="me-2"><strong>${tickets.title }</strong></h6>
 						<dl class="dl-ticketing">
-							<dt><strong>일시</strong></dt><dd>21.08.04(수) 09:30 ~ 11:41</dd>
-							<dt><strong>영화관</strong></dt><dd>가산디지털 5관-2D</dd>
+							<dt><strong>일시</strong></dt><dd><fmt:formatDate value="${tickets.screeningDate }" pattern="yy.MM.dd(E)"/>&nbsp; ${tickets.screeningTime } ~ ${tickets.screeningEndTime }</dd>
+							<dt><strong>영화관</strong></dt><dd>가산디지털 ${tickets.hallName }-2D</dd>
 							<dt><strong>인원</strong></dt><dd>성인1</dd>
 						</dl>						
 					</div>
@@ -191,7 +191,7 @@
 					<div class="bg-secondary" id="div-total">
 						<dl>
 							<dt>상품금액</dt>
-							<dd>22,000원</dd>
+							<dd><fmt:formatNumber value="${tickets.totalPrice }"/>원</dd>
 						</dl>
 						<dl>
 							<dt>할인금액</dt>
