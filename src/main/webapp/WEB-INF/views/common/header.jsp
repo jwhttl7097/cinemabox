@@ -61,7 +61,7 @@
 							<li class="nav-item"><a class="nav-link" href="/cinemabox/specialHall">특별관</a></li>
 						</ul>
 					</li>
-					<li class="nav-item mainnav"><a class="nav-link text-body" href="#">이벤트</a>
+					<li class="nav-item mainnav"><a class="nav-link text-body" href="/cinemabox/event/main">이벤트</a>
 						<ul class="nav justify-content-center subnav" id="subnav-04">
 							<li class="nav-item"><a class="nav-link" href="/cinemabox/event/main">홈</a></li>
 							<li class="nav-item"><a class="nav-link" href="/cinemabox/event/discount">제휴할인</a></li>
@@ -115,7 +115,7 @@
 			</div>
 			<div class="col-8">
 				<form action="search" method="post" id="form-search" class="text-center">
-					<input type="text" name="search" placeholder="영화를 검색하세요" />
+					<input type="text" name="keyword" placeholder="영화를 검색하세요" />
 					<button class="btn"><i class="fas fa-search"></i></button>
 				</form>
 			</div>

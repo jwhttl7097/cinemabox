@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.cinemabox.dao.movie.MovieDao;
 import com.cinemabox.vo.Movie;
 import com.cinemabox.vo.Wishlist;
-import com.cinemabox.web.utils.SessionUtils;
 
 @Service
 public class MovieServiceImpl implements MovieService{
@@ -47,9 +46,6 @@ public class MovieServiceImpl implements MovieService{
 	
 	@Override
 	public List<Movie> getNowMovieList(String sort) {
-		List<Movie> nowMovies = movieDao.getNowMovieList("ticket");
-		SessionUtils.addAttribute("NOW_MOIVES", nowMovies);
-		
 		return movieDao.getNowMovieList(sort);
 	}
 
@@ -58,4 +54,8 @@ public class MovieServiceImpl implements MovieService{
 		return movieDao.getUnreleasedMovieList(sort);
 	}
 
+	@Override
+	public List<Movie> getSearchResult(String keyword) {
+		return movieDao.getSearchResult(keyword);
+	}
 }

@@ -66,12 +66,12 @@
 			<div class="col-12 text-center">
 				<!-- 영화포스터 출력 -->
 				<ul id="ul-movieList">
-					<c:forEach var="movie" items="${searchMovies }" varStatus="loop">
-						<c:choose>
-							<c:when test="${empty movie }">
-								<span>검색된 결과가 없습니다.</span>
-							</c:when>
-							<c:otherwise>
+					<c:choose>
+						<c:when test="${empty searchMovies }">
+							<span style="font-size:1.5rem;"><strong>'${param.keyword }'</strong>의 검색된 결과가 없습니다.</span>
+						</c:when>
+						<c:otherwise>
+							<c:forEach var="movie" items="${searchMovies }" varStatus="loop">
 								<li class="poster d-inline-block shadow position-relative" style="margin-bottom:6rem !important;">
 									<div class="position-absolute poster-info">	
 										<div class="position-absolute">
@@ -96,9 +96,9 @@
 										<li class="d-inline">개봉일 : <fmt:formatDate value="${movie.releaseDate }" pattern="yyyy.MM.dd"/></li>
 									</ul>
 								</li>							
-							</c:otherwise>
-						</c:choose>
-					</c:forEach>
+							</c:forEach>
+						</c:otherwise>
+					</c:choose>
 				</ul>			
 			</div>
 		</div>		

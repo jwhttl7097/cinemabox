@@ -1,6 +1,5 @@
 package com.cinemabox.web.controller.movie;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,14 +63,8 @@ public class MovieController{
 	}
 	
 	@PostMapping(path = {"/search"})
-	public String search(Model model, String search) {
-		List<Movie> movies = movieService.getAllmovies();
-		List<Movie> searchMovies = new ArrayList<Movie>();
-		for(Movie movie : movies) {
-			if(movie.getTitle().contains(search)) {
-				searchMovies.add(movie);
-			}
-		}
+	public String search(Model model, String keyword) {
+		List<Movie> searchMovies = movieService.getSearchResult(keyword);
 		model.addAttribute("searchMovies", searchMovies);
 		return "movie/search";	
 	}
