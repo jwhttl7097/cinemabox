@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cinemabox.dao.ticket.TicketDao;
 import com.cinemabox.dto.ticket.Payload;
+import com.cinemabox.dto.ticket.ScreeningDto;
 import com.cinemabox.dto.ticket.TicketDto;
 import com.cinemabox.dto.ticket.WebsocketTicketDto;
 import com.cinemabox.web.utils.JsonUtils;
@@ -41,7 +42,7 @@ public class TicketServiceImpl implements TicketService{
 		return ticketDao.getTicketStatusByScreeningNo(screeningNo);
 	}
 	@Override
-	public List<TicketDto> getAllMovieTime(Map<String, Object> map) {
+	public List<ScreeningDto> getAllMovieTime(Map<String, Object> map) {
 		return ticketDao.getAllMovieTime(map);
 	}
 	
@@ -54,40 +55,9 @@ public class TicketServiceImpl implements TicketService{
 	
 	// 웹소켓 좌석
 	@Override
-	public void webSocketAjax(int screeningNo, String col, String row) {
+	public void webSocketAjax(int screeningNo, String col, String row, String selectType) {
 		try {
-			System.out.println("행 사이즈 ==="+col.length());
-			System.out.println("좌석번호 사이즈 ==="+row.length());
-			// col, row가 복수개로 전달 올경우
-			if (2 <= col.length()) {
-				String[] cols = col.split(" ");
-				String[] rows = row.split(" ");
-				for (int i=0; i <= rows.length+1; i++) {
-					col = cols[i];
-					row = rows[i];
-					System.out.println("서비스 상영번호==="+ screeningNo);
-					System.out.println("서비스 좌석번호==="+ row);
-					WebsocketTicketDto wsDto = new WebsocketTicketDto();
-					wsDto.setWebScreeningNo(screeningNo);
-					wsDto.setWebSeatCol(col);
-					wsDto.setWebSeatNo(Integer.parseInt(row));
-					System.out.println("행열이 두개 이상일떄 ================wsDto 확인 : "+wsDto.getWebSeatNo());
-					System.out.println("행열이 두개 이상일떄 ================wsDto 확인 : "+wsDto.getWebSeatCol());
-					// 현재 페이지 영화상영 정보 찾기 위한 객체
-					WebsocketTicketDto wstDto = ticketDao.getWebSocketData(wsDto);
-					// 좌석상태  T, 좌석변경 데이트 업데이트 코드 //
-					wstDto.setWebTicketStatus("T");
-					wstDto.setSeatSelectedDate(new Date());
-					ticketDao.updateWebSocetStatus(wstDto);
-					// 클라이언트에게 전달한 메세지 및 데이터를 포함하는 Payload객체를 생성한다.
-					Payload payload = Payload.builder()
-							.title("선택좌석")
-							.message(wstDto.getWebSeatCol()+"행 "+ wstDto.getWebSeatRow()+ "번")
-							.data(wstDto).build();
-					// Payload객체를 JSON 형식의 텍스트로 변환한다.
-					alarmHandler.sendMessage(JsonUtils.toJsonText(payload));
-				}
-			} else {
+			if("T".equals(selectType)) {
 				WebsocketTicketDto wsDto = new WebsocketTicketDto();
 				wsDto.setWebScreeningNo(screeningNo);
 				wsDto.setWebSeatCol(col);
@@ -98,10 +68,32 @@ public class TicketServiceImpl implements TicketService{
 				wstDto.setWebTicketStatus("T");
 				wstDto.setSeatSelectedDate(new Date());
 				ticketDao.updateWebSocetStatus(wstDto);
+				wstDto.setWebSelectType(selectType);
 				// 클라이언트에게 전달한 메세지 및 데이터를 포함하는 Payload객체를 생성한다.
 				Payload payload = Payload.builder()
 						.title("선택좌석")
 						.message(wstDto.getWebSeatCol()+"행 "+ wstDto.getWebSeatRow()+ "번")
+						.selectedType("임시선택 Y, 취소 N : " + selectType)
+						.data(wstDto).build();
+				// Payload객체를 JSON 형식의 텍스트로 변환한다.
+				alarmHandler.sendMessage(JsonUtils.toJsonText(payload));
+			} else {
+				WebsocketTicketDto wsDto = new WebsocketTicketDto();
+				wsDto.setWebScreeningNo(screeningNo);
+				wsDto.setWebSeatCol(col);
+				wsDto.setWebSeatNo(Integer.parseInt(row));
+				// 현재 페이지 영화상영 정보 찾기 위한 객체
+				WebsocketTicketDto wstDto = ticketDao.getWebSocketData(wsDto);
+				// 좌석상태  T, 좌석변경 데이트 업데이트 코드 //
+				wstDto.setWebTicketStatus("N");
+				wstDto.setSeatSelectedDate(null);
+				ticketDao.updateWebSocetStatus(wstDto);
+				wstDto.setWebSelectType(selectType);
+				// 클라이언트에게 전달한 메세지 및 데이터를 포함하는 Payload객체를 생성한다.
+				Payload payload = Payload.builder()
+						.title("선택좌석 취소")
+						.message(wstDto.getWebSeatCol()+"행 "+ wstDto.getWebSeatRow()+ "번")
+						.selectedType("임시선택 Y, 취소 N : " + selectType)
 						.data(wstDto).build();
 				// Payload객체를 JSON 형식의 텍스트로 변환한다.
 				alarmHandler.sendMessage(JsonUtils.toJsonText(payload));

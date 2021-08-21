@@ -18,7 +18,7 @@
 	.container-fluid{position: relative;}
 	header .navbar-brand, #top-nav>li>a, #mainnav-02>li>a{color:white !important;}
 	.mainnav>a{color:white !important;}
-	header{width:100%; background-color: rgba(0,0,0,0.5) !important; position: absolute; top:70px; left: 50%; transform: translate(-50%, -50%); z-index: 10;}
+	header{width:100%; background-color: rgba(0,0,0,0.5) !important; position: absolute; top:80px; z-index: 10;}
 	
 	a { 
 		text-decoration:none; 
@@ -355,16 +355,20 @@
 	<%@include file="./common/footer.jsp" %>    
 <script type="text/javascript">
 $(function(){
-   //header sub nav
-   $('.mainnav').mouseover(function(){
-      $(this).children('.subnav').stop().slideDown().css('display','flex');
-   })
-   $('.mainnav').mouseleave(function(){
-      $(this).children('.subnav').stop().slideUp();
-   })
-   //헤더수정
-   $("#header").removeClass('container').addClass('justify-content-center');
-   $("#header>nav").removeClass('row').addClass('col-12 container');
+   	//header sub nav
+   	$('.mainnav').mouseover(function(){
+      	$(this).children('.subnav').stop().slideDown().css('display','flex');
+   	})
+   	$('.mainnav').mouseleave(function(){
+      	$(this).children('.subnav').stop().slideUp();
+   	})
+	$("#i-close-top-banner").click(function(){
+		$("#div-top-banner").hide();
+		$("#header").css({'top':'70px','left':'50%','transform':'translate(-50%, -50%)'});
+	})
+   	//헤더수정
+   	$("#header").removeClass('container').addClass('justify-content-center');
+   	$("#header>nav").removeClass('row').addClass('col-12 container');
    
    //Trailer 뜨게하기
    var myModal = new bootstrap.Modal(document.getElementById('staticBackdrop'))

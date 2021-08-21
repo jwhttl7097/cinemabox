@@ -23,4 +23,6 @@ public interface MovieDao {
 	Movie getMovieByNo(int no);
 	List<Movie> getNowMovieList(@Param("sort") String sort);
 	List<Movie> getUnreleasedMovieList(@Param("sort") String sort);
+	
+	List<Movie> getSearchResult(String keyword);
 }

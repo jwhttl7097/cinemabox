@@ -29,5 +29,6 @@ public class Movie {
 	private String status;
 	private int userLike;
 	private Date createdDate;
+
 }
 

@@ -247,5 +247,31 @@
 			row_number &lt;= 12
 	</select>
 	
-
+	<!-- 검색 -->
+	<select id="getSearchResult" parameterType="string" resultType="com.cinemabox.vo.Movie">
+		select
+		    MOVIE_NO as no,
+		    MOVIE_TITLE as title, 
+		    MOVIE_THUMBNAIL as thumbnail, 
+		    MOVIE_RATING as rating, 
+		    MOVIE_RESERVATION_RATE as reservationRate,
+		    MOVIE_CUMULATIVE_AUDIENCE_CNT as cumulativeAudienceCnt,
+		    MOVIE_GENRE as genre, 
+		    MOVIE_RELEASE_DATE as releaseDate, 
+		    MOVIE_RUNNING_TIME as runningTime, 
+		    MOVIE_SYNOPSIS as synopsis,
+		    MOVIE_TRAILER_FIRST as trailerFirst,
+		    MOVIE_TRAILER_SECOND as trailerSecond,
+		    MOVIE_AGE as age,
+		    MOVIE_DIRECTOR as director,
+		    MOVIE_CASTING as casting,
+		    MOVIE_LIKE as userLike,
+		    MOVIE_STATUS as status,
+		    MOVIE_CLOSE_DATE as closeDate
+		from
+	    	CINEMABOX_MOVIE
+		where
+	    	movie_title like '%'||#{value}||'%'
+	    	and movie_status = 'Y'
+	</select>
 </mapper>

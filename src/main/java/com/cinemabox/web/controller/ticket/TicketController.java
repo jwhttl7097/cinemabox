@@ -41,7 +41,16 @@ public class TicketController{
 	
 	@PostMapping(path = {"/payment"})
 	public String payment(Model model, @ModelAttribute("ticketDto") TicketDto ticketDto) {
-		System.out.println(ticketDto.toString());
+		String[] cols = ticketDto.getSeatCol().split(" ");
+		String[] rows = ticketDto.getSeatRow().split(" ");
+		String seat = "";
+		for(int i=0;i < cols.length; i++ ) {
+			seat += cols[i];
+			seat += rows[i];
+			seat += " ";
+		}
+		model.addAttribute("seat", seat);
+		model.addAttribute("tickets", ticketDto);
 		return "ticket/payment";
 	}
 	

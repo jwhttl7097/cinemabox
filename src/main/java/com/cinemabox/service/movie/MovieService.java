@@ -53,4 +53,11 @@ public interface MovieService {
 	 */
 	List<Movie> getNowMovieList(@Param("sort") String sort);
 	List<Movie> getUnreleasedMovieList(@Param("sort") String sort);
+	
+	/**
+	 * 키워드로 영화 검색하기
+	 * @param keyword 검색어
+	 * @return 검색된 영화목록
+	 */
+	List<Movie> getSearchResult(String keyword);
 }

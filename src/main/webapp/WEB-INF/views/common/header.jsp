@@ -9,7 +9,24 @@
         // SDK 초기화 여부를 판단합니다.
         console.log(Kakao.isInitialized());
         Kakao.isInitialized();
+        
+		$("#img-top-banner").ready(function(){
+			var yourImages = ["/cinemabox/resources/images/banner/top/Puppy_98080.jpg",
+     		   				 "/cinemabox/resources/images/banner/top/Sence_98080.jpg"];
+			var randomImage = Math.trunc(Math.random()*yourImages.length);
+			$("#img-top-banner").attr("src", yourImages[randomImage]);
+			$("#div-top-banner img[src*='Puppy']").parent().parent().css("background", "rgb(0, 164, 236)");
+			$("#div-top-banner img[src*='Sence']").parent().parent().css("background", "rgb(0, 0, 0)");
+        })
 </script>
+<!-- top banner start -->
+<div class="navbar navbar-light p-0 justify-content-center" id="div-top-banner">
+	<div class="position-relative">
+		<img alt="" id="img-top-banner">
+		<i id="i-close-top-banner" class="fas fa-times text-white position-absolute" style="right:15px; top:10px; cursor: pointer;"></i>
+	</div>
+</div>
+<!-- top banner end -->
 <header class="pt-4 container" id="header">
 	<nav class="row">
 		<div class="text-center p-0" id="topnav-container">
@@ -29,7 +46,7 @@
 					<li class="nav-item mainnav"><a class="nav-link text-body" href="/cinemabox/ticket">예매</a>
 						<ul class="nav justify-content-center subnav" id="subnav-01">
 							<li class="nav-item"><a class="nav-link" href="/cinemabox/ticket">예매하기</a></li>
-							<li class="nav-item"><a class="nav-link" href="">상영시간표</a></li>
+							<li class="nav-item"><a class="nav-link" href="/cinemabox/schedule">상영시간표</a></li>
 						</ul>
 					</li>
 					<li class="nav-item mainnav"><a class="nav-link text-body" href="/cinemabox/movie">영화</a>
@@ -44,7 +61,7 @@
 							<li class="nav-item"><a class="nav-link" href="/cinemabox/specialHall">특별관</a></li>
 						</ul>
 					</li>
-					<li class="nav-item mainnav"><a class="nav-link text-body" href="#">이벤트</a>
+					<li class="nav-item mainnav"><a class="nav-link text-body" href="/cinemabox/event/main">이벤트</a>
 						<ul class="nav justify-content-center subnav" id="subnav-04">
 							<li class="nav-item"><a class="nav-link" href="/cinemabox/event/main">홈</a></li>
 							<li class="nav-item"><a class="nav-link" href="/cinemabox/event/discount">제휴할인</a></li>
@@ -59,14 +76,67 @@
 					</li>
 				</ul>
 				<ul class="nav" id="mainnav-02">
-					<li><a class="nav-link text-body" href="#"><i class="fas fa-search mx-2"></i>검색</a></li>
+					<li><a class="nav-link text-body" id="a-search"><i class="fas fa-search mx-2"></i>검색</a></li>
 					<li><a class="nav-link text-body" href="/cinemabox/ticket"><i class="far fa-calendar-alt mx-2"></i>빠른예매</a></li>
 				</ul>
 			</div>
 		</div>
 	</nav>
 </header>
-<%-----------------------------------------------로그인 모달--------------------------------------------%>
+<!-- search start -->
+<div id="div-search" style="display: none;">
+	<div class="container d-flex justify-content-center">
+		<div class="row col-9 justify-content-center">
+			<div class="col-4 row" style="margin-top:65px;">
+				<h6 style="cursor: default;"><strong style="border-bottom: 2px solid black;">예매율순</strong></h6>
+				<div id="div-search-rank-cont" class="row">
+					<div class="col-6 text-center" id="div-search-poster">
+						<div id="carouselSearchSlidesOnly" class="carousel slide rounded-3 shadow" data-bs-ride="carousel">
+							<div class="carousel-inner">
+								<c:forEach var="now" items="${NOW_MOIVES }" begin="1" end="5" varStatus="loop">
+									<div class="carousel-item ${loop.index eq 1 ? 'active':'' }">
+										<img src="/cinemabox/resources/images/movie/${now.no}.jpg" class="d-block" alt="...">
+									</div>
+								</c:forEach>
+							</div>
+						</div>
+					</div>
+					<div class="col-6 ps-3">
+						<ul id="ul-search-movie-rank" class="p-0">
+							<c:forEach var="now" items="${NOW_MOIVES }" begin="1" end="5" varStatus="loop">
+								<li>
+									<span class="me-2">${loop.index }</span>
+									<a href="movieDetail?no=${now.no}">${now.title}</a>
+								</li>
+							</c:forEach>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="col-8">
+				<form action="search" method="post" id="form-search" class="text-center">
+					<input type="text" name="keyword" placeholder="영화를 검색하세요" />
+					<button class="btn"><i class="fas fa-search"></i></button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	$("#a-search").click(function(){
+		$("#div-search").toggle();
+	})
+	$("#form-search button").click(function(){
+		var searchMovie = $("#form-search input").val();
+		if(!searchMovie){
+			alert("영화명을 입력하세요.");
+			return false;
+		}
+		$("#form-search").submit();	
+	})
+</script>
+<!-- search end -->
+<!-- ----------------------------------------------로그인 모달------------------------------------------ -->
 <div class="modal" tabindex="0" id="loginModal">
   	<div class="modal-dialog modal-dialog-centered modal-lg">
     	<div class="modal-content">

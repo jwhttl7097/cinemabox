@@ -61,4 +61,11 @@ public class MovieController{
 
 		return "movie/movieDetail";	
 	}
+	
+	@PostMapping(path = {"/search"})
+	public String search(Model model, String keyword) {
+		List<Movie> searchMovies = movieService.getSearchResult(keyword);
+		model.addAttribute("searchMovies", searchMovies);
+		return "movie/search";	
+	}
 }

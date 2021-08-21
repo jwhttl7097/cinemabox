@@ -16,6 +16,7 @@ public class WebsocketTicketDto {
 	String webSeatRow;
 	String webSeatCol;
 	String webScreeningTime;
+	String webSelectType;
 	@DateTimeFormat(pattern = "yyyyMMdd")
 	Date seatSelectedDate;
 }

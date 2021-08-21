@@ -41,3 +41,7 @@
 	bottom: 100px;
 	display: none;
 }
+
+#theater-place ul li{
+	cursor: pointer;
+}

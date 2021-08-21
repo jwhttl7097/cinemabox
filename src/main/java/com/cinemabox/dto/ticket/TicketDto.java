@@ -18,6 +18,7 @@ public class TicketDto {
 	private String screeningTime;
 	private String screeningEndTime;
 	private String screeningStatus;
+	private String theaterName;
 	private String title;
 	private String runningTime;
 	private String age;

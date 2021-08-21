@@ -54,4 +54,8 @@ public class MovieServiceImpl implements MovieService{
 		return movieDao.getUnreleasedMovieList(sort);
 	}
 
+	@Override
+	public List<Movie> getSearchResult(String keyword) {
+		return movieDao.getSearchResult(keyword);
+	}
 }
