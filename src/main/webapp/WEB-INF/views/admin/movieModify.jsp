@@ -84,7 +84,7 @@
                     	 </div>
 <!--                                                                       ※ 영화 제목 -->
                             <div class="form-floating mb-3">
-                                <textarea class="form-control" id="title" placeholder="영화 제목" style="height: 60px;" name="title"></textarea>
+                                <textarea class="form-control" id="title" placeholder="영화 제목" style="height: 60px;" name="title">${movie.title }</textarea>
                                 <label for="floatingInput">영화 제목</label>
                             </div>
 <!--                                                                       ※ 영화 러닝타임(분) -->
