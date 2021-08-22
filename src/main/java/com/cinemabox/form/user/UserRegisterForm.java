@@ -14,4 +14,6 @@ public class UserRegisterForm {
 	private String email;
 	private String birth;
 	private String phone;
+	private String address;
+	private String address2;
 }

@@ -43,6 +43,15 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	/**
+	 * 회원정보 수정하기
+	 
+	@Override
+	public void updateUser(User userId) {
+		
+		
+	}
+	*/
+	/**
 	 * 로그인 서비스 Impl
 	 */
 	@Override
@@ -85,7 +94,22 @@ public class UserServiceImpl implements UserService{
 		SessionUtils.addAttribute("LOGINED_USER", kakaoUser);
 	}
 	
-	
+	/**
+	 * 회원가입 할 때 아이디 중복 찾으려는 Impl
+	 */
+	@Override
+	public String getUserById(String userId) {
+		
+		User user = userDao.getUserById(userId);
+		
+		//사용자가 존재 할 경우
+		if(user != null) {
+			return "Y";
+		}
+		
+		//사용자가 존재하지 않을 경우
+		return "N";
+	}
 	/**
 	 * 위시리스트(영화 찜 목록) 서비스 Impl
 	 */
