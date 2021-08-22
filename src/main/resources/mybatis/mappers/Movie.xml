@@ -196,7 +196,7 @@
 				CINEMABOX_MOVIE
 			where 
 				MOVIE_STATUS = 'Y'
-				and MOVIE_RELEASE_DATE &gt; sysdate - 30)
+				and MOVIE_RELEASE_DATE &gt; sysdate - 50)
 		where 
 			row_number &lt;= 12
 	</select>
@@ -271,7 +271,7 @@
 		from
 	    	CINEMABOX_MOVIE
 		where
-	    	movie_title like '%'||#{value}||'%'
-	    	and movie_status = 'Y'
+	    	MOVIE_TITLE like '%'||#{value}||'%'
+	    	and MOVIE_STATUS = 'Y'
 	</select>
 </mapper>
