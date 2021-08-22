@@ -37,7 +37,7 @@ public class UserController {
 		// User객체를 생성하고, UserRegisterForm의 값을 User객체로 복사한다.
 		User user = new User();
 		BeanUtils.copyProperties(userRegisterForm, user);
-		
+		user.setAddress(userRegisterForm.getAddress() + " " + userRegisterForm.getAddress2());
 		// UserService의 registerUser(user)를 호출해서 업무로직을 수행한다. 
 		userService.registerUser(user);
 				
@@ -66,6 +66,8 @@ public class UserController {
 		
 		return "user/myPage";	
 	}
+	
+	
 	
 	@GetMapping("/logout")
 	public String logout() {

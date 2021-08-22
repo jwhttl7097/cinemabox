@@ -195,13 +195,13 @@
             </div>
             <div class="tab-pane fade mt-4 mb-4" id="qna" role="tabpanel" aria-labelledby="qna-tab">
             	<p class="text-center" style="padding:20px">
-               		<button class="btn btn-warning" href="/cinemabox/customerCenter/userInfo">나의 문의 내역 확인하기</button>
+               		<button type="button" class="btn btn-warning" onclick="location.href='customerCenter/userInfo'">나의 문의 내역 확인하기</button>
                </p>
             </div>
             <div class="tab-pane fade mt-4 mb-4" id="info" role="tabpanel" aria-labelledby="info-tab">
             	<div class="row">
             		<div class="col-6 offset-3 text-center">
-            			<form>
+            			<form id="form-register" method="post" action="updateUserInfo" novalidate="novalidate">
 						<div class=" border pr-3 pl-3 mb-3">
 							<div class="form-group row mb-1">
 								<label class="col-3 col-form-label">아이디</label>
@@ -254,7 +254,7 @@
 							</div>
 							</div>
 							<div class="text-center mb-2">
-								<button class="btn btn-warning px-5">확인</button>
+								<button type="button" class="btn btn-warning px-5" id="updateButton">확인</button>
 							</div>
 						</form>
             		</div>

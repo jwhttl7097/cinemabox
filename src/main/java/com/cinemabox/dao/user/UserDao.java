@@ -15,6 +15,12 @@ public interface UserDao {
 	void insertUser(User user);
 	
 	/**
+	 * 지정된 사용자 정보를 수정한다.
+	 * @param user
+	 */
+	void updateUser(String userId);
+	
+	/**
 	 * 지정된 사용자아이디로 데이터베이스에서 사용자정보를 조회해서 반환한다.
 	 * @param userId 사용자 아이디
 	 * @return 사용자정보, null일 수 있음

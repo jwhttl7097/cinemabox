@@ -15,6 +15,12 @@ public interface UserService {
 	void registerUser(User user);
 	
 	/**
+	 * 
+	 * @param user
+	 
+	void updateUser(User user);
+	*/
+	/**
 	 * 지정된 아이디와 비밀번호로 사용자인증을 수행하는 서비스
 	 * @param id 사용자 아이디
 	 * @param password 사용자 비밀번호
@@ -41,6 +47,13 @@ public interface UserService {
 	 * @return
 	 */
 	int countWishlists(String userId);
+	
+	/**
+	 * 아이디로 사용자 불러오기 (중복 체크할 때)
+	 * @param userId
+	 * @return
+	 */
+	String getUserById(String userId);
 	
 	/**
 	 * 저장되어 있는 사용자 정보 불러오기
