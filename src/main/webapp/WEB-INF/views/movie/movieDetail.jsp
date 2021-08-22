@@ -15,6 +15,9 @@
 <script src="/cinemabox/resources/js/common.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<%-- moment cdnjs 한국어설정하기 --%>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/ko.min.js"></script>
 <title>CINEMABOX :: MOVIE</title>
 </head>
 <body>
@@ -23,7 +26,7 @@
 	<div id="movie-detail">
 		<div class="container movie-info row">
 			<div class="col-8 pt-5">
-				<div class="d-flex justify-content-between" style="padding-bottom:15px; border-bottom: 1px solid gray;">
+				<div class="d-flex justify-content-between" style="border-bottom: 1px solid gray;${fn:length(movieDetail.title) ge 15 ?'padding:15px 0 15px 0;':'padding-bottom:15px;' }">
 					<h1 class="text-white" style="${fn:length(movieDetail.title) ge 15 ?'font-size:2rem;':'' }">${movieDetail.title}</h1>
 					<div>
 						<button class="btn btnStyle me-1 mt-2" id="btn-like">
@@ -40,22 +43,23 @@
 						<button class="btn btnStyle mt-2" id="btn-share" data-bs-toggle="modal" data-bs-target="#modal-share"><i class="far fa-share-square"></i>&nbsp;공유하기</button>
 					</div>
 				</div>
-					<div id="movie-info">
-						<ul class="nav mt-3">
-							<li class="tit">
-								<strong>장르</strong>&nbsp;&nbsp;${movieDetail.genre}
-								<span class="px-1" style="font-size: 10px; color:gray;">|</span>
-							</li>
-							<li class="tit">
-								<fmt:formatDate value="${movieDetail.releaseDate }" pattern="yyyy.MM.dd"/>&nbsp;${movieDetail.status eq 'Y'?'개봉':'개봉예정'}
-								<span class="px-1" style="font-size: 10px; color:gray;">|</span>
-							</li>
-							<li class="tit">${movieDetail.runningTime}분</li>
-						</ul>
-						<p class="tit m-0"><strong>감독</strong>&nbsp;&nbsp;${movieDetail.director}</p>
-						<p class="tit m-0 mb-2"><strong>출연</strong>&nbsp;&nbsp;${movieDetail.casting}</p>
-					</div>
-				<div class="row info" style="${fn:length(movieDetail.casting) ge 77 ?'margin-top: 122px':'' }">
+				<div id="movie-info">
+					<ul class="nav mt-3">
+						<li class="tit">
+							<strong>장르</strong>&nbsp;&nbsp;${movieDetail.genre}
+							<span class="px-1" style="font-size: 10px; color:gray;">|</span>
+						</li>
+						<li class="tit">
+							<fmt:formatDate value="${movieDetail.releaseDate }" pattern="yyyy.MM.dd"/>&nbsp;${movieDetail.status eq 'Y'?'개봉':'개봉예정'}
+							<span class="px-1" style="font-size: 10px; color:gray;">|</span>
+						</li>
+						<li class="tit">${movieDetail.runningTime}분</li>
+					</ul>
+					<p class="tit m-0"><strong>감독</strong>&nbsp;&nbsp;${movieDetail.director}</p>
+					<p class="tit m-0 mb-2"><strong>출연</strong>&nbsp;&nbsp;${movieDetail.casting}</p>
+				</div>
+				<div class="row info" style="${fn:length(movieDetail.casting) ge 77 ?'margin-top: 90px':'' }">
+					<div class="text-end text-muted mb-3 px-3" id="div-current-time" style="font-size:0.7rem;"></div>
 					<div class="score col text-center">
 						<p class="tit">평점</p>
 						<p class="cont"><i class="fas fa-star-half-alt"></i>&nbsp;<fmt:formatNumber value="${movieDetail.rating}" pattern="0.0" />점</p>
@@ -100,27 +104,27 @@
 						${movieDetail.synopsis}
 					</p>
 				</div>
-				<div class="row mt-4" id="chart">
-					<h5 class="mb-4"><strong>예매분포(이부분은 빠질 수도 있음)</strong></h5>
-					<div class="col border p-3 text-center justify-content-center">
-						<h6 class="mb-5" style="font-size:14px;"><strong>평점</strong></h6>
-						<div style="width: 120px; height: 120px; border-radius: 120px; background:#ffc107; display: inline-block;">
-							<span style="font-size: 34px; line-height: 120px; color:white;">
-								<strong>
-									<fmt:formatNumber value="${movieDetail.rating}" pattern="0.0" />
-								</strong>
-							</span>
-						</div>
-					</div>
-					<div class="col border p-3 text-center">
-						<h6 style="font-size:14px;"><strong>예매율</strong></h6>
-						<canvas id="chart-rate" style="height:25vh; width:20vw"></canvas>
-					</div>
-					<div class="col border p-3 text-center">
-						<h6 style="font-size:14px;"><strong>관객수</strong></h6>
-						<canvas id="chart-audience" style="height:25vh; width:20vw"></canvas>
-					</div>
-				</div>				
+<!-- 				<div class="row mt-4" id="chart"> -->
+<!-- 					<h5 class="mb-4"><strong>예매분포(이부분은 빠질 수도 있음)</strong></h5> -->
+<!-- 					<div class="col border p-3 text-center justify-content-center"> -->
+<!-- 						<h6 class="mb-5" style="font-size:14px;"><strong>평점</strong></h6> -->
+<!-- 						<div style="width: 120px; height: 120px; border-radius: 120px; background:#ffc107; display: inline-block;"> -->
+<!-- 							<span style="font-size: 34px; line-height: 120px; color:white;"> -->
+<!-- 								<strong> -->
+<%-- 									<fmt:formatNumber value="${movieDetail.rating}" pattern="0.0" /> --%>
+<!-- 								</strong> -->
+<!-- 							</span> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 					<div class="col border p-3 text-center"> -->
+<!-- 						<h6 style="font-size:14px;"><strong>예매율</strong></h6> -->
+<!-- 						<canvas id="chart-rate" style="height:25vh; width:20vw"></canvas> -->
+<!-- 					</div> -->
+<!-- 					<div class="col border p-3 text-center"> -->
+<!-- 						<h6 style="font-size:14px;"><strong>관객수</strong></h6> -->
+<!-- 						<canvas id="chart-audience" style="height:25vh; width:20vw"></canvas> -->
+<!-- 					</div> -->
+<!-- 				</div>				 -->
 				<div class="row mt-4" id="trailer">
 					<h5 class="mb-4"><strong>트레일러</strong></h5>
 					<div class="col-6">
@@ -338,6 +342,10 @@ $(function(){
 		})
 	});
 	
+	//현재 시간 표시
+	var curruntTime = moment().format('YYYY/MM/DD HH:mm');
+	$("#div-current-time").text('현재시간기준 : ' + curruntTime);
+	
 	//star rating(별점)
 	$(document).on({
 		mouseover: function(event) {
@@ -488,65 +496,65 @@ $(function(){
 		})		
 	})
 	
-	//예매율 chart
-	var ctr = document.getElementById("chart-rate");
-	var chartRate = new Chart(ctr, {
-	    type: 'bar',
-	    data: {
-	        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-	        datasets: [{
-	            label: '타이틀써야함',
-	            data: [12, 19, 3, 5, 2, 3],
-	            backgroundColor: [
-	                'rgba(255, 99, 132, 0.2)',
-	                'rgba(54, 162, 235, 0.2)',
-	                'rgba(255, 206, 86, 0.2)',
-	                'rgba(75, 192, 192, 0.2)',
-	                'rgba(153, 102, 255, 0.2)',
-	                'rgba(255, 159, 64, 0.2)'
-	            ],
-	            borderColor: [
-	                'rgba(255,99,132,1)',
-	                'rgba(54, 162, 235, 1)',
-	                'rgba(255, 206, 86, 1)',
-	                'rgba(75, 192, 192, 1)',
-	                'rgba(153, 102, 255, 1)',
-	                'rgba(255, 159, 64, 1)'
-	            ],
-	            borderWidth: 1
-	        }]
-	    },
-	    options: {
-	        scales: {
-	            yAxes: [{
-	                ticks: {
-	                    beginAtZero:true
-	                }
-	            }]
-	        }
-	    }
-	});
+// 	//예매율 chart
+// 	var ctr = document.getElementById("chart-rate");
+// 	var chartRate = new Chart(ctr, {
+// 	    type: 'bar',
+// 	    data: {
+// 	        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+// 	        datasets: [{
+// 	            label: '타이틀써야함',
+// 	            data: [12, 19, 3, 5, 2, 3],
+// 	            backgroundColor: [
+// 	                'rgba(255, 99, 132, 0.2)',
+// 	                'rgba(54, 162, 235, 0.2)',
+// 	                'rgba(255, 206, 86, 0.2)',
+// 	                'rgba(75, 192, 192, 0.2)',
+// 	                'rgba(153, 102, 255, 0.2)',
+// 	                'rgba(255, 159, 64, 0.2)'
+// 	            ],
+// 	            borderColor: [
+// 	                'rgba(255,99,132,1)',
+// 	                'rgba(54, 162, 235, 1)',
+// 	                'rgba(255, 206, 86, 1)',
+// 	                'rgba(75, 192, 192, 1)',
+// 	                'rgba(153, 102, 255, 1)',
+// 	                'rgba(255, 159, 64, 1)'
+// 	            ],
+// 	            borderWidth: 1
+// 	        }]
+// 	    },
+// 	    options: {
+// 	        scales: {
+// 	            yAxes: [{
+// 	                ticks: {
+// 	                    beginAtZero:true
+// 	                }
+// 	            }]
+// 	        }
+// 	    }
+// 	});
 	
-	//관객수 chart
-	var cta = document.getElementById("chart-audience");
-	var chartAudience = new Chart(cta, {
-	    // The type of chart we want to create
-	    type: 'line',
+// 	//관객수 chart
+// 	var cta = document.getElementById("chart-audience");
+// 	var chartAudience = new Chart(cta, {
+// 	    // The type of chart we want to create
+// 	    type: 'line',
 	
-	    // The data for our dataset
-	    data: {
-	        labels: ['March', 'April', 'May', 'June', 'July'],
-	        datasets: [{
-	            label: 'My First dataset',
-	            backgroundColor: 'rgb(255, 99, 132)',
-	            borderColor: 'rgb(255, 99, 132)',
-	            data: [0, 10, 5, 2, 20, 30, 45]
-	        }]
-	    },
+// 	    // The data for our dataset
+// 	    data: {
+// 	        labels: ['March', 'April', 'May', 'June', 'July'],
+// 	        datasets: [{
+// 	            label: 'My First dataset',
+// 	            backgroundColor: 'rgb(255, 99, 132)',
+// 	            borderColor: 'rgb(255, 99, 132)',
+// 	            data: [0, 10, 5, 2, 20, 30, 45]
+// 	        }]
+// 	    },
 	
-	    // Configuration options go here
-	    options: {}
-	});	
+// 	    // Configuration options go here
+// 	    options: {}
+// 	});	
 	
 })
 
