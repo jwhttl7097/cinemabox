@@ -12,6 +12,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script src="https://kit.fontawesome.com/b4347bf02c.js" crossorigin="anonymous"></script>
 <title>CINEMA BOX</title>
 <style type="text/css">
 	body{overflow-x: hidden;}
@@ -37,8 +38,7 @@
 
     .swiper-slide {
         text-align: center;
-        font-size: 18px;
-        background: #fff;
+        background: black;
 
         /* Center slide text vertically */
         display: -webkit-box;
@@ -56,19 +56,56 @@
       }
 
     .swiper-slide img {
-        display: block;
-        width: 100%;
-        height: 100%;
+        
+        width: 65%;
+        height: 85%;
         object-fit: cover;
       }
-      
+    
+    .swiper-pagination{
+    	display : none;
+    }
+    
 	#currentMovies{
-		color: black;
+		background-color: black;
 	}
 	
+	#title{
+		font-size : 15px;
+		margin-top : 11px;
+	}
+	
+	#subs{
+		margin-top : 5px;
+		font-size : 11px;
+	}
 	.list-group-item{
 		border: none;
 	}
+	.poster-info {
+	width: 230px;
+	height: 330px;
+	border-radius: 5px;
+	background: rgba(0, 0, 0, 0.7);
+	display: none;
+}
+
+.poster-info a {
+	width: 150px;
+	border: 1px solid white;
+	border-radius: 5px;
+	font-size: 14px;
+}
+
+.poster-info a:hover {
+	background: rgba(0, 0, 0, 0.5);
+	cursor: pointer;
+}
+
+.poster-info>div {
+	top: 40%;
+	left: 18%;
+}
 	
 	.mainEvent{
 		border: bottom;
@@ -79,24 +116,9 @@
 		font-weight : bold;
 	}
 	
-	.rateStar{
-		width : 11px;
-		height : 12px;
-		top :50% ;
-		margin: auto 5px;
-	}
-	
-	.heart{
-		width : 11px;
-		height : 12px;
-		top :50% ;
-		margin: auto 10px;
-	}
-	
 	.card{
-		border: none;
+		border : none;
 	}
-	
 	.mainEvent a{
 		color: black;
 		text-decoration: none;
@@ -118,6 +140,7 @@
   		font-size:15px;
   		line-height:30px;
 	}
+	
 	@-webkit-keyframes change1 {
 		0%   {margin-top:0px;}
 		15%  {margin-top:0px;}
@@ -184,24 +207,23 @@
 		<div class="col-10 offset-1">
 			<div class="swiper-container mySwiper">
         		<div class="swiper-wrapper">
+        			<c:forEach var="movie" items="${nowMovies }">
         			<div class="swiper-slide">
-        				<div class="d-inline-block rounded-3">
-							<img
-									src="/cinemabox/resources/images/main/movieCurrentLists/blackwidow.jpg" 
-									id="movieCurrent1" class="posterinfo rounded-3" alt="blackwidow">
-								<div class="text-white"> <small>블랙위도우</small></div>
+        				<div class="poster d-inline-block rounded-3">
+        					<div class="position-absolute poster-info">	
+								<div class="poster-go position-absolute">
+									<a class="nav-link text-white d-block mb-2" href="ticket?location=서울&theaterNo=10001&movieNo=${movie.no }">예매하기</a>
+									<a class="nav-link text-white d-block" href="movieDetail?no=${movie.no }">상세정보</a>
+								</div>
 							</div>
-        			</div>
-        			<div class="swiper-slide">Slide 2</div>
-        			<div class="swiper-slide">Slide 3</div>
-        			<div class="swiper-slide">Slide 4</div>
-        			<div class="swiper-slide">Slide 5</div>
-        			<div class="swiper-slide">Slide 6</div>
-        			<div class="swiper-slide">Slide 7</div>
-        			<div class="swiper-slide">Slide 8</div>
-        			<div class="swiper-slide">Slide 9</div>
+							<img
+								src="/cinemabox/resources/images/movie/${movie.no }.jpg" id="nowMovie" class="posterinfo rounded-3" alt="현재 상영장">
+								<div class="text-white" id="title"><strong>${movie.title }</strong></div>
+								<div class="text-white" id="subs">예매율 ${movie.reservationRate } | <i class="fas fa-star"></i> ${movie.rating } |<i class="fas fa-grin-hearts"></i> ${movie.userLike }</div>
+							</div>
+        				</div>
+        			</c:forEach>
       			</div>
-      			
       			<div class="swiper-pagination"></div><!-- 페이징 -->
     		</div>
    		</div>
@@ -397,14 +419,14 @@ $(function(){
    })
 });
 
-//boxOffice 
+//boxOffice swiper 설정
 var swiper = new Swiper(".mySwiper", {
-    slidesPerView: 3,
+    slidesPerView: 4,
     spaceBetween: 30,
     freeMode: true,
     loop: true,
     autoplay: {
-      delay: 1500,
+      delay: 4500,
       disableOnInteraction: false
     },
     pagination: {
@@ -412,7 +434,13 @@ var swiper = new Swiper(".mySwiper", {
       clickable: true
     }
   });
-
+//마우스오버 시 상세보기, 예매하기 버튼 보이기
+$('.poster').mouseover(function(){
+	$(this).children('.a').show();
+})
+$('.poster').mouseleave(function(){
+	$(this).children('.a').hide();
+})
 </script>
 </body>
 </html>
