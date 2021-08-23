@@ -39,6 +39,16 @@
 			MOVIE_NO = #{no}				
 	</update>
 	
+	<!-- 개봉 후 2달이 지난 영화 갱신하기 -->
+	<update id="updateCloseMovie" parameterType="com.cinemabox.dto.movie.CloseMovieDto">
+		update 
+			CINEMABOX_MOVIE 
+		set 
+			MOVIE_SCREENING_STATUS = #{screeningStatus}
+		where
+			MOVIE_NO = #{no}			
+	</update>
+	
 	<!-- 선택한 영화 위시리스트에서 삭제 -->
 	<delete id="deleteWishlist" parameterType="com.cinemabox.vo.Wishlist">
 		delete from CINEMABOX_WISHLISTS
@@ -108,6 +118,23 @@
 		where
 			MOVIE_RELEASE_DATE &lt;= to_date(to_char(sysdate, 'YYYYMMDD'))
 			and MOVIE_STATUS = 'N'
+			and MOVIE_SCREENING_STATUS = 'Y'
+	</select>
+	
+	<!-- 개봉 후 2달이 지난 영화 조회하기 -->
+	<select id="getCloseMovies" resultType="com.cinemabox.dto.movie.CloseMovieDto">
+		select
+		    MOVIE_NO as no,
+		    MOVIE_TITLE as title,
+		    MOVIE_STATUS as status,
+		    MOVIE_SCREENING_STATUS as screeningStatus,
+		    MOVIE_RELEASE_DATE as releasedDate,
+		    ADD_MONTHS(MOVIE_RELEASE_DATE, 2) as twoMonth
+		from
+		    CINEMABOX_MOVIE
+		where
+		    ADD_MONTHS(MOVIE_RELEASE_DATE, 2) &lt;= to_date(to_char(sysdate, 'YYYYMMDD'))
+		    and MOVIE_SCREENING_STATUS = 'Y'	
 	</select>
 		
 	<!-- 영화 번호와 사용자 아이디로 찜한 내역 가져오기 -->
@@ -196,6 +223,7 @@
 				CINEMABOX_MOVIE
 			where 
 				MOVIE_STATUS = 'Y'
+				and MOVIE_SCREENING_STATUS = 'Y'
 				and MOVIE_RELEASE_DATE &gt; sysdate - 50)
 		where 
 			row_number &lt;= 12
@@ -242,7 +270,7 @@
 			from
 				CINEMABOX_MOVIE
 			where MOVIE_RELEASE_DATE &gt; sysdate
-			and MOVIE_STATUS = 'N')
+			and MOVIE_STATUS = 'N' and MOVIE_SCREENING_STATUS = 'Y')
 		where 
 			row_number &lt;= 12
 	</select>
@@ -272,6 +300,6 @@
 	    	CINEMABOX_MOVIE
 		where
 	    	MOVIE_TITLE like '%'||#{value}||'%'
-	    	and MOVIE_STATUS = 'Y'
+	    	and MOVIE_SCREENING_STATUS = 'Y'
 	</select>
 </mapper>

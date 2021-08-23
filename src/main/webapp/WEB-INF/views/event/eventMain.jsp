@@ -45,10 +45,16 @@
 	<li class="event"><a href="detail?no=1"><img src="https://caching.lottecinema.co.kr//Media/Event/5d4fca77c7f549998ed563d9d2345b6e.jpg" alt="<남색대문> 현장경품 이벤트">
 	<div class="date">2021.08.17~2021.10.21</div></a></li>
 	
-	<li class="event"><a href="#none"><img src="https://caching.lottecinema.co.kr//Media/Event/e8c94a452a5a4bd0b9e61dee1f16ea19.jpg" alt="<보스베이비> 스페셜 퍼즐 증정 이벤트">
+	<li class="event"><a href="detail?no=2"><img src="https://caching.lottecinema.co.kr//Media/Event/e8c94a452a5a4bd0b9e61dee1f16ea19.jpg" alt="<보스베이비> 스페셜 퍼즐 증정 이벤트">
 	<div class="date">2021.08.17~2021.10.21</div></a></li>
 	
-	<li class="event"><a href="#none"><img src="https://caching.lottecinema.co.kr//Media/Event/33284260ba2b4e2995499535d18365fd.jpg" alt="영화 더스파이 현장경품이벤트">
+	<li class="event"><a href="detail?no=3"><img src="https://caching.lottecinema.co.kr//Media/Event/33284260ba2b4e2995499535d18365fd.jpg" alt="영화 더스파이 현장경품이벤트">
+	<div class="date">2021.08.17~2021.10.21</div></a></li>
+	
+	<li class="event"><a href="detail?no=4"><img src="https://caching.lottecinema.co.kr//Media/Event/199f530329ab4bf0af39c059c2f29817.jpg" alt="<모가디슈> 관람 인증 이벤트">
+	<div class="date">2021.08.17~2021.10.21</div></a></li>
+	
+	<li class="event"><a href="detail?no=5"><img src="https://caching.lottecinema.co.kr//Media/Event/6830cb7253804ce7a6f6312a393385ce.jpg" alt="<퍼피구조대 더 무비> 현장경품 이벤트">
 	<div class="date">2021.08.17~2021.10.21</div></a></li>
 	
 	</ul>

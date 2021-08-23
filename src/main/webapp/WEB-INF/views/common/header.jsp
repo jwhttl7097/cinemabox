@@ -13,18 +13,20 @@
 		$("#img-top-banner").ready(function(){
 			var yourImages = ["/cinemabox/resources/images/banner/top/Puppy_98080.jpg",
      		   				 "/cinemabox/resources/images/banner/top/Sence_98080.jpg",
-     		   				"/cinemabox/resources/images/banner/top/Sake_98080.jpg"];
+     		   				 "/cinemabox/resources/images/banner/top/Sake_98080.jpg",
+     		   				 "/cinemabox/resources/images/banner/top/Maly_98080.jpg"];
 			var randomImage = Math.trunc(Math.random()*yourImages.length);
 			$("#img-top-banner").attr("src", yourImages[randomImage]);
-			$("#div-top-banner img[src*='Puppy']").parent().parent().css("background", "rgb(0, 164, 236)");
-			$("#div-top-banner img[src*='Sence']").parent().parent().css("background", "rgb(0, 0, 0)");
-			$("#div-top-banner img[src*='Sake']").parent().parent().css("background", "rgb(252, 243, 228)");
+			$("#div-top-banner img[src*='Puppy']").parent().attr("href","movieDetail?no=20219381").parent().parent().css("background", "rgb(0, 164, 236)");
+			$("#div-top-banner img[src*='Sence']").parent().attr("href","movieDetail?no=20218985").parent().parent().css("background", "rgb(0, 0, 0)");
+			$("#div-top-banner img[src*='Sake']").parent().attr("href","movieDetail?no=20219185").parent().parent().css("background", "rgb(252, 243, 228)");
+			$("#div-top-banner img[src*='Maly']").parent().attr("href","movieDetail?no=20219311").parent().parent().css("background", "rgb(0, 0, 0)");
         })
 </script>
 <!-- top banner start -->
 <div class="navbar navbar-light p-0 justify-content-center" id="div-top-banner">
 	<div class="position-relative">
-		<img alt="" id="img-top-banner">
+		<a><img alt="" id="img-top-banner"></a>
 		<i id="i-close-top-banner" class="fas fa-times text-white position-absolute" style="right:15px; top:10px; cursor: pointer;"></i>
 	</div>
 </div>
