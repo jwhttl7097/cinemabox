@@ -16,7 +16,6 @@ import com.cinemabox.service.Ticket.TicketService;
 @Controller
 @SessionAttributes({"ticketDto"})
 public class TicketController{
-	
 	@Autowired TicketService ticketService;
 	
 	@GetMapping(path = {"/ticket"})

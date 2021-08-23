@@ -7,7 +7,6 @@ import com.cinemabox.dto.ticket.ScreeningDto;
 import com.cinemabox.dto.ticket.TicketDto;
 
 public interface TicketService {
-
 	/**
 	 * 극장번호로 등록된 영화정보 받아오기
 	 * @param map 극장번호, 분류(정렬)

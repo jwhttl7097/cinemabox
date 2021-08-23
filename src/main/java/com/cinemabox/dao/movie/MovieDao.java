@@ -19,10 +19,10 @@ public interface MovieDao {
 	Wishlist getLikeByUserId(Wishlist wishlist);
 	
 	List<Movie> getAllmovies();
-	List<Movie> getUnreleaseMovies();
 	Movie getMovieByNo(int no);
 	List<Movie> getNowMovieList(@Param("sort") String sort);
 	List<Movie> getUnreleasedMovieList(@Param("sort") String sort);
 	
+	List<Movie> getUnreleaseMoviesByToday();
 	List<Movie> getSearchResult(String keyword);
 }

@@ -18,14 +18,9 @@ import com.cinemabox.web.utils.SessionUtils;
 public class HomeController{
 	@Autowired
 	NoticeService noticeService;
-	@Autowired MovieDao movieDao;
 	
 	@GetMapping(path = {"/", "/home"})
 	public String home(Model model) {
-		//검색 박스오피스
-		List<Movie> nowMovies = movieDao.getNowMovieList("ticket");
-		SessionUtils.addAttribute("NOW_MOIVES", nowMovies);
-		
 		//박스오피스 뿌리기
 		
 		

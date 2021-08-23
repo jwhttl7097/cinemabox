@@ -12,11 +12,13 @@
         
 		$("#img-top-banner").ready(function(){
 			var yourImages = ["/cinemabox/resources/images/banner/top/Puppy_98080.jpg",
-     		   				 "/cinemabox/resources/images/banner/top/Sence_98080.jpg"];
+     		   				 "/cinemabox/resources/images/banner/top/Sence_98080.jpg",
+     		   				"/cinemabox/resources/images/banner/top/Sake_98080.jpg"];
 			var randomImage = Math.trunc(Math.random()*yourImages.length);
 			$("#img-top-banner").attr("src", yourImages[randomImage]);
 			$("#div-top-banner img[src*='Puppy']").parent().parent().css("background", "rgb(0, 164, 236)");
 			$("#div-top-banner img[src*='Sence']").parent().parent().css("background", "rgb(0, 0, 0)");
+			$("#div-top-banner img[src*='Sake']").parent().parent().css("background", "rgb(252, 243, 228)");
         })
 </script>
 <!-- top banner start -->
@@ -93,7 +95,7 @@
 					<div class="col-6 text-center" id="div-search-poster">
 						<div id="carouselSearchSlidesOnly" class="carousel slide rounded-3 shadow" data-bs-ride="carousel">
 							<div class="carousel-inner">
-								<c:forEach var="now" items="${NOW_MOIVES }" begin="1" end="5" varStatus="loop">
+								<c:forEach var="now" items="${NOW_MOVIES }" begin="1" end="5" varStatus="loop">
 									<div class="carousel-item ${loop.index eq 1 ? 'active':'' }">
 										<img src="/cinemabox/resources/images/movie/${now.no}.jpg" class="d-block" alt="...">
 									</div>
@@ -103,7 +105,7 @@
 					</div>
 					<div class="col-6 ps-3">
 						<ul id="ul-search-movie-rank" class="p-0">
-							<c:forEach var="now" items="${NOW_MOIVES }" begin="1" end="5" varStatus="loop">
+							<c:forEach var="now" items="${NOW_MOVIES }" begin="1" end="5" varStatus="loop">
 								<li>
 									<span class="me-2">${loop.index }</span>
 									<a href="movieDetail?no=${now.no}">${now.title}</a>

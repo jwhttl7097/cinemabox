@@ -44,10 +44,11 @@ public class Scheduler {
 	
 	//매일 오후 12시 정각에 실행
 	@Scheduled(cron = "0 0 12 * * ?")
+	//@Scheduled(cron = "0 0/1 * * * ? ")
 	public void updateMovieStatus(){
 		logger.info("-----------updateMovieStatus 실행됨-----------");
 		//모든 영화정보 가져오기
-		List<Movie> movies = movieDao.getUnreleaseMovies();
+		List<Movie> movies = movieDao.getUnreleaseMoviesByToday();
 		
 		for(Movie item : movies) {
 			//오늘날짜
@@ -77,16 +78,20 @@ public class Scheduler {
 		}
 	}
 	
-	//매일 30분마다 실행
-	@Scheduled(cron = "0 0/30 * * * ? ")
+	//매일밤 12시마다 실행
+	@Scheduled(cron = "0 0 0 * * ? ")
 	public void updateMovie() throws Exception {
 		logger.info("-----------updateMovie 실행됨-----------");
-		
 		//새로 올라온 영화 추가하기
 		apiMovieService.saveMoive();
-		
+	}
+	
+	//매일 30분마다 실행
+	@Scheduled(cron = "0 0/30 * * * ? ")
+	public void updateMovieDetail() throws Exception {
 		//실시간 예매율에서 예매율, 누적관객수 추가하기
 		apiMovieService.crawler();		
+		logger.info("-----------박스오피스 예매율, 누적관객수 갱신 완료-----------");
 	}
 	
 	//매일 3분마다 실행

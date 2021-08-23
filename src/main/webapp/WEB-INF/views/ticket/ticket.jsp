@@ -349,7 +349,7 @@ $(function(){
 			success:function(movieList){
 				$("#div-time-title").empty();
 				$("#ul-list-time").empty();		
-				
+
 				var mvlist = _.uniqBy(movieList, "movieNo");
 				$("#ul-movieList").empty();
 				$.each(mvlist, function(index, item){

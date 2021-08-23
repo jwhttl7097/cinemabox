@@ -14,4 +14,5 @@ public interface ReviewDao {
 	int getReviewCntByMovieNo(int movieNo);
 	List<Review> getAllReviews(int movieNo);
 	Review getReviewByUserId(Map<String, Object> map);
+	double getMovieRatingAvg(int movieNo);
 }

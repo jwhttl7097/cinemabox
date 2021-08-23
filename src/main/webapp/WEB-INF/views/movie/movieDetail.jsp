@@ -19,6 +19,9 @@
 <%-- moment cdnjs 한국어설정하기 --%>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/ko.min.js"></script>
 <title>CINEMABOX :: MOVIE</title>
+<style>
+	iframe{width: 100%;}
+</style>
 </head>
 <body>
 <div class="container-fluid">
@@ -62,18 +65,22 @@
 					<div class="text-end text-muted mb-3 px-3" id="div-current-time" style="font-size:0.7rem;"></div>
 					<div class="score col text-center">
 						<p class="tit">평점</p>
-						<p class="cont"><i class="fas fa-star-half-alt"></i>&nbsp;<fmt:formatNumber value="${movieDetail.rating}" pattern="0.0" />점</p>
+						<p class="cont"><i class="fas fa-star-half-alt"></i>&nbsp;<fmt:formatNumber value="${movieDetail.rating}" pattern="0.00" />점</p>
 					</div>
 					<div class="rating col text-center">
 						<p class="tit">예매율</p>
-						<p class="cont"><i class="fas fa-ticket-alt"></i>&nbsp;<fmt:formatNumber value="${movieDetail.reservationRate}" pattern="0.0" />%</p>
+						<p class="cont"><i class="fas fa-ticket-alt"></i>&nbsp;<fmt:formatNumber value="${movieDetail.reservationRate}" pattern="0" />%</p>
 					</div>
 					<div class="audience col text-center">
 						<p class="tit">누적 관객수</p>
 						<p class="cont"><i class="fas fa-users"></i>&nbsp;<fmt:formatNumber value="${movieDetail.cumulativeAudienceCnt }" type="number" /> 명</p>
 					</div>
 				</div>
-				<button class="btn btn-warning col-12 mt-2 fw-bold" onclick="location.href='ticket?location=서울&theaterNo=10001&movieNo=${movieDetail.no }'">예매하기</button>
+				<button class="btn btn-warning col-12 mt-2 fw-bold" 
+				onclick="location.href='ticket?location=서울&theaterNo=10001&movieNo=${movieDetail.no }'" 
+				${movieDetail.status eq 'Y'?'': 'disabled'}>
+					${movieDetail.status eq 'Y'?'예매하기': '개봉예정'}
+				</button>
 			</div>
 			<div class="col-4">
 				<div class="poster p-5">
@@ -99,9 +106,16 @@
 		<div class="tab-content" id="nav-tabContent">
 			<div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
 				<div class="row mt-4" id="synopsis">
-					<h5><strong>시놉시스</strong></h5>
+					<h5 class="bg-warning py-2 text-center"><strong>시놉시스</strong></h5>
 					<p class="mt-2" style="color:#212529; font-size:0.9em;">
-						${movieDetail.synopsis}
+						<c:choose>
+							<c:when test="${empty movieDetail.synopsis }">
+								${movieDetail.synopsis}
+							</c:when>
+							<c:otherwise>
+								${movieDetail.synopsisWithBr}
+							</c:otherwise>
+						</c:choose>
 					</p>
 				</div>
 <!-- 				<div class="row mt-4" id="chart"> -->
@@ -126,7 +140,7 @@
 <!-- 					</div> -->
 <!-- 				</div>				 -->
 				<div class="row mt-4" id="trailer">
-					<h5 class="mb-4"><strong>트레일러</strong></h5>
+					<h5 class="mb-4 bg-warning py-2 text-center"><strong>트레일러</strong></h5>
 					<div class="col-6">
 						${movieDetail.trailerFirst}
 					</div>
@@ -142,7 +156,7 @@
 						<form action="movieDetail?no=${movieDetail.no}" method="post" class="fomr-review"> 
 							<div class="justify-content-center row">
 								<div class="col-12 input-group">
-									<div class="stars col-2">
+									<div class="stars col-2 p-0 px-1">
 											<label class="rate">
 												<input type="radio" name="radio1" id="star1" value="1">
 												<div class="face"></div>
@@ -169,9 +183,10 @@
 												<i class="far fa-star star five-star"></i>
 											</label>
 									</div>
-									<div class="input-group col" id="div-review">
-										<textarea class="form-control" placeholder="${empty LOGINED_USER ?'로그인 후 작성 가능합니다.':'관람평을 작성해주세요.'}" ${empty LOGINED_USER ?"readonly":""} style="resize: none;"></textarea>
+									<div class="input-group col pt-1" id="div-review">
+										<textarea class="form-control" placeholder="${empty LOGINED_USER ?'로그인 후 작성 가능합니다.':'관람평을 작성해주세요.'}" ${empty LOGINED_USER ?"readonly":""} style="resize: none; height: 45px;"></textarea>
 										<button type="button" id="btn-review" class="btn btn-warning" ${empty LOGINED_USER ?"disabled":""}>작성</button>
+										<span style="color:#aaa; font-size:0.7rem;" id="counter" class="col-12 text-end">(0 / 최대 45자)</span>
 									</div>
 								</div>
 							</div>
@@ -241,7 +256,6 @@
 						<button id="btn-twitter" class="btn"><img src="/cinemabox/resources/images/icon/icon-twitter.png" alt="twitter"></button>
 						<button id="btn-line" class="btn"><img src="/cinemabox/resources/images/icon/icon-line.png" alt="line"></button>
 					</div>
-					</a>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"	data-bs-dismiss="modal">취소</button>
@@ -368,6 +382,18 @@ $(function(){
 		}
 	});
 	
+	//textarea 체크
+	$('#div-review > textarea').keyup(function (e){
+	    var con = $(this).val();
+	    $('#counter').html("("+con.length+" / 최대 45자)");    //글자수 실시간 카운팅
+
+	    if (con.length > 45){
+	        alert("최대 45자까지 입력 가능합니다.");
+	        $(this).val(con.substring(0, 45));
+	        $('#counter').html("(45 / 최대 45자)");
+	    }
+	});
+
 	//관람평 등록
 	var point = 0;
 	$("[name='radio1']").click(function(){
@@ -444,7 +470,7 @@ $(function(){
 	})
 	
 	//관람평 삭제
-	$("#btn-review-delete").click(function(){
+	$(".comment").on('click','#btn-review-delete',(function(){
 		$.ajax({
 			type:"POST",
 			url:"boxoffice/delete",
@@ -494,7 +520,7 @@ $(function(){
 				})
 			}
 		})		
-	})
+	}))
 	
 // 	//예매율 chart
 // 	var ctr = document.getElementById("chart-rate");
