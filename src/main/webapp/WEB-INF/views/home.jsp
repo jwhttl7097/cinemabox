@@ -178,14 +178,17 @@
     				<button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
   				</div>
   				<div class="carousel-inner">
-    				<div class="carousel-item active" id="freeguyImg"  >
-      					<img src="/cinemabox/resources/images/main/mainVisuals/freeguy2.jpg" class="d-block w-100"  data-trailer-url="https://www.youtube.com/embed/LeWwoGjGklc" title="YouTube video player" alt="freeguy" />
+    				<div class="carousel-item active" >
+      					<img src="/cinemabox/resources/images/main/mainVisuals/freeguy2.jpg" class="d-block w-100"  data-trailer-url="https://www.youtube.com/embed/Gczt0fhawDs" title="YouTube video player" id="malignantImg"  alt="malignant" />
     				</div>
     				<div class="carousel-item" >
-      					<img src="/cinemabox/resources/images/main/mainVisuals/mogadishu.jpg" class="d-block w-100" data-trailer-url="https://www.youtube.com/embed/VOdDMmSjle0" title="YouTube video player" id="mogadishuImg" alt="mogadishu"/>
+      					<img src="/cinemabox/resources/images/main/mainVisuals/mogadishu.jpg" class="d-block w-100" data-trailer-url="https://www.youtube.com/embed/8YjFbMbfXaQ" title="YouTube video player" id="shanchiImg" alt="shangchi"/>
     				</div>
     				<div class="carousel-item">
-      					<img src="/cinemabox/resources/images/main/mainVisuals/squad.jpg" class="d-block w-100"  data-trailer-url="https://www.youtube.com/embed/OHq3UxfthZQ" title="YouTube video player" id="squadImg" alt="squad">
+      					<img src="/cinemabox/resources/images/main/mainVisuals/squad.jpg" class="d-block w-100"  data-trailer-url="https://www.youtube.com/embed/YLMT5uXjFLY" title="YouTube video player" id="gunpowserImg" alt="gunpowder">
+    				</div>
+    				<div class="carousel-item">
+      					<img src="/cinemabox/resources/images/main/mainVisuals/squad.jpg" class="d-block w-100"  data-trailer-url="https://www.youtube.com/embed/_BggT--yxf0" title="YouTube video player" id="reminiscenceImg" alt="reminiscence">
     				</div>
   				</div>
   				<button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
