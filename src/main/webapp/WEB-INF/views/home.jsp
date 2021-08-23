@@ -217,7 +217,7 @@
 								</div>
 							</div>
 							<img
-								src="/cinemabox/resources/images/movie/${movie.no }.jpg" id="nowMovie" class="posterinfo rounded-3" alt="현재 상영장">
+								src="/cinemabox/resources/images/movie/${movie.no }.jpg" id="nowMovie" class="posterinfo rounded-3" alt="현재 상영작">
 								<div class="text-white" id="title"><strong>${movie.title }</strong></div>
 								<div class="text-white" id="subs">예매율 ${movie.reservationRate } | <i class="fas fa-star"></i> ${movie.rating } |<i class="fas fa-grin-hearts"></i> ${movie.userLike }</div>
 							</div>
@@ -374,7 +374,7 @@
     		</div>
   	  	</div>
 	</div>
-	<%@include file="./common/footer.jsp" %>    
+<%@include file="./common/footer.jsp" %>    
 <script type="text/javascript">
 $(function(){
    	//헤더수정
@@ -436,10 +436,10 @@ var swiper = new Swiper(".mySwiper", {
   });
 //마우스오버 시 상세보기, 예매하기 버튼 보이기
 $('.poster').mouseover(function(){
-	$(this).children('.a').show();
+	$('.poster-info').children('.a').show();
 })
 $('.poster').mouseleave(function(){
-	$(this).children('.a').hide();
+	$('.poster-info').children('.a').hide();
 })
 </script>
 </body>

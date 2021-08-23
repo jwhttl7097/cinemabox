@@ -110,6 +110,22 @@ public class UserServiceImpl implements UserService{
 		//사용자가 존재하지 않을 경우
 		return "N";
 	}
+	
+	/**
+	 * 회원가입 할 때 이메일 중복 찾으려는 Impl
+	 */
+	@Override
+	public String getUserByEmail(String userEmail) {
+		
+		User user = userDao.getUserByEmail(userEmail);
+		
+		//사용자가 존재 할 경우
+		if(user != null) {
+			return "Y";
+		}
+		
+		return "N";
+	}
 	/**
 	 * 위시리스트(영화 찜 목록) 서비스 Impl
 	 */

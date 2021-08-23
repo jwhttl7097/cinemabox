@@ -31,4 +31,10 @@ public class UserAjaxController2 {
 		
 	}
 	
+	@PostMapping("/emailCheck")
+	@ResponseBody
+	public String emailCheck(String email) {
+		
+		return userService.getUserByEmail(email);
+	}
 }
