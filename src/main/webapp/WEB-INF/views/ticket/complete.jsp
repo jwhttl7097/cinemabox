@@ -56,7 +56,7 @@
 						</div>
 						<div class="col-5 mt-4 p-4 text-center" style="background-color: #eee;">
 							<span style="display:block; font-size:1.5rem;">
-								<strong>예매번호 : 2323432</strong>
+								<strong>예매번호 : ${reservationNo }</strong>
 							</span>
 							<span style="display:block; font-size:0.8rem; color:gray; margin-top:8px;">
 								위의 예매번호로 해당 극장의 무인 발권기/매표소에서 티켓을 찾으세요.
@@ -64,20 +64,20 @@
 						</div>
 						<div class="p-5 row justify-content-center">
 							<div class="col-3 text-end px-4">
-								<img src="/cinemabox/resources/images/movie/20202185.jpg" alt="" width="120px;">
+								<img src="/cinemabox/resources/images/movie/${ticketDto.movieNo }.jpg" alt="" width="120px;">
 							</div>
 							<div class="col-6">
 								<dl class="dl-info">
-									<dt><strong>영화명</strong></dt><dd><img src="/cinemabox/resources/images/icon/txt-age-small-12.png" alt="" class="me-2">모가디슈</dd>
-									<dt><strong>극장</strong></dt><dd>가산디지털 5관-2D</dd>
-									<dt><strong>관람일시</strong></dt><dd>21.08.04(수) 09:30 ~ 11:41</dd>
-									<dt><strong>인원</strong></dt><dd>성인1</dd>
-									<dt><strong>좌석</strong></dt><dd>f11</dd>
+									<dt><strong>영화명</strong></dt><dd><img src="/cinemabox/resources/images/icon/txt-age-small-${ticketDto.age }.png" alt="" class="me-2">${ticketDto.title }</dd>
+									<dt><strong>극장</strong></dt><dd>${ticketDto.theaterName } ${ticketDto.hallName }</dd>
+									<dt><strong>관람일시</strong></dt><dd><fmt:formatDate value="${ticketDto.screeningDate }" pattern="yy.MM.dd"/>(<fmt:formatDate value="${ticketDto.screeningDate }" pattern="EE"/>) ${ticketDto.screeningTime } ~ ${ticketDto.screeningEndTime }</dd>
+									<dt><strong>인원</strong></dt><dd>성인 : ${ticketDto.adultCnt } 청소년 : ${ticketDto.teenagerCnt }</dd>
+									<dt><strong>좌석</strong></dt><dd>${seat }</dd>
 								</dl>						
 							</div>
 						</div>
 						<div class="text-center">
-							<button class="btn bg-dark text-white p-3 rounded-0">예매내역 확인하기</button>
+							<button class="btn bg-dark text-white p-3 rounded-0" onclick="location.href='myPage'">예매내역 확인하기</button>
 						</div>
 					</div>
 				</div>
@@ -87,6 +87,8 @@
 	<%@include file="../common/footer.jsp" %>
 </div>
 <script type="text/javascript">
+//Toast
+//알람 메세지를 화면에 표시한다.
 $(function(){
 	//header nav js
 	$('.mainnav').mouseover(function(){
@@ -94,18 +96,6 @@ $(function(){
 	})
 	$('.mainnav').mouseleave(function(){
 	   $(this).children('.subnav').stop().slideUp();
-	})
-	
-	//카드결제
-	$("#btn-pay-card").click(function(){
-		$("#ul-selectPay-card").show();
-		$("#ul-selectPay-simple").hide();
-	})
-	
-	//간편결제
-	$("#btn-pay-simple").click(function(){
-		$("#ul-selectPay-simple").show();
-		$("#ul-selectPay-card").hide();
 	})
 })
 </script>

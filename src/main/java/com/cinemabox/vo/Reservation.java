@@ -14,7 +14,9 @@ public class Reservation {
 	private int totalPrice;
 	private String payment;
 	private Date createdDate;
-	private int point;
+	private double point;
 	private int movieNo;
 	private String userId;
+	private String ticketNos;
+	private int usedPoint;
 }

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.cinemabox.dao.coupon.CouponDao">
+	<select id="getAllMyCoupon" parameterType="string" resultType="com.cinemabox.vo.Coupon">
+		select
+			cl.couponlist_no as couponListNo,
+			c.coupon_type as type,
+			c.coupon_serial_no as serialNo,
+			c.coupon_issue_date as issueDate,
+			c.coupon_exp_date as expDate,
+			c.coupon_used_date as usedDate,
+			c.coupon_status as status
+		from
+			CINEMABOX_COUPONS c, CINEMABOX_COUPONLIST cl
+		where
+			cl.user_id = #{value}
+			and c.coupon_no = cl.coupon_no
+	</select>
+</mapper>

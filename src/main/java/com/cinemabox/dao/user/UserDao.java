@@ -3,7 +3,6 @@ package com.cinemabox.dao.user;
 import java.util.List;
 
 import com.cinemabox.dto.user.UserDto;
-import com.cinemabox.vo.Movie;
 import com.cinemabox.vo.User;
 
 public interface UserDao {
@@ -41,5 +40,11 @@ public interface UserDao {
 	 * @return
 	 */
 	int countWishlists(String userId);
+	
+	/**
+	 * 적립금을 업데이트 한다.
+	 * @param user 포인트와 해당 userId가 담긴 user객체
+	 */
+	void updatePayPoint(User user);
 	
 }

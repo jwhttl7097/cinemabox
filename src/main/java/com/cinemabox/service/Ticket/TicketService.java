@@ -50,9 +50,9 @@ public interface TicketService {
 	 */
 	List<TicketDto> getAllSeat(int screeningNo);
 	
-	/**
-	 * 
+	/*
+	 * 좌석 임시 선택 
 	 */
 	void webSocketAjax(int screeningNo, String col, String row, String selectType);
-
+	
 }

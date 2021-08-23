@@ -6,4 +6,5 @@ import lombok.Data;
 public class ReservationTicket {
 	private int reservationNo;
 	private int ticketNo;
+	private int reservationTicketNo;
 }

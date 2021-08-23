@@ -24,6 +24,8 @@ public interface TicketDao {
 	
 	//좌석
 	List<TicketDto> getAllSeat(int screeningNo);
+	TicketDto getTicketNo(TicketDto ticketDto);
+	void updateTicketReservationStatus(int ticketNo);
 	// 웹소켓 좌석
 	WebsocketTicketDto getWebSocketData(WebsocketTicketDto wsDto);
 	void updateWebSocetStatus(WebsocketTicketDto wstDto);
