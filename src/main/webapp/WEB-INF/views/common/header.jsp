@@ -73,9 +73,8 @@
 					</li>
 					<li class="nav-item mainnav"><a class="nav-link text-body" href="#">스토어</a>
 						<ul class="nav justify-content-center subnav" id="subnav-05">
-							<li class="nav-item"><a class="nav-link" href="">영화관람권</a></li>
-							<li class="nav-item"><a class="nav-link" href="">상품권구매</a></li>
-							<li class="nav-item"><a class="nav-link" href="">굿즈</a></li>
+							<li class="nav-item"><a class="nav-link" href="/cinemabox/gift">시네마 티켓</a></li>
+							<li class="nav-item"><a class="nav-link" href="/cinemabox/snack">팝콘/음료 세트</a></li>
 						</ul>
 					</li>
 				</ul>

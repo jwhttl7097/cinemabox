@@ -10,6 +10,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script src="https://kit.fontawesome.com/b4347bf02c.js" crossorigin="anonymous"></script>
 <title>마이페이지</title>
 <style type="text/css">
    header .navbar-brand,
@@ -71,10 +73,41 @@
    	height:100%;
    }
    
-   .heart{
-   	width : 13px;
-	height : 14px;
-   }
+   .swiper-container {
+        width: 100%;
+        height: 300px;
+      }
+
+    .swiper-slide {
+        text-align: center;
+        background: black;
+
+        /* Center slide text vertically */
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+      }
+
+    .swiper-slide img {
+        
+        width: 65%;
+        height: 85%;
+        object-fit: cover;
+      }
+    
+    .swiper-pagination{
+    	display : none;
+    }
+    
 </style>
 </head>
 <body>
@@ -268,8 +301,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel"><strong>${LOGINED_USER.name }</strong>님이 <img class="heart" alt="heart"
-								src="/cinemabox/resources/images/main/movieCurrentLists/heart.png">한 영화</h5>
+        <h5 class="modal-title" id="exampleModalLabel"><strong>${LOGINED_USER.name }</strong>님이 <i class="fas fa-heart"></i> 한 영화</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -288,7 +320,7 @@
         					</c:forEach>
         				</c:when>
         				<c:otherwise>
-        					0
+        					
         				</c:otherwise>
         			</c:choose>
         		</div>
