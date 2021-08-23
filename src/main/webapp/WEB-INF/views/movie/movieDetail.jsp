@@ -68,8 +68,12 @@
 						<p class="cont"><i class="fas fa-star-half-alt"></i>&nbsp;<fmt:formatNumber value="${movieDetail.rating}" pattern="0.00" />점</p>
 					</div>
 					<div class="rating col text-center">
+						<c:set value="${movieDetail.reservationRate}" var="rate"/>
 						<p class="tit">예매율</p>
-						<p class="cont"><i class="fas fa-ticket-alt"></i>&nbsp;<fmt:formatNumber value="${movieDetail.reservationRate}" pattern="0" />%</p>
+						<p class="cont">
+							<i class="fas fa-ticket-alt"></i>&nbsp;
+							<fmt:formatNumber value="${movieDetail.status eq 'Y'?rate:'0'}" pattern="0" />%
+						</p>
 					</div>
 					<div class="audience col text-center">
 						<p class="tit">누적 관객수</p>

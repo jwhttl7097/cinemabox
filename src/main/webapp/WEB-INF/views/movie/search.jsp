@@ -75,8 +75,15 @@
 								<li class="poster d-inline-block shadow position-relative" style="margin-bottom:6rem !important;">
 									<div class="position-absolute poster-info">	
 										<div class="position-absolute">
-											<a class="nav-link text-white d-block mb-2" href="ticket?location=서울&theaterNo=10001&movieNo=${movie.no }">예매하기</a>
-											<a class="nav-link text-white d-block" href="movieDetail?no=${movie.no }">상세정보</a>
+											<c:choose>
+												<c:when test="${movie.status eq 'Y' }">
+													<a class="nav-link text-white d-block mb-2" href="ticket?location=서울&theaterNo=10001&movieNo=${movie.no }">예매하기</a>
+													<a class="nav-link text-white d-block" href="movieDetail?no=${movie.no }">상세정보</a>
+												</c:when>
+												<c:otherwise>
+													<a class="nav-link text-white d-block" href="movieDetail?no=${movie.no }">상세정보</a>
+												</c:otherwise>
+											</c:choose>
 										</div>
 									</div>
 									<img src="/cinemabox/resources/images/movie/${movie.no }.jpg">
@@ -92,8 +99,15 @@
 										</c:choose>
 									</h5>
 									<ul class="m-0 p-0" style="font-size:14px; color:#848484;">
-										<li class="d-inline pe-2" style="border-right:1px solid #ddd;">예매율 : ${movie.reservationRate }%</li>
-										<li class="d-inline">개봉일 : <fmt:formatDate value="${movie.releaseDate }" pattern="yyyy.MM.dd"/></li>
+										<c:choose>
+											<c:when test="${movie.status eq 'Y' }">
+												<li class="d-inline pe-2" style="border-right:1px solid #ddd;">예매율 : ${movie.reservationRate }%</li>
+												<li class="d-inline">개봉일 : <fmt:formatDate value="${movie.releaseDate }" pattern="yyyy.MM.dd"/></li>
+											</c:when>
+											<c:otherwise>
+												<li class="d-inline">개봉일 : <fmt:formatDate value="${movie.releaseDate }" pattern="yyyy.MM.dd"/></li>
+											</c:otherwise>
+										</c:choose>
 									</ul>
 								</li>							
 							</c:forEach>
