@@ -30,7 +30,7 @@
 				<div class="row">
 					<div id="theater-place" class="col-12">
 						<ul class="list-group list-group-horizontal" style="border-bottom: 1px solid #ddd">
-							<li class="list-group-item flex-fill text-center" style="background-color: #ffc107;">서울</li>
+							<li class="list-group-item flex-fill text-center" style="background-color: #ffc107; color: white;">서울</li>
 							<li class="list-group-item flex-fill text-center">경기</li>
 							<li class="list-group-item flex-fill text-center">인천</li>
 							<li class="list-group-item flex-fill text-center">대전/충청/세종</li>
@@ -113,7 +113,7 @@
 			
 			$("#theater-place li").click(
 					function() {
-						$(this).css({'background-color':'#ffc107', 'border-top': 'none'}).siblings().css({'background-color':'white', 'border-top': 'none'});
+						$(this).css({'background-color':'#ffc107', 'border-top': 'none', 'color':'white'}).siblings().css({'background-color':'white', 'border-top': 'none', 'color':'black'});
 
 						var $loca = $("#theater-location");
 						var location = $(this).text();

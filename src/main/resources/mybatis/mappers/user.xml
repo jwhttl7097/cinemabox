@@ -94,4 +94,16 @@
 		where 
 			user_id=#{value}
 	</select>
+	
+	<!-- 결제완료 후 최종금액에 대한 0.3프로의 적립금을 업데이트 한다. -->
+	<update id="updatePayPoint" parameterType="com.cinemabox.vo.User">
+		update 
+			CINEMABOX_USERS
+		set
+			USER_POINT = #{point}
+		where
+			user_id = #{id}
+	</update>
+	
+	
 </mapper>

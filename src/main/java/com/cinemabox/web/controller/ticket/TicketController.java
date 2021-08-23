@@ -5,19 +5,36 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.HttpSessionRequiredException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
+import com.cinemabox.dao.coupon.CouponDao;
+import com.cinemabox.dao.ticket.TicketDao;
+import com.cinemabox.dao.user.UserDao;
 import com.cinemabox.dto.ticket.TicketDto;
 import com.cinemabox.service.Ticket.TicketService;
+import com.cinemabox.service.reservation.ReservationService;
+import com.cinemabox.service.user.UserService;
+import com.cinemabox.vo.Coupon;
+import com.cinemabox.vo.Reservation;
+import com.cinemabox.vo.ReservationTicket;
+import com.cinemabox.vo.User;
+import com.cinemabox.web.utils.SessionUtils;
 
 @Controller
 @SessionAttributes({"ticketDto"})
 public class TicketController{
 	
 	@Autowired TicketService ticketService;
+	@Autowired ReservationService reservationService;
+	@Autowired UserService userService;
+	@Autowired UserDao userDao;
+	@Autowired TicketDao ticketDao;
+	@Autowired CouponDao couponDao;
 	
 	@GetMapping(path = {"/ticket"})
 	public String ticket(Model model) {
@@ -32,7 +49,7 @@ public class TicketController{
 	}
 	
 	@PostMapping(path = {"/seat"})
-	public String seat(Model model, @ModelAttribute("ticketDto") TicketDto ticketDto) {
+	public String seat(Model model, @ModelAttribute("ticketDto") TicketDto ticketDto) throws HttpSessionRequiredException{
 		List<TicketDto> seats = ticketService.getAllSeat(ticketDto.getScreeningNo());
 		model.addAttribute("tickets", ticketDto);
 		model.addAttribute("seats", seats);
@@ -49,14 +66,88 @@ public class TicketController{
 			seat += rows[i];
 			seat += " ";
 		}
+		User loginUser = (User) SessionUtils.getAttribute("LOGINED_USER");
+		List<Coupon> coupons = couponDao.getAllMyCoupon(loginUser.getId());
+		model.addAttribute("coupons", coupons);
 		model.addAttribute("seat", seat);
 		model.addAttribute("tickets", ticketDto);
 		return "ticket/payment";
 	}
 	
-	@GetMapping(path = {"/complete"})
-	public String complete() {
-		return "ticket/complete";	
+	@PostMapping(path = {"/complete"})
+	public String complete(Model model, @ModelAttribute("ticketDto") TicketDto ticketDto, SessionStatus sessionStatus, Reservation reservation) {
+		System.out.println("====="+ticketDto.toString());
+		System.out.println("====="+reservation.toString());
+		// 포인트로 전부 결제 또는 일부 결제시 해당 포인트 차감 로직 //
+		userService.updateMinusPoint(reservation.getUsedPoint());
+		// 포인트로 전부 결제 또는 일부 결제시 해당 포인트 차감 로직 //
+		
+		// 시트번호로 티켓번호를 알아내고 해당 티켓상태를 예매완료로 바꿔주기 //
+		String ticketNumber = "";
+		String[] seats = ticketDto.getSeatNo().split(" ");
+		for (String str : seats) {
+			TicketDto tDto = new TicketDto();
+			tDto.setSeatNo(str);
+			tDto.setScreeningNo(ticketDto.getScreeningNo());
+			TicketDto ticketDtoNo = ticketDao.getTicketNo(tDto);
+			// 티켓 예매상태 Y로 업데이트 //
+			ticketDao.updateTicketReservationStatus(ticketDtoNo.getTicketNo());
+			// 티켓번호 복수의 티켓번호가 존재하면 공백을 기준으로 붙여 담아줌 //
+			ticketNumber += Integer.toString(ticketDtoNo.getTicketNo()) + " ";
+		}
+		// 시트번호로 티켓번호를 알아내고 해당 티켓상태를 예매완료로 바꿔주기 //
+		
+		// 결제완료 후 예약 테이블 결제관련 정보 저장 //
+		reservation.setStatus("Y");
+		reservation.setPayStatus("Y");
+		double point = reservation.getTotalPrice()*0.03;
+		reservation.setPoint(point);
+		reservation.setMovieNo(ticketDto.getMovieNo());
+		reservation.setTicketNos(ticketNumber);
+		reservationService.inserPayInfo(reservation);
+		// 결제완료 후 예약 테이블 결제관련 정보 저장 //	
+		
+		// 각각의 티켓번호와 reservation번호를 reservation_ticket테이블에 저장하기 //
+		String[] ticketNoSplit = ticketNumber.split(" ");
+		for (String ticketNo : ticketNoSplit) {
+			int reservationNo = reservationService.getReservationNoByTicketNo(ticketNo);
+			ReservationTicket rt = new ReservationTicket();
+			rt.setReservationNo(reservationNo);
+			rt.setTicketNo(Integer.parseInt(ticketNo));
+			reservationService.insertTicketNoAndReservationNo(rt);
+		}
+		// 각각의 티켓번호와 reservation번호를 reservation_ticket테이블에 저장하기 //
+		
+		// user에 포인트 적립 // 
+		User loginedUser = (User) SessionUtils.getAttribute("LOGINED_USER");
+		User user = new User();
+		user.setPoint(loginedUser.getPoint() + (int) Math.round(point));
+		user.setId(reservation.getUserId());
+		userService.updatePayPoint(user);
+		// user에 포인트 적립 // 
+		
+		// model로 방금 저장한 결제 정보및 티켓dto정보를 뿌려주기 위해 값을 전달 //
+			// 1. 좌석 행열 합쳐서 표시 //
+			String[] cols = ticketDto.getSeatCol().split(" ");
+			String[] rows = ticketDto.getSeatRow().split(" ");
+			String seat = "";
+			for(int i=0;i < cols.length; i++ ) {
+				seat += cols[i];
+				seat += rows[i];
+				seat += " ";
+			}
+			model.addAttribute("seat", seat);
+			// 2. ticketDto 정보 //
+			model.addAttribute("ticketDto", ticketDto);
+			// 3. 예매번호 표시 //
+			int reservationNo = reservationService.getReservationNoByTicketNos(ticketNumber);
+			model.addAttribute("reservationNo", reservationNo);
+		// model로 방금 저장한 결제 정보및 티켓dto정보를 뿌려주기 위해 값을 전달 //
+		
+		//이 컨트롤러의 @SessionAttributes 어노테이션으로 HttpSession객체에 저장했던 객체를 전부 지운다.
+		//이 요청핸들러(컨트롤러) 내에서 사용했던 세션값만 지움
+		sessionStatus.setComplete(); 
+		return "ticket/complete";
 	}
 
 }

@@ -56,7 +56,7 @@
 						<h6><img src="/cinemabox/resources/images/icon/txt-age-small-${tickets.age }.png" alt="" class="me-2"><strong>${tickets.title }</strong></h6>
 						<dl class="dl-ticketing">
 							<dt><strong>일시</strong></dt><dd><fmt:formatDate value="${tickets.screeningDate }" pattern="yy.MM.dd(E)"/>&nbsp; ${tickets.screeningTime } ~ ${tickets.screeningEndTime }</dd>
-							<dt><strong>영화관</strong></dt><dd><i class="fas fa-film mx-2"></i>${tickets.theaterName }점  ${tickets.hallName }</dd>
+							<dt><strong>영화관</strong></dt><dd>${tickets.theaterName }점  ${tickets.hallName }</dd>
 							<dt><strong>인원</strong></dt><dd>성인${tickets.adultCnt } 청소년${tickets.teenagerCnt }</dd>
 						</dl>						
 					</div>
@@ -130,23 +130,27 @@
 										<col width="75%">
 										<col width="20%">
 									</colgroup>
-									<tr class="text-center" style="font-size:0.8rem;">
-										<td colspan="2">* 사용가능한 쿠폰이 존재하지 않습니다.</td>
-									</tr>
-									<tr class="align-middle" style="font-size:0.8rem;">
-										<td class="p-3">40%할인쿠폰</td>
-										<td><button class="btn border">사용</button></td>
-									</tr>
-									<tr class="align-middle" style="font-size:0.8rem;">
-										<td class="p-3">40%할인쿠폰</td>
-										<td><button class="btn border">사용</button></td>
-									</tr>
+									<c:choose>
+										<c:when test="${empty coupons }">
+											<tr class="text-center" style="font-size:0.8rem;">
+												<td colspan="2">* 사용가능한 쿠폰이 존재하지 않습니다.</td>
+											</tr>
+										</c:when>
+										<c:otherwise>
+											<c:forEach items="${coupons }" var="coupon">
+												<tr class="align-middle" style="font-size:0.8rem;">
+													<td class="p-3">${coupon.type }</td>
+													<td><button class="btn border">사용</button></td>
+												</tr>
+											</c:forEach>
+										</c:otherwise>
+									</c:choose>
 								</table>
 							</li>
 							<li class="mt-3">
 								<h6>
 									포인트사용
-									<span style="font-size:0.8rem; color:#999;">( 현재 포인트 : <span id="nowPoint">${LOGINED_USER.point}</span>pt )</span>
+									<span style="font-size:0.8rem; color:#999;">( 현재 포인트 : <span id="nowPoint" data-now-point="${LOGINED_USER.point}">${LOGINED_USER.point}</span>pt )</span>
 								</h6>
 								<div class="input-group">
 									<button class="btn btn-outline-secondary" id="allPointBtn">전체사용</button>
@@ -167,24 +171,52 @@
 						</dl>
 						<dl>
 							<dt>결제금액</dt>
-							<dd id="dd-total-price"><span id="span-total-price"></span>원</dd>
+							<dd id="dd-total-price"><span id="span-total-price"><fmt:formatNumber value="${tickets.totalPrice }"/></span>원</dd>
 						</dl>
 						<a class="" id="a-confirm">결제하기</a>
 					</div>
 				</div>
 			</div>
 			<!-- 선택한 값 넘겨받는 form -->
-			<form action="" id="form-ticketing">
-				<input type="hidden" name="영화번호">
-				<input type="hidden" name="상영관">
-				<input type="hidden" name="날짜">
-				<input type="hidden" name="시간">
+			<form action="complete" method="post" id="form-ticketing">
+				<input type="hidden" name="payment" value="" id="pay-ment">
+				<input type="hidden" name="totalPrice" value="" id="pay-total-price">
+				<input type="hidden" name="userId" value="" id="pay-user-id">
 			</form>
+			<input type="hidden" name="isLogined" value="${not empty LOGINED_USER ? 'yes':'no' }">
 		</div>
 	</div>
+	<!-- 토스트 메세지가 세로방향으로 쌓이는 곳 -->
+	<div class="toast-container position-absolute bottom-0 end-0 p-3"></div>
+	
 	<%@include file="../common/footer.jsp" %>
 </div>
+<!-- 제목을 포함하고 토스트 메세지에 대한 HTML 템플릿 -->
+<script type="text/template" id="toast-basic-template">
+	<div class="toast role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="5000">
+		<div class="toast-header text-white bg-warning border-0">
+			<i class="bi bi-exclamation-circle me-1"></i><strong class="me-auto"><span>title</span></strong> <span></span>
+			<button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+		</div>
+		<div class="toast-body">message</div>
+	</div>
+</script>
 <script type="text/javascript">
+//Toast
+// 알람 메세지를 화면에 표시한다.
+var toastBasicTemplate = $("#toast-basic-template").html();
+var $toastContainer = $('.toast-container');
+
+// 제목을 포함하고 있는 토스트 메세지를 표현한다.
+function createBasicToast(title, message) {
+	var $el = $(toastBasicTemplate);
+	$el.find('.me-auto').text(title);
+	$el.find('.toast-body').text(message);
+	$el.appendTo($toastContainer);
+	
+	new bootstrap.Toast($el[0]).show();
+}
+
 //천단위 콤마 제거
 function minusComma(value){
      value = value.replace(/[^\d]+/g, "");
@@ -199,10 +231,17 @@ function addComma(value){
  
  
 $(function(){
+	// 로그인 유저 정보 //
+	var user_id = '${LOGINED_USER.id}';
+	var userEmail = '${LOGINED_USER.email}';
+	var userName = '${LOGINED_USER.name}';
+	var userPhone = '${LOGINED_USER.phone}';
+	var userAddress = '${LOGINED_USER.address}';
+	// 로그인 유저 정보 //
 	var selectPayment;
 	var simplePayment;
 	var inicisPayment;
-	var totalPrice;
+	var totalPrice = ${tickets.totalPrice };
 	//header nav js
 	$('.mainnav').mouseover(function(){
 	   $(this).children('.subnav').stop().slideDown().css('display','flex');
@@ -219,11 +258,27 @@ $(function(){
 		} else {
 			$("#pointInput").val($("#nowPoint").text());
 		}
+		var point = $('#pointInput').val();
+		var nowPoint = $('#nowPoint').data('now-point') - point;
+		$("#nowPoint").text(nowPoint);
 	})
 	
 	// 포인트 확인 버튼 클릭시
 	$('#confirmPointBtn').click(function() {
 		var point = $('#pointInput').val();
+		// 가지고있는 포인트 보다 많은 포인트를 사용할경우 유효성검사 //
+		if (point > $('#nowPoint').data('now-point')) {
+			$('#pointInput').val("0");
+			$('#pointInput').focus();
+			createBasicToast('포인트 부족', '현재 가지고 있는 포인트가 부족합니다.')
+			return;
+		}
+		// 가지고있는 포인트 보다 많은 포인트를 사용할경우 유효성검사 //
+		// 현재 가지고 있는 포인트에 사용한 포인트를 차감한 결과값을 나타냄 //
+		var nowPoint = $('#nowPoint').data('now-point') - point;
+		$("#nowPoint").text(nowPoint);
+		// 현재 가지고 있는 포인트에 사용한 포인트를 차감한 결과값을 나타냄 //
+		// 콤마 포맷팅 및 차감된 가격을 화면에 나타냄// 
 		var commaPoint = addComma($('#pointInput').val());
 		$('#discountPrice').text("");
 		$('#discountPrice').text('-'+ commaPoint);
@@ -231,6 +286,7 @@ $(function(){
 		totalPrice = price - point;
 		var commaPoint = addComma(String(totalPrice));
 		$("#span-total-price").text(commaPoint);
+		// 콤마 포맷팅 및 차감된 가격을 화면에 나타냄//
 	})
 	
 	//카드결제
@@ -267,6 +323,19 @@ $(function(){
 	
 	/*import*/
 	$("#a-confirm").click(function(){
+		if ($('#span-total-price').text() == 0) {
+			var isLogined = $("[name=isLogined]").val();
+			if(isLogined == 'no'){
+				alert("로그인이 필요한 서비스입니다.");
+	 			loginModal.show();
+				return;
+			}
+			$('#pay-ment').val("포인트");
+		    $('#pay-total-price').val(0);
+		    $('#pay-user-id').val(user_id);
+			$('#form-ticketing').submit();
+			return;
+		}
 		if(!selectPayment){
 			alert("결제 수단을 선택해주세요.")
 		}
@@ -290,26 +359,25 @@ $(function(){
 		    pg : simplePayment,
 		    pay_method : 'card',
 		    merchant_uid : 'merchant_' + new Date().getTime(),
-		    name : '주문명:결제테스트',
+		    name : 'CINEMABOX 결제',
 		    amount : totalPrice,
-		    buyer_email : 'iamport@siot.do',
-		    buyer_name : '구매자이름',
-		    buyer_tel : '010-1234-5678',
-		    buyer_addr : '서울특별시 강남구 삼성동',
-		    buyer_postcode : '123-456'
+		    buyer_email : userEmail,
+		    buyer_name : userName,
+		    buyer_tel : userPhone,
+		    buyer_addr : userAddress
 		}, function(rsp) {
 			console.log(rsp);
 		    if ( rsp.success ) {
 		    	var msg = '결제가 완료되었습니다.';
-		        msg += '고유ID : ' + rsp.imp_uid;
-		        msg += '상점 거래ID : ' + rsp.merchant_uid;
-		        msg += '결제 금액 : ' + rsp.paid_amount;
-		        msg += '카드 승인번호 : ' + rsp.apply_num;
-		    alert(msg);
+			    console.log(msg);
+			    $('#pay-ment').val(simplePayment);
+			    $('#pay-total-price').val(totalPrice);
+			    $('#pay-user-id').val(user_id);
+		        $('#form-ticketing').submit();
 		    } else {
-		    	 var msg = '결제에 실패하였습니다.';
-		         msg += '에러내용 : ' + rsp.error_msg;
-		    alert(msg);
+		    	var msg = '결제에 실패하였습니다.';
+		        msg += '에러내용 : ' + rsp.error_msg;
+			    alert(msg);
 		    }
 		});
 	}

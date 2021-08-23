@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cinemabox.dao.user.UserDao;
 import com.cinemabox.dto.user.UserDto;
-import com.cinemabox.vo.Movie;
 import com.cinemabox.vo.User;
 import com.cinemabox.web.utils.SessionUtils;
 
@@ -132,5 +131,22 @@ public class UserServiceImpl implements UserService{
 	public Map<String, Object> getUserDetail(String userId) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	// 결제후 적립금 적립 로직
+	@Override
+	public void updatePayPoint(User user) {
+		userDao.updatePayPoint(user);
+	}
+	
+	// 결제완료 유저 포인트 차감 로직
+	@Override
+	public void updateMinusPoint(int point) {
+		User loginedUser = (User) SessionUtils.getAttribute("LOGINED_USER");
+		int minusPoint = loginedUser.getPoint() - point;
+		User user = new User();
+		user.setPoint(minusPoint);
+		user.setId(loginedUser.getId());
+		userDao.updatePayPoint(user);
 	}
 }

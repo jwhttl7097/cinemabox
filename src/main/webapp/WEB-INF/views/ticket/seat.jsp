@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="/cinemabox/resources/css/common.css">
 <link rel="stylesheet" href="/cinemabox/resources/css/seat.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
@@ -104,21 +105,21 @@
 										<div class="col text-center">
 											<c:forEach var="n" begin="0" end="1">
 												<c:set var="index" value="${(loop-1)*10+n}" />
-												<input type="checkbox" class="couch" id="seatIco-${index }" value="${seats[index].seatNo}" ${(seats[index].ticketStatus eq 'Y' || seats[index].ticketStatus eq 'T') ? 'disabled':''} data-selected="${seats[index].ticketStatus }"/>
+												<input type="checkbox" class="couch" id="seatIco-${index }" data-seat-row="${seats[index].seatRow}" value="${seats[index].seatNo}" ${(seats[index].ticketStatus eq 'Y' || seats[index].ticketStatus eq 'T') ? 'disabled':''} data-selected="${seats[index].ticketStatus }"/>
 												<label for="seatIco-${index }" class="seatIco-${index }-before"><i class="fas fa-couch ${(seats[index].ticketStatus eq 'Y' || seats[index].ticketStatus eq 'T') ? 'text-success':'text-white'}"></i></label>
 											</c:forEach>
 										</div>
 										<div class="col text-center">
 											<c:forEach var="n" begin="2" end="7">
 												<c:set var="index" value="${(loop-1)*10+n}" />
-												<input type="checkbox" class="couch" id="seatIco-${index }" value="${seats[index].seatNo}" ${(seats[index].ticketStatus eq 'Y' || seats[index].ticketStatus eq 'T') ? 'disabled':''} data-selected="${seats[index].ticketStatus }"/>
+												<input type="checkbox" class="couch" id="seatIco-${index }" data-seat-row="${seats[index].seatRow}" value="${seats[index].seatNo}" ${(seats[index].ticketStatus eq 'Y' || seats[index].ticketStatus eq 'T') ? 'disabled':''} data-selected="${seats[index].ticketStatus }"/>
 												<label for="seatIco-${index }" class="seatIco-${index }-before"><i class="fas fa-couch ${(seats[index].ticketStatus eq 'Y' || seats[index].ticketStatus eq 'T') ? 'text-success':'text-white'}"></i></label>
 											</c:forEach>
 										</div>
 										<div class="col text-center">
 											<c:forEach var="n" begin="8" end="9">
 												<c:set var="index" value="${(loop-1)*10+n}" />
-												<input type="checkbox" class="couch" id="seatIco-${index }" value="${seats[index].seatNo}" ${(seats[index].ticketStatus eq 'Y' || seats[index].ticketStatus eq 'T') ? 'disabled':''} data-selected="${seats[index].ticketStatus }"/>
+												<input type="checkbox" class="couch" id="seatIco-${index }" data-seat-row="${seats[index].seatRow}" value="${seats[index].seatNo}" ${(seats[index].ticketStatus eq 'Y' || seats[index].ticketStatus eq 'T') ? 'disabled':''} data-selected="${seats[index].ticketStatus }"/>
 												<label for="seatIco-${index }" class="seatIco-${index }-before"><i class="fas fa-couch ${(seats[index].ticketStatus eq 'Y' || seats[index].ticketStatus eq 'T') ? 'text-success':'text-white'}"></i></label>
 											</c:forEach>
 										</div>
@@ -152,11 +153,51 @@
 		<input type="hidden" id="teenager_cnt" name="teenagerCnt" value="">
 		<input type="hidden" id="seat_row" name="seatRow" value="">
 		<input type="hidden" id="seat_col" name="seatCol" value="">
+		<input type="hidden" id="seat_no" name="seatNo" value="">
 		<input type="hidden" id="total_price" name="totalPrice" value="">
 	</form>
+	<input type="hidden" name="isLogined" value="${not empty LOGINED_USER ? 'yes':'no' }">
 	<%@include file="../common/footer.jsp" %>
 </div>
+<!-- 토스트 메세지가 세로방향으로 쌓이는 곳 -->
+<div class="toast-container position-absolute bottom-0 end-0 p-3"></div>
+<!-- 제목을 포함하고 토스트 메세지에 대한 HTML 템플릿 -->
+<script type="text/template" id="toast-basic-template">
+	<div class="toast role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="5000">
+		<div class="toast-header text-white bg-warning border-0">
+			<i class="bi bi-exclamation-circle me-1"></i><strong class="me-auto"><span>title</span></strong> <span></span>
+			<button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+		</div>
+		<div class="toast-body">message</div>
+	</div>
+</script>
 <script type="text/javascript">
+//Toast
+//알람 메세지를 화면에 표시한다.
+var toastBasicTemplate = $("#toast-basic-template").html();
+var $toastContainer = $('.toast-container');
+
+//제목을 포함하고 있는 토스트 메세지를 표현한다.
+function createBasicToast(title, message) {
+	var $el = $(toastBasicTemplate);
+	$el.find('.me-auto').text(title);
+	$el.find('.toast-body').html(message);
+	$el.appendTo($toastContainer);
+	
+	new bootstrap.Toast($el[0]).show();
+}
+//천단위 콤마 제거
+function minusComma(value){
+     value = value.replace(/[^\d]+/g, "");
+     return value; 
+ }
+ 
+//천단위 콤마 포맷팅
+function addComma(value){
+     value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+     return value; 
+ }
+
 $(function(){
 	//header nav js
 	$('.mainnav').mouseover(function(){
@@ -260,14 +301,14 @@ $(function(){
 				adultPrice = adultCnt * 10000;
 				teenagerPrice = teenagerCnt * 7000;
 				totalPrice = adultPrice + teenagerPrice;
-				$('#priceMsg').text(totalPrice);
+				$('#priceMsg').text(addComma(String(totalPrice)));
 			} else {
 // 					console.log($('#today').text() + ' 조조 평일');
 				adultPrice = adultCnt * 9000;
 // 					console.log(adultCnt);
 				teenagerPrice = teenagerCnt * 7000;
 				totalPrice = adultPrice + teenagerPrice;
-				$('#priceMsg').text(totalPrice);
+				$('#priceMsg').text(addComma(String(totalPrice)));
 			}
 		} else {
 			if ('금' == $('#today').text() || '토' == $('#today').text() || '일' == $('#today').text()) {
@@ -275,13 +316,13 @@ $(function(){
 				adultPrice = adultCnt * 14000;
 				teenagerPrice = teenagerCnt * 11000;
 				totalPrice = adultPrice + teenagerPrice;
-				$('#priceMsg').text(totalPrice);
+				$('#priceMsg').text(addComma(String(totalPrice)));
 			} else {
 // 				console.log($('#today').text() + ' 일반 평일');
 				adultPrice = adultCnt * 13000;
 				teenagerPrice = teenagerCnt * 10000;
 				totalPrice = adultPrice + teenagerPrice;
-				$('#priceMsg').text(totalPrice);
+				$('#priceMsg').text(addComma(String(totalPrice)));
 			}
 		}
 		// 성인, 청소년 인원수 밸류값 전달하기 //
@@ -291,7 +332,7 @@ $(function(){
 		$('#teenager_cnt').val(teenagerCnt);
 	// 성인, 청소년 인원수 밸류값 전달하기 //
 		// 총 금액 폼태그 값 절달 //
-		$('#total_price').val($('#priceMsg').text());
+		$('#total_price').val(minusComma($('#priceMsg').text()));
 		// 총 금액 폼태그 값 절달 //
 	})
 	//////////////////////////// 가격 산정 코드 ////////////////////////////
@@ -344,14 +385,28 @@ $(function(){
 				// 선택한 좌석의 행, 열 모음 밸류값 전달하기 //
 				var seatRows = [];
 				var seatCols = [];
+				var seatNumbers = [];
+				var seatToast = [];
 				$('.couch:checked').each(function(index, item) {
-					seatRows.push($(item).val());
+					seatNumbers.push($(item).val());
+					seatRows.push($(item).data('seat-row'));
 					seatCols.push($(item).parent().parent().eq(0).text().trim());
+					seatToast.push($(item).parent().parent().eq(0).text().trim() + $(item).data('seat-row'));
 				})
 				console.log('ajax 웹소켓 관계없음 좌석번호 밸류 확인 :'+seatRows);
 				console.log('ajax 웹소켓 관계없음  좌석행 밸류 확인 :'+seatCols);
+				console.log('ajax 웹소켓 관계없음  좌석행 밸류 확인 :'+seatNumbers);
+				$('#seat_no').val(seatNumbers.join(" "));
 				$('#seat_row').val(seatRows.join(" "));
 				$('#seat_col').val(seatCols.join(" "));
+				
+				var title = "좌석이 선택 되었습니다."
+				var message = '<p>선택된 좌석 : ' + seatToast + '</p>';
+					message += '<p>현재 선택된 좌석은 임시 선택 상태이며</p>';
+					message += '<p> 임시선택 유효시간은 20분 입니다.</p>';
+					message += '결제 완료후 좌석이 확정됩니다.';
+				console.log('토스트에 띄울 메세지 확인 : ' + seatToast);
+				createBasicToast(title, message);
 			} else {
 				// 1. 이미 예약된 좌석을 제외하고 비활성화 되어 있는 것을 전부 활성화하고 세컨더리 다 화이트로 선택 가능하게 표시 단, 1좌석 이상이면서 체크가 되어있는 좌석은 체크를 유지해야할것.
 				$('.couch:not(.couch:checked, input[data-selected=Y], input[data-selected=T])').removeClass('disabled').removeAttr('disabled').next().children().removeClass('text-secondary').addClass('text-white');
@@ -376,6 +431,12 @@ $(function(){
 	});
 	// 폼 데이터 서브밋 //
 	$('#pay-ment').click(function() {
+		var isLogined = $("[name=isLogined]").val();
+		if(isLogined == 'no'){
+			alert("로그인이 필요한 서비스입니다.");
+ 			loginModal.show();
+			return;
+		}
 		$('#pay-ment-form').submit();
 	})
 	
@@ -400,6 +461,7 @@ $(function(){
 		console.log('열 : ' + sRow + ', 행 : ' + sCol);
 		console.log('좌석번호 '+sNo + ', 좌석 상태 ' + sStatus + ', 좌석 상태 날짜' + sTime);
 		console.log('클릭상태 : ' + sType);
+		console.log('웹티켓번호 확인 : ' + payload.data.webTicketNo);
 		// 웹소켓 반응 코드 여기다 작성
 		var couchSeatNo = $('.couch').val();
 		console.log('찍힌 밸류 : '+couchSeatNo);

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.cinemabox.dao.reservation.ReservationDao">
+	<!-- 결제정보 예약내역 테이블에 저장하기 -->
+	<insert id="inserPayInfo" parameterType="com.cinemabox.vo.Reservation">
+	insert into CINEMABOX_RESERVATION
+	    (RESERVATION_NO, RESERVATION_STATUS, RESERVATION_PAY_STATUS,
+	    RESERVATION_TOTAL_PRICE, RESERVATION_PAYMENT, RESERVATION_CREATED_DATE,
+	    RESERVATION_POINT, MOVIE_NO, USER_ID, TICKET_NOS)
+	VALUES
+    	(reservation_seq.nextval, #{status}, #{payStatus}, #{totalPrice}, #{payment}, (sysdate+9/24), #{point}, #{movieNo}, #{userId}, #{ticketNos})
+	</insert>
+	
+	<!-- 스트링타입의 티켓번호를 전달받아 해당하는 예매내역번호를 반환받는다. -->
+	<select id="getReservationNoByTicketNo" parameterType="string" resultType="int">
+		select
+			RESERVATION_NO
+		from
+			CINEMABOX_RESERVATION
+		where
+			TICKET_NOS LIKE  '%' || #{value} || '%'
+	</select>
+	
+	<!-- 예매내역티켓객체(티켓번호, 예매내역번호)를 전달받아 등록시킨다. -->
+	<insert id="insertTicketNoAndReservationNo" parameterType="com.cinemabox.vo.ReservationTicket">
+		insert into
+			CINEMABOX_RESERVATION_TICKET
+			(RESERVATION_NO, TICKET_NO, RESERVATION_TICKET_NO)
+		values
+			(#{reservationNo}, #{ticketNo}, reservation_ticket_seq.nextval)
+	</insert>
+	
+</mapper>

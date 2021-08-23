@@ -62,4 +62,15 @@ public interface UserService {
 	 */
 	Map<String, Object> getUserDetail(String userId);
 	
+	/**
+	 * 유저 포인트를 업데이트 한다.
+	 * @param user 유저객체
+	 */
+	void updatePayPoint(User user);
+	
+	/**
+	 * 포인트를 전달받아서 포인트를 수정한다.
+	 * @param point 포인트
+	 */
+	void updateMinusPoint(int point);
 }
