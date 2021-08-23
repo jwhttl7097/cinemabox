@@ -56,6 +56,13 @@ public interface UserService {
 	String getUserById(String userId);
 	
 	/**
+	 * 이메일로 사용자 불러오기 (중복 체크할 때)
+	 * @param userEmail
+	 * @return
+	 */
+	String getUserByEmail(String userEmail);
+	
+	/**
 	 * 저장되어 있는 사용자 정보 불러오기
 	 * @param userId 사용자 아이디
 	 * @return
