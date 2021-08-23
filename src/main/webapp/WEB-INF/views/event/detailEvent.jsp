@@ -36,11 +36,13 @@
 	</div>
 
 	<div class="row mb-3" style="padding:50px">
-		<div>${eventDetail.content }</div>
+		<div style="text-align: center;" class="mb-5"><img src="${eventDetail.content }"/></div>
 	
-	<div style="text-align: center;">
-			<button type="button" class="btn btn-warning" onclick="location.href='main'">목록</button>
-		</div>
+	
+			<div class="d-grid gap-2 col-6 mx-auto">
+			  <button  class="btn btn-outline-warning" style="color: black" type="button" onclick="location.href='../ticket'">예매하기&할인권받기</button>
+			  <button class="btn btn-primary" type="button" onclick="location.href='main'">목록</button>
+			</div>
 	</div>
 	<%@ include file="../common/footer.jsp"%>
 </div>
