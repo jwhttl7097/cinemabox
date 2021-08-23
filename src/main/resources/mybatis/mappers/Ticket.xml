@@ -54,7 +54,8 @@
             and s.THEATER_NO = t.THEATER_NO
             and s.HALL_NO = h.HALL_NO
             and s.screening_date >= to_date(to_char(sysdate, 'YYYYMMDD'))
-            and m. MOVIE_STATUS = 'Y'
+            and m.MOVIE_STATUS = 'Y'
+            and m.MOVIE_SCREENING_STATUS = 'Y'
         order by 
         <choose>
         	<when test="sort == 'ticket'">
@@ -118,6 +119,7 @@
             and s.HALL_NO = h.HALL_NO
             and s.SCREENING_STATUS = 'Y'
             and m.MOVIE_STATUS = 'Y'
+            and m.MOVIE_SCREENING_STATUS = 'Y'
         order by 
         	s.SCREENING_DATE asc
 	</select>
@@ -148,7 +150,8 @@
             and s.MOVIE_NO = m.MOVIE_NO
             and s.THEATER_NO = t.THEATER_NO
             and s.HALL_NO = h.HALL_NO
-            and m. MOVIE_STATUS = 'Y'
+            and m.MOVIE_STATUS = 'Y'
+            and m.MOVIE_SCREENING_STATUS = 'Y'
         order by 
         	s.SCREENING_DATE asc
 	</select>
@@ -180,7 +183,8 @@
             and s.MOVIE_NO = m.MOVIE_NO
             and s.THEATER_NO = t.THEATER_NO
             and s.HALL_NO = h.HALL_NO
-            and m. MOVIE_STATUS = 'Y'
+            and m.MOVIE_STATUS = 'Y'
+			and m.MOVIE_SCREENING_STATUS = 'Y'
 	</select>	
 	
 	<!-- 상영번호로 현재 티켓(좌석) 상태 불러오기 -->

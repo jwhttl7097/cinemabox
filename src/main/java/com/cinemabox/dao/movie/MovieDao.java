@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.cinemabox.dto.movie.CloseMovieDto;
 import com.cinemabox.vo.Movie;
 import com.cinemabox.vo.Wishlist;
 
@@ -25,4 +26,7 @@ public interface MovieDao {
 	
 	List<Movie> getUnreleaseMoviesByToday();
 	List<Movie> getSearchResult(String keyword);
+	
+	void updateCloseMovie(CloseMovieDto closeMovieDto);
+	List<CloseMovieDto> getCloseMovies();
 }
