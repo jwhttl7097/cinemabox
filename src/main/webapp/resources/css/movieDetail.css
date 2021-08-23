@@ -157,10 +157,3 @@
 /* input[type="radio"]:checked + .face {
 	opacity: 1 !important;
 } */
-.input-review{
-	border:1px solid gray;
-	border-radius: 5px;
-	width: 70%;
-	height: 50px;
-	padding:15px;
-}

@@ -28,7 +28,6 @@ import com.cinemabox.web.utils.SessionUtils;
 @Controller
 @SessionAttributes({"ticketDto"})
 public class TicketController{
-	
 	@Autowired TicketService ticketService;
 	@Autowired ReservationService reservationService;
 	@Autowired UserService userService;

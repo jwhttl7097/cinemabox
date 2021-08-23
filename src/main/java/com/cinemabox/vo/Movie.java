@@ -30,5 +30,11 @@ public class Movie {
 	private int userLike;
 	private Date createdDate;
 
+	public String getSynopsisWithBr() {
+		if(synopsis == null) {
+			return " ";
+		}
+		return synopsis.replace("\n", "<br>");
+	}
 }
 

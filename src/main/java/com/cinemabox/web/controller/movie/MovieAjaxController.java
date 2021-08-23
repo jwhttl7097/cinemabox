@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cinemabox.dao.movie.ReviewDao;
 import com.cinemabox.service.movie.MovieService;
 import com.cinemabox.service.movie.ReviewService;
 import com.cinemabox.vo.Movie;
@@ -22,6 +23,7 @@ import com.cinemabox.vo.Wishlist;
 public class MovieAjaxController {
 
 	@Autowired MovieService movieService;
+	@Autowired ReviewDao reviewDao;
 	@Autowired ReviewService reviewService;
 	
 	@RequestMapping("/sort")
@@ -73,9 +75,8 @@ public class MovieAjaxController {
 			
 			//기존의 영화 평점을 불러와서 추가된 평점으로 평균구하기
 			Movie movie = movieService.getMovieByNo(movieNo);
-			int reviewCnt = reviewService.getReviewCntByMovieNo(movieNo);
-			double reviewRating = (movie.getRating()+review.getRating())/reviewCnt;
-			movie.setRating(reviewRating);
+			double avg = reviewDao.getMovieRatingAvg(movieNo);
+			movie.setRating(avg);
 			reviewService.updateMovieRating(movie);
 
 			//관람평 목록 조회
@@ -88,15 +89,14 @@ public class MovieAjaxController {
 	
 	@RequestMapping("/delete")
 	public @ResponseBody ResponseEntity<List<Review>> deleteReview(Review review, int movieNo){
-		//기존의 영화 평점을 불러와서 추가된 평점으로 평균구하기
-		Movie movie = movieService.getMovieByNo(movieNo);
-		int reviewCnt = reviewService.getReviewCntByMovieNo(movieNo);
-		double reviewRating = (movie.getRating()-review.getRating())/reviewCnt-1;
-		movie.setRating(reviewRating);
-		reviewService.updateMovieRating(movie);
-
 		//관람평 삭제
 		reviewService.deleteReview(review);
+		
+		//기존의 영화 평점을 불러와서 추가된 평점으로 평균구하기
+		Movie movie = movieService.getMovieByNo(movieNo);
+		double avg = reviewDao.getMovieRatingAvg(movieNo);
+		movie.setRating(avg);
+		reviewService.updateMovieRating(movie);
 		
 		//관람평 목록 조회
 		List<Review> reviewList = reviewService.getAllReviews(movieNo);

@@ -101,7 +101,7 @@
 								</c:choose>
 							</h5>
 							<ul class="m-0 p-0" style="font-size:14px; color:#848484;">
-								<li class="d-inline pe-2" style="border-right:1px solid #ddd;">예매율 : ${movie.reservationRate }%</li>
+								<li class="d-inline pe-2" style="border-right:1px solid #ddd;">예매율 : <fmt:formatNumber value="${movie.reservationRate }" pattern="0"/>%</li>
 								<li class="d-inline">개봉일 : <fmt:formatDate value="${movie.releaseDate }" pattern="yyyy.MM.dd"/></li>
 							</ul>
 						</li>
@@ -114,7 +114,7 @@
 							<span class="position-absolute rankNo"><strong><i>${loop.count }</i></strong></span>
 							<div class="position-absolute poster-info">	
 								<div class="position-absolute">
-									<a class="nav-link text-white d-block mb-2" href="ticketing?no=${movie.no }">예매하기</a>
+<%-- 									<a class="nav-link text-white d-block mb-2" href="ticketing?no=${movie.no }">예매하기</a> --%>
 									<a class="nav-link text-white d-block" href="movieDetail?no=${movie.no }">상세정보</a>
 								</div>
 							</div>
@@ -131,7 +131,7 @@
 								</c:choose>
 							</h5>
 							<ul class="m-0 p-0" style="font-size:14px; color:#848484;">
-								<li class="d-inline pe-2" style="border-right:1px solid #ddd;">예매율 : ${movie.reservationRate }%</li>
+								<li class="d-inline pe-2" style="border-right:1px solid #ddd;">예매율 : <fmt:formatNumber value="${movie.reservationRate }" pattern="0"/>%</li>
 								<li class="d-inline">개봉일 : <fmt:formatDate value="${movie.releaseDate }" pattern="yyyy.MM.dd"/></li>
 							</ul>
 						</li>
@@ -212,7 +212,7 @@ $(function(){
 						content += "<span class='position-absolute rankNo'><strong><i>"+(index+1)+"</i></strong></span>";
 						content += "<div class='position-absolute poster-info'>"
 						content += "<div class='position-absolute'>"
-						content += "<a class='nav-link text-white d-block mb-2' href='ticketing?no="+item.no+"'>예매하기</a>";
+						content += "<a class='nav-link text-white d-block mb-2' href='ticket?location=서울&theaterNo=10001&movieNo="+item.no+"'>예매하기</a>";
 						content += "<a class='nav-link text-white d-block' href='movieDetail?no="+item.no+"'>상세정보</a>";
 						content += "</div>"
 						content += "</div>"
@@ -241,7 +241,7 @@ $(function(){
 						content += "<span class='position-absolute rankNo'><strong><i>"+(index+1)+"</i></strong></span>";
 						content += "<div class='position-absolute poster-info'>"
 						content += "<div class='position-absolute'>"
-						content += "<a class='nav-link text-white d-block mb-2' href='ticketing?no="+item.no+"'>예매하기</a>";
+// 						content += "<a class='nav-link text-white d-block mb-2' href='ticketing?no="+item.no+"'>예매하기</a>";
 						content += "<a class='nav-link text-white d-block' href='movieDetail?no="+item.no+"'>상세정보</a>";
 						content += "</div>"
 						content += "</div>"
@@ -255,7 +255,7 @@ $(function(){
 						}
 						content += "</h5>" ;
 						content += "<ul class='m-0 p-0' style='font-size:14px; color:#848484;'>";
-						content += "<li class='d-inline pe-2' style='border-right:1px solid #ddd;'>예매율 : "+item.rating+"%</li>";
+						content += "<li class='d-inline pe-2' style='border-right:1px solid #ddd;'>예매율 : "+item.reservationRate+"%</li>";
 						content += "<li class='d-inline m-1'>개봉일 : "+ moment.unix(item.releaseDate/1000).format("YYYY.MM.DD") +"</li>";
 						content += "</ul>";
 						content += "</li>";

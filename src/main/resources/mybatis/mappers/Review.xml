@@ -72,4 +72,12 @@
 			and REVIEW_STATUS = 'Y'
 	</select>
 	
+	<select id="getMovieRatingAvg" parameterType="int" resultType="double">
+		select
+			trunc(avg(REVIEW_RATING),2) as ratingAvg
+		from 
+		    CINEMABOX_REVIEW
+		where
+	 	   movie_no = #{value}
+    </select>
 </mapper>
