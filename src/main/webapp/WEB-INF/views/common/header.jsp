@@ -43,7 +43,6 @@
 					<li id="logout-link" class="nav-item" style="display:${not empty LOGINED_USER ? '' : 'none'}"><a class="nav-link" href="/cinemabox/logout">로그아웃</a></li>
 				</ul>
 		</div>
-		
 		<div class="position-relative p-0" id="sticky-nav">
 			<div class="navbar justify-content-center" id="mainnav-container">
 				<ul class="nav text-center justify-content-center" id="mainnav-01">
@@ -181,7 +180,7 @@
         				<div class="row">
         					<div class="col-6 offset-3">
         						<span><small>ID/PWD 찾기</small></span>
-        						<span><small>| 회원가입</small></span>
+        						<a href="/cinemabox/register"><span><small>| 회원가입</small></span></a>
         					</div>
         				</div>
         				<div class="row mt-4">
@@ -339,5 +338,10 @@ function getCookie(name) {
 		location.href="/cinemabox/register" 
 	};
 	*/
-
 </script>
+<c:if test="${param.error eq 'login' }">
+	<script>
+		//로그인이 필요합니다 적기
+		loginModal.show();
+	</script>
+</c:if>
