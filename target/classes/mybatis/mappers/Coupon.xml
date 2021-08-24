@@ -16,6 +16,31 @@
 			CINEMABOX_COUPONS c, CINEMABOX_COUPONLIST cl
 		where
 			cl.user_id = #{value}
+			and c.coupon_status = 'N'
 			and c.coupon_no = cl.coupon_no
 	</select>
+	
+	<select id="getCouponInfoBySerialNo" parameterType="string" resultType="com.cinemabox.vo.Coupon">
+		select
+			COUPON_NO as couponListNo,
+			COUPON_TYPE as type,
+			COUPON_ISSUE_DATE as issueDate,
+			COUPON_EXP_DATE as expDate,
+			COUPON_STATUS as status,
+			COUPON_USED_DATE as usedDate
+		from
+			CINEMABOX_COUPONS
+		where
+			COUPON_SERIAL_NO = #{value}
+	</select>
+	
+	<update id="updateUsedCoupon" parameterType="com.cinemabox.vo.Coupon">
+		update 
+			CINEMABOX_COUPONS
+		set
+			COUPON_STATUS = #{status},
+			COUPON_USED_DATE = sysdate
+		where
+			COUPON_SERIAL_NO = #{serialNo}
+	</update>
 </mapper>

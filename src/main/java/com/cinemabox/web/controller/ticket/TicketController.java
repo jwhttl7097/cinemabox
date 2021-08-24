@@ -17,6 +17,7 @@ import com.cinemabox.dao.ticket.TicketDao;
 import com.cinemabox.dao.user.UserDao;
 import com.cinemabox.dto.ticket.TicketDto;
 import com.cinemabox.service.Ticket.TicketService;
+import com.cinemabox.service.coupon.CouponService;
 import com.cinemabox.service.reservation.ReservationService;
 import com.cinemabox.service.user.UserService;
 import com.cinemabox.vo.Coupon;
@@ -31,6 +32,7 @@ public class TicketController{
 	@Autowired TicketService ticketService;
 	@Autowired ReservationService reservationService;
 	@Autowired UserService userService;
+	@Autowired CouponService couponService;
 	@Autowired UserDao userDao;
 	@Autowired TicketDao ticketDao;
 	@Autowired CouponDao couponDao;
@@ -77,9 +79,11 @@ public class TicketController{
 	public String complete(Model model, @ModelAttribute("ticketDto") TicketDto ticketDto, SessionStatus sessionStatus, Reservation reservation) {
 		System.out.println("====="+ticketDto.toString());
 		System.out.println("====="+reservation.toString());
-		// 포인트로 전부 결제 또는 일부 결제시 해당 포인트 차감 로직 //
-		userService.updateMinusPoint(reservation.getUsedPoint());
-		// 포인트로 전부 결제 또는 일부 결제시 해당 포인트 차감 로직 //
+		// 사용한 쿠폰 사용 완료 처리 하기 //
+		if(!reservation.getSerialNo().isEmpty()) {
+			String serialNo = reservation.getSerialNo();
+			couponService.updateUsedCoupon(serialNo);
+		}
 		
 		// 시트번호로 티켓번호를 알아내고 해당 티켓상태를 예매완료로 바꿔주기 //
 		String ticketNumber = "";
@@ -117,10 +121,10 @@ public class TicketController{
 		}
 		// 각각의 티켓번호와 reservation번호를 reservation_ticket테이블에 저장하기 //
 		
-		// user에 포인트 적립 // 
+		// user에 포인트 적립 //
 		User loginedUser = (User) SessionUtils.getAttribute("LOGINED_USER");
 		User user = new User();
-		user.setPoint(loginedUser.getPoint() + (int) Math.round(point));
+		user.setPoint((loginedUser.getPoint() + (int) Math.round(point))- reservation.getUsedPoint());
 		user.setId(reservation.getUserId());
 		userService.updatePayPoint(user);
 		// user에 포인트 적립 // 

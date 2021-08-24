@@ -19,4 +19,5 @@ public class Reservation {
 	private String userId;
 	private String ticketNos;
 	private int usedPoint;
+	private String serialNo;
 }

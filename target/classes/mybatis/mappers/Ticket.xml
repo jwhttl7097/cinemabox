@@ -12,7 +12,7 @@
 		where
 			SCREENING_NO = #{screeningNo}
 	</update>
-
+	
 	<!-- 현재시간보다 이전인 전체 상영시간 불러오기 -->
 	<select id="getAllScreeningTime" resultType="com.cinemabox.dto.ticket.TicketDto">
         select

@@ -67,10 +67,11 @@ public interface UserService {
 	 * @param user 유저객체
 	 */
 	void updatePayPoint(User user);
+
 	
 	/**
 	 * 포인트를 전달받아서 포인트를 수정한다.
 	 * @param point 포인트
 	 */
-	void updateMinusPoint(int point);
+	void updateMinusPoint(int usedPoint);
 }

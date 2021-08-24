@@ -72,11 +72,20 @@
 	
 	<insert id="insertUser" parameterType="com.cinemabox.vo.User">
 		insert into cinemabox_users
-		(user_id, user_password, user_name, user_email, user_birth, user_phone_number)
+		(user_id, user_password, user_name, user_email, user_birth, user_phone_number, user_address)
 		values
-		(#{id}, #{password}, #{name}, #{email}, TO_DATE(#{birth},'YYYY-MM-DD'), #{phone})
+		(#{id}, #{password}, #{name}, #{email}, TO_DATE(#{birth},'YYYY-MM-DD'), #{phone}, #{address})
 	</insert>
 	
+	<update id="updateUser" parameterType="com.cinemabox.vo.User">
+		update cinemabox_users
+		set
+			user_password = #{password}, 
+			user_email = #{email}, 
+			user_phone_number = #{phone}, 
+			user_address = #{address} 
+		where user_id = #{value}
+	</update>
 	<select id="countWishlists" parameterType="com.cinemabox.vo.Wishlist" resultType="int">
 		select 
 			count(*) 
@@ -93,7 +102,7 @@
 		set
 			USER_POINT = #{point}
 		where
-			user_id = #{id}
+			USER_ID = #{id}
 	</update>
 	
 	

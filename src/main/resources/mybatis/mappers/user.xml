@@ -102,7 +102,7 @@
 		set
 			USER_POINT = #{point}
 		where
-			user_id = #{id}
+			USER_ID = #{id}
 	</update>
 	
 	

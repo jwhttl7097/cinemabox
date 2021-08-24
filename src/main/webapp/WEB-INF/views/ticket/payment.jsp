@@ -127,8 +127,8 @@
 							<li class="mt-3" id="li-coupon-list" style="display:none;">
 								<table class="table border">
 									<colgroup>
-										<col width="75%">
-										<col width="20%">
+										<col width="70%">
+										<col width="25%">
 									</colgroup>
 									<c:choose>
 										<c:when test="${empty coupons }">
@@ -140,7 +140,7 @@
 											<c:forEach items="${coupons }" var="coupon">
 												<tr class="align-middle" style="font-size:0.8rem;">
 													<td class="p-3">${coupon.type }</td>
-													<td><button class="btn border">사용</button></td>
+													<td><button data-coupon="N" data-serial="${coupon.serialNo }" class="coupon-btn btn btn-outline-secondary btn-sm border">사용가능</button></td>
 												</tr>
 											</c:forEach>
 										</c:otherwise>
@@ -154,8 +154,9 @@
 								</h6>
 								<div class="input-group">
 									<button class="btn btn-outline-secondary" id="allPointBtn">전체사용</button>
-									<input type="number" min="0" value="" placeholder="0" id="pointInput" class="form-control text-end" style="color:#999;">
+									<input type="number" min="0" value="0" placeholder="0" id="pointInput" class="form-control text-end" style="color:#999;">
 									<button class="btn btn-outline-secondary" id="confirmPointBtn">확인</button>
+									<button class="btn btn-outline-secondary" id="cancelPointBtn">취소</button>
 								</div>
 							</li>
 						</ul>
@@ -166,8 +167,16 @@
 							<dd><fmt:formatNumber value="${tickets.totalPrice }"/>원</dd>
 						</dl>
 						<dl>
+							<dt>쿠폰할인</dt>
+							<dd><span>- </span><span id="coupon-money">0</span>원</dd>
+						</dl>
+						<dl>
+							<dt>포인트할인</dt>
+							<dd><span>- </span><span id="point-discount-money">0</span>원</dd>
+						</dl>
+						<dl>
 							<dt>할인금액</dt>
-							<dd><span id="discountPrice"></span>원</dd>
+							<dd><span>- </span><span id="discountPrice">0</span>원</dd>
 						</dl>
 						<dl>
 							<dt>결제금액</dt>
@@ -182,6 +191,8 @@
 				<input type="hidden" name="payment" value="" id="pay-ment">
 				<input type="hidden" name="totalPrice" value="" id="pay-total-price">
 				<input type="hidden" name="userId" value="" id="pay-user-id">
+				<input type="hidden" name="usedPoint" value="" id="pay-user-point">
+				<input type="hidden" name="serialNo" value="" id="pay-coupon-serial">
 			</form>
 			<input type="hidden" name="isLogined" value="${not empty LOGINED_USER ? 'yes':'no' }">
 		</div>
@@ -229,19 +240,30 @@ function addComma(value){
      return value; 
  }
  
- 
 $(function(){
+//총 결제금액, 할인금액 계산 메소드
+function calculateTotalPay() {
+	var ticketPrice = $('#div-total').data('movie-price')
+	var couponPrice = Number(minusComma($('#coupon-money').text()));
+	var payPoint = Number(minusComma($('#point-discount-money').text()));
+	var totalDiscountPrice = couponPrice + payPoint; // 총할인금액 = 쿠폰금액 + 포인트금액
+	totalPrice = ticketPrice - totalDiscountPrice	// 총결제금액 = 상품금액 - 총할인금액
+	console.log('결제금액 확인 계산메소드내부 : ' + totalPrice);
+	$("discountPrice").text(addComma(String(totalDiscountPrice)));	
+	$("#span-total-price").text(addComma(String(totalPrice)));
+	$('#pay-total-price').val(totalPrice);
+}
 	// 로그인 유저 정보 //
 	var user_id = '${LOGINED_USER.id}';
 	var userEmail = '${LOGINED_USER.email}';
 	var userName = '${LOGINED_USER.name}';
 	var userPhone = '${LOGINED_USER.phone}';
 	var userAddress = '${LOGINED_USER.address}';
-	// 로그인 유저 정보 //
+	
 	var selectPayment;
 	var simplePayment;
 	var inicisPayment;
-	var totalPrice = ${tickets.totalPrice };
+	var totalPrice = Number(minusComma($('#span-total-price').text()));
 	//header nav js
 	$('.mainnav').mouseover(function(){
 	   $(this).children('.subnav').stop().slideDown().css('display','flex');
@@ -259,35 +281,67 @@ $(function(){
 			$("#pointInput").val($("#nowPoint").text());
 		}
 		var point = $('#pointInput').val();
-		var nowPoint = $('#nowPoint').data('now-point') - point;
-		$("#nowPoint").text(nowPoint);
+		var nowPoint = $('#nowPoint').text() - point;
 	})
-	
-	// 포인트 확인 버튼 클릭시
+	// 쿠폰 사용버튼 클릭시 //
+		// 쿠폰 중복사용 안됨 알림 //
+	$('#btn-coupon').one('click', function() {
+		createBasicToast("쿠폰 사용 공지", "쿠폰은 중복사용이 불가능 합니다.");
+	})
+		// 쿠폰 중복사용 안됨 알림 //
+		
+	// 쿠폰 사용시 상품금액에 50프로 할인 고정
+	// 쿠폰 사용시 기존 상품금액에서 할인 시켜줄것.
+	$('.coupon-btn').click(function() {
+		if ($(this).hasClass('btn-active')) {   // 취소
+			$(this).attr('data-coupon', 'N').text('사용가능').parents().siblings().find('.coupon-btn').removeClass('disabled');
+			$(this).parent().prev().css('font-weight', '');
+			$("#coupon-money").text(0)
+			$(this).removeClass('btn-active');
+			$('.btn-coupon').removeClass('btn-disabled');
+		} else { // 사용가능 선택
+			$(this).parent().prev().css('font-weight', 'bolder');
+			$(this).attr('data-coupon', 'Y').text('취소');
+			$(this).parents().siblings().find('.coupon-btn').addClass('disabled');
+			$("#coupon-money").text(addComma(String($('#div-total').data('movie-price')*0.5)));
+			$('.btn-coupon').addClass('btn-disabled');
+			$(this).removeClass('btn-disabled').addClass('btn-active');
+			// 선택한 쿠폰시리얼 폼값에 전달
+			$('#pay-coupon-serial').val($(this).data('serial'));
+		}
+		calculateTotalPay();
+	})
+	// 쿠폰 사용버튼 클릭시 //
+	// 포인트 확인 버튼 클릭시 //
 	$('#confirmPointBtn').click(function() {
 		var point = $('#pointInput').val();
 		// 가지고있는 포인트 보다 많은 포인트를 사용할경우 유효성검사 //
-		if (point > $('#nowPoint').data('now-point')) {
-			$('#pointInput').val("0");
+		if (point > $('#nowPoint').text()) {
+			$('#pointInput').val(0);
 			$('#pointInput').focus();
 			createBasicToast('포인트 부족', '현재 가지고 있는 포인트가 부족합니다.')
 			return;
 		}
 		// 가지고있는 포인트 보다 많은 포인트를 사용할경우 유효성검사 //
 		// 현재 가지고 있는 포인트에 사용한 포인트를 차감한 결과값을 나타냄 //
-		var nowPoint = $('#nowPoint').data('now-point') - point;
+		var nowPoint = $('#nowPoint').text() - point;
 		$("#nowPoint").text(nowPoint);
 		// 현재 가지고 있는 포인트에 사용한 포인트를 차감한 결과값을 나타냄 //
-		// 콤마 포맷팅 및 차감된 가격을 화면에 나타냄// 
-		var commaPoint = addComma($('#pointInput').val());
-		$('#discountPrice').text("");
-		$('#discountPrice').text('-'+ commaPoint);
-		var price = $('#div-total').data('movie-price');
-		totalPrice = price - point;
-		var commaPoint = addComma(String(totalPrice));
-		$("#span-total-price").text(commaPoint);
-		// 콤마 포맷팅 및 차감된 가격을 화면에 나타냄//
-	})
+		$("#point-discount-money").text(addComma(String($("#pointInput").val())));
+		calculateTotalPay();
+		$('#pointInput').val(0);
+		// 사용한 포인트를 폼값에 전달
+		var usedPoint = parseInt(minusComma($("#point-discount-money").text()))
+		$('#pay-user-point').val(usedPoint);
+		console.log('======'+$('#pay-user-point').val());
+		
+	});
+	// 포인트 취소 버튼 클릭시 //
+	$('#cancelPointBtn').click(function() {
+		$('#nowPoint').text(minusComma($("#point-discount-money").text()));
+		$("#point-discount-money").text(0);
+		calculateTotalPay();
+	});
 	
 	//카드결제
 	$("#btn-pay-card").click(function(){
@@ -349,7 +403,7 @@ $(function(){
 			simplePay()
 		}
 	});
-
+	console.log('결제금액 확인 : ' + totalPrice);
 	// IMP.request_pay(param, callback) 결제창 호출
 	
     function simplePay(){
@@ -388,13 +442,12 @@ $(function(){
     	    pg : 'html5_inicis', //ActiveX 결제창은 inicis를 사용
     	    pay_method : inicisPayment, //card(신용카드), trans(실시간계좌이체), vbank(가상계좌), phone(휴대폰소액결제)
     	    merchant_uid : 'merchant_' + new Date().getTime(), //상점에서 관리하시는 고유 주문번호를 전달
-    	    name : '주문명:결제테스트',
+    	    name : 'CINEMABOX 결제',
     	    amount : totalPrice,
-    	    buyer_email : 'iamport@siot.do',
-    	    buyer_name : '구매자이름',
-    	    buyer_tel : '010-1234-5678', //누락되면 이니시스 결제창에서 오류
-    	    buyer_addr : '서울특별시 강남구 삼성동',
-    	    buyer_postcode : '123-456'
+    	    buyer_email : userEmail,
+    	    buyer_name : userName,
+    	    buyer_tel : userPhone, //누락되면 이니시스 결제창에서 오류
+    	    buyer_addr : userAddress,
     	}, function(rsp) {
     	    if ( rsp.success ) {
     	    	//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
@@ -410,12 +463,11 @@ $(function(){
     	    		//[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
     	    		if ( everythings_fine ) {
     	    			var msg = '결제가 완료되었습니다.';
-    	    			msg += '\n고유ID : ' + rsp.imp_uid;
-    	    			msg += '\n상점 거래ID : ' + rsp.merchant_uid;
-    	    			msg += '\n결제 금액 : ' + rsp.paid_amount;
-    	    			msg += '카드 승인번호 : ' + rsp.apply_num;
-    	    			
-    	    			alert(msg);
+    	    			console.log(msg);
+    				    $('#pay-ment').val(simplePayment);
+    				    $('#pay-total-price').val(totalPrice);
+    				    $('#pay-user-id').val(user_id);
+    			        $('#form-ticketing').submit();
     	    		} else {
     	    			//[3] 아직 제대로 결제가 되지 않았습니다.
     	    			//[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
