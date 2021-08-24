@@ -10,23 +10,24 @@
 	rel="stylesheet">
 <link rel="stylesheet" href="/cinemabox/resources/css/common.css">
 <link rel="stylesheet" href="/cinemabox/resources/css/theaterHome.css">
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="/cinemabox/resources/js/common.js"></script>
 <title>전체극장|CINEMA BOX</title>
 </head>
 <body>
-	<div class="container-fluid">
+	<div class="container-fluid" style="position: relative;">
 		<%@include file="../common/header.jsp"%>
+	<div style="position: absolute; z-index: -99; background-size: cover; background-image: url('resources/images/theaterDetail/bg-theater-main.png'); width: 100%; height: 500px;">
+	</div>
 		<div class="container">
 			<div class="row mt-5">
 				<div class="col-12 text-start">
-					<h3 style="color: #503396">전체극장</h3>
+					<h3>전체극장</h3>
 				</div>
 			</div>
-			<div id="theater-box">
+			<div id="theater-box" class="bg-white">
 				<div class="row">
 					<div id="theater-place" class="col-12">
 						<ul class="list-group list-group-horizontal" style="border-bottom: 1px solid #ddd">
@@ -52,20 +53,59 @@
 			</div>
 			<div class="row mt-5">
 				<div class="col-6 text-start">
-					<h3 style="color: #503396">극장 이벤트</h3>
+					<h3>극장 이벤트</h3>
 				</div>
-				<div class="col-6 text-end">
-					<a>더보기 <i class="fas fa-sign-in-alt"></i></a>
+				<div class="col-6 text-end more">
+					<a href="event/main" style="text-decoration: none; color: black;">더보기 <i class="fas fa-sign-in-alt"></i></a>
 				</div>
 				<div class="row">
 					<div class="col-6 d-flex justify-content-center">
-						<img src="resources/images/theaterEvent/noimage.png"
-							class="rounded float-start" alt="이벤트1" width="535px"
-							height="250px">
+							<div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel" style="width: 400px; height: 185px;">
+								<div class="carousel-inner">
+									<div class="carousel-item" data-bs-interval="2000">
+										<a href="event/lotto" ><img style="width: 400px; height: 185px; background: bisque;" src="resources/images/event/magic3.png" alt="<팜 스프링스> 현장 경품 이벤트"></a>
+									</div>
+									<div class="carousel-item" data-bs-interval="3000">
+										<a href="event/detail?no=1"><img style="width: 400px; height: 185px;" src="https://caching.lottecinema.co.kr//Media/Event/5d4fca77c7f549998ed563d9d2345b6e.jpg" alt="<남색대문> 현장경품 이벤트"></a>
+									</div>
+									<div class="carousel-item active" data-bs-interval="3000">
+										<a href="event/detail?no=2"><img style="width: 400px; height: 185px;" src="https://caching.lottecinema.co.kr//Media/Event/e8c94a452a5a4bd0b9e61dee1f16ea19.jpg" alt="<보스베이비> 스페셜 퍼즐 증정 이벤트"></a>
+									</div>
+									<div class="carousel-item" data-bs-interval="3000">
+										<a href="event/detail?no=3"><img style="width: 400px; height: 185px;" src="https://caching.lottecinema.co.kr//Media/Event/33284260ba2b4e2995499535d18365fd.jpg" alt="영화 더스파이 현장경품이벤트"></a>
+									</div>
+									<div class="carousel-item" data-bs-interval="3000">
+										<a href="event/detail?no=4"><img style="width: 400px; height: 185px;" src="https://caching.lottecinema.co.kr//Media/Event/199f530329ab4bf0af39c059c2f29817.jpg" alt="<모가디슈> 관람 인증 이벤트"></a>
+									</div>
+									<div class="carousel-item" data-bs-interval="3000">
+										<a href="event/detail?no=5"><img style="width: 400px; height: 185px;" src="https://caching.lottecinema.co.kr//Media/Event/6830cb7253804ce7a6f6312a393385ce.jpg" alt="<퍼피구조대 더 무비> 현장경품 이벤트"></a>
+									</div>
+								</div>
+							</div>	
 					</div>
 					<div class="col-6 d-flex justify-content-center">
-						<img src="resources/images/theaterEvent/noimage.png"
-							class="rounded float-end" alt="이벤트2" width="535px" height="250px">
+							<div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel" style="width: 400px; height: 185px;">
+								<div class="carousel-inner">
+									<div class="carousel-item active" data-bs-interval="2000">
+										<a href="event/lotto" ><img style="width: 400px; height: 185px; background: bisque;" src="resources/images/event/magic3.png" alt="<팜 스프링스> 현장 경품 이벤트"></a>
+									</div>
+									<div class="carousel-item" data-bs-interval="3000">
+										<a href="event/detail?no=1"><img style="width: 400px; height: 185px;" src="https://caching.lottecinema.co.kr//Media/Event/5d4fca77c7f549998ed563d9d2345b6e.jpg" alt="<남색대문> 현장경품 이벤트"></a>
+									</div>
+									<div class="carousel-item" data-bs-interval="3000">
+										<a href="event/detail?no=2"><img style="width: 400px; height: 185px;" src="https://caching.lottecinema.co.kr//Media/Event/e8c94a452a5a4bd0b9e61dee1f16ea19.jpg" alt="<보스베이비> 스페셜 퍼즐 증정 이벤트"></a>
+									</div>
+									<div class="carousel-item" data-bs-interval="3000">
+										<a href="event/detail?no=3"><img style="width: 400px; height: 185px;" src="https://caching.lottecinema.co.kr//Media/Event/33284260ba2b4e2995499535d18365fd.jpg" alt="영화 더스파이 현장경품이벤트"></a>
+									</div>
+									<div class="carousel-item" data-bs-interval="3000">
+										<a href="event/detail?no=4"><img style="width: 400px; height: 185px;" src="https://caching.lottecinema.co.kr//Media/Event/199f530329ab4bf0af39c059c2f29817.jpg" alt="<모가디슈> 관람 인증 이벤트"></a>
+									</div>
+									<div class="carousel-item" data-bs-interval="3000">
+										<a href="event/detail?no=5"><img style="width: 400px; height: 185px;" src="https://caching.lottecinema.co.kr//Media/Event/6830cb7253804ce7a6f6312a393385ce.jpg" alt="<퍼피구조대 더 무비> 현장경품 이벤트"></a>
+									</div>
+								</div>
+							</div>	
 					</div>
 				</div>
 			</div>
@@ -73,26 +113,28 @@
 				<div class="col-6 text-start">
 					<h3>공지사항</h3>
 				</div>
-				<div class="col-6 text-end">
-					<a>더보기 <i class="fas fa-sign-in-alt"></i></a>
+				<div class="col-6 text-end more">
+					<a href="notice/list" style="text-decoration: none; color: black;">더보기 <i class="fas fa-sign-in-alt"></i></a>
 				</div>
 				<div class="col-12">
 					<table class="table">
 						<thead>
 							<tr>
-								<th>극장</th>
-								<th>제목</th>
-								<th>지역</th>
+								<th>번호</th>
+								<th class="text-center">제목</th>
 								<th>등록일</th>
+								<th>조회수</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>하남스타필드</td>
-								<td>[하남스타필드] 지상 4층 주차장 통제 안내 (7/27)</td>
-								<td>경기</td>
-								<td>2021.07.23</td>
-							</tr>
+							<c:forEach items="${noticeList }" var="notice">
+								<tr>
+									<td>${notice.no }</td>
+									<td><a href="notice/detail?no=${notice.no }" class="noticeLink" style="text-decoration: none; color: black">${notice.title }</a></td>
+									<td><fmt:formatDate value="${notice.creatDate }" pattern="yyyy.MM.dd"/></td>
+									<td>${notice.hits }</td>
+								</tr>
+							</c:forEach>
 						</tbody>
 					</table>
 				</div>
@@ -105,6 +147,20 @@
 	</div>
 	<script type="text/javascript">
 		$(function() {
+			// 공지사항 제목 색상 토글
+			$('.noticeLink').mouseover(function() {
+				$(this).addClass('text-warning');
+			})
+			$('.noticeLink').mouseleave(function() {
+				$(this).removeClass('text-warning');
+			})
+			// 더보기 색상 토글
+			$('.more').mouseover(function() {
+				$(this).children().addClass('text-warning');
+			})
+			$('.more').mouseleave(function() {
+				$(this).children().removeClass('text-warning');
+			})
 			
 			$("#theater-location div:eq(3)").css('border-right', 'none');
 			$("#theater-location div:eq(7)").css('border-right', 'none');
