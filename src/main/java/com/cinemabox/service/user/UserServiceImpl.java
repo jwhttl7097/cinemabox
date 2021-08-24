@@ -157,11 +157,10 @@ public class UserServiceImpl implements UserService{
 	
 	// 결제완료 유저 포인트 차감 로직
 	@Override
-	public void updateMinusPoint(int point) {
+	public void updateMinusPoint(int usedPoint) {
 		User loginedUser = (User) SessionUtils.getAttribute("LOGINED_USER");
-		int minusPoint = loginedUser.getPoint() - point;
 		User user = new User();
-		user.setPoint(minusPoint);
+		user.setPoint(loginedUser.getPoint() - usedPoint);
 		user.setId(loginedUser.getId());
 		userDao.updatePayPoint(user);
 	}

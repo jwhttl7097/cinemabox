@@ -351,6 +351,7 @@ $(function(){
 		if ($('#adult-cnt').text() == '0' && $('#teenager-cnt').text() == '0') {
 			alert("인원을 선택해 주십시오.");
 			$('#adult-cnt').focus();
+			return false;
 		} else {
 			var seatRow = $(this).val();
 			var seatCol = $(this).parent().parent().eq(0).text().trim();

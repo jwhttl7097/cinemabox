@@ -82,8 +82,8 @@
 			CINEMABOX_MOVIE
 	</select>
 	
-	<!-- 개봉안한 모든 영화 가져오기 -->
-	<select id="getUnreleaseMovies" resultType="com.cinemabox.vo.Movie">
+	<!-- 오늘 혹은 이전에 개봉한 영화 모두 가져오기 -->
+	<select id="getUnreleaseMoviesByToday" resultType="com.cinemabox.vo.Movie">
 		select
 		    MOVIE_NO as no,
 		    MOVIE_TITLE as title, 
@@ -106,10 +106,10 @@
 		from
 			CINEMABOX_MOVIE
 		where
-			MOVIE_RELEASE_DATE &gt;= to_date(to_char(sysdate, 'YYYYMMDD'))
+			MOVIE_RELEASE_DATE &lt;= to_date(to_char(sysdate, 'YYYYMMDD'))
 			and MOVIE_STATUS = 'N'
 	</select>
-	
+		
 	<!-- 영화 번호와 사용자 아이디로 찜한 내역 가져오기 -->
 	<select id="getLikeByUserId" parameterType="com.cinemabox.vo.Wishlist" resultType="com.cinemabox.vo.Wishlist">
 		select
@@ -196,7 +196,7 @@
 				CINEMABOX_MOVIE
 			where 
 				MOVIE_STATUS = 'Y'
-				and MOVIE_RELEASE_DATE &gt; sysdate - 30)
+				and MOVIE_RELEASE_DATE &gt; sysdate - 50)
 		where 
 			row_number &lt;= 12
 	</select>
@@ -271,7 +271,7 @@
 		from
 	    	CINEMABOX_MOVIE
 		where
-	    	movie_title like '%'||#{value}||'%'
-	    	and movie_status = 'Y'
+	    	MOVIE_TITLE like '%'||#{value}||'%'
+	    	and MOVIE_STATUS = 'Y'
 	</select>
 </mapper>
