@@ -9,12 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import com.cinemabox.dao.coupon.CouponDao;
 import com.cinemabox.dao.movie.MovieDao;
 import com.cinemabox.dao.ticket.TicketDao;
 import com.cinemabox.dto.movie.CloseMovieDto;
 import com.cinemabox.dto.ticket.TicketDto;
 import com.cinemabox.dto.ticket.WebsocketTicketDto;
 import com.cinemabox.service.movie.APIMovieService;
+import com.cinemabox.vo.Coupon;
 import com.cinemabox.vo.Movie;
 
 @Component
@@ -22,6 +24,7 @@ public class Scheduler {
 
 	@Autowired MovieDao movieDao;
 	@Autowired TicketDao ticketDao;
+	@Autowired CouponDao couponDao;
 	@Autowired APIMovieService apiMovieService;
 
 	//해당 클래스에 대한 정보확인
@@ -30,10 +33,16 @@ public class Scheduler {
 	//오늘날짜
 	Date today = new Date();
 	
-	//쿠폰유통기한에 따른 사용불가 갱신 - 매일 12시 정각에 실행
-	@Scheduled(cron = "0 0 12 * * ?")
+	//쿠폰유통기한에 따른 사용불가 갱신 - 매일밤 12시 정각에 실행
+	//@Scheduled(cron = "0 0 0 * * ?")
+	@Scheduled(cron = "0 0/1 * * * ? ")
 	public void updateCouponExp(){
-		
+		logger.info("-----------closeMovie 실행-----------");
+		List<Coupon> coupons = couponDao.getCouponsByExp();
+		for(Coupon item : coupons) {
+			item.setStatus("Y");
+			couponDao.updateCouponByExp(item);
+		}
 	}
 	
 	//개봉일로부터 2달 지난 영화 내리기 - 매일밤 12시마다 실행
