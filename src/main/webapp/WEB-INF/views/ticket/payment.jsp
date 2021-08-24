@@ -323,6 +323,8 @@ function calculateTotalPay() {
 			return;
 		}
 		// 가지고있는 포인트 보다 많은 포인트를 사용할경우 유효성검사 //
+		// 전체포인트 사용버튼 한번만 누르기
+		$('#allPointBtn').addClass('disabled');
 		// 현재 가지고 있는 포인트에 사용한 포인트를 차감한 결과값을 나타냄 //
 		var nowPoint = $('#nowPoint').text() - point;
 		$("#nowPoint").text(nowPoint);
@@ -331,13 +333,15 @@ function calculateTotalPay() {
 		calculateTotalPay();
 		$('#pointInput').val(0);
 		// 사용한 포인트를 폼값에 전달
-		var usedPoint = parseInt(minusComma($("#point-discount-money").text()))
+		var usedPoint = minusComma($("#point-discount-money").text())
 		$('#pay-user-point').val(usedPoint);
 		console.log('======'+$('#pay-user-point').val());
 		
 	});
 	// 포인트 취소 버튼 클릭시 //
 	$('#cancelPointBtn').click(function() {
+		// 전체포인트 사용버튼 한번만 누르기
+		$('#allPointBtn').removeClass('disabled');
 		$('#nowPoint').text(minusComma($("#point-discount-money").text()));
 		$("#point-discount-money").text(0);
 		calculateTotalPay();

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cinemabox.dto.Event.EventDto;
-import com.cinemabox.dto.Question.QuestionDto;
 import com.cinemabox.service.event.EventService;
 import com.cinemabox.service.event.ProductService;
 import com.cinemabox.vo.Event;
