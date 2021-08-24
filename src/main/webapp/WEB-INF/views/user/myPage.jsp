@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script src="/cinemabox/resources/js/common.js"></script>
 <script src="https://kit.fontawesome.com/b4347bf02c.js" crossorigin="anonymous"></script>
 <title>마이페이지</title>
 <style type="text/css">
@@ -58,56 +58,24 @@
    .infoTab{
    	color : white;
    }
-   
-   #MembershipBadge{
-   
-   }
-   
+ 
    #ryan{
-   	width:150px;
-   	height:150px;
+	   width:150px;
+	   height:150px;
+   
    }
    
-   .wishImg{
-   	width: 70%;
-   	height:100%;
+   .modal-dialog{
+   
+	   width: 304px;
+	   height: fit-content;
    }
    
-   .swiper-container {
-        width: 100%;
-        height: 300px;
-      }
-
-    .swiper-slide {
-        text-align: center;
-        background: black;
-
-        /* Center slide text vertically */
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: -webkit-flex;
-        display: flex;
-        -webkit-box-pack: center;
-        -ms-flex-pack: center;
-        -webkit-justify-content: center;
-        justify-content: center;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        -webkit-align-items: center;
-        align-items: center;
-      }
-
-    .swiper-slide img {
-        
-        width: 65%;
-        height: 85%;
-        object-fit: cover;
-      }
-    
-    .swiper-pagination{
-    	display : none;
-    }
-    
+   #wishNum{
+   		padding-top: 4px;
+   		padding-left: 10px;
+   }
+   
 </style>
 </head>
 <body>
@@ -204,25 +172,25 @@
          <div class="tab-content" id="myTabContent">
          	<div class="tab-pane fade show active mt-4 mb-4" id="payment" role="tabpanel" aria-labelledby="payment-tab">
                <p class="text-center" style="padding:20px">
-               		<img alt="ryan" src="./resources/images/user/myPage/ryan.gif" id="ryan" style="padding: 20px"></br>
+               		<img alt="ryan" src="./resources/images/user/myPage/ryan.gif" id="ryan" style="padding: 20px"><br/>
                		최근 결제하신 내역이 없습니다.
                </p>
             </div>
             <div class="tab-pane fade mt-4 mb-4" id="coupon" role="tabpanel" aria-labelledby="coupon-tab">
             	<p class="text-center" style="padding:20px">
-               		<img alt="ryan" src="./resources/images/user/myPage/ryan.gif" id="ryan" style="padding: 20px"></br>
+               		<img alt="ryan" src="./resources/images/user/myPage/ryan.gif" id="ryan" style="padding: 20px"><br/>
                		소유하신 쿠폰이 없습니다.
                </p>
             </div>
             <div class="tab-pane fade mt-4 mb-4" id="watchedMovies" role="tabpanel" aria-labelledby="movie-tab">
             	<p class="text-center" style="padding:20px">
-               		<img alt="ryan" src="./resources/images/user/myPage/ryan.gif" id="ryan" style="padding: 20px"></br>
+               		<img alt="ryan" src="./resources/images/user/myPage/ryan.gif" id="ryan" style="padding: 20px"><br/>
                		최근 관람하신 영화가 없습니다.
                </p>
             </div>
             <div class="tab-pane fade mt-4 mb-4" id="movieNote" role="tabpanel" aria-labelledby="movieNote-tab">
             	<p class="text-center" style="padding:20px">
-               		<img alt="ryan" src="./resources/images/user/myPage/ryan.gif" id="ryan" style="padding: 20px"></br>
+               		<img alt="ryan" src="./resources/images/user/myPage/ryan.gif" id="ryan" style="padding: 20px"><br/>
                		작성하신 무비노트가 없습니다.
                </p>
             </div>
@@ -248,11 +216,9 @@
 								<label class="col-3 col-form-label">비밀번호</label>
 								<div class="col-8">
 									<div class="form-group row mb-1">
-										<label class="col-4 col-form-label">현재 비밀번호</label>
-										<div class="col-8">
-											<input type="password" id="currentPassword" name="currentPassword" class="form-control">
-										</div>
+										<label class="col-8 col-form-label"><button class="btn btn-outline-warning">비밀번호 변경하기</button></label>
 									</div>
+									<!--  
 									<div class="form-group row mb-1">
 										<label class="col-4 col-form-label">새로운 비밀번호</label>
 										<div class="col-8">
@@ -265,6 +231,7 @@
 											<input type="password" id="newPasswordConfirm" name="newPasswordConfirm" class="form-control">
 										</div>
 									</div>
+									-->
 								</div>
 							</div>
 							<div class="form-group row mb-1">
@@ -298,51 +265,60 @@
   </div>
 <%-------------------찜한 영화 모달 ---------------------------%>
  <div class="modal fade" id="wishlistMovieModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel"><strong>${LOGINED_USER.name }</strong>님이 <i class="fas fa-heart"></i> 한 영화</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-        	<div class="col-6">
-        		<div class="text-center">
-        			<c:choose>
-        				<c:when test="${not empty wishlists }">
-        					<c:forEach var="wish"  items="${wishlists }">
-        						<div class="row">
-        							<div class="col-12">
-        								<img  class="wishImg" src="/cinemabox/resources/images/movie/${wish.movieNo }.jpg">
-        							</div>
-        						</div>
-        						<strong>${wish.movieTitle }</strong>
-        					</c:forEach>
-        				</c:when>
-        				<c:otherwise>
-        					
-        				</c:otherwise>
-        			</c:choose>
+ 	<div class="modal-dialog">
+    	<div class="modal-content">
+      		<div class="modal-header">
+        		<h5 class="modal-title" id="exampleModalLabel"><strong>${LOGINED_USER.name }</strong>님이 <i class="fas fa-heart"></i> 한 영화</h5><small id="wishNum">  ${countWish }개</small>
+        		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      		</div>
+      		<div class="modal-body">
+        		<div class="row">
+        			<div class="col d-flex justify-content-center">
+    					<c:choose>
+    						<c:when test="${not empty wishlists }">
+    							<div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+							  		<div class="carousel-inner">
+    									<c:forEach var="wish" varStatus="loop" items="${wishlists }">
+							    			<div class="carousel-item ${loop.index eq 0 ?'active': '' }">
+							      				<a href="/cinemabox/movieDetail?no=${wish.movieNo }"><img  
+							      					class="img-thumbnail" src="/cinemabox/resources/images/movie/${wish.movieNo }.jpg"></a>
+							      			<div class="d-flex justify-content-center"><strong><${wish.movieTitle }></strong></div>
+							    		</div>
+    									</c:forEach>
+							  		</div>
+								  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+								    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+								    <span class="visually-hidden">Previous</span>
+								  </button>
+								  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+								    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+								    <span class="visually-hidden">Next</span>
+								  </button>
+								</div>
+    						</c:when>
+    						<c:otherwise>
+    							찜한 영화가 없습니다.
+    						</c:otherwise>
+    					</c:choose>
+        			</div>
         		</div>
-        	</div>
-        </div>
-      </div>
-      <div class="modal-footer">
-       <a href="myWishlist" class="btn btn-warning " tabindex="-1" role="button" aria-disabled="true">찜한 영화 모두 보러가기</a>
-      </div>
-    </div>
-  </div>
+      		</div>
+    	</div>
+  	</div>
 </div>
- <%@include file="../common/footer.jsp" %>
+<%@include file="../common/footer.jsp" %>
 <script type="text/javascript">
- var wishlistMovieModal = new bootstrap.Modal(document.getElementById("wishlistMovieModal"), {
-     keyboard: false
-  });
- 
- $("#wishlistMovie").click(function(){
-	 wishlistMovieModal.show();
+$(function(){
+	var wishlistMovieModal = new bootstrap.Modal(document.getElementById("wishlistMovieModal"), {
+	    keyboard: false
 	});
+	 
+	$("#wishlistMovie").click(function(){
+		wishlistMovieModal.show();
+	});
+	
+});
 
- </script>
+</script>
 </body>
 </html>

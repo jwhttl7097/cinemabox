@@ -44,14 +44,17 @@ public class UserController {
 		return "redirect:register";
 	}
 	
-	
 	@RequestMapping("/myPage")
 	public String myPage(Model model) {
 		User user = (User) SessionUtils.getAttribute("LOGINED_USER");
 		
+		
+		if(user == null) {
+			
+			return "redirect:/home?error=login";
+		}
+		
 		//쿠폰함
-		
-		
 		//찜한 영화
 		List<UserDto> wishlists = userService.getwishListById(user.getId());
 		

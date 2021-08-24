@@ -26,8 +26,8 @@
 		color : black;
 	}
 	 
-	.posterinfo{
-		width: 184px;
+	#nowMovie{
+		width: 60%;
 		margin-right : 10px;
 	}
 	
@@ -39,7 +39,7 @@
     .swiper-slide {
         text-align: center;
         background: black;
-
+		
         /* Center slide text vertically */
         display: -webkit-box;
         display: -ms-flexbox;
@@ -82,29 +82,9 @@
 	.list-group-item{
 		border: none;
 	}
-	.poster-info {
-		width: 230px;
-		height: 330px;
-		border-radius: 5px;
-		background: rgba(0, 0, 0, 0.7);
-		display: none;
-	}
 
-	.poster-info a {
-		width: 150px;
-		border: 1px solid white;
-		border-radius: 5px;
-		font-size: 14px;
-	}
-
-	.poster-info a:hover {
-		background: rgba(0, 0, 0, 0.5);
-		cursor: pointer;
-	}
-
-	.poster-info>div {
-		top: 40%;
-		left: 18%;
+	#currentMovies{
+		padding-bottom:10px;
 	}
 	
 	.mainEvent{
@@ -119,6 +99,7 @@
 	.card{
 		border : none;
 	}
+	
 	.mainEvent a{
 		color: black;
 		text-decoration: none;
@@ -166,7 +147,6 @@
 </style>
 </head>
 <body>
-
 <div class="container-fluid" id="silder-container">
 <%@include file="common/header.jsp" %>
    	<div class="row" id="wholeCarousel">
@@ -176,6 +156,7 @@
     				<button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
     				<button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
     				<button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    				<button type="button" data-bs-target="#myCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
   				</div>
   				<div class="carousel-inner">
     				<div class="carousel-item active">
@@ -213,14 +194,8 @@
         			<c:forEach var="movie" items="${nowMovies }">
         			<div class="swiper-slide">
         				<div class="poster d-inline-block rounded-3">
-        					<div class="position-absolute poster-info">	
-								<div class="poster-go position-absolute">
-									<a class="nav-link text-white d-block mb-2" href="ticket?location=서울&theaterNo=10001&movieNo=${movie.no }">예매하기</a>
-									<a class="nav-link text-white d-block" href="movieDetail?no=${movie.no }">상세정보</a>
-								</div>
-							</div>
-							<img
-								src="/cinemabox/resources/images/movie/${movie.no }.jpg" id="nowMovie" class="posterinfo rounded-3" alt="현재 상영작">
+							<a href="/cinemabox/movieDetail?no=${movie.no }"><img
+								src="/cinemabox/resources/images/movie/${movie.no }.jpg" id="nowMovie" class="posterinfo rounded-3" alt="현재 상영작"></a>
 								<div class="text-white" id="title"><strong>${movie.title }</strong></div>
 								<div class="text-white" id="subs">예매율 ${movie.reservationRate } | <i class="fas fa-star"></i> ${movie.rating } |<i class="fas fa-grin-hearts"></i> ${movie.userLike }</div>
 							</div>
@@ -411,7 +386,7 @@ $(function(){
 	   location.reload();
    })
    
-   //adImg 부분에 랜덤으로 이미지 나오게 하기
+    //adImg 부분에 랜덤으로 이미지 나오게 하기
    $("#adImg").ready(function(){
 	   var yourImages = ["/cinemabox/resources/images/main/ads/ad1.jpg",
 		   				 "/cinemabox/resources/images/main/ads/ad2.jpg",
@@ -420,6 +395,16 @@ $(function(){
 	   var randomImage = Math.trunc(Math.random()*yourImages.length);
 	   $("#adImg").attr("src", yourImages[randomImage]);
    })
+   
+	//마우스오버 시 상세보기, 예매하기 버튼 보이기
+	$(".poster").mouseenter(function(){
+		console.log("마우스올리기");
+		$(this).find('.a').show();
+	})
+	$(".poster").mouseleave(function(){
+		console.log("마우스 내리기");
+		$(this).find('.a').hide();
+	})
 });
 
 //boxOffice swiper 설정
@@ -437,13 +422,7 @@ var swiper = new Swiper(".mySwiper", {
       clickable: true
     }
   });
-//마우스오버 시 상세보기, 예매하기 버튼 보이기
-$('.poster').mouseover(function(){
-	$('.poster-info').children('.a').show();
-})
-$('.poster').mouseleave(function(){
-	$('.poster-info').children('.a').hide();
-})
+  
 </script>
 </body>
 </html>
