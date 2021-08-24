@@ -96,7 +96,7 @@
 							<li data-simple="kakaopay">
 								<button class="btn p-3 border">
 									<h3 style="margin-top: -11px;">
-										<img src="/cinemabox/resources/images/icon/payment_simple_kakao.png" alt="">
+										<img src="/cinemabox/resources/images/payment/payment_simple_kakao.png" alt="">
 									</h3>
 									카카오페이
 								</button>
@@ -104,7 +104,7 @@
 							<li data-simple="payco">
 								<button class="btn p-3 border">
 									<h3 style="margin-top: -11px;">
-										<img src="/cinemabox/resources/images/icon/payment_simple_payco.png" alt="">
+										<img src="/cinemabox/resources/images/payment/payment_simple_payco.png" alt="">
 									</h3>
 									페이코
 								</button>
@@ -112,7 +112,7 @@
 							<li data-simple="smilepay">
 								<button class="btn p-3 border">
 									<h3 style="margin-top: -11px;">
-										<img src="/cinemabox/resources/images/icon/payment_simple_smilepay.png" alt="">
+										<img src="/cinemabox/resources/images/payment/payment_simple_smilepay.png" alt="">
 									</h3>
 									스마일페이
 								</button>
