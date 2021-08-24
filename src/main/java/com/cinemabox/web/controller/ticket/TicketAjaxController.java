@@ -98,10 +98,10 @@ public class TicketAjaxController {
 		
 		time.put("screeningDate", screeningDate);
 		List<ScreeningDto> times = ticketService.getAllMovieTime(time);
-		System.out.println("--------------"+times);
 		
 		return new ResponseEntity<List<ScreeningDto>>(times, HttpStatus.OK);
 	}
+	
 	// websocket Ajax 좌석 클릭시 동작
 	@RequestMapping("/webSeat")
 	public @ResponseBody ResponseEntity<Void> webSocketAjax(@RequestParam("screeningNo") int screeningNo,
