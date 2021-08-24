@@ -7,6 +7,7 @@ import lombok.Data;
 @Data
 public class Coupon {
 	
+	private int couponNo;
 	private int couponListNo;
 	private String type;
 	private String serialNo;
