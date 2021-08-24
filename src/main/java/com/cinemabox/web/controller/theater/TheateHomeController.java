@@ -6,12 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.cinemabox.dto.theater.TheaterDto;
+import com.cinemabox.dto.ticket.TicketDto;
 import com.cinemabox.service.theater.TheaterService;
 import com.cinemabox.vo.Theater;
 
 @Controller
+@SessionAttributes({"ticketDto"})
 public class TheateHomeController{
 	
 	@Autowired
@@ -31,6 +34,9 @@ public class TheateHomeController{
 		
 		model.addAttribute("location", location);
 		model.addAttribute("theaterDto", theaterDto);
+		
+		TicketDto ticketDto = new TicketDto();
+		model.addAttribute("ticketDto", ticketDto);
 		return "theater/detailTheater";	
 	}
 	

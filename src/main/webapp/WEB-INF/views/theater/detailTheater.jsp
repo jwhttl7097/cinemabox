@@ -551,58 +551,171 @@
 				</div>
 			</div>
 			<!-- 일자별 영화관 스케쥴 -->
+			<script type="text/javascript">
+				$(function(){
+					var theaterNo = '${param.no}';
+					var screeningDate = moment().format("YYYYMMDD");
+					var movieNo;
+					var screeningNo;
+					var hallNo;
+					var hallName;
+					var screeningDate;
+					var screeningTime;
+					var screeningEndTime;
+					var title;
+					var age;
+					var theaterName;
+					
+					function displayMovieList(){
+						$.ajax({
+							type:"get",
+							url:"theater/schedule",
+							data:{theaterNo:theaterNo, screeningDate:screeningDate},
+							dataType:"json",
+							success:(function(result){
+								$.each(result, function(index, dto){
+									var content =
+										'<div class="row mt-2 bg-light p-2">'
+									content +=
+											'<div class="col-6">'
+									content +=
+												'<img alt="'+dto.age+'" src="resources/images/theaterDetail/txt-age-small-'+dto.age+'.png">'
+									content +=
+												'<span class="span-title">'+dto.movieTitle+'</span>'
+									content +=
+											'</div>'
+									content +=
+											'<div class="col-6 text-end">상영중/상영시간 '+dto.runningTime+'분</div>'
+									content +=
+										'</div>'
+									content +=
+										'<div class="row mt-3" style="border-bottom: 1px solid #eaeaea;">'
+									content +=										
+											'<div class="col-1 mt-4">'
+									content +=											
+												'<ul>'
+									content +=												
+													'<li class="d-inline-block">'
+									content +=													
+														'<div class="text-center" style="width: 80px; height: 100px;">'
+									content +=														
+															'<h3 id="h3-hallName">'+dto.hallName+'</h3>'
+									content +=															
+															'<p><small class="text-muted">총 70석</small></p>'
+									content +=															
+														'</div>'
+									content +=														
+													'</li>'
+									content +=													
+												'</ul>'
+									content +=												
+											'</div>'
+									content +=											
+											'<div class="col-11 mt-4">'
+									content +=											
+												'<ul id="detailScheduleId">'
+								$.each(dto.screenings, function(index, item){
+									//끝나는 시간 구하기
+									screeningEndTime = moment.unix(item.screeningDate/1000).add(dto.runningTime, "m").format("HH:mm");
+									var seat = 70-item.seatCnt;
+									content +=												
+													'<li class="d-inline-block position-relative me-2">'
+									content +=													
+														'<button class="ck position-absolute text-center text-white quickTicketing" data-sn='+item.screeningNo+' data-mn='+dto.movieNo+' data-et='+screeningEndTime+' style="display:none; background-color: #ffc107; width: 80px; height: 75px;">'
+									content +=														
+															'<p class="m-0">빠른예매</p>'
+									content +=															
+															'<p class="m-0"><small>'+seat+'석</small></p>'
+									content +=															
+														'</button>'
+									content +=														
+														'<div class="detailSchdules-1 text-center" style="border: 1px solid black; width: 80px; height: 75px;">'
+									if(item.screeningTime.replace(":","") <= 1100 && item.screeningTime.replace(":","") >= 700 ){
+									content +=														
+															'<p class="m-0 mt-2 p-screeningTime"><i class="bi bi-sun" style="color: #ffc107"></i>'+item.screeningTime+'</p>'
+									}else{
+									content +=		
+															'<p class="m-0 mt-2 p-screeningTime">'+item.screeningTime+'</p>'
+									}
+									content +=															
+															'<p class="m-0 mt-2"><small class="text-muted">'+seat+'석</small></p>'
+									content +=															
+														'</div>'
+									content +=														
+													'</li>'
+								})	
+									content +=													
+												'</ul>'
+									content +=												
+											'</div>'
+									content +=											
+										'</div>'
+									$(".theaterDetailMovieSchedule").append(content);
+								})
+							})
+						})						
+					}
+					
+					$("#ul-days").on('click','li',function(){
+						screeningDate = $(this).data('select-day');
+						$(".theaterDetailMovieSchedule").empty();
+						displayMovieList();
+					})
+					
+					$('.theaterDetailMovieSchedule').on('click', '.ck', function() {
+						var loginedUser = '${LOGINED_USER }'
+						if(!loginedUser){
+							alert("로그인이 필요한 서비스입니다.");
+				 			loginModal.show();
+							return;
+						}
+						
+						screeningNo = $(this).data('sn');
+						movieNo = $(this).data('mn');
+						hallName = $(this).parent().parent().parent().siblings().find("#h3-hallName").text();
+						screeningTime = $(this).siblings().find(".p-screeningTime").text();
+						screeningEndTime = $(this).data('et'); 
+						title = $(this).parent().parent().parent().parent().prev().find(".span-title").text();
+						age = $(this).parent().parent().parent().parent().prev().find(".span-title").prev().attr('alt');					
+					
+						//form값 넣기
+						$('#input-screening-no').val(screeningNo);
+						$('#input-movie-no').val(movieNo);
+						$('#input-theater-no').val(theaterNo);
+						$('#input-hall-name').val(hallName);
+						$('#input-screening-date').val(screeningDate);
+						$('#input-screening-time').val(screeningTime);
+						$('#input-screening-end-time').val(screeningEndTime);
+						$('#input-title').val(title);
+						$('#input-age').val(age);
+						$('#input-theater-name').val($("#theaterNm").text());
+						
+						$("#form-ticketing").submit();
+					})
+					
+					$('.theaterDetailMovieSchedule').on('mouseover', 'li', function() {
+						$(this).find(".quickTicketing").show();
+					})
+					$('.theaterDetailMovieSchedule').on('mouseleave', 'li', function() {
+						$(this).find(".quickTicketing").hide();
+					})
+				})
+			</script>
 			<div class="theaterDetailMovieSchedule">
-				<div class="row mt-2 bg-light p-2">
-					<div class="col-6">
-						<img alt="15세 이상"
-							src="resources/images/theaterDetail/txt-age-small-15.png">
-						모가디슈
-					</div>
-					<div class="col-6 text-end">상영중/상영시간 121분</div>
-				</div>
-				<div class="row mt-3" style="border-bottom: 1px solid #eaeaea;">
-					<div class="col-3 mt-4">
-						<ul>
-							<li class="d-inline-block">
-								<div class="text-center" style="width: 80px; height: 100px;">
-									<h3>1관 </h3>
-									<p><small class="text-muted">총 230석</small></p>
-								</div>
-							</li>
-							<li class="d-inline-block">
-								<div class="text-center" style="width: 60px; height: 70px;">
-									<h5>3D</h5>
-									<p><small class="text-muted">특별관</small></p>
-								</div>
-							</li>
-						</ul>
-					</div>
-					<div class="col-9 mt-4">
-						<ul id="detailScheduleId">
-							<li class="d-inline-block position-relative">
-								<button class="position-absolute text-center text-white quickTicketing" style="display:none; background-color: #ffc107; width: 80px; height: 70px;">
-									<p class="mt-2 m-0">빠른예매</p>
-									<p class="p-0"><small>141석</small></p>
-								</button>
-								<div class="detailSchdules-1 text-center" style="border: 1px solid black; width: 80px; height: 70px;">
-									<p><i class="bi bi-sun" style="color: #ffc107"></i>09:05</p>
-									<p><small class="text-muted">141석</small></p>
-								</div>
-							</li>
-							<li class="d-inline-block position-relative">
-								<button class="position-absolute text-center text-white quickTicketing" style="display:none; background-color: #ffc107; width: 80px; height: 70px;">
-									<p class="mt-2 m-0">빠른예매</p>
-									<p class="p-0"><small>141석</small></p>
-								</button>
-								<div class="detailSchdules-1 text-center" style="border: 1px solid black; width: 80px; height: 70px;">
-									<p>09:05</p>
-									<p><small class="text-muted">141석</small></p>
-								</div>
-							</li>
-						</ul>
-					</div>
-				</div>
 			</div>
+			<!-- 선택한 값 넘겨받는 form -->
+			<form action="seat" method="post" id="form-ticketing">
+				<input type="hidden" name="screeningNo" id="input-screening-no">
+				<input type="hidden" name="movieNo" id="input-movie-no">
+				<input type="hidden" name="theaterNo" id="input-theater-no">
+				<input type="hidden" name="hallName" id="input-hall-name">
+				<input type="hidden" name="screeningDate" id="input-screening-date">
+				<input type="hidden" name="screeningTime" id="input-screening-time">
+				<input type="hidden" name="screeningEndTime" id="input-screening-end-time">
+				<input type="hidden" name="title" id="input-title">
+				<input type="hidden" name="age" id="input-age">
+				<input type="hidden" name="theaterName" id="input-theater-name">
+			</form>
 			<div class="row mt-5">
 				<div class="col-12" style="border: 1px solid #eaeaea;">
 					<ul class="mt-3">
@@ -1286,6 +1399,7 @@
 			      var weekDays = [];
 			      for(var i=0; i<14; i++){
 			         weekDays.push({
+						selectedDay : moment().add(i+(week*14), 'd').format("YYYYMMDD"),
 			            month : moment().add(i+(week*14), 'd').format("M월"),
 			            day : moment().add(i+(week*14), 'd').format("D"),
 			            dayOfWeek : moment().add(i+(week*14), 'd').format("ddd")
@@ -1294,7 +1408,8 @@
 			      var prev;
 			      $.each(weekDays, function(index, item){
 			    	 var monthPosition = item.month;
-			         var content = "<li class='d-inline-block' style='width: 7%;'>";
+					 var selectedDay = item.selectedDay;
+			         var content = "<li class='d-inline-block' style='width: 7%;' data-select-day="+selectedDay+">";
 			    	 if(!prev || prev != monthPosition) {
 				         content += "<strong class='d-block' style='font-size:0.7rem;'>"+monthPosition+"</strong>";
 			    	 }
@@ -1326,69 +1441,6 @@
 			      $(this).css({"font-weight": "bolder", "border-bottom": "4px solid #ffc107", "box-shadow": "0px 0px 0px #ffc107"}).siblings().css({"border-bottom": "none", "box-shadow": "none", "font-weight": ""});
 			   })
 			   changeDays();
-			   
-				$('#ul-days').on('click', 'li', function() {
-					var $titleDiv = "<div class='row mt-2 bg-light p-2'>";
-							$titleDiv += "<div class='col-6'>";
-								$titleDiv += "<img alt='15세 이상' src='resources/images/theaterDetail/txt-age-small-15.png'>";
-								$titleDiv += "<span class='ms-2'>모가디슈</span>";
-							$titleDiv += "</div>";
-							$titleDiv += "<div class='col-6 text-end'>";
-								$titleDiv += "상영중/상영시간 121분";
-							$titleDiv += "</div>";
-						$titleDiv += "</div>";
-					$titleDiv += "<div class='row mt-3' style='border-bottom: 1px solid #eaeaea;'>";
-						$titleDiv += "<div class='col-3 mt-4'>";
-							$titleDiv += "<ul>";
-								$titleDiv += "<li class='d-inline-block'>";
-									$titleDiv += "<div class='text-center' style='width: 80px; height: 100px;'>";
-										$titleDiv += "<h3>1관 </h3>";
-										$titleDiv += "<p><small class='text-muted'>총 230석</small></p>";
-									$titleDiv += "</div>";
-								$titleDiv += "</li>";
-								$titleDiv += "<li class='d-inline-block ms-1 ps-1'>";
-									$titleDiv += "<div class='text-center' style='width: 60px; height: 70px;'>";
-										$titleDiv += "<h5>3D</h5>"
-										$titleDiv += "<p><small class='text-muted'>특별관</small></p>";
-									$titleDiv += "</div>";
-								$titleDiv += "</li>";
-							$titleDiv += "</ul>";
-						$titleDiv += "</div>";
-						// 상영 스케쥴 box
-						$titleDiv += "<div class='col-9 mt-4'>";
-							$titleDiv += "<ul class='detailSchedule'>";
-								$titleDiv += "<li class='d-inline-block position-relative ms-1 ps-1'>";
-									$titleDiv += "<button class='position-absolute text-center text-white quickTicketing' style='display:none; background-color: #ffc107; width: 80px; height: 70px;'>";
-										$titleDiv += "<p class='mt-2 m-0'>빠른예매</p>";
-										$titleDiv += "<p class='p-0'><small>141석</small></p>";
-									$titleDiv += "</button>";
-								$titleDiv += "<div class='detailSchdules-1 text-center' style='border: 1px solid black; width: 80px; height: 70px;'>";
-									$titleDiv += "<p><i class='bi bi-sun' style='color: #ffc107'></i>09:05</p>";
-									$titleDiv += "<p><small class='text-muted'>141석</small></p>";
-									$titleDiv += "</div>";
-								$titleDiv += "</li>";
-								$titleDiv += "<li class='d-inline-block position-relative ms-1 ps-1'>";
-									$titleDiv += "<button class='position-absolute text-center text-white quickTicketing' style='display:none; background-color: #ffc107; width: 80px; height: 70px;'>";
-										$titleDiv += "<p class='mt-2 m-0'>빠른예매</p>";
-										$titleDiv += "<p class='p-0'><small>141석</small></p>";
-									$titleDiv += "</button>";
-									$titleDiv += "<div class='detailSchdules-1 text-center' style='border: 1px solid black; width: 80px; height: 70px;'>";
-										$titleDiv += "<p>09:05</p>";
-										$titleDiv += "<p><small class='text-muted'>141석</small></p>";
-									$titleDiv += "</div>";
-								$titleDiv += "</li>";
-							$titleDiv += "</ul>";
-						$titleDiv += "</div>";
-					$titleDiv += "</div>";
-					$('.theaterDetailMovieSchedule').empty().append($titleDiv);
-					
-					$('.detailSchedule').on('mouseover', 'li', function() {
-						$(this).find(".quickTicketing").show();
-					})
-					$('.detailSchedule').on('mouseleave', 'li', function() {
-						$(this).find(".quickTicketing").hide();
-					})
-				});
 				
 			   $('#detailScheduleId li').mouseover(function() {
 				  $(this).find(".quickTicketing").show();

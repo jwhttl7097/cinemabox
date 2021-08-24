@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cinemabox.dao.ticket.TicketDao;
 import com.cinemabox.dto.ticket.Payload;
 import com.cinemabox.dto.ticket.ScreeningDto;
+import com.cinemabox.dto.ticket.TheaterTicketDto;
 import com.cinemabox.dto.ticket.TicketDto;
 import com.cinemabox.dto.ticket.WebsocketTicketDto;
 import com.cinemabox.web.utils.JsonUtils;
@@ -44,6 +45,10 @@ public class TicketServiceImpl implements TicketService{
 	@Override
 	public List<ScreeningDto> getAllMovieTime(Map<String, Object> map) {
 		return ticketDao.getAllMovieTime(map);
+	}
+	@Override
+	public List<TheaterTicketDto> getAllMovieTimeByTheater(Map<String, Object> map) {
+		return ticketDao.getAllMovieTimeByTheater(map);
 	}
 	
 	// 좌석

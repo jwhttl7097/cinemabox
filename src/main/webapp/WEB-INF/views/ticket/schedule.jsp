@@ -155,6 +155,7 @@
 				<input type="hidden" name="title" id="input-title">
 				<input type="hidden" name="age" id="input-age">
 				<input type="hidden" name="movieStatus" id="input-movie-status">
+				<input type="hidden" name="theaterName" id="input-theater-name">
 			</form>
 		</div>
 	</div>
@@ -191,6 +192,14 @@ $(function(){
 	})
 	$('.mainnav').mouseleave(function(){
 	   $(this).children('.subnav').stop().slideUp();
+	})
+	
+	// 영화이름 구하기
+	$("#ul-location2").on('click', 'li', function() {
+		$('#input-theater-name').val($(this).text());
+	})
+	$("#ul-special-location2").on('click', 'li', function() {
+		$('#input-theater-name').val($(this).text());
 	})
 	
 	//1주일 단위로 날짜 변경하기
