@@ -80,7 +80,7 @@ public class TicketController{
 		System.out.println("====="+ticketDto.toString());
 		System.out.println("====="+reservation.toString());
 		// 사용한 쿠폰 사용 완료 처리 하기 //
-		if(!reservation.getSerialNo().isEmpty()) {
+		if(!(reservation.getSerialNo().isEmpty())) {
 			String serialNo = reservation.getSerialNo();
 			couponService.updateUsedCoupon(serialNo);
 		}
@@ -124,7 +124,11 @@ public class TicketController{
 		// user에 포인트 적립 //
 		User loginedUser = (User) SessionUtils.getAttribute("LOGINED_USER");
 		User user = new User();
-		user.setPoint((loginedUser.getPoint() + (int) Math.round(point))- reservation.getUsedPoint());
+		if(reservation.getUsedPoint() == null) {
+			user.setPoint((loginedUser.getPoint() + (int) Math.round(point)));
+		}else {
+			user.setPoint((loginedUser.getPoint() + (int) Math.round(point))- reservation.getUsedPoint());
+		}
 		user.setId(reservation.getUserId());
 		userService.updatePayPoint(user);
 		// user에 포인트 적립 // 

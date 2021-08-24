@@ -18,6 +18,6 @@ public class Reservation {
 	private int movieNo;
 	private String userId;
 	private String ticketNos;
-	private int usedPoint;
+	private Integer usedPoint;
 	private String serialNo;
 }

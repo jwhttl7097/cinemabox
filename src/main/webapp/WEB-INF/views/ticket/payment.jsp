@@ -95,19 +95,25 @@
 						<ul class="nav" id="ul-selectPay-simple" style="display:none;">
 							<li data-simple="kakaopay">
 								<button class="btn p-3 border">
-									<h3></h3>
+									<h3 style="margin-top: -11px;">
+										<img src="/cinemabox/resources/images/icon/payment_simple_kakao.png" alt="">
+									</h3>
 									카카오페이
 								</button>
 							</li>
 							<li data-simple="payco">
 								<button class="btn p-3 border">
-									<h3></h3>
+									<h3 style="margin-top: -11px;">
+										<img src="/cinemabox/resources/images/icon/payment_simple_payco.png" alt="">
+									</h3>
 									페이코
 								</button>
 							</li>
 							<li data-simple="smilepay">
 								<button class="btn p-3 border">
-									<h3></h3>
+									<h3 style="margin-top: -11px;">
+										<img src="/cinemabox/resources/images/icon/payment_simple_smilepay.png" alt="">
+									</h3>
 									스마일페이
 								</button>
 							</li>
@@ -259,7 +265,15 @@ function calculateTotalPay() {
 	var userName = '${LOGINED_USER.name}';
 	var userPhone = '${LOGINED_USER.phone}';
 	var userAddress = '${LOGINED_USER.address}';
-	
+    if(userEmail == null){
+    	userEmail = "aaa@gmail.com";
+    }
+    if(userPhone == null){
+    	userPhone = "010-0000-0000";
+    }
+    if(userAddress == null){
+    	userAddress = "korea";
+    }
 	var selectPayment;
 	var simplePayment;
 	var inicisPayment;
@@ -333,8 +347,6 @@ function calculateTotalPay() {
 		// 사용한 포인트를 폼값에 전달
 		var usedPoint = parseInt(minusComma($("#point-discount-money").text()))
 		$('#pay-user-point').val(usedPoint);
-		console.log('======'+$('#pay-user-point').val());
-		
 	});
 	// 포인트 취소 버튼 클릭시 //
 	$('#cancelPointBtn').click(function() {
@@ -377,6 +389,10 @@ function calculateTotalPay() {
 	
 	/*import*/
 	$("#a-confirm").click(function(){
+	    if($('#pay-user-point').val() == '0' || !$('#pay-user-point').val()){
+	    	$('#pay-user-point').remove();
+	    }
+	    
 		if ($('#span-total-price').text() == 0) {
 			var isLogined = $("[name=isLogined]").val();
 			if(isLogined == 'no'){
@@ -387,6 +403,7 @@ function calculateTotalPay() {
 			$('#pay-ment').val("포인트");
 		    $('#pay-total-price').val(0);
 		    $('#pay-user-id').val(user_id);
+		    
 			$('#form-ticketing').submit();
 			return;
 		}

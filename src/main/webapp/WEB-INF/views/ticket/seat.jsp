@@ -397,7 +397,11 @@ $(function(){
 				console.log('ajax 웹소켓 관계없음 좌석번호 밸류 확인 :'+seatRows);
 				console.log('ajax 웹소켓 관계없음  좌석행 밸류 확인 :'+seatCols);
 				console.log('ajax 웹소켓 관계없음  좌석행 밸류 확인 :'+seatNumbers);
-				$('#seat_no').val(seatNumbers.join(" "));
+				if(seatNumbers.length == 1){
+					$('#seat_no').val(String(seatNumbers[0]));
+				}else{
+					$('#seat_no').val(seatNumbers.join(" "));
+				}
 				$('#seat_row').val(seatRows.join(" "));
 				$('#seat_col').val(seatCols.join(" "));
 				
@@ -467,9 +471,9 @@ $(function(){
 		var couchSeatNo = $('.couch').val();
 		console.log('찍힌 밸류 : '+couchSeatNo);
 		if (sType == 'T') {
-			$('input[value='+sNo+'][data-mine!="me"]').prop('disabled', 'true').addClass('disabled').next().children().removeClass('text-secondary').removeClass('text-white').addClass('text-success');
+			$('#div-selectSeat input[value='+sNo+'][data-mine!="me"]').prop('disabled', 'true').addClass('disabled').next().children().removeClass('text-secondary').removeClass('text-white').addClass('text-success');
 		} else {
-			$('input[value='+sNo+'][data-mine!="me"]').removeAttr('disabled').removeClass('disabled').next().children().removeClass('text-secondary').removeClass('text-success').addClass('text-white');
+			$('#div-selectSeat input[value='+sNo+'][data-mine!="me"]').removeAttr('disabled').removeClass('disabled').next().children().removeClass('text-secondary').removeClass('text-success').addClass('text-white');
 		}
 	}
 
