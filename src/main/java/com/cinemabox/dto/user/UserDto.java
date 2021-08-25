@@ -17,6 +17,18 @@ public class UserDto {
 	private String movieTitle;
 	private String movieThumbnail;
 	private int couponNo;
-	
+	private String couponType;
+	@DateTimeFormat(pattern = "yyyyMMdd")
+	private Date couponExpDate;
+	private int reservationPrice;
+	private String payment;
+	@DateTimeFormat(pattern = "yyyyMMdd")
+	private Date reservationCreatedDate;
+	@DateTimeFormat(pattern ="yyyyMMdd")
+	private Date orderDate;
+	private int orderNo;
+	private String name;
+	private int orderAmount;
+	private int orderPrice;
 	
 }

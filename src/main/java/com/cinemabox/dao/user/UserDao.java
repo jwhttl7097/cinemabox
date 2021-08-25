@@ -41,6 +41,28 @@ public interface UserDao {
 	List<UserDto> getwishListById(String userId);
 	
 	/**
+	 * 사용자 아이디로 쿠폰 보유 내역 가져오기
+	 * @param userId
+	 * @return
+	 */
+	List<UserDto> getCouponsById(String userId);
+	
+	/**
+	 * 사용자 아이디로 영화티켓 예매 내역 가져오기
+	 * @param userId
+	 * @return
+	 */
+	List<UserDto> getMovieReservationsById(String userId);
+	
+	/**
+	 * 사용자 아이디로  구매내역 가져오기
+	 * @param userId
+	 * @return
+	 */
+	List<UserDto> getOrderlistById(String userId);
+	
+	
+	/**
 	 * 사용자 아이디로 위시리스트 개수 가져오기
 	 * @param userId 사용자 아이디
 	 * @return

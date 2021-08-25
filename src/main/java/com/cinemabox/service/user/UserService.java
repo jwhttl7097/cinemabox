@@ -42,11 +42,32 @@ public interface UserService {
 	List<UserDto> getwishListById(String userId);
 	
 	/**
+	 * 보유 쿠폰 가져오기
+	 * @param userId
+	 * @return
+	 */
+	List<UserDto> getCouponsById(String userId);
+	
+	/**
 	 * 위시리스트 영화 개수 세기
 	 * @param userId
 	 * @return
 	 */
 	int countWishlists(String userId);
+	
+	/**
+	 * 티켓 예매 내역 가져오기
+	 * @param userId
+	 * @return
+	 */
+	List<UserDto> getMovieReservationsById(String userId);
+	
+	/**
+	 * snack 구매내역 가져오기
+	 * @param userId
+	 * @return
+	 */
+	List<UserDto> getOrderlistById(String userId);	
 	
 	/**
 	 * 아이디로 사용자 불러오기 (중복 체크할 때)

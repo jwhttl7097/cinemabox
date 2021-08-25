@@ -151,13 +151,13 @@
          </div>
          <ul class="nav nav-tabs  d-flex justify-content-around" style="padding-top : 15px"id="myTab" role="tablist">
             <li class="nav-item infoTabBack rounded" role="presentation">
-               <button class="infoTab nav-link active" id="payment-tab" data-bs-toggle="tab" data-bs-target="#payment" type="button" role="tab" aria-controls="payment" aria-selected="true"><strong>결제내역</strong></button>
+               <button class="infoTab nav-link active" id="movie-tab" data-bs-toggle="tab" data-bs-target="#movie" type="button" role="tab" aria-controls="movie" aria-selected="true"><strong>예매내역</strong></button>
             </li>
             <li class="nav-item infoTabBack rounded" role="presentation">
                <button class="infoTab nav-link" id="coupon-tab" data-bs-toggle="tab" data-bs-target="#coupon" type="button" role="tab" aria-controls="coupon" aria-selected="false"><strong>쿠폰함</strong></button>
             </li>
             <li class="nav-item infoTabBack rounded" role="presentation">
-               <button class="infoTab nav-link" id="movie-tab" data-bs-toggle="tab" data-bs-target="#watchedMovies" type="button" role="tab" aria-controls="movie" aria-selected="false"><strong>관람 영화</strong></button>
+               <button class="infoTab nav-link" id="payment-tab" data-bs-toggle="tab" data-bs-target="#payment" type="button" role="tab" aria-controls="payment" aria-selected="false"><strong>결제 내역</strong></button>
             </li>
             <li class="nav-item infoTabBack rounded" role="presentation">
                <button class="infoTab nav-link" id="movieNote-tab" data-bs-toggle="tab" data-bs-target="#movieNote" type="button" role="tab" aria-controls="movieNote" aria-selected="false"><strong>MY 무비노트</strong></button>
@@ -170,23 +170,121 @@
             </li>
          </ul>
          <div class="tab-content" id="myTabContent">
-         	<div class="tab-pane fade show active mt-4 mb-4" id="payment" role="tabpanel" aria-labelledby="payment-tab">
-               <p class="text-center" style="padding:20px">
-               		<img alt="ryan" src="./resources/images/user/myPage/ryan.gif" id="ryan" style="padding: 20px"><br/>
-               		최근 결제하신 내역이 없습니다.
-               </p>
+         	<div class="tab-pane fade show active mt-4 mb-4" id="movie" role="tabpanel" aria-labelledby="movie-tab">
+               <div class="text-center" style="padding:20px">
+               		<table class="table">
+            			<thead>
+            				<tr>
+	            				<th>예매 번호</th>
+	            				<th>영화 정보</th>
+	            				<th>결제 금액</th>
+	            				<th>결제 수단</th>
+	            				<th>예매 날짜</th>
+	            				<th>적립 포인트</th>
+            				</tr>
+            			</thead>
+            			<tbody>
+            				<c:choose>
+	           					<c:when test="${not empty tickets }">
+	           						<c:forEach var="t" items="${tickets }">
+	           							<tr>
+	           								<td class="align-middle text-center">${t.reservationNo }</td>
+	           								<td class="align-middle text-center">${t.movieTitle }</td>
+	           								<td class="align-middle text-center">
+	           									<fmt:formatNumber value="${t.reservationPrice }" pattern="#,###"/>
+	           								</td>
+	           								<td class="align-middle text-center">${t.reservationPayment }</td>
+	           								<td class="align-middle text-center">
+	           									<fmt:formatDate value="${t.reservationCreatedDate }" pattern="yyyy-MM-dd"/>
+	           								</td>
+	           								<td class="align-middle text-center">${t.reservationPoint }</td>
+	           							</tr>
+	           						</c:forEach>
+	           					</c:when>
+	           					<c:otherwise>
+	           						<tr>
+					               		<td colspan="6" class="text-center py-5"><img alt="ryan" src="./resources/images/user/myPage/ryan.gif" id="ryan" style="padding: 20px"><br/>
+					               		최근 관람하신 영화가 없습니다.</td>
+	           						</tr>
+	           					</c:otherwise>
+           					</c:choose>
+            			</tbody>
+            		</table>
+               </div>
             </div>
             <div class="tab-pane fade mt-4 mb-4" id="coupon" role="tabpanel" aria-labelledby="coupon-tab">
-            	<p class="text-center" style="padding:20px">
-               		<img alt="ryan" src="./resources/images/user/myPage/ryan.gif" id="ryan" style="padding: 20px"><br/>
-               		소유하신 쿠폰이 없습니다.
-               </p>
+            	<div class="text-center" style="padding:20px">
+            		<table class="table">
+            			<thead>
+            				<tr class="text-center">
+            					<th>쿠폰 번호</th>
+            					<th>쿠폰</th>
+            					<th>만료 기간</th>
+            			</thead>
+            			<tbody>
+		            		<c:choose>
+		            			<c:when test="${not empty coupons }">
+		            				<c:forEach var="c" items="${coupons }">
+		            					<tr>
+		            						<td class="align-middle text-center">${c.couponNo }</td>
+		            						<td class="align-middle text-center">${c.couponType }</td>
+		            						<td class="align-middle text-center">
+		            							<fmt:formatDate value="${c.couponExpDate }" pattern="yyyy-MM-dd"/>
+		            						</td>
+		            					</tr>
+		            				</c:forEach>
+		            			</c:when>
+		            			<c:otherwise>
+		            				<tr>
+					               		<td colspan="6" class="text-center py-5"><img alt="ryan" src="./resources/images/user/myPage/ryan.gif" id="ryan" style="padding: 20px"><br/>
+					               		소유하신 쿠폰이 없습니다.</td>
+				               		</tr>            			
+		            			</c:otherwise>
+		            		</c:choose>
+	            		</tbody>
+            		</table>
+               	</div>
             </div>
-            <div class="tab-pane fade mt-4 mb-4" id="watchedMovies" role="tabpanel" aria-labelledby="movie-tab">
-            	<p class="text-center" style="padding:20px">
-               		<img alt="ryan" src="./resources/images/user/myPage/ryan.gif" id="ryan" style="padding: 20px"><br/>
-               		최근 관람하신 영화가 없습니다.
-               </p>
+            <div class="tab-pane fade mt-4 mb-4" id="payment" role="tabpanel" aria-labelledby="payment-tab">
+            	<div class="text-center" style="padding:20px">
+            		<table class="table">
+            			<thead>
+            				<tr>
+	            				<th>구매 번호</th>
+	            				<th>상품 정보</th>
+	            				<th>구매 개수</th>
+	            				<th>결제 금액</th>
+	            				<th>결제 날짜</th>
+            				</tr>
+            			</thead>
+            			<tbody>
+            				<c:choose>
+	           					<c:when test="${not empty orders }">
+	           						<c:forEach var="o" items="${orders }">
+	           							<tr>
+	           								<td class="align-middle text-center">${o.orderNo }</td>
+	           								<td class="align-middle text-center"><a href="/cinemabox/">${o.name }</a></td>
+	           								<td class="align-middle text-center">${o.orderAmount } 개</td>
+	           								<td class="align-middle text-center">
+	           									<fmt:formatNumber value="${o.orderPrice }" pattern="#,###"/>원
+	           								</td>
+	           								<td class="align-middle text-center">
+	           									<fmt:formatDate value="${o.orderDate }" pattern="yyyy-MM-dd"/>
+	           								</td>
+	           								
+	           							</tr>
+	           						</c:forEach>
+	           					</c:when>
+	           					<c:otherwise>
+	           						<tr>
+					               		<td colspan="6" class="text-center py-5"><img alt="ryan" src="./resources/images/user/myPage/ryan.gif" id="ryan" style="padding: 20px"><br/>
+					               		최근 결제하신 내역이 없습니다.</td>
+	           						</tr>
+	           					</c:otherwise>
+           					</c:choose>
+            			</tbody>
+            		</table>
+               </div>
             </div>
             <div class="tab-pane fade mt-4 mb-4" id="movieNote" role="tabpanel" aria-labelledby="movieNote-tab">
             	<p class="text-center" style="padding:20px">

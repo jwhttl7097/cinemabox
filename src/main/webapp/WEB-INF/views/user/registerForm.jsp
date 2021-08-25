@@ -62,6 +62,12 @@
     	opacity: 1;
     	font-size : 13px;
 	}
+	
+	.input-text {
+	    font-size: 14px;
+	    width: 350px;
+	    height: 30px;
+	}
 </style>
 </head>
 <body>
