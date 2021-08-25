@@ -128,11 +128,12 @@ public class TicketController{
 		
 		// user에 포인트 적립 //
 		User loginedUser = (User) SessionUtils.getAttribute("LOGINED_USER");
+		User users = userDao.getUserById(loginedUser.getId());
 		User user = new User();
 		if(reservation.getUsedPoint() == null) {
-			user.setPoint((loginedUser.getPoint() + (int) Math.round(point)));
+			user.setPoint((users.getPoint() + (int) Math.round(point)));
 		}else {
-			user.setPoint((loginedUser.getPoint() + (int) Math.round(point))- reservation.getUsedPoint());
+			user.setPoint((users.getPoint() + (int) Math.round(point))- reservation.getUsedPoint());
 		}
 		user.setId(reservation.getUserId());
 		userService.updatePayPoint(user);
