@@ -84,11 +84,28 @@ public interface AdminService {
 	 */
 	List<Screening> getScreeningsByMovieNo(int moiveNo);
 	
+	/**
+	 * 모든 극장 정보를 제공하는 서비스
+	 * @return 극장정보
+	 */
 	List<Theater> getAllTheaterInfo();
 	
+	/**
+	 * 모든 상영관 정보를 제공하는 서비스
+	 * @return 상영관 정보
+	 */
 	List<Hall> getAllHallInfo();
 	
+	/**
+	 * 페이지 총갯수를 구해주는 서비스
+	 * @return 페이지 총 갯수
+	 */
 	int countBoard();
 	
+	/**
+	 * 페이징처리후 Moive 정보를 제공하는 서비스
+	 * @param page
+	 * @return Moive 정보
+	 */
 	List<Movie> selectMoivePaging(Paging page);
 }

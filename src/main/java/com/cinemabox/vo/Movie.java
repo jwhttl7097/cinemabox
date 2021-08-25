@@ -29,12 +29,15 @@ public class Movie {
 	private String status;
 	private int userLike;
 	private Date createdDate;
-
 	public String getSynopsisWithBr() {
 		if(synopsis == null) {
 			return " ";
 		}
 		return synopsis.replace("\n", "<br>");
+	}
+	private String screeningStatus;
+	public boolean isExistGenre(String text) {
+		return genre.contains(text);
 	}
 }
 

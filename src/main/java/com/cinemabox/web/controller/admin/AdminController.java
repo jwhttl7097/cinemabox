@@ -45,10 +45,10 @@ public class AdminController {
 	@GetMapping("/deleteList")
 	public String deleteMovieList(Model model) {
 		// 상영중인 전체 영화정보 조회하기
-		List<Movie> list = adminService.getAllDeleteMovies();
+		List<Movie> deltelist = adminService.getAllDeleteMovies();
 		
 		// 뷰 페이지에 영화정보 목록 전달하기
-		model.addAttribute("movies", list);
+		model.addAttribute("delteMovies", deltelist);
 		
 		// 뷰페이지로 내부이동하기
 		return "admin/deleteMovieList";
@@ -95,7 +95,11 @@ public class AdminController {
 	@GetMapping(path = {"/screening"})
 	public String screeningList(Model model, @RequestParam("movieNo") int movieNo) {
 		List<Screening> savedScreens = adminService.getScreeningsByMovieNo(movieNo);
+		List<Theater> theaters = adminService.getAllTheaterInfo();
+		List<Hall> halls = adminService.getAllHallInfo();
 		model.addAttribute("screens", savedScreens);
+		model.addAttribute("theaters", theaters);
+		model.addAttribute("halls", halls);
 		return "admin/screeningList";
 	}
 	
@@ -126,7 +130,6 @@ public class AdminController {
 	
 	@PostMapping("/update")
 	public String update(Movie movie, @RequestParam("file") MultipartFile multipartFile) throws IOException {
-		Movie savedMovie = adminService.getMovieByNo(movie.getNo());
 		if (!multipartFile.isEmpty()) {
 			String originalname = multipartFile.getOriginalFilename();
 			String folderName = "C:\\eclipse\\eGovFrameDev-3.10.0-64bit\\workspace\\cinemabox\\src\\main\\webapp\\resources\\images\\movie";
@@ -140,7 +143,8 @@ public class AdminController {
 			String changeFileName = originalname.replaceAll(originalname, StringMovieNo);
 			// 파일이 정해진 폴더에 기록됨
 			FileCopyUtils.copy(in, out);
-			savedMovie.setThumbnail(changeFileName);
+			System.out.println("바뀐영화이름" + changeFileName);
+			movie.setThumbnail(changeFileName);
 		}
 		adminService.updateMovie(movie);
 		

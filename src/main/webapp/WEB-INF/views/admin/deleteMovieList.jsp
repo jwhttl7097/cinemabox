@@ -53,10 +53,9 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="movie" items="${movies }">
-<%-- 							<c:if test="${movie.status eq 'N'}" > --%>
+							<c:forEach var="movie" items="${delteMovies }">
 							<c:choose>
-								<c:when test="${movie.status eq 'N'}">
+								<c:when test="${empty movie}">
 									<tr>
 										<td class="text-center" colspan="12">삭제된 영화정보가 없습니다.</td>
 									</tr>
@@ -64,8 +63,7 @@
 								<c:otherwise>
 										<tr class="text-center">
 											<td>${movie.no }</td>
-											<!-- 버튼 누르면 영화 개봉현황 페이지로 가게끔 -->
-											<td><a href="screening" class="btn btn-link btn-sm" data-movie-no="${movie.no }">${movie.title }</a></td>
+											<td>${movie.title }</td>
 											<td>${movie.genre }</td>
 											<td>${movie.runningTime }분</td>
 											<td>${movie.director }</td>
@@ -77,7 +75,6 @@
 												<button class="btn btn-primary btn-sm" data-movie-no="${movie.no }">복구</button>
 											</td>
 										</tr>
-<%-- 								</c:if> --%>
 								</c:otherwise>
 							</c:choose>
 							</c:forEach>
@@ -94,7 +91,7 @@ $(function() {
 		$.ajax({
 			type: "GET",
 			url: "recovery",	// 복구기능
-			data: {no: $(this).data("movie-no")},
+			data: {movieNo: $(this).data("movie-no")},
 			error : function(error) {
 		        alert("Error!");
 		    },

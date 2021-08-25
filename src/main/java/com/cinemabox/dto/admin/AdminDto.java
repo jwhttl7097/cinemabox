@@ -12,12 +12,12 @@ import lombok.Data;
 public class AdminDto {
 	private int screeningNo;
 	private int theaterNo;
+	private String theaterName;
 	private int hallNo;
+	private String hallName;
 	private int movieNo;
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date screeningDate;
 	private String title;
-	private String theaterName;
-	private String hallName;
 }

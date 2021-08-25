@@ -25,59 +25,59 @@
                         <div class="col-12">
                         <br/>
                         <div class="form-floating mb-3">
-                        	<input type="hidden" name="no" value="${movie.no }"/>
-	                        <div class="form-check">
+                        	<input type="hidden" name="no" id="no" value="${movie.no }"/>
+	                        <div class="form-check" id="genreCheck">
 	                        	※ 영화 장르 선택<br>
 	                           <div class="form-check form-check-inline">
-	                              <input class="form-check-input" type="checkbox" id="genre" name="genre" value="액션">
+	                              <input class="form-check-input" type="checkbox" id="genre" name="genre" value="액션" ${movie.isExistGenre('액션') ? 'checked' : '' }>
 	                              <label class="form-check-label">액션</label>
 	                           </div>
 	                           <div class="form-check form-check-inline">
-	                              <input class="form-check-input" type="checkbox" id="genre" name="genre" value="스릴러">
+	                              <input class="form-check-input" type="checkbox" id="genre" name="genre" value="스릴러" ${movie.isExistGenre('스릴러') ? 'checked' : '' }>
 	                              <label class="form-check-label">스릴러</label>
 	                           </div>
 	                           <div class="form-check form-check-inline">
-	                              <input class="form-check-input" type="checkbox" id="genre" name="genre" value="공포(호러)">
+	                              <input class="form-check-input" type="checkbox" id="genre" name="genre" value="공포(호러)" ${movie.isExistGenre('공포') ? 'checked' : '' }>
 	                              <label class="form-check-label">공포(호러)</label>
 	                           </div>
 	                           <div class="form-check form-check-inline">
-	                              <input class="form-check-input" type="checkbox" id="genre" name="genre" value="범죄">
+	                              <input class="form-check-input" type="checkbox" id="genre" name="genre" value="범죄" ${movie.isExistGenre('범죄') ? 'checked' : '' }>
 	                              <label class="form-check-label">범죄</label>
 	                           </div>
 	                           <div class="form-check form-check-inline">
-	                              <input class="form-check-input" type="checkbox" id="genre" name="genre" value="코미디">
+	                              <input class="form-check-input" type="checkbox" id="genre" name="genre" value="코미디" ${movie.isExistGenre('코미디') ? 'checked' : '' }>
 	                              <label class="form-check-label">코미디</label>
 	                           </div>
 	                           <div class="form-check form-check-inline">
-	                              <input class="form-check-input" type="checkbox" id="genre" name="genre" value="멜로/로맨스">
+	                              <input class="form-check-input" type="checkbox" id="genre" name="genre" value="멜로/로맨스" ${movie.isExistGenre('멜로') ? 'checked' : '' }>
 	                              <label class="form-check-label">멜로/로맨스</label>
 	                           </div>
 	                           <div class="form-check form-check-inline">
-	                              <input class="form-check-input" type="checkbox" id="genre" name="genre" value="어드벤처">
+	                              <input class="form-check-input" type="checkbox" id="genre" name="genre" value="어드벤처" ${movie.isExistGenre('어드벤처') ? 'checked' : '' }>
 	                              <label class="form-check-label">어드벤처</label>
 	                           </div>
 	                           <div class="form-check form-check-inline">
-	                              <input class="form-check-input" type="checkbox" id="genre" name="genre" value="미스터리">
+	                              <input class="form-check-input" type="checkbox" id="genre" name="genre" value="미스터리" ${movie.isExistGenre('미스터리') ? 'checked' : '' }>
 	                              <label class="form-check-label">미스터리</label>
 	                           </div>
 	                           <div class="form-check form-check-inline">
-	                              <input class="form-check-input" type="checkbox" id="genre" name="genre" value="SF">
+	                              <input class="form-check-input" type="checkbox" id="genre" name="genre" value="SF" ${movie.isExistGenre('SF') ? 'checked' : '' }>
 	                              <label class="form-check-label">SF</label>
 	                           </div>
 	                           <div class="form-check form-check-inline">
-	                              <input class="form-check-input" type="checkbox" id="genre" name="genre" value="애니메이션">
+	                              <input class="form-check-input" type="checkbox" id="genre" name="genre" value="애니메이션" ${movie.isExistGenre('애니메이션') ? 'checked' : '' }>
 	                              <label class="form-check-label">애니메이션</label>
 	                           </div>
 	                           <div class="form-check form-check-inline">
-	                              <input class="form-check-input" type="checkbox" id="genre" name="genre" value="다큐멘터리">
+	                              <input class="form-check-input" type="checkbox" id="genre" name="genre" value="다큐멘터리" ${movie.isExistGenre('다큐멘터리') ? 'checked' : '' }>
 	                              <label class="form-check-label">다큐멘터리</label>
 	                           </div>
 	                           <div class="form-check form-check-inline">
-	                              <input class="form-check-input" type="checkbox" id="genre" name="genre" value="판타지">
+	                              <input class="form-check-input" type="checkbox" id="genre" name="genre" value="판타지" ${movie.isExistGenre('판타지') ? 'checked' : '' }>
 	                              <label class="form-check-label">판타지</label>
 	                           </div>
 	                           <div class="form-check form-check-inline">
-	                              <input class="form-check-input" type="checkbox" id="genre" name="genre" value="기타">
+	                              <input class="form-check-input" type="checkbox" id="genre" name="genre" value="기타" ${movie.isExistGenre('기타') ? 'checked' : '' }>
 	                              <label class="form-check-label">기타</label>
 	                           </div>
 	                        </div>
@@ -115,22 +115,22 @@
                                 <label for="floatingInput">기존 마감일 :<fmt:formatDate pattern="MM월 dd일 (E)" value="${movie.closeDate }"/></label>
                             </div>
 	  						<div class="form-floating mb-3">
-		                        <div class="form-check">
+		                        <div class="form-check" id="ageCheck">
 		                            	※ 관람가<br>
 		                           <div class="form-check form-check-inline">
-		                              <input class="form-check-input" type="radio" name="age" value="ALL">
+		                              <input class="form-check-input" type="radio" name="age" value="ALL" ${movie.age eq 'ALL' ? 'checked' : ''}>
 		                              <label class="form-check-label">전체</label>
 		                           </div>
 		                           <div class="form-check form-check-inline">
-		                              <input class="form-check-input" type="radio" name="age" value="12">
+		                              <input class="form-check-input" type="radio" name="age" value="12" ${movie.age eq '12' ? 'checked' : ''}>
 		                              <label class="form-check-label">12세+</label>
 		                           </div>
 		                           <div class="form-check form-check-inline">
-		                              <input class="form-check-input" type="radio" name="age" value="15">
+		                              <input class="form-check-input" type="radio" name="age" value="15" ${movie.age eq '15' ? 'checked' : ''}>
 		                              <label class="form-check-label">15세+</label>
 		                           </div>
 		                           <div class="form-check form-check-inline">
-		                              <input class="form-check-input" type="radio" name="age" value="19">
+		                              <input class="form-check-input" type="radio" name="age" value="19" ${movie.age eq '19' ? 'checked' : ''}>
 		                              <label class="form-check-label">19세+</label>
 		                           </div>
 		                        </div>

@@ -87,21 +87,31 @@
 					 <form id="form-movie">
 						<div class="row px-3 mb-3">
 						<!-- 기본은 비활성화할 것 -->
-							<label for="floatingInput">상영 [영화번호]입력</label>
+							<label for="floatingInput">[영화번호]입력</label>
 							 <input type="text" class="form-control" id="movie-no" name="movieNo" value="${param.movieNo }" readonly/>
 						</div>
 						<div class="row px-3 mb-3">
-							<label for="floatingInput">상영 [극장번호]입력</label>
-							 <input type="text" onKeyup="this.value=this.value.replace(/[^0-9]/g,'')" 
-							class="form-control" id="movie-theaterNo" placeholder="극장 번호를 입력해주세요" name=theaterNo />
+							<c:if test="${!empty theaters }">
+								<label for="floatingInput">[극장번호]입력</label>
+								<select name="theaterNo" id="movie-theaterNo">
+									<c:forEach var="theater" items="${theaters }">
+										<option value="${theater.theaterNo}">[${theater.theaterNo}], [${theater.theaterName}]</option> 
+									</c:forEach>
+								</select>
+							</c:if>	
 						</div>
 						<div class="row px-3 mb-3">
-							<label for="floatingInput">상영 [상영관번호]입력</label>
-							 <input type="text" onKeyup="this.value=this.value.replace(/[^0-9]/g,'')" 
-							class="form-control" id="movie-hallNo" placeholder="상영관 번호를 입력해주세요" name=hallNo />
+							<c:if test="${!empty halls }">
+								<label for="floatingInput">[상영관번호]입력</label>
+								<select name="hallNo" id="movie-hallNo">	
+									<c:forEach var="hall" items="${halls }">
+								 		<option value="${hall.hallNo}">${hall.hallName}</option> 
+								 	</c:forEach>
+								</select>
+							</c:if>
 						</div>
 						<div class="row px-3 mb-3">
-							<label for="floatingInput">상영[날짜/시간]입력</label>
+							<label for="floatingInput">[날짜/시간]입력</label>
 							<input type="text" class="form-control" id="screening-date" name="screeningDate">
 						</div>
 					</form>
@@ -150,10 +160,7 @@ $(function() {
 		    },
 		    success : function(data) {
 		        alert("영화 배정이 완료되었습니다.");
-		    },
-		    complete : function() {
-		        alert("영화 배정정보 화면으로 이동합니다.");  
-		        location.href="screening?movieNo=" + $("#movie-no").val();
+		        location.reload();
 		    }
 		});
 	})
