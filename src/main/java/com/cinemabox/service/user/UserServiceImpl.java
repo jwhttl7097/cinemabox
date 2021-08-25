@@ -130,7 +130,35 @@ public class UserServiceImpl implements UserService{
 	 */
 	@Override
 	public List<UserDto> getwishListById(String userId) {
+		
 		return userDao.getwishListById(userId);
+	}
+	
+	/**
+	 * 쿠폰 보유 목록 서비스 Impl
+	 */
+	@Override
+	public List<UserDto> getCouponsById(String userId) {
+		
+		return userDao.getCouponsById(userId);
+	}
+	
+	/**
+	 * 영화 예매 내역 서비스 Impl
+	 */
+	@Override
+	public List<UserDto> getMovieReservationsById(String userId) {
+		
+		return userDao.getMovieReservationsById(userId);
+	}
+	
+	/**
+	 * 구매 내역 서비스 Impl
+	 */
+	@Override
+	public List<UserDto> getOrderlistById(String userId) {
+		
+		return userDao.getOrderlistById(userId);
 	}
 	
 	@Override

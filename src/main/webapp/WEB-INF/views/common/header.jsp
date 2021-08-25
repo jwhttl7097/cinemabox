@@ -154,7 +154,7 @@
         					<input type="hidden" value="name" id="kakaoName" name="name">
         				</form>
         				<form id="form-login" method="post" action="login" novalidate="novalidate">
-        					<div class="mt-4" id="error-message" style="display:none;">
+        					<div class="mt-4" id="error-message" style="color:red; display:none;">
      										
         					</div>
         					<div class="row px-2 mb-3">
@@ -250,7 +250,9 @@ $("#form-login").submit(function(event){
 				$("#myPage-link").show();
             
 				loginModal.hide();
-				location.reload();
+				location.href = location.href.replace('error=login','')
+				//location.reload();
+				
             };
 		},
 		error:function() {
@@ -286,7 +288,8 @@ function loginWithKakao(){
     	    				$("#myPage-link").show();
     	    				
     	    				loginModal.hide();
-    	    				location.reload();
+    	    				location.href = location.href.replace('?error=login','')
+    	    				//location.reload();
     	    			}
     	    		})
     	    	}
@@ -330,7 +333,6 @@ function getCookie(name) {
 	}
 	return "";
 };
-	
 	/*
 	document.getElementById("register-link").onclick= function(event){
 		event.preventDefault()
@@ -341,7 +343,7 @@ function getCookie(name) {
 </script>
 <c:if test="${param.error eq 'login' }">
 	<script>
-		//로그인이 필요합니다 적기
+		$('#error-message').text("로그아웃 되어 로그인이 필요합니다.").show();
 		loginModal.show();
 	</script>
 </c:if>
