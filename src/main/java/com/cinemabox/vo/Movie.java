@@ -29,6 +29,10 @@ public class Movie {
 	private String status;
 	private int userLike;
 	private Date createdDate;
-
+	private String screeningStatus;
+	
+	public boolean isExistGenre(String text) {
+		return genre.contains(text);
+	}
 }
 

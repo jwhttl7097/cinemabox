@@ -19,14 +19,11 @@ public interface AdminDao  {
 	List<Movie> getAllDeleteMovies();
 	List<Theater> getAllTheaterInfo();
 	List<Hall> getAllHallInfo();
-	
 	List<Seat> getAllSeats();
 	void insertSeat(Screening screening);
-	
 	void insertScreening(Screening screening);
 	void updateScreening(Screening screening);
 	Screening getScreeningByNo(int screeningNo);
-	
 	List<Screening> getScreeningsByMovieNo(int moiveNo);
 	
 	// 페이징 처리

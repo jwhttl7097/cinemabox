@@ -35,14 +35,31 @@ public class AdminServiceImpl implements AdminService{
 	}
 	
 	@Override
-	public Movie getMovieByNo(int MovieNo) {
-		Movie Movie = adminDao.getMovieByNo(MovieNo);
-		return Movie;
+	public Movie getMovieByNo(int movieNo) {
+		Movie movie = adminDao.getMovieByNo(movieNo);
+		return movie;
 	}
 
 	@Override
 	public void updateMovie(Movie movie) {
-		adminDao.updateMovie(movie);
+		Movie savedMovie = adminDao.getMovieByNo(movie.getNo());
+		savedMovie.setGenre(movie.getGenre());
+		savedMovie.setTitle(movie.getTitle());
+		savedMovie.setRunningTime(movie.getRunningTime());
+		savedMovie.setDirector(movie.getDirector());
+		savedMovie.setCasting(movie.getCasting());
+		savedMovie.setReleaseDate(movie.getReleaseDate());
+		savedMovie.setCloseDate(movie.getCloseDate());
+		savedMovie.setAge(movie.getAge());
+		savedMovie.setSynopsis(movie.getSynopsis());
+		savedMovie.setTrailerFirst(movie.getTrailerFirst());
+		savedMovie.setTrailerSecond(movie.getTrailerSecond());
+		
+		if (movie.getThumbnail() != null )  {
+			savedMovie.setThumbnail(movie.getThumbnail());
+		}
+		
+		adminDao.updateMovie(savedMovie);
 	}
 
 	@Override

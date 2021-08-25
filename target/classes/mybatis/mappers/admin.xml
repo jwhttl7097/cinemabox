@@ -140,10 +140,11 @@
 			S.SCREENING_NO			as screeningNo,
 			S.THEATER_NO 			as theaterNo,
 			S.HALL_NO				as hallNo,
+			H.HALL_NAME				as hallName,
 			S.SCREENING_DATE		as screeningDate,
 			M.MOVIE_TITLE			as title,
-			T.THEATER_NAME 			as theaterName,
-			H.HALL_NAME				as hallName
+			T.THEATER_NO			as theaterNo,
+			T.THEATER_NAME 			as theaterName
 		from
 			CINEMABOX_SCREENING S, CINEMABOX_MOVIE M, CINEMABOX_THEATER T, CINEMABOX_HALL H
 		where 
@@ -172,7 +173,8 @@
 			MOVIE_THUMBNAIL			as thumbnail,
 			MOVIE_SYNOPSIS			as synopsis,
 			MOVIE_TRAILER_FIRST     as trailerFirst,
-			MOVIE_TRAILER_SECOND	as trailerSecond
+			MOVIE_TRAILER_SECOND	as trailerSecond,
+			MOVIE_SCREENING_STATUS	as screeningStatus
 		from
 			CINEMABOX_MOVIE
 		where

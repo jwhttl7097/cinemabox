@@ -38,8 +38,8 @@
 		<div class="row mb-3">
 			<div class="col">
 				<div class="border p-2 bg-light d-flex justify-content-between">
-					 <a class="navbar-brand" href="admin" style="font-size:25px; color:black; font-weight: bolder;">CINEMA BOX</a>
-					 <a class="text-center" href="movieList" style="font-size:25px; color:black; font-weight: bolder;">영화 상영 정보</a>
+					<a class="navbar-brand" href="admin" style="font-size:25px; color:black; font-weight: bolder;">CINEMA BOX</a>
+					<a class="text-center" href="movieList" style="text-align : center; font-size:25px; color:black; font-weight: bolder;">영화 상영 정보</a>
 					<a class="btn btn-warning btn-sm" href="admin">관리자 메인</a>
 				</div>
 			</div>
@@ -184,7 +184,7 @@
 						</div>
 						<div class="row px-3 mb-3">
 							<c:if test="${!empty theaters }">
-								<label for="floatingInput">상영 [극장번호]입력</label>
+								<label for="floatingInput">[극장번호]입력</label>
 								<select name="theaterNo" id="movie-theaterNo">
 									<c:forEach var="theater" items="${theaters }">
 										<option value="${theater.theaterNo}">[${theater.theaterNo}], [${theater.theaterName}]</option> 
@@ -194,7 +194,7 @@
 						</div>
 						<div class="row px-3 mb-3">
 							<c:if test="${!empty halls }">
-								<label for="floatingInput">상영 [상영관번호]입력</label>
+								<label for="floatingInput">[상영관번호]입력</label>
 								<select name="hallNo" id="movie-hallNo">	
 									<c:forEach var="hall" items="${halls }">
 								 		<option value="${hall.hallNo}">${hall.hallName}</option> 
@@ -203,7 +203,7 @@
 							</c:if>
 						</div>
 						<div class="row px-3 mb-3">
-							<label for="floatingInput">상영[날짜/시간]입력</label>
+							<label for="floatingInput">[날짜/시간]입력</label>
 							<input type="text" class="form-control" id="screening-date" name="screeningDate">
 						</div>
 					</form>
@@ -247,9 +247,9 @@ $(function() {
 	});	
 	
 	//Trailer 닫기버튼 시 재생 종료 시키기
-	   $(".btn-secondary").click(function(){
+	$(".btn-secondary").click(function(){
 	      location.reload();
-	   })
+	})
 	
 	// 배정 버튼을 클릭했을 때 실행된다.
 	$("#table-movies .btn-outline-warning").click(function() {
@@ -305,21 +305,6 @@ $(function() {
 		    }
 		});
 	});
-	
-// 	$("#table-movies .btn-outline-primary").click(function() {
-// 		$.ajax({
-// 			type: "GET",
-// 			url: "movieModify", // 수정기능 
-// 			data: {movieNo: $(this).data("movie-no")},
-// 			error : function(error) {
-// 		        alert("Error!");
-// 		    },
-// 			success : function(data) {
-// 			    alert("영화 수정페이지로 이동합니다.");
-// 			    location.href="movieModify";
-// 			},
-// 		});
-// 	});
 })
 </script>
 </body>
