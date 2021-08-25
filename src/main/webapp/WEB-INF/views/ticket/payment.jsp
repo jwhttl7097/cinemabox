@@ -73,19 +73,19 @@
 							<h6>최종 결제수단</h6>
 							<ul class="nav" id="ul-selectPay">
 								<li>
-									<button class="btn p-3 border" id="btn-pay-card">
+									<button class="btn p-3 border pay-selected-parent" id="btn-pay-card">
 										<h3><i class="bi bi-credit-card"></i></h3>
 										<span style="font-size: 0.75rem;">신용카드</span>
 									</button>
 								</li>
 								<li>
-									<button class="btn p-3 border" id="btn-pay-simple">
+									<button class="btn p-3 border pay-selected-parent" id="btn-pay-simple">
 										<h3><i class="bi bi-wallet2"></i></h3>
 										<span style="font-size: 0.75rem;">간편결제</span>
 									</button>
 								</li>
 								<li>
-									<button class="btn p-3 border" id="btn-pay-deposit">
+									<button class="btn p-3 border pay-selected-parent" id="btn-pay-deposit">
 										<h3><i class="bi bi-cash-stack"></i></h3>
 										<span style="font-size: 0.75rem;">실시간 계좌이체</span>
 									</button>
@@ -94,27 +94,27 @@
 						</div>
 						<ul class="nav" id="ul-selectPay-simple" style="display:none;">
 							<li data-simple="kakaopay">
-								<button class="btn p-3 border">
+								<button class="btn p-3 border pay-selected">
 									<h3 style="margin-top: -11px;">
 										<img src="/cinemabox/resources/images/payment/payment_simple_kakao.png" alt="">
 									</h3>
-									카카오페이
+									<span class="text-body">카카오페이</span>
 								</button>
 							</li>
 							<li data-simple="payco">
-								<button class="btn p-3 border">
+								<button class="btn p-3 border pay-selected">
 									<h3 style="margin-top: -11px;">
 										<img src="/cinemabox/resources/images/payment/payment_simple_payco.png" alt="">
 									</h3>
-									페이코
+									<span class="text-body">페이코</span>
 								</button>
 							</li>
 							<li data-simple="smilepay">
-								<button class="btn p-3 border">
+								<button class="btn p-3 border pay-selected">
 									<h3 style="margin-top: -11px;">
 										<img src="/cinemabox/resources/images/payment/payment_simple_smilepay.png" alt="">
 									</h3>
-									스마일페이
+									<span class="text-body">스마일페이</span>
 								</button>
 							</li>
 						</ul>
@@ -156,7 +156,7 @@
 							<li class="mt-3">
 								<h6>
 									포인트사용
-									<span style="font-size:0.8rem; color:#999;">( 현재 포인트 : <span id="nowPoint" data-now-point="${LOGINED_USER.point}">${LOGINED_USER.point}</span>pt )</span>
+									<span style="font-size:0.8rem; color:#999;">( 현재 포인트 : <span id="nowPoint" data-now-point="${user.point}">${user.point}</span>pt )</span>
 								</h6>
 								<div class="input-group">
 									<button class="btn btn-outline-secondary" id="allPointBtn">전체사용</button>
@@ -204,7 +204,7 @@
 		</div>
 	</div>
 	<!-- 토스트 메세지가 세로방향으로 쌓이는 곳 -->
-	<div class="toast-container position-absolute bottom-0 end-0 p-3"></div>
+	<div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 11"></div>
 	
 	<%@include file="../common/footer.jsp" %>
 </div>
@@ -339,6 +339,8 @@ function calculateTotalPay() {
 		// 가지고있는 포인트 보다 많은 포인트를 사용할경우 유효성검사 //
 		// 전체포인트 사용버튼 한번만 누르기
 		$('#allPointBtn').addClass('disabled');
+		// 확인 클릭시 확인 버튼 불가능 상태
+		$(this).addClass('disabled');
 		// 현재 가지고 있는 포인트에 사용한 포인트를 차감한 결과값을 나타냄 //
 		var nowPoint = $('#nowPoint').text() - point;
 		$("#nowPoint").text(nowPoint);
@@ -354,10 +356,20 @@ function calculateTotalPay() {
 	$('#cancelPointBtn').click(function() {
 		// 전체포인트 사용버튼 한번만 누르기
 		$('#allPointBtn').removeClass('disabled');
-		$('#nowPoint').text(minusComma($("#point-discount-money").text()));
+		// 취소 클릭시 확인 버튼 가능 상태
+		$('#confirmPointBtn').removeClass('disabled');
+		// 취소시 포인트 할인란에 있는 금액 을 현재 포인트에 더한값
+		$('#nowPoint').text(Number($('#nowPoint').text()) + Number(minusComma($("#point-discount-money").text())));
 		$("#point-discount-money").text(0);
 		calculateTotalPay();
 	});
+	
+	$('.pay-selected').click(function() {
+		$(this).addClass('bg-warning').parent().siblings().find('button').removeClass('bg-warning');
+	})
+	$('.pay-selected-parent').click(function() {
+		$(this).addClass('bg-warning').parent().siblings().find('button').removeClass('bg-warning');
+	})
 	
 	//카드결제
 	$("#btn-pay-card").click(function(){

@@ -71,17 +71,17 @@
 							<div class="col-6 text-center">
 								<label class="mx-2">성인</label>
 								<div class="bx-num">
-									<button class="btn-minus" id="adult-minus"><i class="fas fa-minus"></i></button>
+									<button class="btn-minus calc" id="adult-minus"><i class="fas fa-minus"></i></button>
 									<div class="txt-num" id="adult-cnt">0</div> 
-									<button class="btn-plus" id="adult-plus"><i class="fas fa-plus"></i></button>
+									<button class="btn-plus calc" id="adult-plus"><i class="fas fa-plus"></i></button>
 								</div>
 							</div>
 							<div class="col-6 text-center">
 								<label class="mx-2">청소년</label>
 								<div class="bx-num">
-									<button class="btn-minus" id="teenager-minus"><i class="fas fa-minus"></i></button>
+									<button class="btn-minus calc" id="teenager-minus"><i class="fas fa-minus"></i></button>
 									<div class="txt-num" id="teenager-cnt">0</div> 
-									<button class="btn-plus" id="teenager-plus"><i class="fas fa-plus"></i></button>
+									<button class="btn-plus calc" id="teenager-plus"><i class="fas fa-plus"></i></button>
 								</div>
 							</div>
 						</div>
@@ -160,7 +160,7 @@
 	<%@include file="../common/footer.jsp" %>
 </div>
 <!-- 토스트 메세지가 세로방향으로 쌓이는 곳 -->
-<div class="toast-container position-absolute bottom-0 end-0 p-3"></div>
+<div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 11"></div>
 <!-- 제목을 포함하고 토스트 메세지에 대한 HTML 템플릿 -->
 <script type="text/template" id="toast-basic-template">
 	<div class="toast role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="5000">
@@ -381,6 +381,7 @@ $(function(){
 			})
 			// 인원수에 맞게 클릭횟수가 채워지면  일어날 아이콘 동작 상태에 관한 함수
 			if (totalCnt == selectedSeatCount) {
+				$('.calc').prop('disabled', 'true');
 				// 인원수에 맞게 클릭횟수가 채워지면 클릭한 부분과 이미 예약된 좌석을 제외한 나머지 구간 disabled
 				$('.couch:not(.couch:checked, .couch.text-success)').prop('disabled', 'true').addClass('disabled').next().children().addClass('text-secondary').removeClass('text-white');
 				// 선택한 좌석의 행, 열 모음 밸류값 전달하기 //
@@ -406,15 +407,17 @@ $(function(){
 				$('#seat_col').val(seatCols.join(" "));
 				
 				var title = "좌석이 선택 되었습니다."
-				var message = '<p>선택된 좌석 : ' + seatToast + '</p>';
-					message += '<p>현재 선택된 좌석은 임시 선택 상태이며</p>';
-					message += '<p> 임시선택 유효시간은 20분 입니다.</p>';
-					message += '결제 완료후 좌석이 확정됩니다.';
+				var message = '<p>' + seatToast + ' 좌석이 선택되었습니다.</p>';
+					message += '<p>결제 완료후 좌석이 확정됩니다.</p>';
+					message += '<p>임시선택 유효시간은 20분 입니다.</p>';
+					message += '<p>인원수정은 좌석 선택해제 후 </p>';
+					message += '인원 수정이 가능합니다.';
 				console.log('토스트에 띄울 메세지 확인 : ' + seatToast);
 				createBasicToast(title, message);
 			} else {
 				// 1. 이미 예약된 좌석을 제외하고 비활성화 되어 있는 것을 전부 활성화하고 세컨더리 다 화이트로 선택 가능하게 표시 단, 1좌석 이상이면서 체크가 되어있는 좌석은 체크를 유지해야할것.
 				$('.couch:not(.couch:checked, input[data-selected=Y], input[data-selected=T])').removeClass('disabled').removeAttr('disabled').next().children().removeClass('text-secondary').addClass('text-white');
+				$('.calc').removeAttr('disabled');
 			}
 		
 			// websocket 클릭

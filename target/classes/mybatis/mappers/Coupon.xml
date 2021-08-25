@@ -34,6 +34,7 @@
 			COUPON_NO as couponListNo,
 			COUPON_TYPE as type,
 			COUPON_ISSUE_DATE as issueDate,
+			COUPON_SERIAL_NO as serialNo,
 			COUPON_EXP_DATE as expDate,
 			COUPON_STATUS as status,
 			COUPON_USED_DATE as usedDate
@@ -48,7 +49,7 @@
 			CINEMABOX_COUPONS
 		set
 			COUPON_STATUS = #{status},
-			COUPON_USED_DATE = sysdate
+			COUPON_USED_DATE = sysdate+9/24
 		where
 			COUPON_SERIAL_NO = #{serialNo}
 	</update>

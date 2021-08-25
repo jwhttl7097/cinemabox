@@ -87,8 +87,6 @@
 	<%@include file="../common/footer.jsp" %>
 </div>
 <script type="text/javascript">
-//Toast
-//알람 메세지를 화면에 표시한다.
 $(function(){
 	//header nav js
 	$('.mainnav').mouseover(function(){

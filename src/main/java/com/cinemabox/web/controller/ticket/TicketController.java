@@ -59,6 +59,7 @@ public class TicketController{
 	
 	@PostMapping(path = {"/payment"})
 	public String payment(Model model, @ModelAttribute("ticketDto") TicketDto ticketDto) {
+		// 좌석 행, 열 표시하기
 		String[] cols = ticketDto.getSeatCol().split(" ");
 		String[] rows = ticketDto.getSeatRow().split(" ");
 		String seat = "";
@@ -67,10 +68,14 @@ public class TicketController{
 			seat += rows[i];
 			seat += " ";
 		}
+		model.addAttribute("seat", seat);
+		// 쿠폰 표시하기
 		User loginUser = (User) SessionUtils.getAttribute("LOGINED_USER");
 		List<Coupon> coupons = couponDao.getAllMyCoupon(loginUser.getId());
 		model.addAttribute("coupons", coupons);
-		model.addAttribute("seat", seat);
+		// 포인트 표시하기
+		User user = userDao.getUserById(loginUser.getId());
+		model.addAttribute("user", user);
 		model.addAttribute("tickets", ticketDto);
 		return "ticket/payment";
 	}
