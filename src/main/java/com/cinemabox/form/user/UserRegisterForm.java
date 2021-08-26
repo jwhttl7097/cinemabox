@@ -1,7 +1,5 @@
 package com.cinemabox.form.user;
 
-import java.util.Date;
-
 import lombok.Data;
 
 @Data

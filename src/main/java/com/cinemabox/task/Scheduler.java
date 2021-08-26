@@ -59,7 +59,7 @@ public class Scheduler {
 	}
 	
 	//개봉한 영화 상영중으로 변경하기 - 매일 오후 12시 정각에 실행
-	@Scheduled(cron = "0 0 12 * * ?")
+	@Scheduled(cron = "0 0/1 0 * * ?")
 	public void updateMovieStatus(){
 		logger.info("-----------updateMovieStatus 실행-----------");
 		//모든 영화정보 가져오기
