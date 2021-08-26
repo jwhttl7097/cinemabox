@@ -162,6 +162,15 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	@Override
+	public int countCoupon(String userId) {
+		int cnt = userDao.countCoupon(userId);
+		if(cnt == 0 ) {
+			return 0;
+		}
+		return cnt;
+	}
+	
+	@Override
 	public int countWishlists(String userId) {
 		int cnt = userDao.countWishlists(userId);
 		if (cnt == 0) {

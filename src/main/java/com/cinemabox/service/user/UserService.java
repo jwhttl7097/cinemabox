@@ -49,6 +49,13 @@ public interface UserService {
 	List<UserDto> getCouponsById(String userId);
 	
 	/**
+	 *  쿠폰 개수 세기
+	 * @param userId
+	 * @return
+	 */
+	int countCoupon(String userId);
+	
+	/**
 	 * 위시리스트 영화 개수 세기
 	 * @param userId
 	 * @return
