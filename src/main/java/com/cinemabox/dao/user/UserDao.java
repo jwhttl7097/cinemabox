@@ -61,6 +61,12 @@ public interface UserDao {
 	 */
 	List<UserDto> getOrderlistById(String userId);
 	
+	/**
+	 * 사용자 아이디로 보유 쿠폰 개수 가져오기
+	 * @param userId
+	 * @return
+	 */
+	int countCoupon(String userId);
 	
 	/**
 	 * 사용자 아이디로 위시리스트 개수 가져오기

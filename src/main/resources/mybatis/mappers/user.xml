@@ -145,6 +145,15 @@
 		where user_id = #{value}
 	</update>
 	
+	<select id="countCoupon" parameterType="com.cinemabox.vo.CouponList" resultType="int">
+		select
+		    count(*)
+		from 
+		    cinemabox_couponlist
+		where 
+	    	user_id=#{value}
+	</select>
+	
 	<select id="countWishlists" parameterType="com.cinemabox.vo.Wishlist" resultType="int">
 		select 
 			count(*) 

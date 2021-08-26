@@ -67,8 +67,11 @@
     }
     
 	#currentMovies{
-		background-color: black;
+		background-color: black!important;
+		padding-top: 70px!important;
+		padding-bottom:100px!important;
 	}
+	
 	
 	#title{
 		font-size : 15px;
@@ -79,12 +82,9 @@
 		margin-top : 5px;
 		font-size : 11px;
 	}
+	
 	.list-group-item{
 		border: none;
-	}
-
-	#currentMovies{
-		padding-bottom:10px;
 	}
 	
 	.mainEvent{
@@ -188,7 +188,7 @@
 	현재 상영작 (박스오피스, 예매율 순위로 정렬)
  -->
 	<div class="row p-5" id="currentMovies" style="background:black;">
-		<div class="col-10 offset-1">
+		<div class="col">
 			<div class="swiper-container mySwiper">
         		<div class="swiper-wrapper">
         			<c:forEach var="movie" items="${nowMovies }">
@@ -408,7 +408,7 @@ $(function(){
 });
 
 //boxOffice swiper 설정
-var swiper = new Swiper(".mySwiper", {
+var swiper = new Swiper(".swiper-container", {
     slidesPerView: 4,
     spaceBetween: 30,
     freeMode: true,

@@ -65,6 +65,18 @@
    
    }
    
+   .wishlistMovie{
+   		cursor:pointer;
+   }
+   
+   #couponWidth{
+   		width:500px;
+   }
+   
+   .couponList{
+   		cursor:pointer;
+   }
+   
    .modal-dialog{
    
 	   width: 304px;
@@ -140,21 +152,18 @@
 					<span>${LOGINED_USER.point } p</span>
             	</div>
             	<div class="3tabs col text-center" style="padding:20px 20px">
-					<span><strong>쿠폰함</strong></span>
-					<span><ins style="color:#DC143C">0</ins>개</span>
+					<span class="couponList"><strong>쿠폰함</strong></span>
+					<span class="couponList"><ins style="color:#DC143C">${countCoupon }</ins>개</span>
             	</div>
             	<div class="3tabs col text-center" style="padding:20px 20px">
-					<span><strong>찜한 영화</strong></span>
-					<span id="wishlistMovie">${countWish }개</span>
+					<span class="wishlistMovie"><strong>찜한 영화</strong></span>
+					<span class="wishlistMovie">${countWish }개</span>
             	</div>
             </div>
          </div>
          <ul class="nav nav-tabs  d-flex justify-content-around" style="padding-top : 15px"id="myTab" role="tablist">
             <li class="nav-item infoTabBack rounded" role="presentation">
                <button class="infoTab nav-link active" id="movie-tab" data-bs-toggle="tab" data-bs-target="#movie" type="button" role="tab" aria-controls="movie" aria-selected="true"><strong>예매내역</strong></button>
-            </li>
-            <li class="nav-item infoTabBack rounded" role="presentation">
-               <button class="infoTab nav-link" id="coupon-tab" data-bs-toggle="tab" data-bs-target="#coupon" type="button" role="tab" aria-controls="coupon" aria-selected="false"><strong>쿠폰함</strong></button>
             </li>
             <li class="nav-item infoTabBack rounded" role="presentation">
                <button class="infoTab nav-link" id="payment-tab" data-bs-toggle="tab" data-bs-target="#payment" type="button" role="tab" aria-controls="payment" aria-selected="false"><strong>결제 내역</strong></button>
@@ -212,39 +221,6 @@
             		</table>
                </div>
             </div>
-            <div class="tab-pane fade mt-4 mb-4" id="coupon" role="tabpanel" aria-labelledby="coupon-tab">
-            	<div class="text-center" style="padding:20px">
-            		<table class="table">
-            			<thead>
-            				<tr class="text-center">
-            					<th>쿠폰 번호</th>
-            					<th>쿠폰</th>
-            					<th>만료 기간</th>
-            			</thead>
-            			<tbody>
-		            		<c:choose>
-		            			<c:when test="${not empty coupons }">
-		            				<c:forEach var="c" items="${coupons }">
-		            					<tr>
-		            						<td class="align-middle text-center">${c.couponNo }</td>
-		            						<td class="align-middle text-center">${c.couponType }</td>
-		            						<td class="align-middle text-center">
-		            							<fmt:formatDate value="${c.couponExpDate }" pattern="yyyy-MM-dd"/>
-		            						</td>
-		            					</tr>
-		            				</c:forEach>
-		            			</c:when>
-		            			<c:otherwise>
-		            				<tr>
-					               		<td colspan="6" class="text-center py-5"><img alt="ryan" src="./resources/images/user/myPage/ryan.gif" id="ryan" style="padding: 20px"><br/>
-					               		소유하신 쿠폰이 없습니다.</td>
-				               		</tr>            			
-		            			</c:otherwise>
-		            		</c:choose>
-	            		</tbody>
-            		</table>
-               	</div>
-            </div>
             <div class="tab-pane fade mt-4 mb-4" id="payment" role="tabpanel" aria-labelledby="payment-tab">
             	<div class="text-center" style="padding:20px">
             		<table class="table">
@@ -263,7 +239,7 @@
 	           						<c:forEach var="o" items="${orders }">
 	           							<tr>
 	           								<td class="align-middle text-center">${o.orderNo }</td>
-	           								<td class="align-middle text-center"><a href="/cinemabox/">${o.name }</a></td>
+	           								<td class="align-middle text-center"><a href="/cinemabox/gift">${o.name }</a></td>
 	           								<td class="align-middle text-center">${o.orderAmount } 개</td>
 	           								<td class="align-middle text-center">
 	           									<fmt:formatNumber value="${o.orderPrice }" pattern="#,###"/>원
@@ -361,7 +337,57 @@
         </div>
      </div>
   </div>
-<%-------------------찜한 영화 모달 ---------------------------%>
+<!-------------------쿠폰함 모달  ---------------------------->
+<!-- Vertically centered modal -->
+<div class="modal fade" id="couponModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" id="couponWidth">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel"><strong>${LOGINED_USER.name }</strong>님의 쿠폰함<i class="fas fa-paper-plane"></i></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      	<div class="row">
+       		<div class="col d-flex justify-content-center">
+       			<table class="table">
+           			<thead>
+           				<tr class="text-center">
+           					<th>쿠폰 번호</th>
+           					<th>쿠폰</th>
+           					<th>만료 기간</th>
+           			</thead>
+            		<tbody>
+	            		<c:choose>
+	            			<c:when test="${not empty coupons }">
+	            				<c:forEach var="c" items="${coupons }">
+	            					<tr>
+	            						<td class="align-middle text-center">${c.couponNo }</td>
+	            						<td class="align-middle text-center">${c.couponType }</td>
+	            						<td class="align-middle text-center">
+	            							<fmt:formatDate value="${c.couponExpDate }" pattern="yyyy-MM-dd"/>
+	            						</td>
+	            					</tr>
+	            				</c:forEach>
+	            			</c:when>
+	            			<c:otherwise>
+	            				<tr>
+				               		<td colspan="6" class="text-center py-5"><img alt="ryan" src="./resources/images/user/myPage/ryan.gif" id="ryan" style="padding: 20px"><br/>
+				               		소유하신 쿠폰이 없습니다.</td>
+			               		</tr>            			
+	            			</c:otherwise>
+	            		</c:choose>
+	            	</tbody>
+            	</table>
+       		</div>
+       	</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning btn-sm" data-bs-dismiss="modal">닫기</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-------------------찜한 영화 모달 --------------------------->
  <div class="modal fade" id="wishlistMovieModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
  	<div class="modal-dialog">
     	<div class="modal-content">
@@ -395,7 +421,8 @@
 								</div>
     						</c:when>
     						<c:otherwise>
-    							찜한 영화가 없습니다.
+    								<div colspan="6" class="text-center py-5"><img alt="ryan" src="./resources/images/user/myPage/ryan.gif" id="ryan" style="padding: 20px"><br/>
+    								찜한 영화가 없습니다.</div>
     						</c:otherwise>
     					</c:choose>
         			</div>
@@ -411,10 +438,17 @@ $(function(){
 	    keyboard: false
 	});
 	 
-	$("#wishlistMovie").click(function(){
+	var couponModal = new bootstrap.Modal(document.getElementById("couponModal"),{
+		keyboard:false	
+	});
+	
+	$(".wishlistMovie").click(function(){
 		wishlistMovieModal.show();
 	});
 	
+	$(".couponList").click(function(){
+		couponModal.show();
+	});
 });
 
 </script>

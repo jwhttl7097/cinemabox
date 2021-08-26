@@ -66,6 +66,9 @@ public class UserController {
 		//찜한 영화
 		List<UserDto> wishlists = userService.getwishListById(user.getId());
 		
+		//보유 쿠폰 개수 가져오기
+		int countCoupon = userService.countCoupon(user.getId()); 
+		
 		//찜한 영화 개수 가져오기
 		int countWishlist = userService.countWishlists(user.getId());
 		
@@ -75,6 +78,7 @@ public class UserController {
 		model.addAttribute("tickets", tickets);
 		model.addAttribute("coupons", coupons);
 		model.addAttribute("wishlists", wishlists);
+		model.addAttribute("countCoupon", countCoupon);
 		model.addAttribute("countWish", countWishlist);
 		
 		return "user/myPage";	
