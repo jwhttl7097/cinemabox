@@ -27,10 +27,8 @@ public class Movie {
 	private String director;
 	private String casting;
 	private String status;
-	private String director;
-	private String casting;
 	private int userLike;
 	private Date createdDate;
-	private Date closeDate;
+
 }
 

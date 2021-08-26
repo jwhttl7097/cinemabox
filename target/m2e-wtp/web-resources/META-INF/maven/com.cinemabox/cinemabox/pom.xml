@@ -21,6 +21,13 @@
           <version>4.5.13</version>
       </dependency>
       
+      <!-- commons-fileuploads -->
+	  <dependency>
+		  <groupId>commons-fileupload</groupId>
+		  <artifactId>commons-fileupload</artifactId>
+		  <version>1.2.1</version> 
+	  </dependency>
+      
       <!-- jsoup -->
       <dependency>
           <groupId>org.jsoup</groupId>

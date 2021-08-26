@@ -24,7 +24,9 @@ public class QuestionController {
 	public @ResponseBody void updateSatisfaction(Question question) { //프론트에서든 Question 객체에 값을 넣기
 		
 		// 서비스를 호출하여 만족도를 수정
-		questionService.updateSatisfaction(question);
+		 questionService.updateSatisfaction(question);
+		 System.out.println("만족도"+ question.toString());
+	
 	}
 	
 //	@PostMapping("/list/count")

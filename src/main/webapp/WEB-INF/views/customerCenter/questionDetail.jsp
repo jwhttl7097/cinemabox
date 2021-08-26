@@ -12,7 +12,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="/cinemabox/resources/js/common.js"></script>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<title>TITLE</title>
+<title>문의 상세조회</title>
 <style type="text/css">
  a:link { color: black; text-decoration: none;}
  a:visited { color: black; text-decoration: none;}
@@ -113,6 +113,7 @@
             <h5>만족도</h5>
             <div class="star-rating space-x-4 mx-auto">
            		<input type="hidden" id="satisfaction1" name="satisfaction1" value="${questionDetail.satisfaction}"/> 
+           		<input type="hidden" name=“questionNo” id="“questionNo" value="${questionDetail.questionNo}"/>
 				<input type="radio" id="5-stars" name="rating" value="5" />
 				<label for="5-stars" class="star pr-4">★</label>
 				<input type="radio" id="4-stars" name="rating" value="4" />
@@ -136,7 +137,8 @@
 <script type="text/javascript">
 window.onload = function(){
 	var satisfaction = $('#satisfaction1').val();
-	$("input:radio[name='rating']:radio[value="+satisfaction+"]").prop('checked', true); 
+	$("input:radio[name='rating']:radio[value="+satisfaction+"]").prop('checked', true);
+
 }
 
 function del(questionNo) {
@@ -149,7 +151,7 @@ function del(questionNo) {
 
 function satisfaction(){
 	var radioValue = $('input:radio[name=rating]:checked').val();
-	var questionNo = $('#questionNo').val();
+	var questionNo = ${questionDetail.questionNo};
 	var ajaxData = {satisfaction:radioValue,questionNo:questionNo};
 
 		$.ajax({

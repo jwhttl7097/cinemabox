@@ -11,7 +11,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="/cinemabox/resources/js/common.js"></script>
-<title>TITLE</title>
+<title>공지사항 등록</title>
 <style type="text/css">
  a:link { color: black; text-decoration: none;}
  a:visited { color: black; text-decoration: none;}
@@ -19,7 +19,7 @@
 </style>
 </head>
 <body>
-<div class="container-fluid">
+<div class="container">
 	<%@ include file="../common/header.jsp"%>
 	
 	<div class="top" style="margin-left:150px;  margin-top:50px;">
@@ -32,10 +32,6 @@
 	<div class="mb-3">
 	  <label for="exampleFormControlInput1" class="form-label">제목</label>
 	  <input type="text" class="form-control" id="title" name="title">
-	</div>
-	<div class="form-check">
-	  <input class="form-check-input" type="checkbox" value="" id="important" name="important">
-	  <label class="form-check-label" for="flexCheckDefault">중요글</label>
 	</div>
 	<div class="mb-3">
 	  <label for="exampleFormControlTextarea1" class="form-label">내용</label>
