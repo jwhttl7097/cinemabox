@@ -48,7 +48,8 @@
 					            	</c:if>
 					                <!-- Product image-->
 					                <a href="snackDetail?snackNo=${snack.snackNo }">
-					                	<img class="card-img-top" src="/cinemabox/resources/images/shop/${snack.snackNo }.png" alt="${snack.name } 상세보기" />
+					                	<!--png 파일  -->
+					                	<img class="card-img-top" src="/cinemabox/resources/images/snack/${snack.snackNo }.jpg" alt="${snack.name } 상세보기" />
 									</a>
 					                <!-- Product details-->
 					                <div class="card-body p-4">

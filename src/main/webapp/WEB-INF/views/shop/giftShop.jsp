@@ -49,7 +49,7 @@
 								</c:if>
 								<!-- Product image-->
 								<a href="giftDetail?giftNo=${gift.giftNo }">
-									<img class="card-img-top" src="/cinemabox/resources/images/shop/${gift.giftNo }.jpg" alt="..." />
+									<img class="card-img-top" src="/cinemabox/resources/images/gift/${gift.giftNo }.jpg" alt="..." />
 								</a>
 								<!-- Product details-->
 								<div class="card-body p-4">
@@ -69,7 +69,7 @@
 								</div>
 								<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
 								    <div class="text-center" id="purchase">
-								    	<a href="giftDetail?giftNo=${gift.giftNo}" class="btn btn-outline-warning mt-auto">구매하기</a>
+								  		<a href="giftDetail?giftNo=${gift.giftNo}" class="btn btn-outline-warning mt-auto">구매하기</a>
 								    </div>
 					           	</div>
 					    	</div>
@@ -88,5 +88,16 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
 <%@include file="../common/footer.jsp" %>
 </div>
+<script type="text/javascript">
+$("#test").click(function() {
+	var isLogined = $("[name=isLogined]").val();
+	if(isLogined == 'no'){
+		alert("로그인이 필요한 서비스입니다.");
+			loginModal.show();
+		return false;
+	}
+})
+
+</script>
 </body>
 </html>

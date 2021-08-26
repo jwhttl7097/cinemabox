@@ -221,6 +221,11 @@ $(function(){
 	   $(this).children('.subnav').stop().slideUp();
 	})
 	
+	//탑배너
+	$("#i-close-top-banner").click(function(){
+	   $("#div-top-banner").slideUp();
+	})
+	
 	//1주일 단위로 날짜 변경하기
 	var week = 0;
 	function changeDays(){
@@ -702,6 +707,7 @@ $(function(){
 		if(isLogined == 'no'){
 			alert("로그인이 필요한 서비스입니다.");
  			$('#confirmModal').hide();
+ 			$('.modal-backdrop').hide();
  			loginModal.show();
 			return;
 		}

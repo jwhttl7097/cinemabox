@@ -285,6 +285,10 @@ function calculateTotalPay() {
 	$('.mainnav').mouseleave(function(){
 	   $(this).children('.subnav').stop().slideUp();
 	})
+	//탑배너
+	$("#i-close-top-banner").click(function(){
+	   $("#div-top-banner").slideUp();
+	})
 	
 	// 포인트 전체 사용
 	$("#allPointBtn").click(function() {

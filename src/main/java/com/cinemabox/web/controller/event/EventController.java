@@ -12,15 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cinemabox.dto.Event.EventDto;
-<<<<<<< HEAD
-import com.cinemabox.service.event.EventService;
-import com.cinemabox.service.event.ProductService;
-=======
 import com.cinemabox.dto.Question.QuestionDto;
 import com.cinemabox.service.event.EventService;
 import com.cinemabox.service.event.ProductService;
 import com.cinemabox.vo.Discount;
->>>>>>> dev-kjeun
 import com.cinemabox.vo.Event;
 import com.cinemabox.vo.Product;
 
@@ -59,8 +54,6 @@ public class EventController {
 	}
 	
 	/**
-<<<<<<< HEAD
-=======
 	 * 이벤트 할인 상세화면
 	 * @param model
 	 * @return
@@ -74,7 +67,6 @@ public class EventController {
 	
 	
 	/**
->>>>>>> dev-kjeun
 	 * 뽑기 이벤트 화면
 	 * @param model
 	 * @return

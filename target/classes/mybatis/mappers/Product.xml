@@ -39,8 +39,5 @@
 		where c1.cinemabox_no = c2.cinemabox_no and ROWNUM &lt;= 5 order by c1.prize_date desc
 	</select>
 	
-<<<<<<< HEAD
+
 </mapper>
-=======
-</mapper>
->>>>>>> dev-kjeun
