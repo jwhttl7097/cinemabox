@@ -1,6 +1,5 @@
 package com.cinemabox.dao.Notice;
 
-import java.util.HashMap;
 import java.util.List;
 
 import com.cinemabox.dto.Notice.NoticeDetailDto;

@@ -1,10 +1,8 @@
 package com.cinemabox.service.theater.Notice;
 
 
-import java.util.HashMap;
 import java.util.List;
 
-import com.cinemabox.dao.Notice.NoticeDao;
 import com.cinemabox.dto.Notice.NoticeDetailDto;
 import com.cinemabox.dto.Notice.NoticeDto;
 import com.cinemabox.dto.Notice.NoticeListDto;

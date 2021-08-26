@@ -5,7 +5,6 @@ import java.util.List;
 import com.cinemabox.vo.Hall;
 import com.cinemabox.vo.Movie;
 import com.cinemabox.vo.Screening;
-import com.cinemabox.vo.Seat;
 import com.cinemabox.vo.Theater;
 import com.cinemabox.web.utils.Paging;
 
