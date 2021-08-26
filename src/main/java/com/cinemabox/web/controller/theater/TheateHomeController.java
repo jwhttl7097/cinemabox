@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.cinemabox.dto.theater.TheaterDto;
 import com.cinemabox.dto.ticket.TicketDto;
 import com.cinemabox.service.event.EventService;
+import com.cinemabox.service.shop.ShopService;
 import com.cinemabox.service.theater.TheaterService;
 import com.cinemabox.service.theater.Notice.NoticeService;
 import com.cinemabox.vo.Notice;
+import com.cinemabox.vo.Snack;
 import com.cinemabox.vo.Theater;
 
 @Controller
@@ -26,6 +28,8 @@ public class TheateHomeController{
 	EventService eventService;
 	@Autowired
 	NoticeService noticeService;
+	@Autowired 
+	ShopService shopService;
 	
 	@GetMapping("/theaterHome")
 	public String theaterHome(Model model) {
@@ -51,6 +55,11 @@ public class TheateHomeController{
 		
 		TicketDto ticketDto = new TicketDto();
 		model.addAttribute("ticketDto", ticketDto);
+		
+		// 전체 snack정보 조회하기
+		List<Snack> snackList = shopService.getAllSnackInfo();
+		// 뷰 페이지에 snack 목록 전달하기
+		model.addAttribute("snacks", snackList);
 		return "theater/detailTheater";	
 	}
 	

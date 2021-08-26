@@ -30,5 +30,7 @@ public class UserDto {
 	private String name;
 	private int orderAmount;
 	private int orderPrice;
-	
+	private int reservationNo;
+    private String reservationPayment;
+    private int reservationPoint;
 }

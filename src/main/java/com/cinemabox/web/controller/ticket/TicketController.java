@@ -112,6 +112,20 @@ public class TicketController{
 		reservation.setPoint(point);
 		reservation.setMovieNo(ticketDto.getMovieNo());
 		reservation.setTicketNos(ticketNumber);
+		reservation.setAdultCnt(ticketDto.getAdultCnt());
+		reservation.setTeenagerCnt(ticketDto.getTeenagerCnt());
+		reservation.setSeatNo(ticketDto.getSeatNo());
+		reservation.setSeatCol(ticketDto.getSeatCol());
+		reservation.setSeatRow(ticketDto.getSeatRow());
+		reservation.setScreeningDate(ticketDto.getScreeningDate());
+		reservation.setScreeningTime(ticketDto.getScreeningTime());
+		reservation.setScreeningEndTime(ticketDto.getScreeningEndTime());
+		reservation.setHallName(ticketDto.getHallName());
+		reservation.setTheaterName(ticketDto.getTheaterName());
+		reservation.setTitle(ticketDto.getTitle());
+		reservation.setScreeningNo(ticketDto.getScreeningNo());
+		reservation.setTheaterNo(ticketDto.getTheaterNo());
+		reservation.setHallNo(ticketDto.getHallNo());
 		reservationService.inserPayInfo(reservation);
 		// 결제완료 후 예약 테이블 결제관련 정보 저장 //	
 		
@@ -149,17 +163,22 @@ public class TicketController{
 				seat += rows[i];
 				seat += " ";
 			}
-			model.addAttribute("seat", seat);
-			// 2. ticketDto 정보 //
-			model.addAttribute("ticketDto", ticketDto);
 			// 3. 예매번호 표시 //
 			int reservationNo = reservationService.getReservationNoByTicketNos(ticketNumber);
-			model.addAttribute("reservationNo", reservationNo);
-		// model로 방금 저장한 결제 정보및 티켓dto정보를 뿌려주기 위해 값을 전달 //
-		
+			String age = ticketDto.getAge();
 		//이 컨트롤러의 @SessionAttributes 어노테이션으로 HttpSession객체에 저장했던 객체를 전부 지운다.
 		//이 요청핸들러(컨트롤러) 내에서 사용했던 세션값만 지움
 		sessionStatus.setComplete(); 
+		return "redirect:complete?rNo="+reservationNo+"&seat="+seat+"&age="+age;
+	}
+	
+	@GetMapping(path = {"/complete"})
+	public String completeResult(Model model, int rNo, String seat, String age) {
+		Reservation rInfo = reservationService.getReservedInfoByRno(rNo);
+		model.addAttribute("rInfo", rInfo);
+		model.addAttribute("age", age);
+		model.addAttribute("reservationNo", rNo);
+		model.addAttribute("seat", seat);
 		return "ticket/complete";
 	}
 

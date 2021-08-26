@@ -22,4 +22,10 @@ public interface ReservationDao {
 	 * @param rt 예매내역티켓객체(티켓번호, 예매내역번호)
 	 */
 	void insertTicketNoAndReservationNo(ReservationTicket rt);
+	
+	/**
+	 * 예약번호를 전달 받아 예약정보를 반환한다.
+	 * @return 예약번호
+	 */
+	Reservation getReservedInfoByRno(int rNo);
 }

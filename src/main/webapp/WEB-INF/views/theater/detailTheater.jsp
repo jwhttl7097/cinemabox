@@ -400,89 +400,49 @@
 				<div class="col-6 text-start">
 					<h4>스토어 상품</h4>
 				</div>
-			</div>
-			<div class="row row-cols-1 row-cols-md-4 g-4">
-				<div class="col">
-					<div class="card">
-						<img src="resources/images/theaterEvent/noimage.png"
-							class="card-img-top" alt="...">
-						<div class="card-body">
-							<h5 class="card-title">ICE밀크티_[포인트페스타]</h5>
-						</div>
-						<div class="card-body">
-							<small class="text-muted">4주차 특가_ICE밀크티</small>
-						</div>
-						<div class="card-footer bg-white"
-							style="border-top: 1px solid #ebebeb;">
-							<small class="text-muted text-decoration-line-through">5,000</small>
-							<div>
-								<p class="d-inline-block" style="color: #503396">2,500 원</p>
-								<span class="float-end text-muted">387개 남음</span>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col">
-					<div class="card">
-						<img src="resources/images/theaterEvent/noimage.png"
-							class="card-img-top" alt="...">
-						<div class="card-body">
-							<h5 class="card-title">ICE밀크티_[포인트페스타]</h5>
-						</div>
-						<div class="card-body">
-							<small class="text-muted">4주차 특가_ICE밀크티</small>
-						</div>
-						<div class="card-footer bg-white"
-							style="border-top: 1px solid #ebebeb;">
-							<small class="text-muted text-decoration-line-through">5,000</small>
-							<div>
-								<p class="d-inline-block" style="color: #503396">2,500 원</p>
-								<span class="float-end text-muted">387개 남음</span>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col">
-					<div class="card">
-						<img src="resources/images/theaterEvent/noimage.png"
-							class="card-img-top" alt="...">
-						<div class="card-body">
-							<h5 class="card-title">ICE밀크티_[포인트페스타]</h5>
-						</div>
-						<div class="card-body">
-							<small class="text-muted">4주차 특가_ICE밀크티</small>
-						</div>
-						<div class="card-footer bg-white"
-							style="border-top: 1px solid #ebebeb;">
-							<small class="text-muted text-decoration-line-through">5,000</small>
-							<div>
-								<p class="d-inline-block" style="color: #503396">2,500 원</p>
-								<span class="float-end text-muted">387개 남음</span>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col">
-					<div class="card">
-						<img src="resources/images/theaterEvent/noimage.png"
-							class="card-img-top" alt="...">
-						<div class="card-body">
-							<h5 class="card-title">ICE밀크티_[포인트페스타]</h5>
-						</div>
-						<div class="card-body">
-							<small class="text-muted">4주차 특가_ICE밀크티</small>
-						</div>
-						<div class="card-footer bg-white"
-							style="border-top: 1px solid #ebebeb;">
-							<small class="text-muted text-decoration-line-through">5,000</small>
-							<div>
-								<p class="d-inline-block" style="color: #503396">2,500 원</p>
-								<span class="float-end text-muted">387개 남음</span>
-							</div>
-						</div>
-					</div>
+				<div class="col-6 text-end more">
+					<a href="gift" style="text-decoration: none; color: black;">스토어 <i class="fas fa-sign-in-alt"></i></a>
 				</div>
 			</div>
+			<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+			    <c:choose>
+					<c:when test="${empty snacks }">
+						<tr>
+							<td class="text-center" colspan="12">등록된 SNACK정보가 없습니다.</td>
+						</tr>
+					</c:when>
+					<c:otherwise>
+						<c:forEach var="snack" items="${snacks }">
+					        <div class="col mb-5">
+					            <div class="card h-100">
+					            	<c:if test="${snack.name eq 'CINEMABOX 콤보'}">
+					            	<div class="badge bg-dark text-white position-absolute" style="top: 0.9rem; laft: 0.5rem;">대표 상품</div>
+					            	</c:if>
+					            	<c:if test="${snack.name eq '더블 콤보'}">
+					            	<div class="badge bg-danger text-white position-absolute" style="top: 0.9rem; laft: 0.5rem;">BEST</div>
+					            	</c:if>
+					                <!-- Product image-->
+					                <a href="snackDetail?snackNo=${snack.snackNo }">
+					                	<img class="card-img-top" src="/cinemabox/resources/images/shop/${snack.snackNo }.png" alt="${snack.name } 상세보기" />
+									</a>
+					                <!-- Product details-->
+					                <div class="card-body p-4">
+					                    <div class="text-center">
+					                        <h4 class="fw-bolder">${snack.name } </h4>
+					                        <p class="bundle">${snack.detail }</p>
+					                        <hr>
+					                        <br><strong><fmt:formatNumber type="number" maxFractionDigits="3" value="${snack.price }" /> 원</strong>
+					                    </div>
+					                </div>
+					                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+					                    <div class="text-center"><a class="btn btn-outline-warning mt-auto" href="snackDetail?snackNo=${snack.snackNo }">구매하기</a></div>
+					                </div>
+					            </div>
+					        </div>
+				        </c:forEach>
+		       		</c:otherwise>
+		        </c:choose>
+	        </div>
 			<!-- 스토어 상품-->
 		</div>
 		<!-- 극장 상세정보 탭(극장정보) -->
@@ -1178,7 +1138,7 @@
 			
 			// 지역별 풍선
 			$('.locationNav').mouseover(function() {
-				
+				$('#theaterNm').hide();
 				var location = $(this).find('a').text();
 				console.log(location);
 				var $loca = $(".balloon");
@@ -1207,6 +1167,7 @@
 			})
 			$('.balloon').mouseleave(function() {
 				$(".balloon").stop().hide();
+				$('#theaterNm').show();
 			})
 			
 			// nav탭 테두리
