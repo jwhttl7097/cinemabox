@@ -29,6 +29,7 @@ public class Movie {
 	private String status;
 	private int userLike;
 	private Date createdDate;
+<<<<<<< HEAD
 	public String getSynopsisWithBr() {
 		if(synopsis == null) {
 			return " ";
@@ -39,5 +40,8 @@ public class Movie {
 	public boolean isExistGenre(String text) {
 		return genre.contains(text);
 	}
+=======
+
+>>>>>>> dev-kjeun
 }
 

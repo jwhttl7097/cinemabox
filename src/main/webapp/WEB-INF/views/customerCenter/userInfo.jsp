@@ -11,7 +11,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="/cinemabox/resources/js/common.js"></script>
-<title>TITLE</title>
+<title>문의 정보 등록</title>
 <style type="text/css">
  a:link { color: black; text-decoration: none;}
  a:visited { color: black; text-decoration: none;}
@@ -61,7 +61,7 @@
 			<div class="col-6">
 			<main class="form-signin">
 	  <form id="question-form" name="userInfo" method="post" action="../customerCenter/list">
-	    <h6 class="h6 mb-3 fw-normal">문의할 때 입력했던 이름과 메일을 입력해 주세요</h6>
+	    <h6 class="h6 mb-3 fw-normal">문의할 때 입력했던 이름과 메일을 입력해 주세요.<br> 답변은 메일로도 받아 보실 수 있습니다.</h6>
 	
 		<div class="mb-3">
 		    <div class="form-floating mb-2">
