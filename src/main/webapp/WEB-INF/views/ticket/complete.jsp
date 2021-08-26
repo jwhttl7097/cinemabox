@@ -64,29 +64,55 @@
 						</div>
 						<div class="p-5 row justify-content-center">
 							<div class="col-3 text-end px-4">
-								<img src="/cinemabox/resources/images/movie/${ticketDto.movieNo }.jpg" alt="" width="120px;">
+								<img src="/cinemabox/resources/images/movie/${rInfo.movieNo }.jpg" alt="" width="120px;">
 							</div>
 							<div class="col-6">
 								<dl class="dl-info">
-									<dt><strong>영화명</strong></dt><dd><img src="/cinemabox/resources/images/icon/txt-age-small-${ticketDto.age }.png" alt="" class="me-2">${ticketDto.title }</dd>
-									<dt><strong>극장</strong></dt><dd>${ticketDto.theaterName } ${ticketDto.hallName }</dd>
-									<dt><strong>관람일시</strong></dt><dd><fmt:formatDate value="${ticketDto.screeningDate }" pattern="yy.MM.dd"/>(<fmt:formatDate value="${ticketDto.screeningDate }" pattern="EE"/>) ${ticketDto.screeningTime } ~ ${ticketDto.screeningEndTime }</dd>
-									<dt><strong>인원</strong></dt><dd>성인 : ${ticketDto.adultCnt } 청소년 : ${ticketDto.teenagerCnt }</dd>
+									<dt><strong>영화명</strong></dt><dd><img src="/cinemabox/resources/images/icon/txt-age-small-${age }.png" alt="" class="me-2">${rInfo.title }</dd>
+									<dt><strong>극장</strong></dt><dd>${rInfo.theaterName } ${rInfo.hallName }</dd>
+									<dt><strong>관람일시</strong></dt><dd><fmt:formatDate value="${rInfo.screeningDate }" pattern="yy.MM.dd"/>(<fmt:formatDate value="${rInfo.screeningDate }" pattern="EE"/>) ${rInfo.screeningTime } ~ ${rInfo.screeningEndTime }</dd>
+									<dt><strong>인원</strong></dt><dd>성인 : ${rInfo.adultCnt } 청소년 : ${rInfo.teenagerCnt }</dd>
 									<dt><strong>좌석</strong></dt><dd>${seat }</dd>
 								</dl>						
 							</div>
 						</div>
 						<div class="text-center">
-							<button class="btn bg-dark text-white p-3 rounded-0" onclick="location.href='myPage'">예매내역 확인하기</button>
+							<a href="myPage" class="btn bg-dark text-white p-3 rounded-0">예매내역 확인하기</a>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	<!-- 토스트 메세지가 세로방향으로 쌓이는 곳 -->
+	<div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 11"></div>
 	<%@include file="../common/footer.jsp" %>
 </div>
+<!-- 제목을 포함하고 토스트 메세지에 대한 HTML 템플릿 -->
+<script type="text/template" id="toast-basic-template">
+	<div class="toast role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="5000">
+		<div class="toast-header text-white bg-warning border-0">
+			<i class="bi bi-exclamation-circle me-1"></i><strong class="me-auto"><span>title</span></strong> <span></span>
+			<button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+		</div>
+		<div class="toast-body">message</div>
+	</div>
+</script>
 <script type="text/javascript">
+//Toast
+//알람 메세지를 화면에 표시한다.
+var toastBasicTemplate = $("#toast-basic-template").html();
+var $toastContainer = $('.toast-container');
+
+//제목을 포함하고 있는 토스트 메세지를 표현한다.
+function createBasicToast(title, message) {
+	var $el = $(toastBasicTemplate);
+	$el.find('.me-auto').text(title);
+	$el.find('.toast-body').text(message);
+	$el.appendTo($toastContainer);
+	
+	new bootstrap.Toast($el[0]).show();
+}
 $(function(){
 	//header nav js
 	$('.mainnav').mouseover(function(){

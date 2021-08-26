@@ -30,4 +30,10 @@ public interface ReservationService {
 	 * @return
 	 */
 	int getReservationNoByTicketNos(String ticketNumber);
+	
+	/**
+	 * 예약번호를 전달 받아 예약정보를 반환한다.
+	 * @return 예약번호
+	 */
+	Reservation getReservedInfoByRno(int rNo);
 }

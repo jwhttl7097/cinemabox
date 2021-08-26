@@ -33,4 +33,9 @@ public class ReservationServiceImpl implements ReservationService{
 	public int getReservationNoByTicketNos(String ticketNumber) {
 		return reservationDao.getReservationNoByTicketNo(ticketNumber);
 	}
+	
+	@Override
+	public Reservation getReservedInfoByRno(int rNo) {
+		return reservationDao.getReservedInfoByRno(rNo);
+	}
 }
