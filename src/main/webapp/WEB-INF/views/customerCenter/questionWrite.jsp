@@ -21,52 +21,47 @@
 <body>
 <div class="container">
 	<%@ include file="../common/header.jsp"%>
-	<div class="top" style="margin-left:150px;  margin-top:50px;">
-	<h3 >1:1문의</h3>
-	</div>
-		<form id="question-form" name="insertForm" method="post" action="../customerCenter/insertQuestion">
-	<div style="padding:80px; margin-top:-30px">
-		<div class="mb-3">
-			<h5>문의 내용</h5>
+		<div class="top" style="margin-left:150px;  margin-top:50px;">
+			<h3 >1:1문의</h3>
 		</div>
-	<div class="mb-3 ">
-	  <label for="exampleFormControlInput1" class="form-label">제목</label>
-	  <input type="text" class="form-control" id="title" name="questionTitle">
-	</div>
-	<div class="mb-5">
-	  <label for="exampleFormControlTextarea1" class="form-label">내용</label>
-	  <textarea class="form-control" id="content" name="questionContent" rows="3"></textarea>
-	</div>
-	
-	  <div class="col">
-        <h5 class="mb-3">고객정보(*필수입력사항입니다)</h5>
-          <div class="row g-3" style="background: #f5f5f5;">
-            <div class="col-sm-6">
-            	<div class="mb-3">
-              <label for="firstName" class="form-label">성명*</label>
-              <input type="text" class="form-control" id="firstName" name="name" value="" required>
-              </div>
-         	<div class="mb-3">
-              <label for="email" class="form-label">이메일*<span class="text-muted"></span></label>
-              <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com">
-              </div>
-      		 <div class="mb-3">
-              <label for="phone" class="form-label">휴대폰 번호*</label>
-              <input type="text" class="form-control" id="phone" name="phone" placeholder="-를 제외하고 적어주세요"  required>
-            </div>
-           </div>
-		</div>
-	
-		<div style="text-align: right;">
-			<button type="submit" id="insertBt" class="btn btn-warning" >등록</button>
-		</div>	
-		
-	</div>
-</div>
-</form>
+			<form id="question-form" name="insertForm" method="post" action="../customerCenter/insertQuestion">
+				<div style="padding:80px; margin-top:-30px">
+					<div class="mb-3">
+						<h5>문의 내용</h5>
+					</div>
+					<div class="mb-3 ">
+					  <label for="exampleFormControlInput1" class="form-label">제목</label>
+					  <input type="text" class="form-control" id="title" name="questionTitle">
+					</div>
+					<div class="mb-5">
+					  <label for="exampleFormControlTextarea1" class="form-label">내용</label>
+					  <textarea class="form-control" id="content" name="questionContent" rows="3"></textarea>
+					</div>
+					  <div class="col">
+				        <h5 class="mb-3">고객정보(*필수입력사항입니다)</h5>
+				          <div class="row g-3" style="background: #f5f5f5;">
+				            <div class="col-sm-6">
+				            	<div class="mb-3">
+					              <label for="firstName" class="form-label">성명*</label>
+					              <input type="text" class="form-control" id="firstName" name="name" value="" required>
+					             </div>
+					         	<div class="mb-3">
+					              <label for="email" class="form-label">이메일*<span class="text-muted"></span></label>
+					              <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com">
+					             </div>
+					      		 <div class="mb-3">
+					              <label for="phone" class="form-label">휴대폰 번호*</label>
+					              <input type="text" class="form-control" id="phone" name="phone" placeholder="-를 제외하고 적어주세요"  required>
+					            </div>
+				           </div>
+						</div>
+						<div style="text-align: right;">
+							<button type="submit" id="insertBt" class="btn btn-warning" >등록</button>
+						</div>	
+					</div>
+				</div>
+			</form>
 	<%@ include file="../common/footer.jsp"%>
-	
-	
 </div>
 <script type="text/javascript">
 function checkForm() {
@@ -76,10 +71,7 @@ function checkForm() {
 	var phone = document.insertForm.phone;
 	var title = document.insertForm.title;
 	var content = document.insertForm.content;
-	
-	
 }
-
 
 $(function() {
 	// 입력값 유효성 체크해서 아이디와 비밀번호가 전부 값이 입력되어 있을 때만 폼 입력값이 서버로 제출되게 하기

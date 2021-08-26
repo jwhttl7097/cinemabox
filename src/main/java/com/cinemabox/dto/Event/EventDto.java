@@ -2,14 +2,9 @@
 package com.cinemabox.dto.Event;
 
 import lombok.Data;
-
-@Data
-public class EventDto {
-	private String email;
-	private String goods;
-}
 =======
 package com.cinemabox.dto.Event;
+>>>>>>> b5978ffdf384297585369b44058233eb37aef63b
 
 import lombok.Data;
 
@@ -18,4 +13,7 @@ public class EventDto {
 	private String email;
 	private String goods;
 }
->>>>>>> dev-kjeun
+<<<<<<< HEAD
+
+=======
+>>>>>>> b5978ffdf384297585369b44058233eb37aef63b

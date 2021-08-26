@@ -4,7 +4,7 @@
 	
 	<insert id="insertMovie" parameterType="com.cinemabox.vo.Movie">
 		<selectKey keyProperty="no" resultType="int" order="BEFORE">
-			select SCREENING_seq.nextval from dual
+			select MOVIE_seq.nextval from dual
 		</selectKey>
 		insert into CINEMABOX_MOVIE
 		(MOVIE_NO, MOVIE_GENRE, MOVIE_TITLE, MOVIE_RUNNING_TIME, MOVIE_DIRECTOR, MOVIE_CASTING, MOVIE_RELEASE_DATE, MOVIE_CLOSE_DATE, MOVIE_AGE, MOVIE_THUMBNAIL, MOVIE_SYNOPSIS, MOVIE_TRAILER_FIRST, MOVIE_TRAILER_SECOND)
@@ -34,10 +34,6 @@
 		update 
 			CINEMABOX_MOVIE
 		set	
-<<<<<<< HEAD
-=======
-			MOVIE_NO				= 	#{no},
->>>>>>> dev-kjeun
 			MOVIE_GENRE 			=	#{genre},
 			MOVIE_TITLE 			=	#{title},
 			MOVIE_RUNNING_TIME		=	#{runningTime},
@@ -70,11 +66,7 @@
 		update 
 			CINEMABOX_MOVIE
 		set
-<<<<<<< HEAD
 			MOVIE_SCREENING_STATUS = 'N'
-=======
-			MOVIE_STATUS = 'N'
->>>>>>> dev-kjeun
 		where 
 			MOVIE_NO   	 = #{no}	
 	</update>
@@ -83,11 +75,7 @@
 		update 
 			CINEMABOX_MOVIE
 		set
-<<<<<<< HEAD
 			MOVIE_SCREENING_STATUS = 'Y'
-=======
-			MOVIE_STATUS = 'Y'
->>>>>>> dev-kjeun
 		where 
 			MOVIE_NO   	 = #{no}	
 	</update>
@@ -113,11 +101,7 @@
 			MOVIE_NO = #{value}
 	</select>
 	
-<<<<<<< HEAD
 	<select id="getAllTheaterInfo" resultType="com.cinemabox.vo.Theater">
-=======
-	<select id="getTheaterInfo" resultType="com.cinemabox.vo.Theater">
->>>>>>> dev-kjeun
 		select
 			THEATER_NO				as theaterNo,
 			THEATER_NAME 			as theaterName
@@ -127,7 +111,6 @@
 			THEATER_NAME ASC
 	</select>
 	
-<<<<<<< HEAD
 	<select id="getAllHallInfo" resultType="com.cinemabox.vo.Hall">
 		select
 			HALL_NO				as hallNo,
@@ -138,8 +121,6 @@
 			HALL_NAME ASC
 	</select>
 	
-=======
->>>>>>> dev-kjeun
 	<select id="getScreeningByNo" parameterType="int" resultType="com.cinemabox.vo.Screening">
 		select
 			SCREENING_NO			as screeningNo,
@@ -153,7 +134,6 @@
 			SCREENING_NO  			= #{screeningNo}
 	</select>
 	
-<<<<<<< HEAD
 	<select id="getScreeningsByMovieNo" parameterType="int" resultType="com.cinemabox.dto.admin.AdminDto">
 		select
 			M.MOVIE_NO				as movieNo,
@@ -164,7 +144,14 @@
 			S.SCREENING_DATE		as screeningDate,
 			M.MOVIE_TITLE			as title,
 			T.THEATER_NO			as theaterNo,
-			T.THEATER_NAME 			as theaterName
+			T.THEATER_NAME 			as theaterName,
+            (SELECT COUNT(*) 
+                from
+                    CINEMABOX_TICKET T
+                where
+                    TICKET_RESERVATION_STATUS = 'N'
+                and
+                    SCREENING_NO	= S.SCREENING_NO) remainingSeats
 		from
 			CINEMABOX_SCREENING S, CINEMABOX_MOVIE M, CINEMABOX_THEATER T, CINEMABOX_HALL H
 		where 
@@ -173,25 +160,8 @@
 			S.THEATER_NO			= T.THEATER_NO 
 		and
 			S.HALL_NO				= H.HALL_NO	 
-=======
-	<select id="getScreeningsByMovieNo" parameterType="int" resultType="com.cinemabox.vo.Screening">
-		select
-			S.SCREENING_NO			as screeningNo,
-			S.MOVIE_NO 				as movieNo,
-			S.THEATER_NO 			as theaterNo,
-			S.HALL_NO				as hallNo,
-			S.SCREENING_DATE		as screeningDate,
-			M.MOVIE_TITLE			as title,
-			T.THEATER_NAME 			as theaterName
-		from
-			CINEMABOX_SCREENING S, CINEMABOX_MOVIE M, CINEMABOX_THEATER T
-		where 
-			M.MOVIE_NO				= S.MOVIE_NO
 		and
-			S.THEATER_NO			= T.THEATER_NO  
->>>>>>> dev-kjeun
-		and
-			M.MOVIE_NO  			= #{movieNo}
+			M.MOVIE_NO  			= #{value}
 		order by 
 			screeningDate ASC
 	</select>
@@ -210,35 +180,24 @@
 			MOVIE_THUMBNAIL			as thumbnail,
 			MOVIE_SYNOPSIS			as synopsis,
 			MOVIE_TRAILER_FIRST     as trailerFirst,
-<<<<<<< HEAD
 			MOVIE_TRAILER_SECOND	as trailerSecond,
 			MOVIE_SCREENING_STATUS	as screeningStatus
 		from
 			CINEMABOX_MOVIE
 		where
 			MOVIE_SCREENING_STATUS = 'N'
-=======
-			MOVIE_TRAILER_SECOND	as trailerSecond
-		from
-			CINEMABOX_MOVIE
-		where
-			MOVIE_STATUS = 'N'
->>>>>>> dev-kjeun
 		order by
 			MOVIE_NO desc
 	</select>
 	
+<<<<<<< HEAD
 <!-- 총 게시글 갯수 출력 -->
 <select id="countBoard" resultType="int">
 	SELECT COUNT(*) 
 	FROM 
 		CINEMABOX_MOVIE
 	where
-<<<<<<< HEAD
 		MOVIE_SCREENING_STATUS = 'Y'
-=======
-		MOVIE_STATUS != 'N'
->>>>>>> dev-kjeun
 </select>
 
 <!-- 페이징 처리 후 게시글 조회 -->
@@ -264,11 +223,7 @@
 						from
 							CINEMABOX_MOVIE
 						where
-<<<<<<< HEAD
 							MOVIE_SCREENING_STATUS = 'Y'
-=======
-							MOVIE_STATUS != 'N'
->>>>>>> dev-kjeun
 						order by
 							MOVIE_NO desc
 						) A
@@ -284,6 +239,72 @@
 			HALL_NO			as hallNo
 		from
 			CINEMABOX_SEAT
+=======
+	<!-- 총 게시글 갯수 출력 -->
+	<select id="countBoard" resultType="int">
+		SELECT COUNT(*) 
+		FROM 
+			CINEMABOX_MOVIE
+		where
+			MOVIE_SCREENING_STATUS = 'Y'
+	</select>
+
+	<!-- 페이징 처리 후 게시글 조회 -->
+	<select id="selectMoivePaging" resultType="com.cinemabox.vo.Movie">
+		SELECT * 
+			FROM (
+				SELECT ROWNUM RN, A.* 
+					FROM (
+							SELECT 
+								MOVIE_NO				as no,
+								MOVIE_GENRE 			as genre,
+								MOVIE_TITLE 			as title,
+								MOVIE_RUNNING_TIME		as runningTime,
+								MOVIE_DIRECTOR			as director,
+								MOVIE_CASTING			as casting,
+								MOVIE_RELEASE_DATE 		as releaseDate,
+								MOVIE_CLOSE_DATE 		as closeDate,
+								MOVIE_AGE 				as age,
+								MOVIE_THUMBNAIL			as thumbnail,
+								MOVIE_SYNOPSIS			as synopsis,
+								MOVIE_TRAILER_FIRST     as trailerFirst,
+								MOVIE_TRAILER_SECOND	as trailerSecond
+							from
+								CINEMABOX_MOVIE
+							WHERE	
+								MOVIE_SCREENING_STATUS = 'Y'
+							order by
+								MOVIE_NO desc
+							) A
+					)
+			WHERE 
+				RN BETWEEN #{start} AND #{end}
+>>>>>>> b5978ffdf384297585369b44058233eb37aef63b
 	</select>
 	
+	<!-- 검색 후 게시글 조회 -->
+	<select id="getAllSearchMovies" parameterType="string" resultType="com.cinemabox.vo.Movie">
+	SELECT 
+		MOVIE_NO				as no,
+		MOVIE_GENRE 			as genre,
+		MOVIE_TITLE 			as title,
+		MOVIE_RUNNING_TIME		as runningTime,
+		MOVIE_DIRECTOR			as director,
+		MOVIE_CASTING			as casting,
+		MOVIE_RELEASE_DATE 		as releaseDate,
+		MOVIE_CLOSE_DATE 		as closeDate,
+		MOVIE_AGE 				as age,
+		MOVIE_THUMBNAIL			as thumbnail,
+		MOVIE_SYNOPSIS			as synopsis,
+		MOVIE_TRAILER_FIRST     as trailerFirst,
+		MOVIE_TRAILER_SECOND	as trailerSecond
+	from
+		CINEMABOX_MOVIE
+	where 
+		MOVIE_TITLE LIKE '%'||#{value}||'%'
+	and
+		MOVIE_SCREENING_STATUS = 'Y'
+	order by
+		MOVIE_NO desc
+	</select>
 </mapper>

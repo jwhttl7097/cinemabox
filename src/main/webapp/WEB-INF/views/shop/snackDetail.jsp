@@ -63,7 +63,7 @@
 			<div class="d-flex justify-content-between">
 				<div class="col-5" id="img">
 				<br>
-					<img src="/cinemabox/resources/images/shop/${snackInfo.snackNo}.png" alt="상품 대표이미지" class="img-thumbnail">
+					<img src="/cinemabox/resources/images/snack/${snackInfo.snackNo}.jpg" alt="상품 대표이미지" class="img-thumbnail">
 				</div>
 				<div class="col-7 ps-5" style="border-left: 1px #e9e9e9 solid;">
 					<input type="hidden" value="${snackInfo.snackNo}" id=snackNo>
@@ -118,6 +118,7 @@
 								</tbody>
 							</table>
 							<div class="d-grid gap-2" id="buy">
+								<input type="hidden" id="isLogined" name="isLogined" value="${not empty LOGINED_USER ? 'yes':'no' }">
 								<button class="btn btn-outline-success btn-lg" data-snacks-no="${snacks.snacksNo }" id="insert-purchase" type="button">구매하기</button>
 							</div>
 						</div>
@@ -323,6 +324,12 @@ $(function() {
 	});
 	
 	$("#buy #insert-purchase").click(function() {
+		var isLogined = $("[name=isLogined]").val();
+		if(isLogined == 'no'){
+			alert("로그인이 필요한 서비스입니다.");
+				loginModal.show();
+			return false;
+		}
 		$.ajax({
 			type: "post",
 			url: "purchase",	// 구매기능

@@ -31,12 +31,12 @@
 	<task:annotation-driven/>
 	
 	<!-- 
-		commons-dbcp2 라이브러리를 이용한 커넥션풀을 스프링의 빈으올 등록시킨다.
+		commons-dbcp2 라이브러리를 이용한 커넥션풀을 스프링의 빈으로 등록시킨다.
 	 -->
 	<bean id="dataSource" 
 		class="org.apache.commons.dbcp2.BasicDataSource"
 		p:driverClassName="oracle.jdbc.OracleDriver"
-		p:url="jdbc:oracle:thin:@cinemabox_high?TNS_ADMIN=/Users/jungeun-kim/Wallet_CINEMABOX"
+		p:url="jdbc:oracle:thin:@cinemabox_high?TNS_ADMIN=c://cinemaboxDB"
 		p:username="admin"
 		p:password="Cinemabox1234"/>
 		

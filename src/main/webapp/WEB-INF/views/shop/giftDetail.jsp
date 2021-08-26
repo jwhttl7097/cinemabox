@@ -63,7 +63,7 @@
 			<div class="d-flex justify-content-between">
 				<div class="col-5" id="img">
 				<br>
-					<img src="/cinemabox/resources/images/shop/${giftInfo.giftNo}.jpg" alt="상품 대표이미지" class="img-thumbnail">
+					<img src="/cinemabox/resources/images/gift/${giftInfo.giftNo}.jpg" alt="상품 대표이미지" class="img-thumbnail">
 				</div>
 				<div class="col-7 ps-5" style="border-left: 1px #e9e9e9 solid;">
 					<input type="hidden" value="${giftInfo.giftNo}" id=giftNo>
@@ -141,6 +141,7 @@
 								</tbody>
 							</table>
 							<div class="d-grid gap-2" id="buy">
+								<input type="hidden" id="isLogined" name="isLogined" value="${not empty LOGINED_USER ? 'yes':'no' }">
 								<button class="btn btn-outline-success btn-lg" data-gift-no="${gift.giftNo }" id="insert-purchase" type="button">구매하기</button>
 							</div>
 						</div>
@@ -159,14 +160,14 @@
 				</div>
 				<div class="modal-body">
 					<div class="d-flex align-items-start">
-						<div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-					   		<button class="nav-link active" id="v-pills-Incheon-Seoul" data-bs-toggle="pill" data-bs-target="#v-pills-Seoul" type="button" role="tab" aria-controls="v-pills-Seoul" aria-selected="true">서울 (17)</button>
-					    	<button class="nav-link" id="v-pills-Incheon-Gyeonggi" data-bs-toggle="pill" data-bs-target="#v-pills-Gyeonggi" type="button" role="tab" aria-controls="v-pills-Gyeonggi" aria-selected="false">경기 (26)</button>
-					    	<button class="nav-link" id="v-pills-Incheon-tab" data-bs-toggle="pill" data-bs-target="#v-pills-Incheon" type="button" role="tab" aria-controls="v-pills-Incheon" aria-selected="false">인천 (5)</button>
-					    	<button class="nav-link" id="v-pills-Chungcheong-tab" data-bs-toggle="pill" data-bs-target="#v-pills-Chungcheong" type="button" role="tab" aria-controls="v-pills-Chungcheong" aria-selected="false">대전/충청/세종 (17)</button>
-					    	<button class="nav-link" id="v-pills-Busan-tab" data-bs-toggle="pill" data-bs-target="#v-pills-Busan" type="button" role="tab" aria-controls="v-pills-Busan" aria-selected="false">부산/대구/경상 (21</button>
-					    	<button class="nav-link" id="v-pills-Gwangju-tab" data-bs-toggle="pill" data-bs-target="#v-pills-Gwangju" type="button" role="tab" aria-controls="v-pills-Gwangju" aria-selected="false">광주/전라 (9)</button>
-					    	<button class="nav-link" id="v-pills-Gangwon-tab" data-bs-toggle="pill" data-bs-target="#v-pills-Gangwon" type="button" role="tab" aria-controls="v-pills-Gangwon" aria-selected="false">강원 (4)</button>
+						<div class="nav flex-column nav-pills me-3" style="border-bottom: 1px solid #ddd" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+					   		<button class="btn btn-outline-warning mt-auto active" id="v-pills-Incheon-Seoul" data-bs-toggle="pill" data-bs-target="#v-pills-Seoul" type="button" role="tab" aria-controls="v-pills-Seoul" aria-selected="true">서울 (17)</button>
+					    	<button class="btn btn-outline-warning mt-auto" id="v-pills-Incheon-Gyeonggi" data-bs-toggle="pill" data-bs-target="#v-pills-Gyeonggi" type="button" role="tab" aria-controls="v-pills-Gyeonggi" aria-selected="false">경기 (26)</button>
+					    	<button class="btn btn-outline-warning mt-auto" id="v-pills-Incheon-tab" data-bs-toggle="pill" data-bs-target="#v-pills-Incheon" type="button" role="tab" aria-controls="v-pills-Incheon" aria-selected="false">인천 (5)</button>
+					    	<button class="btn btn-outline-warning mt-auto" id="v-pills-Chungcheong-tab" data-bs-toggle="pill" data-bs-target="#v-pills-Chungcheong" type="button" role="tab" aria-controls="v-pills-Chungcheong" aria-selected="false">대전/충청/세종 (17)</button>
+					    	<button class="btn btn-outline-warning mt-auto" id="v-pills-Busan-tab" data-bs-toggle="pill" data-bs-target="#v-pills-Busan" type="button" role="tab" aria-controls="v-pills-Busan" aria-selected="false">부산/대구/경상 (21</button>
+					    	<button class="btn btn-outline-warning mt-auto" id="v-pills-Gwangju-tab" data-bs-toggle="pill" data-bs-target="#v-pills-Gwangju" type="button" role="tab" aria-controls="v-pills-Gwangju" aria-selected="false">광주/전라 (9)</button>
+					    	<button class="btn btn-outline-warning mt-auto" id="v-pills-Gangwon-tab" data-bs-toggle="pill" data-bs-target="#v-pills-Gangwon" type="button" role="tab" aria-controls="v-pills-Gangwon" aria-selected="false">강원 (4)</button>
 					    	
 					 	</div>
 						<div class="tab-content" id="v-pills-tabContent">
@@ -346,6 +347,12 @@ $(function() {
 	});
 	
 	$("#buy #insert-purchase").click(function() {
+		var isLogined = $("[name=isLogined]").val();
+		if(isLogined == 'no'){
+			alert("로그인이 필요한 서비스입니다.");
+				loginModal.show();
+			return false;
+		}
 		$.ajax({
 			type: "post",
 			url: "purchase",	// 구매기능

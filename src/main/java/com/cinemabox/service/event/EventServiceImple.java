@@ -7,26 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cinemabox.dao.event.EventDao;
+import com.cinemabox.vo.Discount;
 import com.cinemabox.vo.Event;
-
-@Service
-public class EventServiceImple implements EventService{
-	
-	@Autowired EventDao eventDao;
-	
-	@Override
-	public List<Event> getAllEvent(){
-		// 이벤트 모든 정보 조회
-		return eventDao.getAllEvent();
-	}
-	
-	@Override
-	public Event detailEvent(int no) {
-		// 이벤트 종류별 상세조회
-		return eventDao.detailEvent(no);
-	}
-
-}
 =======
 package com.cinemabox.service.event;
 
@@ -38,6 +20,7 @@ import org.springframework.stereotype.Service;
 import com.cinemabox.dao.event.EventDao;
 import com.cinemabox.vo.Discount;
 import com.cinemabox.vo.Event;
+>>>>>>> b5978ffdf384297585369b44058233eb37aef63b
 
 @Service
 public class EventServiceImple implements EventService{
@@ -63,4 +46,3 @@ public class EventServiceImple implements EventService{
 	}
 
 }
->>>>>>> dev-kjeun

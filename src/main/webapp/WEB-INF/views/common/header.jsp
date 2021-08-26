@@ -10,17 +10,20 @@
         console.log(Kakao.isInitialized());
         Kakao.isInitialized();
         
+        //탑배너
 		$("#img-top-banner").ready(function(){
 			var yourImages = ["/cinemabox/resources/images/banner/top/Puppy_98080.jpg",
      		   				 "/cinemabox/resources/images/banner/top/Sence_98080.jpg",
      		   				 "/cinemabox/resources/images/banner/top/Sake_98080.jpg",
-     		   				 "/cinemabox/resources/images/banner/top/Maly_98080.jpg"];
+     		   				 "/cinemabox/resources/images/banner/top/Maly_98080.jpg",
+     		   				 "/cinemabox/resources/images/banner/top/Sangy_98080.jpg"];
 			var randomImage = Math.trunc(Math.random()*yourImages.length);
 			$("#img-top-banner").attr("src", yourImages[randomImage]);
 			$("#div-top-banner img[src*='Puppy']").parent().attr("href","movieDetail?no=20219381").parent().parent().css("background", "rgb(0, 164, 236)");
 			$("#div-top-banner img[src*='Sence']").parent().attr("href","movieDetail?no=20218985").parent().parent().css("background", "rgb(0, 0, 0)");
 			$("#div-top-banner img[src*='Sake']").parent().attr("href","movieDetail?no=20219185").parent().parent().css("background", "rgb(252, 243, 228)");
 			$("#div-top-banner img[src*='Maly']").parent().attr("href","movieDetail?no=20219311").parent().parent().css("background", "rgb(0, 0, 0)");
+			$("#div-top-banner img[src*='Sangy']").parent().attr("href","movieDetail?no=20217742").parent().parent().css("background", "rgb(0, 0, 0)");
         })
 </script>
 <!-- top banner start -->
@@ -70,7 +73,7 @@
 							<li class="nav-item"><a class="nav-link" href="/cinemabox/event/discount">제휴할인</a></li>
 						</ul>
 					</li>
-					<li class="nav-item mainnav"><a class="nav-link text-body" href="#">스토어</a>
+					<li class="nav-item mainnav"><a class="nav-link text-body" href="/cinemabox/gift">스토어</a>
 						<ul class="nav justify-content-center subnav" id="subnav-05">
 							<li class="nav-item"><a class="nav-link" href="/cinemabox/gift">시네마 티켓</a></li>
 							<li class="nav-item"><a class="nav-link" href="/cinemabox/snack">팝콘/음료 세트</a></li>
@@ -251,7 +254,7 @@ $("#form-login").submit(function(event){
             
 				loginModal.hide();
 				location.href = location.href.replace('error=login','')
-				//location.reload();
+				location.reload();
 				
             };
 		},
@@ -289,7 +292,7 @@ function loginWithKakao(){
     	    				
     	    				loginModal.hide();
     	    				location.href = location.href.replace('?error=login','')
-    	    				//location.reload();
+    	    				location.reload();
     	    			}
     	    		})
     	    	}

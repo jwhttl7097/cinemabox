@@ -30,6 +30,9 @@ public class Movie {
 	private int userLike;
 	private Date createdDate;
 <<<<<<< HEAD
+
+=======
+>>>>>>> b5978ffdf384297585369b44058233eb37aef63b
 	public String getSynopsisWithBr() {
 		if(synopsis == null) {
 			return " ";
@@ -40,8 +43,9 @@ public class Movie {
 	public boolean isExistGenre(String text) {
 		return genre.contains(text);
 	}
-=======
+<<<<<<< HEAD
 
->>>>>>> dev-kjeun
+=======
+>>>>>>> b5978ffdf384297585369b44058233eb37aef63b
 }
 

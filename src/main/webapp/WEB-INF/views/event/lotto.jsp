@@ -12,7 +12,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="/cinemabox/resources/js/common.js"></script>
-<title>TITLE</title>
+<title>이벤트 상세</title>
 <style type="text/css">
  a:link { color: black; text-decoration: none;}
  a:visited { color: black; text-decoration: none;}
@@ -59,100 +59,93 @@
 <body class="body">
 <div class="container-fluid">
 	<%@ include file="../common/header.jsp"%>
-	
 	<div class="top" style="margin-left:150px;  margin-top:50px;">
-	<h3 >이벤트</h3>
+		<h3 >이벤트</h3>
 	</div>
-	
 	<div class="row mb-3" style="padding:60px; margin-left:150px;">
-	<table style="margin-bottom:100px;">
-		<thead>
-			<tr>
-				<th>3개의 선물상자 중 하나를 뽑아주세요~!!</th>
-				<th>
-					
-				</th>
-			</tr>
-			<tr>
-				<th>응모하기전 메일을 입력해주세요^^</th>
-			</tr>
-		</thead>
-		<tbody style="text-align: center;">
-		<tr>
-			<td></td>
-		</tr>	
-		</tbody>
-	</table>
-	  <form id="lotto-form" name="lotto" method="post" action="lotto">
-		<ul class="list-group list-group-horizontal" style="list-style: none; display: block; text-align: center; margin: inherit;">
-			<li class="event"><img class="product_img" style="width: 150px; height: 150px;" src="../resources/images/event/gift.png" alt=""></li>
-			<li class="event"><img class="product_img" style="width: 150px; height: 150px;" src="../resources/images/event/gift.png" alt=""></li>
-			<li class="event"><img class="product_img" style="width: 150px; height: 150px;" src="../resources/images/event/gift.png" alt=""></li>
-		</ul>
-	</form>
-		<div class="d-grid gap-2 col-6 mx-auto mb-3" >
-		   <button class="btn btn-warning" id="insert-email" onclick="">*신청자 정보 등록*</button>
+		<div class="col-5">
+			<table style="margin-bottom:100px;">
+				<thead>
+					<tr>
+						<th>3개의 선물상자 중 하나를 뽑아주세요~!!</th>
+						<th>
+						</th>
+					</tr>
+					<tr>
+						<th>응모하기전 메일을 입력해주세요^^</th>
+					</tr>
+				</thead>
+				<tbody style="text-align: center;">
+				<tr>
+					<td></td>
+				</tr>	
+				</tbody>
+			</table>
 		</div>
-
-		<h6  style="text-align: center;">두근두근:)</h6>
-		<div  class="d-grid gap-2 col-6 mx-auto" style="text-align:center;">
-			<ul class="list-group" style="text-align: center;">
-				<li class="list-group-item flex-fill" id="goods" style="padding:30px;">결과가 표시됩니다!</li>
-			</ul>
-		</div>
-	
-	<div class="modal fade" id="form-email-modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="modalLabel">신청자 정보 등록</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-					 <form id="form-email">
-						<div class="form-floating">
-						
-							<input type="email" class="form-control" id="email" placeholder="name@example.com" name="email">
-							<label for="floatingInput">메일을 입력해 주세요</label>
-						</div>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-					<button type="button" class="btn btn-warning" id="insert-lotto">등록</button>
-				</div>
-				
-				
-			</div>
-		</div>
-	</div>
-	<div>
-						<div class="winnerContainer">
-							<ul class="winnerList">
-							<c:forEach var="winner" items="${winnerList }">
-								<li class="winnerListChild">${winner.email } ${winner.goods }</li>
-							</c:forEach>
-							</ul>
-						</div>
+		<!-- 당첨 결과 -->
+		<div class="col-6" style="text-align: end;">
+				<div class="row mb-3">
+					<div class="col-5"  >			
+						<div style="text-align: end;"><strong><small>당첨 결과</small></strong></div>
 					</div>
+					<div class="col-7" style="text-align: initial;">
+				<div class="winnerContainer">
+					<ul class="winnerList">
+						<c:forEach var="winner" items="${winnerList }">
+							<li class="winnerListChild"><div class="d-flex justify-content-between"><span>${winner.email }</span>  <span style="color: darkviolet;">${winner.goods }</span></div></li>
+						</c:forEach>
+					</ul>
+				</div>
+				</div>
+			</div>	
+		</div>
+		<!-- 선물상자 -->
+		  <form id="lotto-form" name="lotto" method="post" action="lotto">
+				<ul class="list-group list-group-horizontal" style="list-style: none; display: block; text-align: center; margin-left: 150px;">
+					<li class="event"><img class="product_img" style="width: 150px; height: 150px;" src="../resources/images/event/gift.png" alt=""></li>
+					<li class="event"><img class="product_img" style="width: 150px; height: 150px;" src="../resources/images/event/gift.png" alt=""></li>
+					<li class="event"><img class="product_img" style="width: 150px; height: 150px;" src="../resources/images/event/gift.png" alt=""></li>
+				</ul>
+			</form>
+			<div class="col-6">
+			<label for="floatingInput">메일을 입력해 주세요</label>
+				<input type="email" class="form-control" id="email" placeholder="name@example.com" name="email">	
+			</div>
+			<div class="d-grid mx-auto col-3">
+				<button type="button" class="btn btn-warning" id="insert-lotto">신청자 정보 등록</button>
+			</div>
+			<div class="modal fade" id="form-email-modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="modalLabel">결과</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							 <h6  style="text-align: center;">두근두근:)</h6>
+							<div  class="d-grid gap-2 col-6 mx-auto" style="text-align:center;">
+								<ul class="list-group" style="text-align: center;">
+									<li class="list-group-item flex-fill" id="goods" style="padding:30px; color: darkviolet;">결과가 표시됩니다!</li>
+								</ul>
+							</div>
+						</div>
+						
+					</div>
+				</div>
+			</div>														
+		<div>
+	</div>
 </div>
 
 	<%@ include file="../common/footer.jsp"%>
 </div>
 <script type="text/javascript">
 $(function() {
-	
 	var emailModal = new bootstrap.Modal(document.getElementById("form-email-modal"), {
 		keyboard: false
 	})
 	
-	// 응모하기 버튼 눌렀을때 실행된다.
-	$("#insert-email").click(function() {
-		$("#email").val("");
-		emailModal.show();
-	});	
-	
-	// 메일입력 모달창에서 등록버튼을 클릭했을 때 실행된다.
+	// 신청자 정보 등록 클릭 후 실행
 	$("#insert-lotto").click(function() {
 		if($("#email").val()== ""){
 			alert("메일을 입력해주세요!");
@@ -162,35 +155,33 @@ $(function() {
 			emailModal.hide();
 		}
 	})
-	
-	
 	// 선물 이미지를 눌렀을때 실행된다.
 	$(".product_img").click(function() {
 		if($("#email").val()==""){ // 이메일이 없는 경우
-			emailModal.show();
-			return;
-		}
-		
-		$.ajax({
-		    type : "POST",
-		    url : "/cinemabox/event/lotto/start",
-			data : {email:$("#email").val()}, 
-		    dataType: 'json',
-		    success : function() {
-		    	
-		    },
-			complete: function(productItem) {
-				if(productItem.responseText == "existEmail"){
-					alert("이미 응모한 아이디입니다.")
-				}else{
-					document.getElementById("goods").innerText = productItem.responseText;
+			alert("신청자 정보 등록해주세요")
+		}else{
+			$.ajax({
+			    type : "POST",
+			    url : "/cinemabox/event/lotto/start",
+				data : {email:$("#email").val()}, 
+			    dataType: 'json',
+			    success : function() {
+			    	
+			    },
+				complete: function(productItem) {
+					if(productItem.responseText == "existEmail"){
+						alert("이미 응모한 아이디입니다.")
+					}else{
+						document.getElementById("goods").innerText = productItem.responseText;
+						emailModal.show();
+					}
 				}
-			}
-		});
+			});
+		}
 	});	
 	
 	// 이메일 입력, 선물 클릭 후 상품이 나옴 
-	$("#lotto-form").submit(function() {
+/* 	$("#lotto-form").submit(function() {
 			$.ajax({
 				type: "POST",
 				url: "/cinemabox/event/lotto/",
@@ -205,11 +196,9 @@ $(function() {
 				
 			});
 			
-		})
+		}) */
 	
 })
-
-
 </script>
 </body>
 =======
@@ -432,5 +421,5 @@ $(function() {
 
 </script>
 </body>
->>>>>>> dev-kjeun
+>>>>>>> b5978ffdf384297585369b44058233eb37aef63b
 </html>

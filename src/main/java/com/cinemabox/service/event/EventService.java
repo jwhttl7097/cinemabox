@@ -1,19 +1,3 @@
-<<<<<<< HEAD
-package com.cinemabox.service.event;
-
-import java.util.List;
-
-import com.cinemabox.vo.Event;
-
-public interface EventService {
-
-	List<Event> getAllEvent();
-	// 이벤트 모든 정보 조회
-	Event detailEvent(int no);
-	// 이벤트 종류별 상세조회
-
-}
-=======
 package com.cinemabox.service.event;
 
 import java.util.List;
@@ -30,4 +14,7 @@ public interface EventService {
 	Discount detailDiscount(int no);
 	// 제휴할인 상세조회
 }
->>>>>>> dev-kjeun
+<<<<<<< HEAD
+
+=======
+>>>>>>> b5978ffdf384297585369b44058233eb37aef63b

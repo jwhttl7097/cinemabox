@@ -35,6 +35,11 @@ public class AdminServiceImpl implements AdminService{
 	}
 	
 	@Override
+	public List<Movie> getAllSearchMovies(String movieTitle) {
+		return adminDao.getAllSearchMovies(movieTitle);
+	}
+	
+	@Override
 	public Movie getMovieByNo(int movieNo) {
 		Movie movie = adminDao.getMovieByNo(movieNo);
 		return movie;
@@ -76,11 +81,6 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public void updateScreening(Screening screening) {
 		adminDao.updateScreening(screening);
-	}
-
-	@Override
-	public List<Seat> getAllSeats() {
-		return adminDao.getAllSeats();
 	}
 
 	@Override
