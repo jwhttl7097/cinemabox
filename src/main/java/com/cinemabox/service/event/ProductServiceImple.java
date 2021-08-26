@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package com.cinemabox.service.event;
 
 import java.util.HashMap;
@@ -11,14 +10,6 @@ import org.springframework.stereotype.Service;
 import com.cinemabox.dao.event.ProductDao;
 import com.cinemabox.dto.Event.EventDto;
 import com.cinemabox.vo.Product;
-=======
-package com.cinemabox.service.event;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
->>>>>>> b5978ffdf384297585369b44058233eb37aef63b
-
 
 @Service
 public class ProductServiceImple implements ProductService{
@@ -39,7 +30,8 @@ public class ProductServiceImple implements ProductService{
 		
 		// 뽑기 로직
 		List<Product> productList = productDao.getAllProduct();
-		int prizeProductNo =  (int) (Math.random() * productList.size());
+		int prizeProductNo =  (int) (Math.random() * productList.size()) ;
+		 
 		String prizeProductName = productList.get(prizeProductNo).getGoods();
 		
 		// DB에 결과값 저장
@@ -67,7 +59,3 @@ public class ProductServiceImple implements ProductService{
 	
 
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> b5978ffdf384297585369b44058233eb37aef63b

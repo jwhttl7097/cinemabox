@@ -45,18 +45,6 @@
 			</div>
 		</div>
 		<div class="row mb-3" id="outter">
-			<div style="float: right;">
-			<select id="cntPerPage" name="sel" onchange="selChange()">
-				<option value="5"
-					<c:if test="${paging.cntPerPage == 5}">selected</c:if>>5줄 보기</option>
-				<option value="10"
-					<c:if test="${paging.cntPerPage == 10}">selected</c:if>>10줄 보기</option>
-				<option value="15"
-					<c:if test="${paging.cntPerPage == 15}">selected</c:if>>15줄 보기</option>
-				<option value="20"
-					<c:if test="${paging.cntPerPage == 20}">selected</c:if>>20줄 보기</option>
-			</select>
-			</div> <!-- 옵션선택 끝 -->
 			<div class="col">
 				<div class="border p-2 bg-light">
 					<table class="table" id="table-movies">
@@ -137,15 +125,6 @@
 				</div>
 			</div>
 		</c:if>	
-		<div style="text-align : center;">
-			<form action="searchMovie" method="get">
-				<select>
-					<option value="searchTitle">제목</option>
-				</select>
-				<input type="text" name="movieTitle" id="movieTitle" value="${movieTitle }" placeholder="검색어를 입력해주세요" />
-				<button type="submit">검색</button>
-			</form>
-		</div>
 	</main>
 	<div class="modal fade" id="trailer-movie-modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
 	  	<div class="modal-dialog modal-xl">
@@ -226,10 +205,6 @@
 	</div>
 </div>	
 <script>
-function selChange() {
-	var sel = document.getElementById('cntPerPage').value;
-	location.href="movieList?nowPage=1&cntPerPage="+sel;
-}
 $(function() {
 	// datetimepicker 사용
 	$('#screening-date').appendDtpicker({'locale':'ko'});

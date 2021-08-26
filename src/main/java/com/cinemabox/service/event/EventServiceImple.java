@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package com.cinemabox.service.event;
 
 import java.util.List;
@@ -9,18 +8,6 @@ import org.springframework.stereotype.Service;
 import com.cinemabox.dao.event.EventDao;
 import com.cinemabox.vo.Discount;
 import com.cinemabox.vo.Event;
-=======
-package com.cinemabox.service.event;
-
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.cinemabox.dao.event.EventDao;
-import com.cinemabox.vo.Discount;
-import com.cinemabox.vo.Event;
->>>>>>> b5978ffdf384297585369b44058233eb37aef63b
 
 @Service
 public class EventServiceImple implements EventService{

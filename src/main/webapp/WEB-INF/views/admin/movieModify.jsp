@@ -91,8 +91,8 @@
                             <div class="form-floating mb-3">
                             <!-- 숫자만 적을수 있게함 -->
 								<textarea class="form-control" onKeyup="this.value=this.value.replace(/[^0-9]/g,'')" 
-								id="runningTime" placeholder="영화 러닝타임" style="height: 60px;" name="runningTime">${movie.runningTime }</textarea>
-                                <label for="floatingInput">영화 러닝타임</label>
+								id="runningTime" placeholder="영화 러닝타임(분)" style="height: 60px;" name="runningTime">${movie.runningTime }</textarea>
+                                <label for="floatingInput">영화 러닝타임(분)</label>
                             </div>
 <!--                                                                       ※ 감독 -->
                             <div class="form-floating mb-3">
