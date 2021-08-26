@@ -38,6 +38,7 @@
 							<col width="12%">
 							<col width="10%">
 							<col width="20%">
+							<col width="20%">
 						</colgroup>
 						<thead>
 							<tr class="text-center">
@@ -48,6 +49,7 @@
 								<th>극장 이름</th>
 								<th>상영관</th>
 								<th>상영 시간</th>
+								<th>좌석 현황</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -67,6 +69,7 @@
 											<td>[${screen.theaterName }]</td>
 											<td>${screen.hallName }</td>
 											<td><strong><fmt:formatDate pattern="MM월 dd일 (E) HH시 mm분 " value="${screen.screeningDate }"/></strong></td>
+											<td><span style="color:blue; font-weight:bold">${screen.remainingSeats }</span>/70</td>
 									</c:forEach>
 								</c:otherwise>
 							</c:choose>

@@ -88,7 +88,7 @@
                             <div class="form-floating mb-3">
                             <!-- 숫자만 적을수 있게함 -->
                                <input type="text" onKeyup="this.value=this.value.replace(/[^0-9]/g,'')" 
-								class="form-control" id="runningTime" placeholder="영화 러닝타임" name="runningTime" />
+								class="form-control" id="runningTime" placeholder="영화 러닝타임(분)" name="runningTime" />
                                 <label for="floatingInput">영화 러닝타임(분)</label>
                             </div>
                             <div class="form-floating mb-3">
@@ -169,7 +169,7 @@ $(function() {
 		var name = $.trim($("#title").val());
 		if (!title) {
 			alert("영화 제목을 입력해주세요.");
-			$("#name").focus();
+			$("#title").focus();
 			return false;
 		}
 		var runningTime = $.trim($("#runningTime").val());
@@ -229,8 +229,6 @@ $(function() {
 			$("#synopsis").focus();
 			return false;
 		}
-		
-		
 		return true;	// 폼입력값이 서버로 제출되게 함
 	});
 })
