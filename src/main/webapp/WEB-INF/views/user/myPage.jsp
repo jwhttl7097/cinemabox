@@ -77,6 +77,10 @@
    		cursor:pointer;
    }
    
+   .moviePoint{
+   		cursor:pointer;
+   }
+   
    .modal-dialog{
    
 	   width: 304px;
@@ -148,8 +152,8 @@
             </div>
             <div class="row mx-2 mt-4 mb-4 border-top border-bottom">
             	<div class="col text-center" style="padding:20px 20px">
-					<span><strong>POINT</strong></span>
-					<span>${LOGINED_USER.point } p</span>
+					<span class="moviePoint"><strong>POINT</strong></span>
+					<span>${user2.point } p</span>
             	</div>
             	<div class="3tabs col text-center" style="padding:20px 20px">
 					<span class="couponList"><strong>쿠폰함</strong></span>

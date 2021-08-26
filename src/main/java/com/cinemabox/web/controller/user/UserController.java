@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
+import com.cinemabox.dao.user.UserDao;
 import com.cinemabox.dto.user.UserDto;
 import com.cinemabox.form.user.UserRegisterForm;
 
@@ -24,6 +24,7 @@ import com.cinemabox.web.utils.SessionUtils;
 public class UserController {
 
 	@Autowired UserService userService;
+	@Autowired UserDao userDao;
 	
 	@GetMapping(path = {"/register"})
 	public String register() {
@@ -54,6 +55,7 @@ public class UserController {
 			return "redirect:/home?error=login";
 		}
 		
+		
 		//구매내역
 		List<UserDto> orders = userService.getOrderlistById(user.getId());
 		
@@ -72,6 +74,10 @@ public class UserController {
 		//찜한 영화 개수 가져오기
 		int countWishlist = userService.countWishlists(user.getId());
 		
+		//포인트 가져오기
+		 User user2 = userDao.getUserById(user.getId());
+	     model.addAttribute("user2", user2);
+	     
 		//무비노트
 		
 		model.addAttribute("orders", orders);
