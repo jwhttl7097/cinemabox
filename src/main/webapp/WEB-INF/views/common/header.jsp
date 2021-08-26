@@ -251,7 +251,7 @@ $("#form-login").submit(function(event){
             
 				loginModal.hide();
 				location.href = location.href.replace('error=login','')
-				//location.reload();
+// 				location.reload();
 				
             };
 		},
