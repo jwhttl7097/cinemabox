@@ -293,9 +293,12 @@ function calculateTotalPay() {
 	// 포인트 전체 사용
 	$("#allPointBtn").click(function() {
 		$("#pointInput").val("");
-		if($('#nowPoint').text() > $('#div-total').data('movie-price')) {
-			$('#pointInput').val($('#div-total').data('movie-price'));
+		console.log(Number(minusComma($('#span-total-price').text())) + '밖');
+		if($('#nowPoint').text() > Number(minusComma($('#span-total-price').text()))) {
+			console.log(Number(minusComma($('#span-total-price').text())) + 'if문 안');
+			$('#pointInput').val(Number(minusComma($('#span-total-price').text())));
 		} else {
+			console.log(Number(minusComma($('#point-discount-money').text())) + 'if문 엘즈 안');
 			$("#pointInput").val($("#nowPoint").text());
 		}
 		var point = $('#pointInput').val();
@@ -321,7 +324,12 @@ function calculateTotalPay() {
 			$(this).parent().prev().css('font-weight', 'bolder');
 			$(this).attr('data-coupon', 'Y').text('취소');
 			$(this).parents().siblings().find('.coupon-btn').addClass('disabled');
-			$("#coupon-money").text(addComma(String($('#div-total').data('movie-price')*0.5)));
+			// 포인트를 먼저 사용했을 경우 쿠폰 처리
+			if (Number(minusComma($('#point-discount-money').text())) != 0) {
+				$("#coupon-money").text(addComma(String(Number(minusComma($('#span-total-price').text())) *0.5)));
+			} else {
+				$("#coupon-money").text(addComma(String($('#div-total').data('movie-price')*0.5)));
+			}
 			$('.btn-coupon').addClass('btn-disabled');
 			$(this).removeClass('btn-disabled').addClass('btn-active');
 			// 선택한 쿠폰시리얼 폼값에 전달
@@ -333,12 +341,19 @@ function calculateTotalPay() {
 	// 포인트 확인 버튼 클릭시 //
 	$('#confirmPointBtn').click(function() {
 		var point = $('#pointInput').val();
-		// 가지고있는 포인트 보다 많은 포인트를 사용할경우 유효성검사 //
-		if (point > $('#nowPoint').text()) {
+		// 상품금액보다 포인트 인풋값이 크면 입력불가
+		if ($('#pointInput').val() > Number(minusComma($('#span-total-price').text()))) {
 			$('#pointInput').val(0);
 			$('#pointInput').focus();
-			createBasicToast('포인트 부족', '현재 가지고 있는 포인트가 부족합니다.')
-			return false;
+			createBasicToast('포인트 사용 초과', '결제 하려는 금액보다 포인트가 많습니다.');
+			return;
+		}
+		// 가지고있는 포인트 보다 많은 포인트를 사용할경우 유효성검사 //
+		if (Number(minusComma($('#point-discount-money').text())) >= $('#nowPoint').text()) {
+			$('#pointInput').val(0);
+			$('#pointInput').focus();
+			createBasicToast('포인트 부족', '현재 가지고 있는 포인트가 부족합니다.');
+			return;
 		}
 		// 가지고있는 포인트 보다 많은 포인트를 사용할경우 유효성검사 //
 		// 전체포인트 사용버튼 한번만 누르기

@@ -1,9 +1,7 @@
-<<<<<<< HEAD
 package com.cinemabox.service.event;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,13 +9,6 @@ import org.springframework.stereotype.Service;
 import com.cinemabox.dao.event.ProductDao;
 import com.cinemabox.dto.Event.EventDto;
 import com.cinemabox.vo.Product;
-=======
-package com.cinemabox.service.event;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
->>>>>>> b5978ffdf384297585369b44058233eb37aef63b
 
 
 @Service
@@ -63,11 +54,5 @@ public class ProductServiceImple implements ProductService{
 		
 		return winnerList;
 	}
-	
-	
 
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> b5978ffdf384297585369b44058233eb37aef63b

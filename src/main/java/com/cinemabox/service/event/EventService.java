@@ -14,7 +14,3 @@ public interface EventService {
 	Discount detailDiscount(int no);
 	// 제휴할인 상세조회
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> b5978ffdf384297585369b44058233eb37aef63b

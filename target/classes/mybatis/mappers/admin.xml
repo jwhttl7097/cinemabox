@@ -190,56 +190,6 @@
 			MOVIE_NO desc
 	</select>
 	
-<<<<<<< HEAD
-<!-- 총 게시글 갯수 출력 -->
-<select id="countBoard" resultType="int">
-	SELECT COUNT(*) 
-	FROM 
-		CINEMABOX_MOVIE
-	where
-		MOVIE_SCREENING_STATUS = 'Y'
-</select>
-
-<!-- 페이징 처리 후 게시글 조회 -->
-<select id="selectMoivePaging" resultType="com.cinemabox.vo.Movie">
-	SELECT * 
-		FROM (
-			SELECT ROWNUM RN, A.* 
-				FROM (
-						SELECT 
-							MOVIE_NO				as no,
-							MOVIE_GENRE 			as genre,
-							MOVIE_TITLE 			as title,
-							MOVIE_RUNNING_TIME		as runningTime,
-							MOVIE_DIRECTOR			as director,
-							MOVIE_CASTING			as casting,
-							MOVIE_RELEASE_DATE 		as releaseDate,
-							MOVIE_CLOSE_DATE 		as closeDate,
-							MOVIE_AGE 				as age,
-							MOVIE_THUMBNAIL			as thumbnail,
-							MOVIE_SYNOPSIS			as synopsis,
-							MOVIE_TRAILER_FIRST     as trailerFirst,
-							MOVIE_TRAILER_SECOND	as trailerSecond
-						from
-							CINEMABOX_MOVIE
-						where
-							MOVIE_SCREENING_STATUS = 'Y'
-						order by
-							MOVIE_NO desc
-						) A
-				)
-	WHERE RN BETWEEN #{start} AND #{end}
-</select>
-	
-	<select id="getAllSeats" resultType="com.cinemabox.vo.Seat">
-		select
-			SEAT_NO			as seatNo,
-			SEAT_COL		as seatCol,
-			SEAT_ROW   		as seatRow,
-			HALL_NO			as hallNo
-		from
-			CINEMABOX_SEAT
-=======
 	<!-- 총 게시글 갯수 출력 -->
 	<select id="countBoard" resultType="int">
 		SELECT COUNT(*) 
@@ -279,7 +229,6 @@
 					)
 			WHERE 
 				RN BETWEEN #{start} AND #{end}
->>>>>>> b5978ffdf384297585369b44058233eb37aef63b
 	</select>
 	
 	<!-- 검색 후 게시글 조회 -->
