@@ -7,6 +7,15 @@ import org.springframework.stereotype.Service;
 
 import com.cinemabox.dao.event.EventDao;
 import com.cinemabox.vo.Discount;
+package com.cinemabox.service.event;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.cinemabox.dao.event.EventDao;
+import com.cinemabox.vo.Discount;
 import com.cinemabox.vo.Event;
 
 @Service

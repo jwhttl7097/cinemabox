@@ -1,10 +1,12 @@
+
+
+import com.cinemabox.vo.Event;
 package com.cinemabox.dao.event;
 
 import java.util.List;
 
 import com.cinemabox.vo.Discount;
 import com.cinemabox.vo.Event;
-
 
 public interface EventDao {
 	

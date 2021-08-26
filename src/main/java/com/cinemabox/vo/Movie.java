@@ -29,6 +29,7 @@ public class Movie {
 	private String status;
 	private int userLike;
 	private Date createdDate;
+
 	public String getSynopsisWithBr() {
 		if(synopsis == null) {
 			return " ";

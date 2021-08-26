@@ -1,5 +1,7 @@
 package com.cinemabox.dto.Event;
 
+package com.cinemabox.dto.Event;
+
 import lombok.Data;
 
 @Data

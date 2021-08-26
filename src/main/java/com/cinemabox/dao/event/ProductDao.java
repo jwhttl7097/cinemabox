@@ -5,7 +5,13 @@ import java.util.List;
 
 import com.cinemabox.dto.Event.EventDto;
 import com.cinemabox.vo.Product;
+package com.cinemabox.dao.event;
 
+import java.util.HashMap;
+import java.util.List;
+
+import com.cinemabox.dto.Event.EventDto;
+import com.cinemabox.vo.Product;
 
 public interface ProductDao {
 
