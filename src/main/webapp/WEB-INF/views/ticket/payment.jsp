@@ -334,7 +334,7 @@ function calculateTotalPay() {
 			$('#pointInput').val(0);
 			$('#pointInput').focus();
 			createBasicToast('포인트 부족', '현재 가지고 있는 포인트가 부족합니다.')
-			return;
+			return false;
 		}
 		// 가지고있는 포인트 보다 많은 포인트를 사용할경우 유효성검사 //
 		// 전체포인트 사용버튼 한번만 누르기
