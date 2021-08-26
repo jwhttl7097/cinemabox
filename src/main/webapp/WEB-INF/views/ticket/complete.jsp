@@ -121,6 +121,10 @@ $(function(){
 	$('.mainnav').mouseleave(function(){
 	   $(this).children('.subnav').stop().slideUp();
 	})
+	//탑배너
+	$("#i-close-top-banner").click(function(){
+	   $("#div-top-banner").slideUp();
+	})
 })
 </script>
 </body>

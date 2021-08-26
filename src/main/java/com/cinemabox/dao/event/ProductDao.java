@@ -5,6 +5,12 @@ import java.util.List;
 
 import com.cinemabox.dto.Event.EventDto;
 import com.cinemabox.vo.Product;
+=======
+package com.cinemabox.dao.event;
+
+import java.util.HashMap;
+import java.util.List;
+>>>>>>> b5978ffdf384297585369b44058233eb37aef63b
 
 
 public interface ProductDao {
@@ -20,4 +26,7 @@ public interface ProductDao {
 	List<EventDto> getWinnerList(); // 당첨자 리스트 조회
 	
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> b5978ffdf384297585369b44058233eb37aef63b

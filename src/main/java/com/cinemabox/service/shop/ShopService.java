@@ -39,4 +39,28 @@ public interface ShopService {
 	 * @return gift 정보
 	 */
 	List<Gift> getAllGiftInfo();
+	
+	/**
+	 * gift 정보를 서버에 저장하는 서비스
+	 * @param gift 정보
+	 */
+	void insertGift(Gift gift);
+	
+	/**
+	 * snack 정보를 서버에 저장하는 서비스
+	 * @param snack 정보
+	 */
+	void insertSnack(Snack snack);
+	
+	/**
+	 * gift 정보를 번경하는 서비스
+	 * @param gift 정보
+	 */
+	void updateGift(Gift gift);
+	
+	/**
+	 * snack 정보를 번경하는 서비스
+	 * @param snack 정보
+	 */
+	void updateSnack(Snack snack);
 }

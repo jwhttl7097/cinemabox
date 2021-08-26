@@ -19,8 +19,8 @@ public interface AdminDao  {
 	List<Movie> getAllDeleteMovies();
 	List<Theater> getAllTheaterInfo();
 	List<Hall> getAllHallInfo();
+	List<Movie> getAllSearchMovies(String movieTitle);
 	
-	List<Seat> getAllSeats();
 	void insertSeat(Screening screening);
 	
 	void insertScreening(Screening screening);

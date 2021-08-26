@@ -92,6 +92,19 @@ public class AdminController {
 		return "admin/movieList";
 	}
 	
+	@GetMapping("searchMovie")
+	public String getAllSearchMovies(Model model, @RequestParam("movieTitle") String movieTitle) {
+		List<Movie> list = adminService.getAllSearchMovies(movieTitle);
+		List<Theater> theaterList = adminService.getAllTheaterInfo();
+		List<Hall> hallList = adminService.getAllHallInfo();
+		model.addAttribute("movies", list);
+		model.addAttribute("theaters", theaterList);
+		model.addAttribute("halls", hallList);
+					
+		// 뷰페이지로 내부이동하기
+		return "admin/searchMovie";
+	}
+	
 	@GetMapping(path = {"/screening"})
 	public String screeningList(Model model, @RequestParam("movieNo") int movieNo) {
 		List<Screening> savedScreens = adminService.getScreeningsByMovieNo(movieNo);
@@ -112,12 +125,12 @@ public class AdminController {
 		if (!multipartFile.isEmpty()) {
 			String originalname = multipartFile.getOriginalFilename();
 			String folderName = "C:\\eclipse\\eGovFrameDev-3.10.0-64bit\\workspace\\cinemabox\\src\\main\\webapp\\resources\\images\\movie";
-			// 지정된 폴더에 지정된 이름을 파일을 기록
-			OutputStream out = new FileOutputStream(new File(folderName, originalname));
-			// multipartFile객체에서 파일을 읽어옴
-			InputStream in = multipartFile.getInputStream();
 			// 전달받은 movie정보에서 no를 가져옴
 			String StringMovieNo = String.valueOf(movie.getNo());
+			// 지정된 폴더에 지정된 이름을 파일을 기록
+			OutputStream out = new FileOutputStream(new File(folderName, StringMovieNo + ".jpg"));
+			// multipartFile객체에서 파일을 읽어옴
+			InputStream in = multipartFile.getInputStream();
 			// 파일이름을 영화no로 변경
 			String changeFileName = originalname.replaceAll(originalname, StringMovieNo);
 			// 파일이 정해진 폴더에 기록됨

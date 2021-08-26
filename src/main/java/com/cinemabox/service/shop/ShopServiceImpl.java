@@ -44,6 +44,37 @@ public class ShopServiceImpl implements ShopService {
 		return shopDao.getAllGiftInfo();
 	}
 
-	
+	@Override
+	public void insertGift(Gift gift) {
+		shopDao.insertGift(gift);
+	}
 
+	@Override
+	public void insertSnack(Snack snack) {
+		shopDao.insertSnack(snack);
+	}
+
+	@Override
+	public void updateGift(Gift gift) {
+		Gift savedGift = shopDao.getGiftByNo(gift.getGiftNo());
+		savedGift.setName(gift.getName());
+		savedGift.setPrice(gift.getPrice());
+		savedGift.setDiscountPrice(gift.getDiscountPrice());
+		if (gift.getThumbnail() != null )  {
+			savedGift.setThumbnail(gift.getThumbnail());
+		}
+		shopDao.updateGift(savedGift);
+	}
+	
+	@Override
+	public void updateSnack(Snack snack) {
+		Snack savedSnack = shopDao.getSnackByNo(snack.getSnackNo());
+		savedSnack.setName(snack.getName());
+		savedSnack.setPrice(snack.getPrice());
+		savedSnack.setDetail(snack.getDetail());
+		if (snack.getThumbnail() != null )  {
+			savedSnack.setThumbnail(snack.getThumbnail());
+		}
+		shopDao.updateSnack(savedSnack);
+	}
 }

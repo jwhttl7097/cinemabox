@@ -20,4 +20,5 @@ public class AdminDto {
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date screeningDate;
 	private String title;
+	private int remainingSeats;
 }

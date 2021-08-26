@@ -27,16 +27,16 @@ public interface AdminService {
 	 void updateMovie(Movie movie);
 	 
 	 /**
+	  * 검색된 영화정보를 제공하는 서비스
+	  * @return 검색된 영화정보 목록
+	  */
+	 List<Movie> getAllSearchMovies(String movieTitle);
+	 
+	 /**
 	 * 삭제된 영화정보를 제공하는 서비스
 	 * @return 삭제된 영화정보 목록
 	 */
 	List<Movie> getAllDeleteMovies();
-	
-	/**
-	 * 모든 시트정보
-	 * @return 시트목록
-	 */
-	List<Seat> getAllSeats();
 	
 	/**
 	 * 지정된 영화번호에 해당하는 영화의 상세정보를 제공하는 서비스
