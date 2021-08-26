@@ -21,34 +21,25 @@
 <body>
 <div class="container-fluid">
 	<%@ include file="../common/header.jsp"%>
-	
-	<div class="top" style="margin-left:150px;  margin-top:50px;">
-	<h3 >1:1문의</h3>
-	</div>
-	
-		<form id="question-form" name="insertForm" method="post" action="../customerCenter/insertAnswer">
-	<input type="hidden" name="questionNo" id="questionNo"  value="${questionDetail.questionNo}"/>
-	<input type="hidden" name="email" id="email"  value="${questionDetail.email}"/>
-	<input type="hidden" name="name" id="name"  value="${questionDetail.name}"/>
-	<div style="padding:80px">
-	<div class="mb-3">
-	<h4>문의 답글</h4>
-	</div>
-	<div class="mb-3">
-	  <label for="answerContent" class="form-label">내용</label>
-	  <textarea class="form-control" id="answerContent" name ="answerContent" rows="3"></textarea>
-
-	</div>
-	
-	<div style="text-align: right;">
-			<button type="submit" id="insertBt" class="btn btn-warning">등록</button>
-		</div>	
-	</div>
-	
-</form>
-	<%@ include file="../common/footer.jsp"%>
-	
-	
+		<div class="top" style="margin-left:150px;  margin-top:50px;">
+			<h3 >1:1문의</h3>
+		</div>
+			<form id="question-form" name="insertForm" method="post" action="../customerCenter/insertAnswer">
+				<input type="hidden" name="questionNo" id="questionNo"  value="${questionDetail.questionNo}"/>
+				<input type="hidden" name="email" id="email"  value="${questionDetail.email}"/>
+				<input type="hidden" name="name" id="name"  value="${questionDetail.name}"/>
+				<div style="padding:80px">
+					<div class="mb-3"><h4>문의 답글</h4></div>
+					<div class="mb-3">
+					  <label for="answerContent" class="form-label">내용</label>
+					  <textarea class="form-control" id="answerContent" name ="answerContent" rows="3"></textarea>
+					</div>
+					<div style="text-align: right;">
+						<button type="submit" id="insertBt" class="btn btn-warning">등록</button>
+					</div>	
+				</div>
+			</form>
+	<%@ include file="../common/footer.jsp"%>	
 </div>
 <script type="text/javascript">
 $(function() {
@@ -58,7 +49,6 @@ $(function() {
 		return true;
 	});
 })
-
 </script>
 </body>
 </html>

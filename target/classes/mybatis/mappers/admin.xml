@@ -34,10 +34,6 @@
 		update 
 			CINEMABOX_MOVIE
 		set	
-<<<<<<< HEAD
-=======
-			MOVIE_NO				= 	#{no},
->>>>>>> dev-kjeun
 			MOVIE_GENRE 			=	#{genre},
 			MOVIE_TITLE 			=	#{title},
 			MOVIE_RUNNING_TIME		=	#{runningTime},
@@ -70,11 +66,7 @@
 		update 
 			CINEMABOX_MOVIE
 		set
-<<<<<<< HEAD
 			MOVIE_SCREENING_STATUS = 'N'
-=======
-			MOVIE_STATUS = 'N'
->>>>>>> dev-kjeun
 		where 
 			MOVIE_NO   	 = #{no}	
 	</update>
@@ -83,11 +75,7 @@
 		update 
 			CINEMABOX_MOVIE
 		set
-<<<<<<< HEAD
 			MOVIE_SCREENING_STATUS = 'Y'
-=======
-			MOVIE_STATUS = 'Y'
->>>>>>> dev-kjeun
 		where 
 			MOVIE_NO   	 = #{no}	
 	</update>
@@ -113,11 +101,7 @@
 			MOVIE_NO = #{value}
 	</select>
 	
-<<<<<<< HEAD
 	<select id="getAllTheaterInfo" resultType="com.cinemabox.vo.Theater">
-=======
-	<select id="getTheaterInfo" resultType="com.cinemabox.vo.Theater">
->>>>>>> dev-kjeun
 		select
 			THEATER_NO				as theaterNo,
 			THEATER_NAME 			as theaterName
@@ -127,7 +111,6 @@
 			THEATER_NAME ASC
 	</select>
 	
-<<<<<<< HEAD
 	<select id="getAllHallInfo" resultType="com.cinemabox.vo.Hall">
 		select
 			HALL_NO				as hallNo,
@@ -138,8 +121,6 @@
 			HALL_NAME ASC
 	</select>
 	
-=======
->>>>>>> dev-kjeun
 	<select id="getScreeningByNo" parameterType="int" resultType="com.cinemabox.vo.Screening">
 		select
 			SCREENING_NO			as screeningNo,
@@ -153,7 +134,6 @@
 			SCREENING_NO  			= #{screeningNo}
 	</select>
 	
-<<<<<<< HEAD
 	<select id="getScreeningsByMovieNo" parameterType="int" resultType="com.cinemabox.dto.admin.AdminDto">
 		select
 			M.MOVIE_NO				as movieNo,
@@ -173,23 +153,6 @@
 			S.THEATER_NO			= T.THEATER_NO 
 		and
 			S.HALL_NO				= H.HALL_NO	 
-=======
-	<select id="getScreeningsByMovieNo" parameterType="int" resultType="com.cinemabox.vo.Screening">
-		select
-			S.SCREENING_NO			as screeningNo,
-			S.MOVIE_NO 				as movieNo,
-			S.THEATER_NO 			as theaterNo,
-			S.HALL_NO				as hallNo,
-			S.SCREENING_DATE		as screeningDate,
-			M.MOVIE_TITLE			as title,
-			T.THEATER_NAME 			as theaterName
-		from
-			CINEMABOX_SCREENING S, CINEMABOX_MOVIE M, CINEMABOX_THEATER T
-		where 
-			M.MOVIE_NO				= S.MOVIE_NO
-		and
-			S.THEATER_NO			= T.THEATER_NO  
->>>>>>> dev-kjeun
 		and
 			M.MOVIE_NO  			= #{movieNo}
 		order by 
@@ -210,20 +173,12 @@
 			MOVIE_THUMBNAIL			as thumbnail,
 			MOVIE_SYNOPSIS			as synopsis,
 			MOVIE_TRAILER_FIRST     as trailerFirst,
-<<<<<<< HEAD
 			MOVIE_TRAILER_SECOND	as trailerSecond,
 			MOVIE_SCREENING_STATUS	as screeningStatus
 		from
 			CINEMABOX_MOVIE
 		where
 			MOVIE_SCREENING_STATUS = 'N'
-=======
-			MOVIE_TRAILER_SECOND	as trailerSecond
-		from
-			CINEMABOX_MOVIE
-		where
-			MOVIE_STATUS = 'N'
->>>>>>> dev-kjeun
 		order by
 			MOVIE_NO desc
 	</select>
@@ -234,11 +189,7 @@
 	FROM 
 		CINEMABOX_MOVIE
 	where
-<<<<<<< HEAD
 		MOVIE_SCREENING_STATUS = 'Y'
-=======
-		MOVIE_STATUS != 'N'
->>>>>>> dev-kjeun
 </select>
 
 <!-- 페이징 처리 후 게시글 조회 -->
@@ -264,11 +215,7 @@
 						from
 							CINEMABOX_MOVIE
 						where
-<<<<<<< HEAD
 							MOVIE_SCREENING_STATUS = 'Y'
-=======
-							MOVIE_STATUS != 'N'
->>>>>>> dev-kjeun
 						order by
 							MOVIE_NO desc
 						) A

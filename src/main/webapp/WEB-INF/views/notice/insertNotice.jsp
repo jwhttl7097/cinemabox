@@ -21,32 +21,24 @@
 <body>
 <div class="container">
 	<%@ include file="../common/header.jsp"%>
-	
-	<div class="top" style="margin-left:150px;  margin-top:50px;">
-	<h3 >공지사항</h3>
-	</div>
-	
-	<form id="notice-form" name="insertForm" method="get" action="../notice/insert">
-	<div style="padding:80px">
-	
-	<div class="mb-3">
-	  <label for="exampleFormControlInput1" class="form-label">제목</label>
-	  <input type="text" class="form-control" id="title" name="title">
-	</div>
-	<div class="mb-3">
-	  <label for="exampleFormControlTextarea1" class="form-label">내용</label>
-	  <textarea class="form-control" id="content" name ="content" rows="3"></textarea>
-
-	</div>
-	
-	<div style="text-align: right;">
-			<button type="submit" id="insertBt" class="btn btn-warning"  onclick="checkForm()">등록</button>
-		</div>	
-	</div>
-	</form>
-	
-</form>
-	
+		<div class="top" style="margin-left:150px;  margin-top:50px;">
+			<h3 >공지사항</h3>
+		</div>
+		<form id="notice-form" name="insertForm" method="get" action="../notice/insert">
+			<div style="padding:80px">
+				<div class="mb-3">
+		 			<label for="exampleFormControlInput1" class="form-label">제목</label>
+		  			<input type="text" class="form-control" id="title" name="title">
+				</div>
+				<div class="mb-3">
+				  <label for="exampleFormControlTextarea1" class="form-label">내용</label>
+				  <textarea class="form-control" id="content" name ="content" rows="3"></textarea>
+				</div>
+				<div style="text-align: right;">
+					<button type="submit" id="insertBt" class="btn btn-warning"  onclick="checkForm()">등록</button>
+				</div>	
+			</div>
+		</form>
 	<%@ include file="../common/footer.jsp"%>	
 </div>
 

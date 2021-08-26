@@ -21,27 +21,25 @@
 <body>
 <div class="container-fluid">
 	<%@ include file="../common/header.jsp"%>
-	
-	<div class="top" style="margin-left:150px;  margin-top:50px;">
-	<h3>1:1문의</h3>
-	</div>
-	
-	<div class="row mb-3" style="padding:55px; margin-left:50px;">
-		<div class="col-2">
-		<table class="table">
-		<tbody>
-			<tr>
-		<td><a href="main">고객센터 메인</a></td>
-			</tr>
-			<tr>
-				<td><a href="../notice/list">공지사항</a></td>
-			</tr>
-			<tr>
-				<td><a href="userInfo">1:1 문의</a></td>
-			</tr>
-		</tbody>
-		</table>
-	</div>
+		<div class="top" style="margin-left:150px;  margin-top:50px;">
+			<h3>1:1문의</h3>
+		</div>
+		<div class="row mb-3" style="padding:55px; margin-left:50px;">
+			<div class="col-2">
+				<table class="table">
+					<tbody>
+						<tr>
+							<td><a href="main">고객센터 메인</a></td>
+						</tr>
+						<tr>
+							<td><a href="../notice/list">공지사항</a></td>
+						</tr>
+						<tr>
+							<td><a href="userInfo">1:1 문의</a></td>
+						</tr>
+					</tbody>
+			</table>
+		</div>
 		<div class="col-9">
 			<div class="border p-2 bg-light">
 				<table class="table">
@@ -74,12 +72,9 @@
 					</tbody>
 				</table>
 			</div>	
-	</div>		
- </div>
-	
-	
-	<%@ include file="../common/footer.jsp"%>
-		
+		</div>		
+ 	</div>	
+	<%@ include file="../common/footer.jsp"%>		
 </div>
 </body>
 </html>
