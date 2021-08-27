@@ -315,7 +315,7 @@
 							<div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel" style="width: 400px; height: 185px;">
 								<div class="carousel-inner">
 									<div class="carousel-item" data-bs-interval="2000">
-										<a href="event/lotto" ><img style="width: 400px; height: 185px; background: bisque;" src="resources/images/event/magic3.png" alt="<팜 스프링스> 현장 경품 이벤트"></a>
+										<a href="event/lotto" ><img style="width: 400px; height: 185px; background: bisque;" src="resources/images/event/lotto.jpeg" alt="당첨 이벤트"></a>
 									</div>
 									<div class="carousel-item" data-bs-interval="3000">
 										<a href="event/detail?no=1"><img style="width: 400px; height: 185px;" src="https://caching.lottecinema.co.kr//Media/Event/5d4fca77c7f549998ed563d9d2345b6e.jpg" alt="<남색대문> 현장경품 이벤트"></a>
@@ -339,7 +339,7 @@
 							<div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel" style="width: 400px; height: 185px;">
 								<div class="carousel-inner">
 									<div class="carousel-item active" data-bs-interval="2000">
-										<a href="event/lotto" ><img style="width: 400px; height: 185px; background: bisque;" src="resources/images/event/magic3.png" alt="<팜 스프링스> 현장 경품 이벤트"></a>
+										<a href="event/lotto" ><img style="width: 400px; height: 185px; background: bisque;" src="resources/images/event/lotto.jpeg" alt="당첨 이벤트"></a>
 									</div>
 									<div class="carousel-item" data-bs-interval="3000">
 										<a href="event/detail?no=1"><img style="width: 400px; height: 185px;" src="https://caching.lottecinema.co.kr//Media/Event/5d4fca77c7f549998ed563d9d2345b6e.jpg" alt="<남색대문> 현장경품 이벤트"></a>
