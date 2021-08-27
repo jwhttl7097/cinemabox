@@ -10,8 +10,7 @@
 		    division,
 		    title,
 		    creatDate,
-		    hits,
-		    important
+		    hits
 		from (
 		    select 
 		        notice_no				no,
@@ -19,7 +18,6 @@
 		        notice_title			title,
 		        notice_date				creatDate,
 		        notice_hits				hits,
-		        notice_important		important,
 		        ROW_NUMBER() OVER (order by notice_no desc) num
 		    from
 		    	cinemabox_notice
@@ -39,17 +37,14 @@
 	</select>
 	
 	<select id="noticeMain" resultType="com.cinemabox.vo.Notice">
-		select 
-			notice_no				no,
-			notice_division			division,
-			notice_title			title,
-			notice_date				creatDate,
-			notice_hits				hits,
-			notice_important		important
-		from
-			cinemabox_notice
+		select
+        notice_no				no,
+        notice_division			division,
+        notice_title			title,
+        notice_date				creatDate,
+        notice_hits				hits   
+		from(select * from cinemabox_notice order by notice_date desc)
 		where ROWNUM &lt;= 4
-		order by notice_date desc
 	</select> 
 	
 	
@@ -75,9 +70,9 @@
 
 	<insert id="insertNotice" parameterType="com.cinemabox.dto.Notice.NoticeDto">
 		insert into cinemabox_notice
-		(notice_no, notice_division, notice_title, notice_content, notice_date, notice_important)
+		(notice_no, notice_division, notice_title, notice_content, notice_date)
 		values
-		(notice_seq.nextval, #{division},  #{title}, #{content},  sysDate, #{important})
+		(notice_seq.nextval, #{division},  #{title}, #{content},  sysDate)
 	</insert>
 	
 	

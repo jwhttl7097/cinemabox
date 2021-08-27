@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <!doctype html>
@@ -201,7 +200,6 @@ $(function() {
 })
 </script>
 </body>
-=======
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <!doctype html>
@@ -421,5 +419,4 @@ $(function() {
 
 </script>
 </body>
->>>>>>> b5978ffdf384297585369b44058233eb37aef63b
 </html>

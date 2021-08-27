@@ -13,7 +13,6 @@ public class Notice {
 	private String content;
 	private Date creatDate;
 	private int hits;
-	private int important;
 	
 
 }
