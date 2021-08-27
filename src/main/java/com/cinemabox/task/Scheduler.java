@@ -37,7 +37,7 @@ public class Scheduler {
 	//@Scheduled(cron = "0 0 0 * * ?")
 	@Scheduled(cron = "0 0/1 * * * ? ")
 	public void updateCouponExp(){
-		logger.info("-----------closeMovie 실행-----------");
+		logger.info("-----------updateCouponExp 실행-----------");
 		List<Coupon> coupons = couponDao.getCouponsByExp();
 		for(Coupon item : coupons) {
 			item.setStatus("Y");
@@ -59,7 +59,7 @@ public class Scheduler {
 	}
 	
 	//개봉한 영화 상영중으로 변경하기 - 매일 오후 12시 정각에 실행
-	@Scheduled(cron = "0 0/1 0 * * ?")
+	@Scheduled(cron = "0 0/1 * * * ?")
 	public void updateMovieStatus(){
 		logger.info("-----------updateMovieStatus 실행-----------");
 		//모든 영화정보 가져오기

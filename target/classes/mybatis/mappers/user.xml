@@ -80,9 +80,11 @@
 		from
     		cinemabox_couponlist CList, cinemabox_coupons C
 		where 
-	     CList.coupon_no = C.coupon_no
+	     	CList.coupon_no = C.coupon_no
+	    and 
+	    	C.COUPON_STATUS = 'N'
 	     and
-	     CList.user_id = #{value}
+	    	CList.user_id = #{value}
 	</select>
 	
 	<select id="getMovieReservationsById" parameterType="String" resultType="com.cinemabox.dto.user.UserDto">
@@ -150,10 +152,14 @@
 	<select id="countCoupon" parameterType="com.cinemabox.vo.CouponList" resultType="int">
 		select
 		    count(*)
-		from 
-		    cinemabox_couponlist
+		from
+    		cinemabox_couponlist CList, cinemabox_coupons C
 		where 
-	    	user_id=#{value}
+	     	CList.coupon_no = C.coupon_no
+	    and 
+	    	C.COUPON_STATUS = 'N'
+	     and
+	    	CList.user_id = #{value}	
 	</select>
 	
 	<select id="countWishlists" parameterType="com.cinemabox.vo.Wishlist" resultType="int">

@@ -473,7 +473,7 @@ $(function(){
 					content += '본 영화는  <span style="color:#5BC77E; text-decoration:underline;"><strong>전체관람가</strong></span> 영화입니다.'
 				}
 				if(m.movieInfo.age == "12"){
-					content += '본 영화는 <span style="color:#4DD6FF; text-decoration:underline;"><strong>12세관람가</strong></span> 영화입니다.'
+					content += '본 영화는 <span style="color:#4DD6FF; text-decoration:underline;"><strong>12세관람가</strong></span> 영화입니다.<br/>'
 					content += '<span style="font-size:9px;">만 12세 미만의 고객님(영, 유아 포함)은 반드시 부모님 또는 성인 보호자의 동반하에<br/>관람이 가능합니다. 연령 확인 불가 시 입장이 제한될 수 있습니다.</span>'
 				}
 				if(m.movieInfo.age == "15"){
@@ -481,7 +481,7 @@ $(function(){
 					content +=	'<span style="font-size:9px;">만 15세 미만의 고객님(영, 유아 포함)은 반드시 부모님 또는 성인 보호자의 동반하에<br/>관람이 가능합니다. 연령 확인 불가 시 입장이 제한될 수 있습니다.</span>'
 				}
 				if(m.movieInfo.age == "19"){
-					content +=	'본 영화는 <span style="color:#ED4C6B; text-decoration:underline;"><strong>19세관람가</strong></span> 영화입니다.'
+					content +=	'본 영화는 <span style="color:#ED4C6B; text-decoration:underline;"><strong>19세관람가</strong></span> 영화입니다.<br/>'
 					content +=	'<span style="font-size:9px;">만 18세 미만의 고객님(영, 유아 포함)은 부모님 또는 성인 보호자를 동반하여도<br/>관람이 불가합니다. 또한 만 18세 이상이라도 재학중인 학생은 관람이 불가합니다.<br/>영화 관람 시, 반드시 신분증을 지참하여 주시기 바랍니다.</span>'
 				}
 				content +=	'</div>'

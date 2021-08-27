@@ -3,11 +3,6 @@ package com.cinemabox.service.event;
 import java.util.List;
 
 import com.cinemabox.dto.Event.EventDto;
-package com.cinemabox.service.event;
-
-import java.util.List;
-
-import com.cinemabox.dto.Event.EventDto;
 import com.cinemabox.vo.Product;
 
 public interface ProductService {

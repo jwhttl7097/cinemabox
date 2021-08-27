@@ -22,14 +22,13 @@
 					</li>
 					<li class="nav-item mainnav"><a class="nav-link text-body" href="#">이벤트</a>
 						<ul class="nav justify-content-center bg-white subnav" id="subnav-02">
-							<li class="nav-item"><a class="nav-link text-body" href="">이벤트 등록</a></li>
 							<li class="nav-item"><a class="nav-link text-body" href="event/main">이벤트 목록</a></li>
 						</ul>
 					</li>
 					<li class="nav-item mainnav"><a class="nav-link text-body" href="">스토어</a>
 						<ul class="nav justify-content-center subnav bg-white bg-white" id="subnav-03">
-							<li class="nav-item"><a class="nav-link text-body" href="giftInsert">GIFT 등록</a></li>
-							<li class="nav-item"><a class="nav-link text-body" href="snackInsert">SNACK 등록</a></li>
+							<li class="nav-item"><a class="nav-link text-body" href="giftInsert">GIFT 상품 등록</a></li>
+							<li class="nav-item"><a class="nav-link text-body" href="snackInsert">SNACK 상품 등록</a></li>
 							<li class="nav-item"><a class="nav-link text-body" href="gift">스토어 목록</a></li>
 						</ul>
 					</li>

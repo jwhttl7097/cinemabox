@@ -119,7 +119,6 @@
             </div>
             <div class="row mx-2 mb-3">
             	<div class="col-6 offset-3 text-center" style="font-size : 20px">
-            		2021년 VIP까지 <strong>20,000원 남았어요!</strong>
             	</div>
             </div>
             <div class="row mt-4 mb-1">
@@ -142,9 +141,9 @@
  						<tbody>
  							<tr>
  								<td class="align-middle text-center">0</td>
- 								<td class="align-middle text-center">2만원</td>
- 								<td class="align-middle text-center">3만원</td>
- 								<td class="align-middle text-center">4만원</td>
+ 								<td class="align-middle text-center">30만원</td>
+ 								<td class="align-middle text-center">60만원</td>
+ 								<td class="align-middle text-center">90만원</td>
  							</tr>
  						</tbody>
  					</table>

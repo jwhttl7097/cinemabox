@@ -27,7 +27,8 @@
 	}
 	 
 	#nowMovie{
-		width: 60%;
+		height: 300px;
+    	width: 200px;
 		margin-right : 10px;
 	}
 	

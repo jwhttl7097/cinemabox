@@ -1,6 +1,3 @@
-
-
-import com.cinemabox.vo.Event;
 package com.cinemabox.dao.event;
 
 import java.util.List;

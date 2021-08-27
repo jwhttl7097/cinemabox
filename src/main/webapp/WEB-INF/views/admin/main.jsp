@@ -165,7 +165,7 @@
                                 <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                             </div>
                             <!-- Portfolio Modal - Image-->
-<!--                             <img class="img-fluid rounded mb-5" src="/cinemabox/resources/images/admin/insertMovie.jpg" alt="..." /> -->
+                            <img class="img-fluid rounded mb-5" src="/cinemabox/resources/images/admin/ticket.jpg" alt="..." />
                             <!-- Portfolio Modal - Text-->
                             <p class="mb-4">티켓 예매 페이지 입니다.</p>
                             <a href="">티켓 예매 페이지 이동</a>
@@ -192,7 +192,7 @@
                                 <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                             </div>
                             <!-- Portfolio Modal - Image-->
-<!--                             <img class="img-fluid rounded mb-5" src="/cinemabox/resources/images/admin/insertMovie.jpg" alt="..." /> -->
+                            <img class="img-fluid rounded mb-5" src="/cinemabox/resources/images/admin/eventPage.jpg" alt="..." />
                             <!-- Portfolio Modal - Text-->
                             <p class="mb-4">이벤트 페이지 입니다.</p>
                             <a href="event/main">이벤트 페이지 이동</a>
@@ -246,7 +246,7 @@
                                 <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                             </div>
                             <!-- Portfolio Modal - Image-->
-<!--                             <img class="img-fluid rounded mb-5" src="/cinemabox/resources/images/admin/insertMovie.jpg" alt="..." /> -->
+                            <img class="img-fluid rounded mb-5" src="/cinemabox/resources/images/admin/noticePage.jpg" alt="..." />
                             <!-- Portfolio Modal - Text-->
                             <p class="mb-4">공지사항 새 글 등록이 가능한 페이지입니다.</p>
                             <a href="notice/add">공지사항 새 글 등록 페이지 이동</a>
