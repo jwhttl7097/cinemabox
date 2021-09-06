@@ -51,7 +51,7 @@
 ## 담당파트 구현화면
 
 |담당파트| 구현화면 |
-|:-------------:|:--------:|
+|:--------:|:--------:|
 |극장</br>페이지|![FireShot Capture 008 - 전체극장-CINEMA BOX - localhost](https://user-images.githubusercontent.com/62005139/132183519-f2abae1c-a564-47ab-828e-5b0f237f53ad.png)|
 |극장</br>상세</br>페이지|![FireShot Capture 009 - 극장상세-CINEMA BOX - localhost](https://user-images.githubusercontent.com/62005139/132183493-845fe89a-a7d5-4663-b7e3-69b51bbe33ce.png)|
 |극장</br>상세</br>페이지</br>(약도보기)|![FireShot Capture 010 - 약도보기-CINEMA BOX - localhost](https://user-images.githubusercontent.com/62005139/132186778-8daffba0-a15f-4428-b798-cebc0cd0f275.png)|
