@@ -54,7 +54,7 @@
 |:-------------:|:--------:|
 |극장</br>페이지|![FireShot Capture 008 - 전체극장-CINEMA BOX - localhost](https://user-images.githubusercontent.com/62005139/132183519-f2abae1c-a564-47ab-828e-5b0f237f53ad.png)|
 |극장</br>상세</br>페이지|![FireShot Capture 009 - 극장상세-CINEMA BOX - localhost](https://user-images.githubusercontent.com/62005139/132183493-845fe89a-a7d5-4663-b7e3-69b51bbe33ce.png)|
-|극장</br>상세</br>페이지</br>(약도보기)|![FireShot Capture 010 - 약도보기-CINEMA BOX - localhost](https://user-images.githubusercontent.com/62005139/132183462-8d3146ad-5c34-448f-ad3a-be682afe5513.png)|
+|극장</br>상세</br>페이지</br>(약도보기)|![image](https://user-images.githubusercontent.com/62005139/132186710-bbea92ab-d38d-45ae-b1ba-ba36f1e4c07e.png)|
 |극장</br>상세</br>페이지</br>(극장 상영시간표)|![FireShot Capture 013 - 극장 상영시간표 -CINEMA BOX - localhost](https://user-images.githubusercontent.com/62005139/132183388-1108a11e-08eb-49e1-a9fc-848af55f24f9.png)|
 |특별관</br>페이지|![FireShot Capture 013 - 특별관 -CINEMA BOX - localhost](https://user-images.githubusercontent.com/62005139/132183343-2a0993b6-e043-4535-833b-ba0dd77eb98d.png)|
 |특별관</br>상세</br>페이지|![FireShot Capture 015 - 특별관 상세 -CINEMA BOX - localhost](https://user-images.githubusercontent.com/62005139/132183278-75438e5f-8b04-4109-9c97-cdbce593cdda.png)|
