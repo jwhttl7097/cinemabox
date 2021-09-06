@@ -1,10 +1,10 @@
 # 🎬 CINEMA BOX
 ## Index
   - [프로젝트 설명](#프로젝트-설명) 
-  - [개발환경](#getting-started)
-  - [ERD](#contributing)
-  - [메인페이지](#authors)
-  - [담당파트 구현화면](#authors)
+  - [개발환경](#개발환경)
+  - [ERD](#ERD)
+  - [메인페이지](#메인페이지)
+  - [담당파트 구현화면](#담당파트-구현화면)
   
 ## About RepositoryTemplate
 <!--Wirte one paragraph of project description -->  
@@ -20,7 +20,7 @@ This project's purpose is to create a make Repository with a collection of defau
 - Contribute Template
 - Pull Request Build Test(With Github Actions)
 
-## Getting Started
+## 개발환경
 **click `Use this template` and use this template!**
 <!--
 ### Depencies
@@ -41,17 +41,13 @@ And repeat
 1. Click `Use this template` button 
 2. Create New Repository
 3. Update Readme and Others(Other features are noted in comments.)
-<!--
-## Deployment
- Add additional notes about how to deploy this on a live system
- -->
-## Contributing
+## ERD
 <!-- Write the way to contribute -->
 I am looking for someone to help with this project. Please advise and point out.  
 Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code
 of conduct, and the process for submitting pull requests to us.
 
-## Authors
+## 메인페이지
   - [Always0ne](https://github.com/Always0ne) - **SangIl Hwang** - <si8363@soongsil.ac.kr>
 
 See also the list of [contributors](https://github.com/always0ne/readmeTemplate/contributors)
@@ -61,7 +57,7 @@ who participated in this project.
  - [referenced Project](project link) - **LICENSE** - little-bit introduce
 -->
 
-## License
+## 담당파트 구현화면
 
 ```
 MIT License
