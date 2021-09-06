@@ -6,15 +6,11 @@
   - [메인페이지](#메인페이지)
   - [담당파트 구현화면](#담당파트-구현화면)
   
-## About RepositoryTemplate
-<!--Wirte one paragraph of project description -->  
-This project's purpose is to create a make Repository with a collection of default settings  
-
 ## 프로젝트 설명
-<!-- Write Overview about this project -->
-**If you use this template, you can use this function**
-- Issue Template
-- Pull Request Template
+**프로젝트 개요**
+- 주제 : 영화 예매 및 영화등록부터 전반적인 영화사 웹사이트의 프로세스를 담은 영화관 웹사이트 구현
+- 내용 : 관리자의 영화 등록 및 각 극장에 상영시간표를 등록하고 이용자가 결제를 통한 예매와 편의 컨텐츠를 이용할 수 있는 사이트를 구현
+**담당파트**
 - Commit Template
 - Readme Template
 - Contribute Template
